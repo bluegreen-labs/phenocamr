@@ -31,7 +31,7 @@ This will download all deciduous broadleaf (DB) PhenoCam time series for the "ha
 
 ### Notes / Dependencies
 
-The code depends on the following R packages: ( [DaymetR](https://khufkens.github.io/daymetr) ) and ( [AmerifluxR](https://khufkens.github.io/amerifluxr) )
+The code depends on the following R packages: [DaymetR](https://khufkens.github.io/daymetr) and [AmerifluxR](https://khufkens.github.io/amerifluxr).
 
 # Acknowledgements
 
