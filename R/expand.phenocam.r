@@ -1,6 +1,7 @@
 #' Expand the file from 3-day to a 1-day time step
 #' All values will be filled with NA. This is usefull
 #' to store subsequent interpolated (1-day data)
+#' and increase consistency across processing
 #' 
 #' @param file: a phenocam data file with a 3 day time step
 #' @keywords time series, smoothing, phenocam

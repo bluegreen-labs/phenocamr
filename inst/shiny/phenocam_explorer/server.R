@@ -64,7 +64,7 @@ df$lon_j = df$lon + rnorm(length(df$lat)) * 0.00005
 # subset data to exclude certain PFT / ROI classes which are irrelevant
 # (no vegetation, bad ROI, mixed data types)
 df = df[-which(
-    #df$veg_type == "XX" |
+    df$veg_type == "XX" |
     df$veg_type == "MX" |
     df$veg_type == "UN" | df$veg_type == "NV" | df$veg_type == "RF"
 ),]
@@ -116,8 +116,7 @@ server = function(input, output, session) {
     GR = makeIcon("grass_o.png", "grass_o.png", 18, 18),
     SH = makeIcon("grass_o.png", "grass_o.png", 18, 18),
     TN = makeIcon("grass_o.png", "grass_o.png", 18, 18),
-    AG = makeIcon("agriculture_o.png", "agriculture_o.png", 18, 18),
-    XX = makeIcon("agriculture_o.png", "agriculture_o.png", 18, 18)
+    AG = makeIcon("agriculture_o.png", "agriculture_o.png", 18, 18)
   )
   
   # function to subset the site list based upon coordinate locations

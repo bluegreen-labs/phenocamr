@@ -79,6 +79,11 @@ smooth.ts <- function(df, force = TRUE) {
     # interpollation
     na_orig = which(is.na(values))
     
+    # this routine takes care of gap filling large gaps
+    # using priors derived from averaging values across
+    # years or linearly interpolating. The averaging over
+    # years is needed to limit artifacts at the beginning
+    # and end of cycles in subsequent phenophase extraction
     if (nr_years >= 3) {
       
       # calculate the mean values for locations
@@ -86,7 +91,7 @@ smooth.ts <- function(df, force = TRUE) {
       fill_values = by(values,INDICES = df$doy, mean,na.rm = TRUE)
       doy_fill_values = as.numeric(names(fill_values))
       doy_na = df$doy[na_orig]
-      
+
       # calculate the interpolated data based on
       # the whole dataset
       int_data = lapply(doy_na,
@@ -106,14 +111,17 @@ smooth.ts <- function(df, force = TRUE) {
       
     }else{
       
-      # check this section if the code runs with linear gap filling !!!!!
+      # for short series, where averaging over years isn't possible
+      # linearly interpolate the data for gap filling
       gap_filled = na.approx(values, na.rm = FALSE)
       
-      # which days should contain data
-      doy_selection = seq(2,366,3)
-      gap_filled[!df$doy %in% doy_selection] = NA
+      # which days should contain data, all others set to NA
+      gap_filled[!df$doy %in% seq(2,366,3)] = NA
       
-    }
+    } 
+    # the gap_filled object is used in the subsequent analysis
+    # to calculate the ideal fit, down weighing those areas
+    # which were interpolated
     
     # store the original na values (for the 3 day product)
     long_na = which(is.na(na.approx(
