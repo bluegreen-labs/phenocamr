@@ -34,12 +34,13 @@ download.phenocam = function(site="bartlett",
                              out_dir=getwd()){
   
   # load libraries
-  #require(DaymetR)
+  require(DaymetR)
   require(downloader, quietly = TRUE)
+  require(RCurl, quietly = TRUE)
   
   # get site listing
-  url = "http://phenocam.sr.unh.edu/webcam/roi/roilistinfo/?format=csv"
-  site.list = read.csv(url(url),comment.char="#",header=TRUE)
+  url = getURL("https://phenocam.sr.unh.edu/webcam/roi/roilistinfo/?format=csv")
+  site.list = read.csv(text = url,header=TRUE)
   
   # is there a site name?
   # this excludes any geographic constraints

@@ -18,7 +18,8 @@ vegtype = c(
   "Tundra" = "TN",
   "Agriculture" = "AG",
   "Evergreen Broadleaf" = "EB",
-  "Wetland" = "WL"
+  "Wetland" = "WL",
+  "WTF" = "XX"
 )
 
 # interface elements
@@ -52,7 +53,7 @@ body <- dashboardBody(
             $('#map').height(h); 
           }
           function resizeTable(){
-            var h = window.innerHeight - $('.navbar').height() - 500;
+            var h = window.innerHeight - $('.navbar').height() - 550;
             $('#time_series_plot').height(h);
           }"
       )
@@ -99,7 +100,11 @@ body <- dashboardBody(
                               h4("Plotting options"),
                               selectInput("percentile", "Percentile",c(90,75,50,"mean"),width="100%"),  
                               selectInput("frequency", "Data Frequency",c(3,1),width="100%"),
-                              selectInput("plot_type", "Plot Type",c("daily","yearly"),width="100%")
+                              selectInput("plot_type", "Plot Type",
+                                          c("Time Series" = "bydate",
+                                            "DOY Time Series" = "byyear",
+                                            "Phenology" = "phenology"),
+                                          width="100%")
                           )),
                    column(9,
                           box(width = NULL,
@@ -110,9 +115,11 @@ body <- dashboardBody(
                    column(12,
                           box(width = NULL,height = NULL,
                               plotlyOutput("time_series_plot")
-                          )
-                   ) 
-                 )
+                          ))
+                  ),
+                fluidRow(                 
+                    column(3, downloadButton('downloadData',label = "Download Transition Dates"))
+                    )
         )
       )
     ),

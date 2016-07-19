@@ -1,7 +1,6 @@
 #' Detect outliers in PhenoCam time series
 #' @param data: PhenoCam data frame or filename
 #' @param iterations: number of itterations over which to cycle to detect outliers ()
-#' @param smooth: export smoothed data and confidence intervals (TRUE / FALSE)
 #' @param vis: visualize the process, mostly for debugging (TRUE / FALSE)
 #' @keywords PhenoCam, outliers, smoothing, pre-processing
 #' @export
@@ -9,7 +8,7 @@
 #' # with defaults, overwriting the original data frame:
 #' df <- detect.outliers(df, iterations=5)
 
-detect.outliers = function(data,iterations=10,smooth=TRUE,vis=FALSE){
+detect.outliers = function(data,iterations=10,vis=FALSE){
   
   # load required library
   require(zoo, quietly = TRUE)
@@ -29,7 +28,7 @@ detect.outliers = function(data,iterations=10,smooth=TRUE,vis=FALSE){
   if(!is.data.frame(data)){
     if(file.exists(data)){
       # pluck real header from the phenocam file
-      phenocam_header = readLines(data,n=22)
+      header = readLines(data,n=22)
       
       # read the original data
       df = read.table(data,header=T,sep=',')
@@ -131,7 +130,7 @@ detect.outliers = function(data,iterations=10,smooth=TRUE,vis=FALSE){
         outliers[loc] = 1
         outliers[-loc] = 0
         
-        # break conditions (when not change is detected),
+        # break conditions (when no change is detected),
         # if not met update the temporary location vector
         if (sum(tmp.loc - loc) == 0 & j != 1){
           break # exit while loop
@@ -178,7 +177,7 @@ detect.outliers = function(data,iterations=10,smooth=TRUE,vis=FALSE){
     if(file.exists(data)){
       # write everything to file using append
       # write the original header first
-      write.table(phenocam_header,data,quote=FALSE,row.names=FALSE,col.names=FALSE)
+      write.table(header,data,quote=FALSE,row.names=FALSE,col.names=FALSE)
       write.table(df,data,row.names=FALSE,col.names=TRUE,quote=FALSE,sep=",",append = TRUE)
     }
   } else {
