@@ -2,7 +2,7 @@
 #' time series. This routine combines a forward and backward
 #' run of transition.dates() to calculate all phenophases.
 #' 
-#' @param df: a PhenoCam data file or data frame
+#' @param df: a PhenoCam data file (or data frame)
 #' @param sitename: a PhenoCam data file or data frame
 #' @param veg_type: a PhenoCam data file or data frame
 #' @param roi_id: a PhenoCam data file or data frame
@@ -11,27 +11,35 @@
 #' @keywords PhenoCam, transition dates, phenology, time series
 #' @export
 #' @examples
-#' # with defaults, outputting a nested list of phenophases dates
+#' # downloads a time series for Bartlett Forest data and calculates
+#' # the matching phenophases.
+#' # Outputs a nested list of phenophases dates
 #' # where location [[1]] holds the greenup dates and location
-#' [[2]] the greendown dates
+#' # [[2]] the greendown dates
 #' 
-#' my_dates <- phenophases(df,output=FALSE)
+#' df = download.phenocam(site="bartlett",
+#'                        type="DB",
+#'                        roi="1",
+#'                        frequency=3)
+#' my_dates = phenophases(df,output=FALSE)
 #' 
 #' # dates need to be converted to standard notation using
 #' as.Date(my_dates)
 
-phenophases <- function(df,
+phenophases = function(df,
                         sitename=NULL,
                         veg_type=NULL,
                         roi_id=NULL,
                         freq=NULL,
-                        output = TRUE,
+                        lat=NULL,
+                        MAT=NULL,
+                        output = FALSE,
                         out_dir=getwd()){
   
   # check if the output directory exists
-  if (!dir.exists(out_dir)) {
-    stop("provide a valid output directory")
-  }
+  #if (!dir.exists(out_dir)) {
+  #   stop("provide a valid output directory")
+  #}
   
   # load data and check input parameters
   if (!is.data.frame(df)) {
@@ -53,6 +61,8 @@ phenophases <- function(df,
       veg_type = header[2]
       roi_id = as.numeric(header[3])
       freq = header[9]
+      lat = as.numeric(header[4])
+      #MAT = as.numeric(header[x])
       
       # read the original data
       df = read.table(df, header = T, sep = ',')
@@ -64,22 +74,45 @@ phenophases <- function(df,
     
     # check if I have all parameters if fed in a data frame
     # [can't be derived from data frame itself]
-    if ( any(is.null(c(sitename,veg_type,roi_id,freq))) ){
+    if ( any(is.null(c(sitename,veg_type,roi_id,freq,MAT,lat))) ){
       stop("Not all required parameters provided")
     }
-    
   }
+  
+  # calculate the daylength for additional screening
+  # calculate for a single year, not the time series
+  dl = daylength(1:366,lat)[[1]]
+  dl_trend = ifelse(c(diff(dl),NA)<=0,1,0)
   
   # calculate rising greenness transtions dates
   # all percentiles
   for(i in c(90,75,50,"mean")){
    if(i == 90){
+     
      rising = transition.dates(df,reverse=FALSE,percentile=i)
+     
+     # screen for false rising parts
+     locr = strptime(as.Date(rising$transition_10),"%Y-%m-%d")$yday
+     l = which(dl_trend[locr] == 1 )
+     if(!length(l)==0L){
+       rising = rising[-l,]
+     }
+     
      gcc_value = rep(sprintf("gcc_%s",i),dim(rising)[1])
      rising = cbind(gcc_value,rising)
+     
    } else {
      tmp = transition.dates(df,reverse=FALSE,percentile=i)
-     gcc_value = rep(sprintf("gcc_%s",i),dim(tmp)[1])
+
+     # screen for false rising parts
+     loc = strptime(as.Date(tmp$transition_10),"%Y-%m-%d")$yday
+     l = which(dl_trend[loc] == 1 )
+     if(!length(l)==0L){
+       tmp = tmp[-l,]
+     }
+     
+     gcc_value = rep(sprintf("gcc_%s",i),dim(tmp)[1])     
+     
      tmp = cbind(gcc_value,tmp)
      rising = rbind(rising,tmp)
    }
@@ -90,10 +123,26 @@ phenophases <- function(df,
   for(i in c(90,75,50,"mean")){
     if(i == 90){
       falling = transition.dates(df,reverse=TRUE,percentile=i)
+      
+      # screen for false falling curves
+      loc = strptime(as.Date(falling$transition_50),"%Y-%m-%d")$yday
+      l = which(dl_trend[loc] == 0 )
+      if(!length(l)==0L){
+        falling = falling[-l,]
+      }
+      
       gcc_value = rep(sprintf("gcc_%s",i),dim(falling)[1])
       falling = cbind(gcc_value,falling)
     } else {
       tmp = transition.dates(df,reverse=TRUE,percentile=i)
+      
+      # screen for false falling curves
+      loc = strptime(as.Date(tmp$transition_50),"%Y-%m-%d")$yday
+      l = which(dl_trend[loc] == 0 )
+      if(!length(l)==0L){
+        tmp = tmp[-l,]
+      }
+      
       gcc_value = rep(sprintf("gcc_%s",i),dim(tmp)[1])
       tmp = cbind(gcc_value,tmp)
       falling = rbind(falling,tmp)
@@ -109,6 +158,12 @@ phenophases <- function(df,
   ss = apply(s,2,sum,na.rm=TRUE)
   RMSE = round(sqrt(ss/dim(smooth_data)[2]),5)
 
+  plot(as.Date(df$date),df$gcc_90, pch=20,xlab="Date",ylab="Gcc")
+  legend("topright",legend="daylength trend screening",bty="n")
+  abline(v=as.Date(rising$transition_50),col='green')
+  abline(v=as.Date(falling$transition_50),col='red')
+  
+  # output data to file
   if (output){
     
   # bind spring and fall phenology data in a coherent format
@@ -175,7 +230,7 @@ phenophases <- function(df,
     freq
   )
   
-  # write all data to file
+  # write all data to file, first write the header then append the data
   write.table(
     phenology_header,
     filename,
@@ -194,8 +249,8 @@ phenophases <- function(df,
     append = TRUE
   )
   
+  } else {
+    # return dates as a list if no output file is required
+    return(list(rising,falling))
   }
-  
-  # return dates as a list
-  return(list(rising,falling))
 }

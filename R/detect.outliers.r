@@ -8,7 +8,7 @@
 #' # with defaults, overwriting the original data frame:
 #' df <- detect.outliers(df, iterations=5)
 
-detect.outliers = function(data,iterations=10,vis=FALSE){
+detect.outliers = function(data,iterations=10,vis=FALSE, snowflag=FALSE ){
   
   # load required library
   require(zoo, quietly = TRUE)
@@ -46,7 +46,7 @@ detect.outliers = function(data,iterations=10,vis=FALSE){
   
   # loop over gcc 90 / 75 / 50 time series
   for (k in c("mean",90,75,50)){
-    
+
     # loop over all years to calculate outliers in each year
     for (i in unique(df$year)){
 
@@ -54,7 +54,7 @@ detect.outliers = function(data,iterations=10,vis=FALSE){
       dec = which(month == 12 & df$year == (i - 1) )
       jan = which(month == 1 & df$year == (i + 1) )
       yr = which(df$year == i)
-      df.subset = df[c(dec,yr,jan),] 
+      df.subset = df[c(dec,yr,jan),]
       
       # create date and greenness vectors
       dates = strptime(df.subset$date,"%Y-%m-%d")
@@ -169,6 +169,31 @@ detect.outliers = function(data,iterations=10,vis=FALSE){
         df$outlierflag_gcc_50[df$year==i] = outliers[current.year.loc]
       }
     } # loop over years
+    
+    # Bcc > Gcc (a sign of snow / weather contamination).
+    # This can be done outside the next yearly loop (vector operation)
+    # optional using parameter
+    if (snowflag == TRUE){
+      
+      # gcc / bcc / rcc time series
+      midday_gcc = df$midday_g / (df$midday_r + df$midday_g + df$midday_b)
+      midday_bcc = df$midday_b / (df$midday_r + df$midday_g + df$midday_b)
+      
+      # put everything back into the dataframe
+      if (k == "mean"){
+        df$outlierflag_gcc_mean[midday_bcc > midday_gcc] = 1
+      }
+      if (k == 90){
+        df$outlierflag_gcc_90[midday_bcc > midday_gcc] = 1
+      }
+      if (k == 75){
+        df$outlierflag_gcc_75[midday_bcc > midday_gcc] = 1
+      }
+      if (k == 50){
+        df$outlierflag_gcc_50[midday_bcc > midday_gcc] = 1
+      }
+    }
+    
   } # loop over metrics
   
   # write the data to the original data frame or the

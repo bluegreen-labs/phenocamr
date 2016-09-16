@@ -1,4 +1,4 @@
-site,latitude,longitude,vegetation,roi,MAP,MAT
+site,lat,lon,veg_type,roi_id_number,MAP,MAT
 acadia,44.3769444444,-68.2608333333,DB,1,1303,6.5
 acadia,44.3769444444,-68.2608333333,DB,2,1303,6.5
 aguatibiaeast,33.622,-116.867,XX,1,504,14.9

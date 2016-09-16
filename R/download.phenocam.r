@@ -46,15 +46,15 @@ download.phenocam = function(site="bartlett",
   # this excludes any geographic constraints
   if (!is.null(site)){
     if (vegetation == "all"){ 
-      loc = which(site.list$site %in% site) # list all vegetation types and rois
+      loc = grep(sprintf("%s",site),site.list$site)
     }else{
       if (!is.null(roi_id)){
         # list only particular vegetation types and rois
-        loc = which(site.list$site %in% site & site.list$veg_type %in% vegetation &
+        loc = which( grep(sprintf("%s",site),site.list$site) & site.list$veg_type %in% vegetation &
                       site.list$roi_id_number %in% roi_id)
       }else{
         # list only vegetation types for all rois      
-        loc = which(site.list$site %in% site & site.list$veg_type %in% vegetation)
+        loc = which(loc = grep(sprintf("%s",site),site.list$site) & site.list$veg_type %in% vegetation)
       }
     }
   }else{ # if there is no site name, use geographic boundaries (by default all rois are returned)

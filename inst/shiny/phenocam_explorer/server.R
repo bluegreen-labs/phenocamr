@@ -8,11 +8,8 @@ require(shinydashboard, quietly = TRUE)
 require(leaflet, quietly = TRUE)
 require(plotly, quietly = TRUE)
 require(DT, quietly = TRUE)
-source(
-  '/data/Dropbox/Research_Projects/code_repository/bitbucket/phenocamr/R/download.phenocam.r'
-)
-source('detect.outliers.r')
-source('optimal.span.r')
+require(RCurl,quietly = TRUE)
+require(jsonlite)
 
 # grab the OS info
 OS = Sys.info()[1]
@@ -48,11 +45,50 @@ if (machine == "squeeze" | machine == "Pandora.local") {
   # location of the data
   path = "~/phenocam_cache"
   
+  source('download.phenocam.r')
+  source('detect.outliers.r')
+  source('optimal.span.r')
 }
 
-# # grab the latest roi list
-url = "https://phenocam.sr.unh.edu/webcam/roi/roilistinfo/?format=csv"
-df = read.csv(url(url), header = TRUE) # https works on linux, not on OSX
+# set constants pertaining to the transition date
+# thresholds (% of amplitude), these will be used
+# in the calculation of the transtion dates (dynamically)
+lower.thresh = 0.1
+middle.thresh = 0.25
+upper.thresh = 0.5
+
+# grab the latest roi list using jsonlite
+# this should work across all platforms regardless
+df = fromJSON("https://phenocam.sr.unh.edu/webcam/roi/roilistinfo/")
+
+df = df[,c("site",
+           "veg_type",
+           "roi_id_number",
+           "first_date",
+           "last_date",
+           "site_years",
+           "lat","lon",
+           "description",
+           "missing_data_pct")]
+
+# download metadata, and select useful columns for the explorer
+metadata = fromJSON("https://phenocam.sr.unh.edu/webcam/network/siteinfo_combined/")
+
+# use daymet in case of missing site specific MAT / MAP
+metadata$MAT = ifelse(is.na(metadata$MAT_site),metadata$MAT_gridded,metadata$MAT_site)
+metadata$MAP = ifelse(is.na(metadata$MAP_site),metadata$MAP_gridded,metadata$MAP_site)
+
+# what variables do I retain
+metadata = metadata[,c("site",
+                       "ecoregion",
+                       "koeppen_geiger",
+                       "landcover_igbp",
+                       "elev",
+                       "MAT",
+                       "MAP")]
+
+# merge the roi list with the short metadata based on sitename
+df = merge(df,metadata,by="site")
 
 # introduce jitter on lat long coordinates
 # this avoids that site locations with different PFTs
@@ -64,10 +100,9 @@ df$lon_j = df$lon + rnorm(length(df$lat)) * 0.00005
 # subset data to exclude certain PFT / ROI classes which are irrelevant
 # (no vegetation, bad ROI, mixed data types)
 df = df[-which(
-    df$veg_type == "XX" |
-    df$veg_type == "MX" |
-    df$veg_type == "UN" | df$veg_type == "NV" | df$veg_type == "RF"
-),]
+  df$veg_type == "XX" | df$veg_type == "MX" |
+  df$veg_type == "UN" | df$veg_type == "NV" | 
+  df$veg_type == "RF" ),]
 row.names(df) = 1:dim(df)[1]
 
 # create a character field with html to call as marker
@@ -82,7 +117,7 @@ df$preview = unlist(lapply(df$site, function(x)
     "</tr>",
     "<tr>",
     "<td>",
-    "<img src=http://phenocam.sr.unh.edu/data/latest/thumbs/",
+    "<img src=https://phenocam.sr.unh.edu/data/latest/thumbs/",
     x,
     ".thumb.jpg>",
     "</td>",
@@ -95,7 +130,7 @@ df$preview = unlist(lapply(df$site, function(x)
 colloc = c(which(colnames(df) == "lat_j"), which(colnames(df) == "lon_j"))
 
 # load MODIS land cover legend
-mylegend = read.csv("MODIS.LC.legend.csv",sep=",")
+mylegend = read.csv("MODIS.LC.legend.csv",sep = ",")
 
 # start server routine
 server = function(input, output, session) {
@@ -147,27 +182,57 @@ server = function(input, output, session) {
   }
   
   getValueData = function(table) {
-    nr_sites = length(unique(table$site))
+     
+    # calculate the total number of site years
+    # and sites in the dataset
+    total_site_years = sum(table$site_years)
+    total_sites = length(unique(table$site))
     
     output$site_count = renderInfoBox({
-      valueBox(nr_sites,
+    valueBox(total_sites,
                "Sites",
                icon = icon("list"),
                color = "blue")
     })
     
     output$year_count = renderInfoBox({
-      valueBox(nr_sites,
+    valueBox(total_site_years,
                "Site Years",
                icon = icon("list"),
                color = "blue")
     })
-    
-    output$season_count = renderInfoBox({
-      valueBox(nr_sites,
-               "# Growing Seaons",
-               icon = icon("list"),
-               color = "blue")
+  }
+  
+  # fill site count etc fields
+  getValueData(df)
+  
+  # create function to plot the climatology
+  # occurs too many times to repeat the code
+  updateClimatology = function(){
+    output$climate = renderPlot({
+      par(mar = c(4, 4, 1, 1))
+      plot(
+        1,
+        1,
+        type = 'n',
+        xaxt = 'n',
+        yaxt = 'n',
+        xlab = '',
+        ylab = '',
+        bty = 'n',
+        xlim = c(0, 100),
+        ylim = c(0, 100)
+      )
+      plot(MAP~MAT,data=filteredData(),
+           xlab=expression("MAT ("*degree*"C)"),
+           ylab="MAP (mm)",
+           pch=19,
+           col=rgb(0.5,0.5,0.5,0.3),
+           xlim=c(-15,30),
+           ylim=c(0,3000)
+      )
+    }, height = function() {
+      session$clientData$output_climate_height
     })
   }
   
@@ -185,9 +250,13 @@ server = function(input, output, session) {
         "http://webmap.ornl.gov/ogcbroker/wms?",
         layers = "10004_31",
         options = WMSTileOptions(format = "image/png", transparent = TRUE),
-        attribution = "",
-        group = "MODIS Land Cover") %>%
-      addProviderTiles("OpenStreetMap.BlackAndWhite", group = "Open Street Map") %>%
+        attribution = "MODIS Land Cover (MCD12Q1) &copy NASA",
+        group = "MODIS Land Cover"
+      ) %>%
+      addProviderTiles(
+        "OpenTopoMap",
+        group = "Open Topo Map"
+        ) %>%
       addMarkers(
         lat = ~ lat_j,
         lng = ~ lon_j,
@@ -196,7 +265,7 @@ server = function(input, output, session) {
       ) %>%
       # Layers control
       addLayersControl(
-        baseGroups = c("World Imagery","MODIS Land Cover","OSM"),
+        baseGroups = c("World Imagery","MODIS Land Cover","Open Topo Map"),
         position = c("topleft"),
         options = layersControlOptions(collapsed = TRUE)
       ) %>%
@@ -208,7 +277,6 @@ server = function(input, output, session) {
   # Incremental changes to the map. Each independent set of things that can change
   # should be managed in its own observer.
   observe({
-    
     leafletProxy("map", data = filteredData()) %>%
       clearMarkers() %>%
       addMarkers(
@@ -220,43 +288,20 @@ server = function(input, output, session) {
     
     # update the data table in the explorer
     output$table = DT::renderDataTable({
-      tmp = filteredData()[,-c(8:10)]
+      tmp = filteredData()#[,-DT_drop]
+      tmp = tmp[,-c((ncol(tmp)-2):ncol(tmp))]
       return(tmp)
     },
     selection = "single",
-    options = list(lengthMenu = list(c(5, 10), c('5', '10')), pom = list('MAT')),
+    options = list(lengthMenu = list(c(5, 10), c('5', '10')),
+                   pom = list('site_years')),
     extensions = c('Responsive'))
     
     # update value box
     getValueData(filteredData())
     
-    # update the climatology plot
-    output$test = renderPlot({
-      par(mar = c(4, 4, 1, 1))
-      plot(
-        1,
-        1,
-        type = 'n',
-        xaxt = 'n',
-        yaxt = 'n',
-        xlab = '',
-        ylab = '',
-        bty = 'n',
-        xlim = c(0, 100),
-        ylim = c(0, 100)
-      )
-      text(50, 50, "To be completed")
-      #       plot(MAP~MAT,data=filteredData(),
-      #            xlab=expression("MAT ("*degree*"C)"),
-      #            ylab="MAP (mm)",
-      #            pch=19,
-      #            col=rgb(0.5,0.5,0.5,0.3),
-      #            xlim=c(-15,30),
-      #            ylim=c(0,3000)
-      #       )
-    }, height = function() {
-      session$clientData$output_test_height
-    })
+    # update climatology plot
+    updateClimatology()
   })
   
   # grab the bounding box, by clicking the map
@@ -282,22 +327,8 @@ server = function(input, output, session) {
       
       getValueData(filteredData())
       
-      # update the climatology plot
-      output$test = renderPlot({
-        par(mar = c(4, 4, 1, 1))
-        plot(
-          MAP ~ MAT,
-          data = filteredData(),
-          xlab = expression("MAT (" * degree * "C)"),
-          ylab = "MAP (mm)",
-          pch = 19,
-          col = rgb(0.5, 0.5, 0.5, 0.3),
-          xlim = c(-15, 30),
-          ylim = c(0, 3000)
-        )
-      }, height = function() {
-        session$clientData$output_test_height
-      })
+      # update climatology plot
+      updateClimatology()
       
     } else{
       # grab bounding box coordinates
@@ -329,7 +360,9 @@ server = function(input, output, session) {
     
     # if the bottom right does exist
     if (!is.null(isolate(v2$lat))) {
+      
       # subset data based upon topleft / bottomright
+      # first put all data in tmp data table
       tmp = filteredData()
       
       # check if the dataset is not empty
@@ -349,38 +382,25 @@ server = function(input, output, session) {
             lng2 = isolate(v2$lon),
             lat2 = isolate(v2$lat),
             fillColor = "transparent",
-            color = "grey"
+            color = "red"
           )
         
         # update the data table in the explorer
         output$table = DT::renderDataTable({
-          tmp = filteredData()[,-c(8:10)]
+          tmp = filteredData()#[,-DT_drop]
+          tmp = tmp[,-c((ncol(tmp)-2):ncol(tmp))]
           return(tmp)
         },
         selection = "single",
-        options = list(lengthMenu = list(c(5, 10), c('5', '10')), pom =
-                         list('MAT')),
+        options = list(lengthMenu = list(c(5, 10), c('5', '10')),
+                       pom = list('site_years')),
         extensions = c('Responsive'))
         
         # update the value box
         getValueData(filteredData())
         
-        # update the climatology plot
-        output$test = renderPlot({
-          par(mar = c(4, 4, 1, 1))
-          plot(
-            MAP ~ MAT,
-            data = filteredData(),
-            xlab = expression("MAT (" * degree * "C)"),
-            ylab = "MAP (mm)",
-            pch = 19,
-            col = rgb(0.5, 0.5, 0.5, 0.3),
-            xlim = c(-15, 30),
-            ylim = c(0, 3000)
-          )
-        }, height = function() {
-          session$clientData$output_test_height
-        })
+        # update climatology plot
+        updateClimatology()
         
       } else{
         # set bounding box values to NULL
@@ -399,22 +419,20 @@ server = function(input, output, session) {
             popup =  ~ preview
           )
         
-        # update the climatology plot
-        output$test = renderPlot({
-          par(mar = c(4, 4, 1, 1))
-          plot(
-            MAP ~ MAT,
-            data = filteredData(),
-            xlab = expression("MAT (" * degree * "C)"),
-            ylab = "MAP (mm)",
-            pch = 19,
-            col = rgb(0.5, 0.5, 0.5, 0.3),
-            xlim = c(-15, 30),
-            ylim = c(0, 3000)
-          )
-        }, height = function() {
-          session$clientData$output_test_height
-        })
+        # then stuff it back into the shiny output
+        # object
+        output$table = DT::renderDataTable({
+          tmp = filteredData()
+          tmp = tmp[,-c((ncol(tmp)-2):ncol(tmp))]
+          return(tmp)
+        },
+        selection = "single",
+        options = list(lengthMenu = list(c(5, 10), c('5', '10')),
+                       pom = list('site_years')),
+        extensions = c('Responsive'))
+        
+        # update climatology plot
+        updateClimatology()
       }
     }
   })
@@ -488,29 +506,51 @@ server = function(input, output, session) {
     # trap errors, mainly if no dates can be detected return an empty
     # string (NAs) to prevent plotting errors further down.
     # code this up in the transition.dates() function TODO TODO TODO
-    spring = transition.dates(data, percentile = percentile, reverse = FALSE)
-    fall = transition.dates(data, percentile = percentile, reverse = TRUE)
+    spring = transition.dates(data,
+                              percentile = percentile,
+                              lower.thresh = lower.thresh,
+                              middle.thresh = middle.thresh,
+                              upper.thresh = upper.thresh,
+                              reverse = FALSE)
     
+    fall = transition.dates(data,
+                            percentile = percentile,
+                            lower.thresh = lower.thresh,
+                            middle.thresh = middle.thresh,
+                            upper.thresh = upper.thresh,
+                            reverse = TRUE)
+
     # Final plot preparations
     progress$set(value = 0.7, detail = "preparing final plot")
     
     # formulate variable names dynamically
     gcc_val = sprintf("gcc_%s", percentile)
-    out_val = sprintf("outlierflag_gcc_%s", percentile)
+    rcc_val = sprintf("rcc_%s", percentile)
+    
+    #out_val = data[,sprintf("outlierflag_gcc_%s", percentile)]
     col_val = colnames(data)
-    smooth_val = sprintf("smooth_gcc_%s", percentile)
+    
+    smooth_val_gcc = sprintf("smooth_gcc_%s", percentile)
+    smooth_val_rcc = sprintf("smooth_rcc_%s", percentile)
+    
     ci_val = sprintf("smooth_ci_gcc_%s", percentile)
     
     # stuff things in reactive value
     date = data$date
     doy = data$doy
     year = data$year
+    
+    # gcc / bcc / rcc time series
     gcc = data[, which(col_val == gcc_val)]
-    out = as.numeric(data[, which(col_val == out_val)])
+    bcc = data$midday_b / (data$midday_r + data$midday_g + data$midday_b)
+    rcc = data$midday_r / (data$midday_r + data$midday_g + data$midday_b)
+    
+    out = data[,sprintf("outlierflag_gcc_%s", percentile)]
     int_flag = data$int_flag
     
     # rename outlier values with proper descriptive names
-    gcc_smooth = data[, which(col_val == smooth_val)]
+    gcc_smooth = data[, which(col_val == smooth_val_gcc)]
+    
     ci = data[, which(col_val == ci_val)]
     
     # mark gaps
@@ -518,8 +558,8 @@ server = function(input, output, session) {
     # ci[!is.na(int_flag)] = NA
     
     # create data frame
-    plot_data = data.frame(date, year, doy, gcc, out, gcc_smooth, ci, int_flag)
-    
+    plot_data = data.frame(date, year, doy, gcc, rcc, bcc, out, gcc_smooth, ci, int_flag)
+
     # return data
     return(list(plot_data, spring, fall))
   }
@@ -535,6 +575,7 @@ server = function(input, output, session) {
   
   # plot the data ---------------
   output$time_series_plot = renderPlotly({
+    
     # grab plotting data
     data = inputData()
     
@@ -555,7 +596,6 @@ server = function(input, output, session) {
     
     # plotting routine
     if (is.null(data)) {
-      
       # populate the download handler with error message
       output$downloadData <- downloadHandler(
         filename = sprintf(
@@ -594,8 +634,8 @@ server = function(input, output, session) {
       # bind spring and fall phenology data in a coherent format
       phenology = rbind(spring,fall)
       rising_length = dim(spring)[1]
-      falling_length = dim(fall)[1] 
-      direction = c(rep("rising", rising_length), 
+      falling_length = dim(fall)[1]
+      direction = c(rep("rising", rising_length),
                     rep("falling", falling_length))
       sitename = rep(site,rising_length + falling_length)
       veg_type = rep(veg,rising_length + falling_length)
@@ -620,11 +660,13 @@ server = function(input, output, session) {
       phenology_header[6,1] = sprintf("# ROI ID: %04d",roi)
       phenology_header[7,1] = sprintf("# Aggregation period: %s", as.numeric(input$frequency))
       phenology_header[8,1] = sprintf("# Year min: %s",
-              min(strptime(as.matrix(phenology[, 5:13]),"%Y-%m-%d")$year+1900),
-              na.rm=TRUE)
+                                      min(strptime(as.matrix(phenology[, 5:13]),"%Y-%m-%d")$year +
+                                            1900),
+                                      na.rm = TRUE)
       phenology_header[9,1] = sprintf("# Year max: %s",
-              max(strptime(as.matrix(phenology[, 5:13]),"%Y-%m-%d")$year+1900),
-              na.rm=TRUE)
+                                      max(strptime(as.matrix(phenology[, 5:13]),"%Y-%m-%d")$year +
+                                            1900),
+                                      na.rm = TRUE)
       phenology_header[10,1] = sprintf("# Creation Date: %s", Sys.Date())
       phenology_header[11,1] = sprintf("# Creation Time: %s", format(Sys.time(), "%H:%M:%S"))
       
@@ -638,7 +680,6 @@ server = function(input, output, session) {
           Sys.Date()
         ),
         content = function(file = filename) {
-          
           write.table(
             phenology_header,
             file,
@@ -659,231 +700,290 @@ server = function(input, output, session) {
         }
       )
       
+      # add an ID column to the phenology data
+      # for easy reshaping and plotting
+      spring = data.frame(id=1:nrow(spring),spring)
+      fall = data.frame(id=1:nrow(fall),fall)
+      
       # convert to long format for confidence intervals
-      if (dim(spring)[1] == 1) {
-        spring_sos = spring
-        spring_mos = spring
-        spring_eos = spring
+      if (nrow(na.omit(spring)) == 0) {
         
-      } else{
+        names(spring) = sub("_lower","", names(spring)) # rename columns
+      
+        } else{
+        
         spring_sos = reshape(
-          spring[, grep("start", names(spring))],
-          idvar = "start_threshold",
+          spring[, grep(sprintf("_%s",lower.thresh*100), names(spring))],
+          #idvar = sprintf("threshold_%s",lower.thresh*100),
+          idvar = "id",
           direction = "long",
           varying = list(c(2, 3))
         )
         
         spring_eos = reshape(
-          spring[, grep("end", names(spring))],
-          idvar = "end_threshold",
+          spring[, grep(sprintf("_%s",upper.thresh*100), names(spring))],
+          #idvar = sprintf("threshold_%s",upper.thresh*100),
+          idvar = "id",
           direction = "long",
           varying = list(c(2, 3))
         )
         
         spring_mos = reshape(
-          spring[, grep("middle", names(spring))],
-          idvar = "middle_threshold",
+          spring[, grep(sprintf("_%s",middle.thresh*100), names(spring))],
+          #idvar = sprintf("threshold_%s",middle.thresh*100),
+          idvar = "id",
           direction = "long",
           varying = list(c(2, 3))
         )
         
+        # merge data
+        spring = cbind(spring_sos,spring_mos,spring_eos)
+        spring = spring[,-grep("time",names(spring))]
+        names(spring) = sub("_lower","", names(spring)) # rename columns
+
       }
       
-      if (dim(fall)[1] == 1) {
-        fall_sos = fall
-        fall_mos = fall
-        fall_eos = fall
+      if (nrow(na.omit(fall)) == 0) { # when no data is available, should check this
+        
+        names(fall) = sub("_lower","", names(fall)) # rename columns
         
       } else{
         fall_sos =  reshape(
-          fall[, grep("start", names(fall))],
-          idvar = "start_threshold",
+          fall[, grep(sprintf("_%s",upper.thresh*100), names(fall))],
+          #idvar = sprintf("threshold_%s",upper.thresh*100),
+          idvar = "id",
           direction = "long",
           varying = list(c(2, 3))
         )
         
         fall_mos =  reshape(
-          fall[, grep("middle", names(fall))],
-          idvar = "middle_threshold",
+          fall[, grep(sprintf("_%s",middle.thresh*100), names(fall))],
+          #idvar = sprintf("threshold_%s",middle.thresh*100),
+          idvar = "id",
           direction = "long",
           varying = list(c(2, 3))
         )
         
         fall_eos =  reshape(
-          fall[, grep("end", names(fall))],
-          idvar = "end_threshold",
+          fall[, grep(sprintf("_%s",lower.thresh*100), names(fall))],
+          #idvar = sprintf("threshold_%s",lower.thresh*100),
+          idvar = "id",
           direction = "long",
           varying = list(c(2, 3))
         )
+
+        # merge data
+        fall = cbind(fall_sos,fall_mos,fall_eos)
+        fall = fall[,-grep("time",names(fall))]
+        names(fall) = sub("_lower","", names(fall)) # rename columns
+        
       }
-      
+
       # full time series
       if (input$plot_type == "bydate") {
-        # colour scheme for the scatterplot
-        if (!any(plot_data$out != 0)) {
-          set = c(rgb(0.3, 0.3, 0.3))
-        } else{
-          set = c(rgb(1, 0, 0), rgb(0.3, 0.3, 0.3))
-        }
         
+        # duplicate outlier flag data, for plotting
+        plot_data$outlier_symbols = plot_data$out
+        plot_data$colours = plot_data$out
+
+        plot_data$colours[plot_data$colours == 0] = rgb(0.3, 0.3, 0.3)
+        plot_data$colours[plot_data$colours == 1] = rgb(1, 0, 0)
+                
         # rename the outliers, make it look nice
-        plot_data$out[plot_data$out == 0] = "ok"
-        plot_data$out[plot_data$out == 1] = "outlier"
+        plot_data$out[plot_data$out == 0] = "Gcc ok"
+        plot_data$out[plot_data$out == 1] = "Gcc outlier"
         
-        p = plot_ly(
-          data = plot_data,
-          x = date,
-          y = gcc_smooth + ci,
-          mode = "lines",
-          fill = "none",
-          line = list(width = 0, color = "rgb(200,200,200)"),
-          showlegend = FALSE,
-          name = "95% CI"
-        ) %>%
-          add_trace(
+        # rename the outliers symbols
+        plot_data$outlier_symbols[plot_data$outlier_symbol == 0] = "circle"
+        plot_data$outlier_symbols[plot_data$outlier_symbol == 1] = "circle-open"
+        
+        # when showing multiple time series
+        # remove the transition dates
+        if (input$rccbcc == "FALSE") {
+          # base plot shows the Gcc confidence interval
+          # switch order for cleaner plotting
+          p = plot_ly(
             data = plot_data,
             x = date,
-            y = gcc_smooth - ci,
+            y = gcc_smooth + ci,
             mode = "lines",
-            fill = "tonexty",
+            fill = "none",
             line = list(width = 0, color = "rgb(200,200,200)"),
-            showlegend = TRUE,
+            showlegend = FALSE,
             name = "95% CI"
           ) %>%
-          add_trace(
-            data = plot_data,
-            x = date,
-            y = gcc_smooth,
-            mode = "lines",
-            line = list(width = 2, color = "rgb(120,120,120)"),
-            name = "loess fit",
-            showlegend = TRUE
-          ) %>%
-          add_trace(
-            data = plot_data,
-            x = date,
-            y = gcc,
-            color = as.factor(out),
-            mode = "markers",
-            colors = set,
-            showlegend = TRUE
-          ) %>%
-          
-          # SOS spring
-          # 10%
-          add_trace(
-            data = spring_sos,
-            x = as.Date(start),
-            y = start_threshold,
-            mode = "markers",
-            marker = list(color = "#7FFF00", symbol = "circle"),
-            name = "SOS (10%)"
-          ) %>%
-          add_trace(
-            data = spring_sos,
-            x = as.Date(start_lower_ci),
-            y = start_threshold,
-            mode = "lines",
-            group = start_threshold,
-            showlegend = F,
-            line = list(color = "#7FFF00")
-          ) %>%
-          # 25 %
-          add_trace(
-            data = spring_mos,
-            x = as.Date(middle),
-            y = middle_threshold,
-            mode = "markers",
-            marker = list(color = "#66CD00", symbol = "square"),
-            name = "SOS (25%)"
-          ) %>%
-          add_trace(
-            data = spring_mos,
-            x = as.Date(middle_lower_ci),
-            y = middle_threshold,
-            mode = "lines",
-            group = middle_threshold,
-            showlegend = F,
-            line = list(color = "#66CD00")
-          ) %>%
-          
-          # 50 %
-          add_trace(
-            data = spring_eos,
-            x = as.Date(end),
-            y = end_threshold,
-            mode = "markers",
-            marker = list(color = "#458B00", symbol = "diamond"),
-            name = "SOS (50%)"
-          ) %>%
-          add_trace(
-            data = spring_eos,
-            x = as.Date(end_lower_ci),
-            y = end_threshold,
-            mode = "lines",
-            group = end_threshold,
-            showlegend = F,
-            line = list(color = "#458B00")
-          ) %>%
-          
-          # EOS fall
-          # 50%
-          add_trace(
-            data = fall_sos,
-            x = as.Date(start),
-            y = start_threshold,
-            mode = "markers",
-            marker = list(color = "#FFB90F", symbol = "diamond"),
-            name = "EOS (50%)"
-          ) %>%
-          add_trace(
-            data = fall_sos,
-            x = as.Date(start_lower_ci),
-            y = start_threshold,
-            mode = "lines",
-            group = start_threshold,
-            showlegend = F,
-            line = list(color = "#FFB90F")
-          ) %>%
-          # 25 %
-          add_trace(
-            data = fall_mos,
-            x = as.Date(middle),
-            y = middle_threshold,
-            mode = "markers",
-            marker = list(color = "#CD950C", symbol = "square"),
-            name = "EOS (25%)"
-          ) %>%
-          add_trace(
-            data = fall_mos,
-            x = as.Date(middle_lower_ci),
-            y = middle_threshold,
-            mode = "lines",
-            group = middle_threshold,
-            showlegend = F,
-            line = list(color = "#CD950C")
-          ) %>%
-          
-          # 10 %
-          add_trace(
-            data = fall_eos,
-            x = as.Date(end),
-            y = end_threshold,
-            mode = "markers",
-            marker = list(color = "#8B6508", symbol = "circle"),
-            name = "EOS (10%)"
-          ) %>%
-          add_trace(
-            data = fall_eos,
-            x = as.Date(end_lower_ci),
-            y = end_threshold,
-            mode = "lines",
-            group = end_threshold,
-            showlegend = F,
-            line = list(color = "#8B6508")
-          ) %>%
-          layout(xaxis = list(title = "Date"),
-                 yaxis = list(title = "Gcc"))
+            add_trace(
+              data = plot_data,
+              x = date,
+              y = gcc_smooth - ci,
+              mode = "lines",
+              fill = "tonexty",
+              line = list(width = 0, color = "rgb(200,200,200)"),
+              showlegend = TRUE,
+              name = "Gcc 95% CI"
+            ) %>%
+            add_trace(
+              data = plot_data,
+              x = date,
+              y = gcc_smooth,
+              mode = "lines",
+              line = list(width = 2, color = "rgb(120,120,120)"),
+              name = "Gcc loess fit",
+              showlegend = TRUE
+            ) %>%
+            add_trace(
+              data = plot_data,
+              x = date,
+              y = gcc,
+              color = as.factor(out),
+              mode = "markers",
+              marker=list(color=colours),
+              showlegend = TRUE
+            ) %>%
+            # SOS spring
+            # 10%
+            add_trace(
+              x = as.Date(spring[,grep(sprintf("^transition_%s$",lower.thresh*100),names(spring))]),
+              y = spring[,grep(sprintf("threshold_%s",lower.thresh*100),names(spring))],
+              mode = "markers",
+              marker = list(color = "#7FFF00", symbol = "circle"),
+              name = sprintf("SOS (%s %%)",lower.thresh*100)
+            ) %>%
+            add_trace(
+              x = as.Date(spring[,grep(sprintf("^transition_%s_ci$",lower.thresh*100),names(spring))]),
+              y = spring[,grep(sprintf("threshold_%s",lower.thresh*100),names(spring))],
+              mode = "lines",
+              group = spring$id,
+              showlegend = FALSE,
+              line = list(color = "#7FFF00")
+            ) %>%
+            # 25 %
+            add_trace(
+              x = as.Date(spring[,grep(sprintf("^transition_%s$",middle.thresh*100),names(spring))]),
+              y = spring[,grep(sprintf("threshold_%s",middle.thresh*100),names(spring))],
+              mode = "markers",
+              marker = list(color = "#66CD00", symbol = "square"),
+              name = sprintf("SOS (%s %%)",middle.thresh*100)
+            ) %>%
+            add_trace(
+              x = as.Date(spring[,grep(sprintf("^transition_%s_ci$",middle.thresh*100),names(spring))]),
+              y = spring[,grep(sprintf("threshold_%s",middle.thresh*100),names(spring))],
+              mode = "lines",
+              group = spring$id,
+              showlegend = F,
+              line = list(color = "#66CD00")
+            ) %>%
+
+            # 50 %
+            add_trace(
+              x = as.Date(spring[,grep(sprintf("^transition_%s$",upper.thresh*100),names(spring))]),
+              y = spring[,grep(sprintf("threshold_%s",upper.thresh*100),names(spring))],
+              mode = "markers",
+              marker = list(color = "#458B00", symbol = "diamond"),
+              name = sprintf("SOS (%s %%)",upper.thresh*100)
+            ) %>%
+            add_trace(
+              x = as.Date(spring[,grep(sprintf("^transition_%s_ci$",upper.thresh*100),names(spring))]),
+              y = spring[,grep(sprintf("threshold_%s",upper.thresh*100),names(spring))],
+              mode = "lines",
+              group = spring$id,
+              showlegend = FALSE,
+              line = list(color = "#458B00")
+            ) %>%
+
+            # EOS fall
+            # 50%
+            add_trace(
+              x = as.Date(fall[,grep(sprintf("^transition_%s$",upper.thresh*100),names(fall))]),
+              y = fall[,grep(sprintf("threshold_%s",upper.thresh*100),names(fall))],
+              mode = "markers",
+              marker = list(color = "#FFB90F", symbol = "diamond"),
+              name = sprintf("EOS (%s %%)",upper.thresh*100)
+            ) %>%
+            add_trace(
+              x = as.Date(fall[,grep(sprintf("^transition_%s_ci$",upper.thresh*100),names(fall))]),
+              y = fall[,grep(sprintf("threshold_%s",upper.thresh*100),names(fall))],
+              mode = "lines",
+              group = fall$id,
+              showlegend = FALSE,
+              line = list(color = "#FFB90F")
+            ) %>%
+            # 25 %
+            add_trace(
+              x = as.Date(fall[,grep(sprintf("^transition_%s$",middle.thresh*100),names(fall))]),
+              y = fall[,grep(sprintf("threshold_%s",middle.thresh*100),names(fall))],
+              mode = "markers",
+              marker = list(color = "#CD950C", symbol = "square"),
+              name = sprintf("EOS (%s %%)",middle.thresh*100)
+            ) %>%
+            add_trace(
+              x = as.Date(fall[,grep(sprintf("^transition_%s_ci$",middle.thresh*100),names(fall))]),
+              y = fall[,grep(sprintf("threshold_%s",middle.thresh*100),names(fall))],
+              mode = "lines",
+              group = fall$id,
+              showlegend = FALSE,
+              line = list(color = "#CD950C")
+            ) %>%
+
+            # 10 %
+            add_trace(
+              x = as.Date(fall[,grep(sprintf("^transition_%s$",lower.thresh*100),names(fall))]),
+              y = fall[,grep(sprintf("threshold_%s",lower.thresh*100),names(fall))],
+              mode = "markers",
+              marker = list(color = "#8B6508", symbol = "circle"),
+              name = sprintf("EOS (%s %%)",lower.thresh*100)
+            ) %>%
+            add_trace(
+              x = as.Date(fall[,grep(sprintf("^transition_%s_ci$",lower.thresh*100),names(fall))]),
+              y = fall[,grep(sprintf("threshold_%s",lower.thresh*100),names(fall))],
+              mode = "lines",
+              group = fall$id,
+              showlegend = FALSE,
+              line = list(color = "#8B6508")
+            ) %>%
+            layout(xaxis = list(title = "Date"),
+                   yaxis = list(title = "Gcc"))
+        } else {
+           
+          p = plot_ly(
+               data = plot_data,
+               x = date,
+               y = bcc,
+               mode = "markers",
+               marker = list(color = rgb(0, 0, 1), symbol = "circle"),
+               name = "Bcc",
+               showlegend = TRUE
+             ) %>%
+            add_trace(
+              data = plot_data,
+              x = date,
+              y = rcc,
+              mode = "markers",
+              marker = list(color = rgb(1, 0, 0), symbol = "circle"),
+              name = "Rcc",
+              showlegend = TRUE
+            ) %>%
+            add_trace(
+              data = plot_data,
+              x = date,
+              y = gcc_smooth,
+              mode = "lines",
+              line = list(width = 2, color = "#66CD00"),
+              name = "Gcc loess fit",
+              showlegend = TRUE
+            ) %>%
+            add_trace(
+              data = plot_data,
+              x = date,
+              y = gcc,
+              mode = "markers",
+              marker = list(color = "#66CD00", symbol = outlier_symbols),
+              name = "Gcc",
+              showlegend = TRUE
+            ) %>%
+            layout(xaxis = list(title = "Date"),
+                   yaxis = list(title = "Gcc / Rcc / Bcc"))
+        }
         
       } else{
         # # condense to one plot along DOY
@@ -952,8 +1052,10 @@ server = function(input, output, session) {
               mode = "text"
             ) %>% layout(xaxis = ax, yaxis = ax)
           } else {
-            fall_date = as.Date(fall$middle)
-            spring_date = as.Date(spring$middle)
+            
+            # grab dates from the fall and spring matrices
+            fall_date = unique(as.Date(fall[,grep(sprintf("^transition_%s$",upper.thresh*100),names(fall))]))
+            spring_date = unique(as.Date(spring[,grep(sprintf("^transition_%s$",upper.thresh*100),names(spring))]))
             
             fall_doy = as.numeric(format(fall_date, "%j"))
             fall_year = as.numeric(format(fall_date, "%Y"))
@@ -1010,12 +1112,9 @@ server = function(input, output, session) {
               ) %>%
               layout(xaxis = list(title = "Year"),
                      yaxis = list(title = "DOY"))
-            
           }
         }
       }
-      
     }
   }) # plotly action end
-  
 } # server function end

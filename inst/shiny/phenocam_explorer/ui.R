@@ -55,11 +55,11 @@ body <- dashboardBody(tags$head(tags$script(
     window.dispatchEvent(new Event('resize'));
     });
     function resizeMap(){
-    var h = window.innerHeight - $('.navbar').height() - 280; // Get dashboardBody height
+    var h = window.innerHeight - $('.navbar').height() - 270; // Get dashboardBody height
     $('#map').height(h);
     }
     function resizeTable(){
-    var h = window.innerHeight - $('.navbar').height() - 550;
+    var h = window.innerHeight - $('.navbar').height() - 535;
     $('#time_series_plot').height(h);
     }"
       )
@@ -88,14 +88,16 @@ body <- dashboardBody(tags$head(tags$script(
             box(
               width = NULL,
               leafletOutput("map"),
-              # Shiny versions prior to 0.11 should use class="modal" instead.
               absolutePanel(
-                id = "controls", class = "panel panel-default", fixed = TRUE,
-                draggable = TRUE, top = 275, left = "auto", right = 70, bottom = "auto",
-                width = 320, height = 350,
-                h4("Climatology"),
-                plotOutput("test", height =
-                             280,width = 280)
+                id = "controls", class = "panel panel-default",
+                fixed = TRUE,
+                draggable = FALSE, top = 300, left = "auto", right = 70, bottom = "auto",
+                width = 380, height = 350,
+                #h4("Climatology", align="center"),
+                plotOutput("climate",
+                             height = "100%",
+                             width = "100%"
+                             )
               )
             )
           ))
@@ -107,18 +109,20 @@ body <- dashboardBody(tags$head(tags$script(
             box(
               width = NULL,
               h4("Plotting options"),
-              selectInput("percentile", "Percentile",c(90,75,50,"mean"),width =
-                            "100%"),
-              selectInput("frequency", "Data Frequency",c(3,1),width =
-                            "100%"),
-              selectInput(
-                "plot_type", "Plot Type",
-                c(
-                  "Time Series" = "bydate",
+              selectInput("percentile", "Percentile",c(90,75,50,"mean"),
+                          width = "100%"),
+              selectInput("frequency", "Data Frequency",c(3,1),
+                          width ="100%"),
+              selectInput("plot_type", "Plot Type",
+                c("Time Series" = "bydate",
                   "DOY Time Series" = "byyear",
-                  "Phenology" = "phenology"
-                ),
-                width = "100%"
+                  "Phenology" = "phenology"),
+                width = "100%"),
+              conditionalPanel( # dynamic GUI component 
+                condition = "input.plot_type == 'bydate'",
+                checkboxInput("rccbcc", "plot Rcc / Bcc",
+                            value = FALSE,
+                            width = "100%")
               )
             )
           ),
