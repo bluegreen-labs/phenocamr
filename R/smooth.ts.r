@@ -6,7 +6,21 @@
 #' @examples
 #' # with defaults, outputting a data frame
 #' # with smoothed values, overwriting the original
-#' df <- smooth.ts(df)
+#' 
+#' # download demo data (do not smooth)
+#' download.phenocam(site="harvard",
+#'                   vegetation="DB",
+#'                   roi_id=1,
+#'                   frequency=3,
+#'                   smooth=FALSE)
+#' 
+#' # smooth the downloaded file (and overwrite the original)
+#' smooth.ts("harvard_DB_0001_1day_v4.csv")
+#' 
+#' # the function also works on a PhenoCam data frame
+#' # but you will lose the extensive header in the process
+#' df = read.csv("harvard_DB_0001_1day_v4.csv")
+#' df = smooth.ts(df)
 
 smooth.ts <- function(df, force = TRUE) {
   

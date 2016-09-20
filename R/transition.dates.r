@@ -1,18 +1,20 @@
 #' Calculates transition dates on the upward
 #' segments of a PhenoCam time series. This function
-#' should not be run stand-alone. Use phenophases instead
-#' The required input is a PhenoCam data file
-#' with the smooth.ts() routine using the BCI
-#' optimized smoothing parameter
+#' should not be run stand-alone. Use phenophases() instead!
+#' The required input is a smoothed PhenoCam data file or data frame.
 #'
 #' @param df: a PhenoCam data file or data frame
 #' @param percentile: which index to use for the calculation
 #' of transition dates
 #' @param lower.thresh: the minimum threshold used
-#' to determine the transition dates (default=0.2)
+#' to determine the transition dates (default=0.1)
+#' @param middle.thresh: the middle threshold used
+#' to determine the transition dates (default=0.25)
 #' @param upper.thresh: the maximum threshold used
-#'  to determine the transition dates (default=0.8)
-#' @param reverse: flip the direction of processing
+#'  to determine the transition dates (default=0.5)
+#' @param percentile: which percentile time series to process
+#' (mean,50 75, 90)
+#' @param reverse: flip the direction of the processing
 #' if TRUE you calculate the senescence phase of the season
 #' @param plot: plot for debugging purposes
 #' @keywords PhenoCam, transition dates, phenology, time series
@@ -22,10 +24,12 @@
 #' # for both the smoothed time series as well as the CI on this
 #' # smoothed time series
 #' 
-#' df = download.phenocam(site="bartlett",
+#' df = download.phenocam(site="harvard",
 #'                        type="DB",
 #'                        roi="1",
 #'                        frequency=3)
+#'                        
+#' df = read.csv("harvard_DB_0001_1day_v4.csv")
 #' my_dates = transition.dates(df)
 #'
 #' # dates need to be converted to standard notation using
@@ -105,6 +109,9 @@ transition.dates = function(df,
     if (file.exists(df)) {
       # read the original data
       df = read.table(df, header = T, sep = ',')
+      
+      # QUIT if not smooth data is present!!!
+      
     } else{
       stop("not a valid PhenoCam data file")
     }

@@ -1,11 +1,12 @@
 Package: PhenoCam
 Title: Facilitating PhenoCam data access
-Version: 0.1
+Version: 1.0
 Authors@R: "Koen Hufkens <koen.hufkens@gmail.com> [aut, cre]"
 Description: Functions to download (and merge) preprocessed PhenoCam time
     series.
-Depends:
-    R (>= 3.1.0),
+Imports:
+    R (>= 3.2.5)
+Suggests:
     DaymetR
 License: GPL2
 LazyData: true

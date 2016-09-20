@@ -7,18 +7,34 @@
 #' @param vegetation : vegeation type (DB, EN, ... default = ALL)
 #' @param frequency : frequency of the PhenoCam time series product, in days (1,3, "raw" are allowed)
 #' @param roi_id: the id of the ROI to download, if not specified download all
-#' @param top_lef: latitude, longitude tupple as a vector or a list (c(45.5, -80)), requires bottom_right
-#' @param bottom_right: latitude, longitude tupple as a vector or a list (c(45.5, -80)), requires top_left
+#' @param top_lef: latitude, longitude tupple as a vector c(45.5, -80), requires bottom_right
+#' @param bottom_right: latitude, longitude tupple as a vector c(45.5, -80), requires top_left
 #' @param smooth: smooth data for future plotting (TRUE / FALSE, default is TRUE)
 #' @param daymet : TRUE or FALSE, if true merges the daymet data at the location (only for frequency 1 and 3)
 #' @param trim_daymet: TRUE or FALSE, if TRUE only download Daymet data for the dates matching the Gcc data. 
-#' If FALSE, provide the whole Daymet series (for modelling spinup purposes).
+#' If FALSE, I provide the whole Daymet series (for modelling spin-up purposes).
 #' @param outlier_detection: TRUE or FALSE, detect outliers
 #' @param phenophase: TRUE or FALSE, calculate threshold based phenological transition dates (this will generate a non standard product)
-#' @keywords PhenoCam, DAYMET, climate data, modelling
+#' @keywords PhenoCam, Daymet, climate data, modelling
 #' @export
 #' @examples
-#' download.phenocam(site="harvard",vegetation="DB",frequency=3,smooth=TRUE)
+#' 
+#' # download the first ROI time series for the Harvard PhenoCam site
+#' # and an aggregation frequency of 3-days.
+#' download.phenocam(site="harvard",
+#'                   vegetation="DB",
+#'                   roi_id=1,
+#'                   frequency=3)
+#'                   
+#' # download all Harvard Forest deciduous broadleaf sites using
+#' # geographic constraints.
+#' download.phenocam(vegetation="DB",
+#'                   roi_id=1,
+#'                   frequency=3,
+#'                   top_left=c(42.545657, -72.197524),
+#'                   bottom_right=c(42.527079, -72.158128))
+#'                   
+#' # All files will be downloaded in your current working directory
 
 download.phenocam = function(site="bartlett",
                              vegetation="all",
@@ -40,7 +56,7 @@ download.phenocam = function(site="bartlett",
   
   # get site listing
   url = getURL("https://phenocam.sr.unh.edu/webcam/roi/roilistinfo/?format=csv")
-  site.list = read.csv(text = url,header=TRUE)
+  site.list = read.csv(text = url,header=TRUE) # this does not work in WINDOZE
   
   # is there a site name?
   # this excludes any geographic constraints

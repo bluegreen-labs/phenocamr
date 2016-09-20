@@ -1,14 +1,13 @@
-#' Normalize time series, between 0-1 to to standardize
+#' Normalize PhenoCam time series, between 0-1 to to standardize
 #' further processing, independent of the relative amplitude
 #' of the time series (works on vectors not data frames)
 #' 
-#' @param df: a vector with data 
+#' @param df: a PhenoCam data frame
 #' @keywords time series, smoothing, phenocam
 #' @export
 #' @examples
-#' # with defaults, outputting a data frame
-#' # with normalized values (0-1), overwriting the original
-#' df <- normalize.ts(df)
+#' # Internal function only, should not be used stand-alone.
+#' # As such no documentation is provided.
 
 normalize.ts <- function(df,percentile=90){
   

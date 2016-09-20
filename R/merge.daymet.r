@@ -1,17 +1,31 @@
-# merge daymet
+#' Merge Daymet data with a PhenoCam data file.
+#' 
+#' @param df: a PhenoCam data file
+#' @param trim_daymet: TRUE / FALSE, trim the daymet data to the length of the
+#' PhenoCam time series or include the whole Daymet time series (1980-current).
+#' @keywords time series, PhenoCam, Daymet, data integration
+#' @export
+#' @examples
+#' # download demo data (do not smooth)
+#' download.phenocam(site="harvard",
+#'                   vegetation="DB",
+#'                   roi_id=1,
+#'                   frequency=3)
+#'  
+#'  merge.daymet("harvard_DB_0001_1day_v4.csv")
+#'  # the function will overwrite the original file.
 
-# start function
-merge.daymet  = function(filename,trim_daymet=FALSE){
+merge.daymet  = function(df,trim_daymet=FALSE){
 
   # load required routines
   require(DaymetR, quietly = TRUE)
   
   # grab site name from filename
-  site = strsplit(basename(filename),split="_")[[1]][1]
+  site = strsplit(basename(df),split="_")[[1]][1]
   
   # extract the latitude and longitude of the site
-  lat <- as.numeric(scan(filename, skip=6, nlines = 1, what = character(),quiet=TRUE)[3])
-  lon <- as.numeric(scan(filename, skip=7, nlines = 1, what = character(),quiet=TRUE)[3])
+  lat = as.numeric(scan(df, skip=6, nlines = 1, what = character(),quiet=TRUE)[3])
+  lon = as.numeric(scan(df, skip=7, nlines = 1, what = character(),quiet=TRUE)[3])
   
   # start and end year of daymet downloads -- download maximum range
   start_yr = 1980
@@ -19,8 +33,6 @@ merge.daymet  = function(filename,trim_daymet=FALSE){
   
   # Download all available daymet data
   daymet_status = try(download.daymet(site=site, lat = lat, lon = lon, end_yr = end_yr, internal=FALSE), silent=TRUE)
-  
-  print(daymet_status)
   
   # error trap the latency in the Daymet data releases
   if(inherits(daymet_status,"try-error")){
@@ -45,7 +57,7 @@ merge.daymet  = function(filename,trim_daymet=FALSE){
   daymet_dates = as.Date(sprintf("%s-%s",daymet_data$year,daymet_data$yday),"%Y-%j")
   
   # read phenocam data
-  phenocam_data = read.table(filename,header=TRUE,sep=',')
+  phenocam_data = read.table(df,header=TRUE,sep=',')
   
   # create phenocam dates string
   phenocam_dates = as.Date(phenocam_data$date)
@@ -102,11 +114,11 @@ merge.daymet  = function(filename,trim_daymet=FALSE){
                                nrow=1,
                                byrow=TRUE)
   
-  # pluck real header from the phenocam file
-  phenocam_header = readLines(filename,n=22)
+  # pluck real header from the PhenoCam file
+  phenocam_header = readLines(df,n=22)
   
   # create output filename string
-  output_file_name = sprintf("%s_v4.csv",unlist(strsplit(filename,"_v4.csv")))
+  output_file_name = sprintf("%s_v4.csv",unlist(strsplit(df,"_v4.csv")))
   
   # write everything to file using append
   write.table(phenocam_header,output_file_name,quote=F,row.names=F,col.names=F,sep=",")

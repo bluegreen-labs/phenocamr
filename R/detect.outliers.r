@@ -1,12 +1,27 @@
-#' Detect outliers in PhenoCam time series
+#' Detect outliers in PhenoCam time series (data frame or file)
+#' The function fills in the existing column to hold outlier flags,
+#' and either overwrites the original file or outputs a new data frame.
+#' 
 #' @param data: PhenoCam data frame or filename
 #' @param iterations: number of itterations over which to cycle to detect outliers ()
 #' @param vis: visualize the process, mostly for debugging (TRUE / FALSE)
 #' @keywords PhenoCam, outliers, smoothing, pre-processing
 #' @export
 #' @examples
-#' # with defaults, overwriting the original data frame:
-#' df <- detect.outliers(df, iterations=5)
+#' # download demo data (do not detect outliers)
+#' download.phenocam(site="harvard",
+#'                   vegetation="DB",
+#'                   roi_id=1,
+#'                   frequency=3,
+#'                   outlier_detection=FALSE)
+#' 
+#' # detect outliers in the downloaded file
+#' detect.outliers("harvard_DB_0001_1day_v4.csv")
+#' 
+#' This function is rarely used stand-alone as it is called by the
+#' download.phenocam() function and does not serve any other purpose
+#' as it needs the outlier_flag_xxx field to work (and does not verify this).
+#' Use stand-alone at your own risk.
 
 detect.outliers = function(data,iterations=10,vis=FALSE, snowflag=FALSE ){
   
