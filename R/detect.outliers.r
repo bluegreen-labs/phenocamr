@@ -16,7 +16,7 @@
 #'                   outlier_detection=FALSE)
 #' 
 #' # detect outliers in the downloaded file
-#' detect.outliers("harvard_DB_0001_1day_v4.csv")
+#' detect.outliers("harvard_DB_0001_1day.csv")
 #' 
 #' This function is rarely used stand-alone as it is called by the
 #' download.phenocam() function and does not serve any other purpose
@@ -24,9 +24,6 @@
 #' Use stand-alone at your own risk.
 
 detect.outliers = function(data,iterations=10,vis=FALSE, snowflag=FALSE ){
-  
-  # load required library
-  require(zoo, quietly = TRUE)
   
   # specify the double exponential (laplace) distribution 
   # standard deviation function, used to screen outliers

@@ -1,13 +1,15 @@
 Package: PhenoCam
 Title: Facilitating PhenoCam data access
 Version: 1.0
-Authors@R: "Koen Hufkens <koen.hufkens@gmail.com> [aut, cre]"
+Authors@R: c(person("Hufkens","Koen", email="koen.hufkens@gmail.com",role=c("aut", "cre")),
+	           person("Aubrecht","Donald", role=c("ctb")),
+	           person("Richardson","Andrew", role=c("ctb")))
 Description: Functions to download (and merge) preprocessed PhenoCam time
     series.
-Imports:
+Depends:
     R (>= 3.2.5)
 Suggests:
     DaymetR
-License: GPL2
+License: AGPLv3 + file LICENSE
 LazyData: true
 RoxygenNote: 5.0.1

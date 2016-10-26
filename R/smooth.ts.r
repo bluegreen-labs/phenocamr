@@ -15,11 +15,11 @@
 #'                   smooth=FALSE)
 #' 
 #' # smooth the downloaded file (and overwrite the original)
-#' smooth.ts("harvard_DB_0001_1day_v4.csv")
+#' smooth.ts("harvard_DB_0001_1day.csv")
 #' 
 #' # the function also works on a PhenoCam data frame
 #' # but you will lose the extensive header in the process
-#' df = read.csv("harvard_DB_0001_1day_v4.csv")
+#' df = read.csv("harvard_DB_0001_1day.csv")
 #' df = smooth.ts(df)
 
 smooth.ts <- function(df, force = TRUE) {

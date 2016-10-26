@@ -53,7 +53,7 @@ snow.flag = function(df) {
     phenocam_header = readLines(df, n = 22)
     
     # create output filename string
-    output_file_name = sprintf("%s_v4.csv", unlist(strsplit(df, "_v4.csv")))
+    output_file_name = sprintf("%s.csv", unlist(strsplit(df, ".csv")))
     
     # write everything to file using append
     write.table(

@@ -15,11 +15,11 @@
 #'                        roi="1",
 #'                        frequency=3)
 #'
-#' expand.phenocam("harvard_DB_0001_1day_v4.csv")
+#' expand.phenocam("harvard_DB_0001_1day.csv")
 #' # Overwrites the original file, increasing
 #' # it's file size.
 #'
-#' contract.phenocam("harvard_DB_0001_1day_v4.csv")
+#' contract.phenocam("harvard_DB_0001_1day.csv")
 #' # Contracts the file to it's original size, skipping
 #' # two days.
 

@@ -12,7 +12,7 @@
 #'                   roi_id=1,
 #'                   frequency=3)
 #'  
-#'  merge.daymet("harvard_DB_0001_1day_v4.csv")
+#'  merge.daymet("harvard_DB_0001_1day.csv")
 #'  # the function will overwrite the original file.
 
 merge.daymet  = function(df,trim_daymet=FALSE){
@@ -118,7 +118,7 @@ merge.daymet  = function(df,trim_daymet=FALSE){
   phenocam_header = readLines(df,n=22)
   
   # create output filename string
-  output_file_name = sprintf("%s_v4.csv",unlist(strsplit(df,"_v4.csv")))
+  output_file_name = sprintf("%s.csv",unlist(strsplit(df,".csv")))
   
   # write everything to file using append
   write.table(phenocam_header,output_file_name,quote=F,row.names=F,col.names=F,sep=",")

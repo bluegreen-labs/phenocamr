@@ -13,7 +13,7 @@
 #'                        roi="1",
 #'                        frequency=3)
 #'
-#' expand.phenocam("harvard_DB_0001_1day_v4.csv")
+#' expand.phenocam("harvard_DB_0001_1day.csv")
 #' # overwrites the original file, increasing
 #' # it's file size. shrink the file using
 #' # contract.phenocam()
@@ -42,7 +42,7 @@ expand.phenocam = function(df) {
   all_doy = format(all_dates, "%j")
   
   # combine data with missing dates filled in
-  output = matrix(NA, length(all_datephenocam_datas), dim(phenocam_data)[2])
+  output = matrix(NA, length(all_dates), dim(phenocam_data)[2])
   output[which(all_dates %in% phenocam_dates), ] = as.matrix(phenocam_data)
   output[, 1] = as.character(all_dates)
   output[, 2] = all_years

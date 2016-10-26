@@ -21,7 +21,7 @@
 #'                        type="DB",
 #'                        roi="1",
 #'                        frequency=3)
-#' df = read.csv("harvard_DB_0001_1day_v4.csv")
+#' df = read.csv("harvard_DB_0001_1day.csv")
 #' my_dates = phenophases(df,output=FALSE)
 #' 
 #' # dates need to be converted to standard notation using
@@ -159,10 +159,10 @@ phenophases = function(df,
   ss = apply(s,2,sum,na.rm=TRUE)
   RMSE = round(sqrt(ss/dim(smooth_data)[2]),5)
 
-  plot(as.Date(df$date),df$gcc_90, pch=20,xlab="Date",ylab="Gcc")
-  legend("topright",legend="daylength trend screening",bty="n")
-  abline(v=as.Date(rising$transition_50),col='green')
-  abline(v=as.Date(falling$transition_50),col='red')
+  #plot(as.Date(df$date),df$gcc_90, pch=20,xlab="Date",ylab="Gcc")
+  #legend("topright",legend="daylength trend screening",bty="n")
+  #abline(v=as.Date(rising$transition_50),col='green')
+  #abline(v=as.Date(falling$transition_50),col='red')
   
   # output data to file
   if (output){

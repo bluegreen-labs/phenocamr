@@ -1,96 +1,83 @@
-# phenocamr shiny interface server back end
-# this is the dynamic version which switches to
-# a local mode for debugging on my own systems
+# phenocamr shiny interface / server back-end
+# see matching ui.R code for formatting
 
 # load required libraries
+# MOVE THESE OUT OF THE CODE UPON PACKAGING
 require(shiny, quietly = TRUE)
 require(shinydashboard, quietly = TRUE)
 require(leaflet, quietly = TRUE)
 require(plotly, quietly = TRUE)
-require(DT, quietly = TRUE)
-require(RCurl,quietly = TRUE)
 require(jsonlite)
 
-# grab the OS info
-OS = Sys.info()[1]
-machine = Sys.info()[4]
-
-# When on the machine of the developer, sideload the code locally
-# for quick reviewing of changes to the GUI
-if (machine == "squeeze" | machine == "Pandora.local") {
-  # load all functions
-  files = list.files(
-    "/data/Dropbox/Research_Projects/code_repository/bitbucket/phenocamr/R/",
-    "*.r",
-    full.names = TRUE
-  )
-  for (i in files) {
-    source(i)
-  }
-  
-  # set data path
-  path = "./data"
-  
-} else{
-  # create temporary directory and move into it
-  if (!dir.exists("~/phenocam_cache")) {
-    dir.create("~/phenocam_cache")
-  }
-  
-  # set the base directory to the cache directory
-  # this prevents any temporary files interfering with
-  # local data
-  setwd("~/phenocam_cache")
-  
-  # location of the data
-  path = "~/phenocam_cache"
-  
-  source('download.phenocam.r')
-  source('detect.outliers.r')
-  source('optimal.span.r')
+# create temporary directory and move into it
+if (!dir.exists("~/phenocam_data")) {
+  dir.create("~/phenocam_data")
 }
 
-# set constants pertaining to the transition date
-# thresholds (% of amplitude), these will be used
-# in the calculation of the transtion dates (dynamically)
-lower.thresh = 0.1
-middle.thresh = 0.25
-upper.thresh = 0.5
+# set the base directory to the cache directory
+# this prevents any temporary files interfering with
+# local data
+#setwd("~/phenocam_data")
+
+# location of the data to be used in
+# strings throughout
+path = "~/phenocam_data"
+
+# list all colours to be used in plotting
+# this allows for quick changes
+col_sos_10 = "#7FFF00"
+col_sos_25 = "#66CD00"
+col_sos_50 = "#458B00"
+
+col_eos_10 = "#8B6508"
+col_eos_25 = "#CD950C"
+col_eos_50 = "#FFB90F"
+
+col_ci = "#C8C8C8"
+col_line = "#787878"
+col_text = "#787878"
 
 # grab the latest roi list using jsonlite
 # this should work across all platforms regardless
 df = fromJSON("https://phenocam.sr.unh.edu/webcam/roi/roilistinfo/")
 
-df = df[,c("site",
-           "veg_type",
-           "roi_id_number",
-           "first_date",
-           "last_date",
-           "site_years",
-           "lat","lon",
-           "description",
-           "missing_data_pct")]
+df = df[, c(
+  "site",
+  "veg_type",
+  "roi_id_number",
+  "first_date",
+  "last_date",
+  "site_years",
+  "lat",
+  "lon",
+  "description",
+  "missing_data_pct"
+)]
 
 # download metadata, and select useful columns for the explorer
-metadata = fromJSON("https://phenocam.sr.unh.edu/webcam/network/siteinfo_combined/")
+metadata = fromJSON("https://phenocam.sr.unh.edu/webcam/network/siteinfo/")
 
-# use daymet in case of missing site specific MAT / MAP
-metadata$MAT = ifelse(is.na(metadata$MAT_site),metadata$MAT_gridded,metadata$MAT_site)
-metadata$MAP = ifelse(is.na(metadata$MAP_site),metadata$MAP_gridded,metadata$MAP_site)
+# use gridded (daymet / worldclim) data in case of missing site specific MAT / MAP
+metadata$MAT = ifelse(is.na(metadata$MAT_site),
+                      metadata$MAT_gridded,
+                      metadata$MAT_site)
+metadata$MAP = ifelse(is.na(metadata$MAP_site),
+                      metadata$MAP_gridded,
+                      metadata$MAP_site)
 
 # what variables do I retain
-metadata = metadata[,c("site",
-                       "ecoregion",
-                       "koeppen_geiger",
-                       "landcover_igbp",
-                       "elev",
-                       "MAT",
-                       "MAP")]
+metadata = metadata[, c("site",
+                        "ecoregion",
+                        "koeppen_geiger",
+                        "landcover_igbp",
+                        "elev",
+                        "MAT",
+                        "MAP")]
 
 # merge the roi list with the short metadata based on sitename
-df = merge(df,metadata,by="site")
+df = merge(df, metadata, by = "site")
 
-# introduce jitter on lat long coordinates
+# introduce jitter on lat/long coordinates
 # this avoids that site locations with different PFTs
 # will overlap, although not geographically accurate
 # it helps visualize things
@@ -98,15 +85,16 @@ df$lat_j = df$lat + rnorm(length(df$lat)) * 0.00005
 df$lon_j = df$lon + rnorm(length(df$lat)) * 0.00005
 
 # subset data to exclude certain PFT / ROI classes which are irrelevant
-# (no vegetation, bad ROI, mixed data types)
+# (no vegetation, bad ROI, mixed data types etc)
 df = df[-which(
   df$veg_type == "XX" | df$veg_type == "MX" |
-  df$veg_type == "UN" | df$veg_type == "NV" | 
-  df$veg_type == "RF" ),]
+    df$veg_type == "UN" | df$veg_type == "NV" |
+    df$veg_type == "RF"
+), ]
 row.names(df) = 1:dim(df)[1]
 
-# create a character field with html to call as marker
-# popup. This includes a thumbnail of the site!
+# create a character field with html to call as a marker
+# popup. This includes a thumbnail of the site.
 df$preview = unlist(lapply(df$site, function(x)
   paste(
     "<table width=150px, border=0px>",
@@ -125,12 +113,6 @@ df$preview = unlist(lapply(df$site, function(x)
     "</table>",
     sep = ""
   )))
-
-# find the column locations of certain variables (for later data table manipulations)
-colloc = c(which(colnames(df) == "lat_j"), which(colnames(df) == "lon_j"))
-
-# load MODIS land cover legend
-mylegend = read.csv("MODIS.LC.legend.csv",sep = ",")
 
 # start server routine
 server = function(input, output, session) {
@@ -210,7 +192,7 @@ server = function(input, output, session) {
   # occurs too many times to repeat the code
   updateClimatology = function(){
     output$climate = renderPlot({
-      par(mar = c(4, 4, 1, 1))
+      par(mar = c(4, 4, 4, 1))
       plot(
         1,
         1,
@@ -229,7 +211,8 @@ server = function(input, output, session) {
            pch=19,
            col=rgb(0.5,0.5,0.5,0.3),
            xlim=c(-15,30),
-           ylim=c(0,3000)
+           ylim=c(0,3000),
+           main = "Climatology"
       )
     }, height = function() {
       session$clientData$output_climate_height
@@ -438,6 +421,7 @@ server = function(input, output, session) {
   })
   
   downloadData = function(myrow, frequency, percentile) {
+    
     # if nothing selected return NULL
     if (length(myrow) == 0) {
       return(NULL)
@@ -455,7 +439,7 @@ server = function(input, output, session) {
     roi_id = as.numeric(df$roi_id_number[as.numeric(myrow)])
     
     # formulate the filename of the data we need to download
-    data_file = sprintf("%s/%s_%s_%04d_%sday_v4.csv",
+    data_file = sprintf("%s/%s_%s_%04d_%sday.csv",
                         path,
                         site,
                         veg_type,
@@ -474,11 +458,12 @@ server = function(input, output, session) {
       # do not detect outliers and smooth in this step
       # do this separately to allow for proper progresss
       # bar updating (keep people busy as this takes a while)
+      
       download.phenocam(
         site = site,
         vegetation = veg_type,
         roi_id = roi_id,
-        frequency = frequency,
+        frequency = input$frequency,
         outlier_detection = FALSE,
         smooth = FALSE,
         out_dir = path
@@ -487,6 +472,8 @@ server = function(input, output, session) {
       # detect outliers
       progress$set(value = 0.3, detail = "detecting outliers")
       status = try(detect.outliers(data_file), silent = TRUE)
+      
+      # trap errors
       if (inherits(status, "try-error")) {
         return(NULL)
       }
@@ -494,6 +481,8 @@ server = function(input, output, session) {
       # smooth data
       progress$set(value = 0.6, detail = "smoothing data")
       status = try(smooth.ts(data_file), silent = TRUE)
+      
+      # trap errors
       if (inherits(status, "try-error")) {
         return(NULL)
       }
@@ -508,16 +497,10 @@ server = function(input, output, session) {
     # code this up in the transition.dates() function TODO TODO TODO
     spring = transition.dates(data,
                               percentile = percentile,
-                              lower.thresh = lower.thresh,
-                              middle.thresh = middle.thresh,
-                              upper.thresh = upper.thresh,
                               reverse = FALSE)
     
     fall = transition.dates(data,
                             percentile = percentile,
-                            lower.thresh = lower.thresh,
-                            middle.thresh = middle.thresh,
-                            upper.thresh = upper.thresh,
                             reverse = TRUE)
 
     # Final plot preparations
@@ -540,27 +523,26 @@ server = function(input, output, session) {
     doy = data$doy
     year = data$year
     
-    # gcc / bcc / rcc time series
+    # calculate gcc / bcc / rcc time series
     gcc = data[, which(col_val == gcc_val)]
     bcc = data$midday_b / (data$midday_r + data$midday_g + data$midday_b)
     rcc = data$midday_r / (data$midday_r + data$midday_g + data$midday_b)
     
+    # put outlier and interpolation flags into readable
+    # variable names
     out = data[,sprintf("outlierflag_gcc_%s", percentile)]
     int_flag = data$int_flag
     
     # rename outlier values with proper descriptive names
     gcc_smooth = data[, which(col_val == smooth_val_gcc)]
-    
     ci = data[, which(col_val == ci_val)]
     
-    # mark gaps
-    # gcc_smooth[!is.na(int_flag)] = NA
-    # ci[!is.na(int_flag)] = NA
-    
-    # create data frame
+    # create data frame which is exported and used in
+    # all plotting routines
     plot_data = data.frame(date, year, doy, gcc, rcc, bcc, out, gcc_smooth, ci, int_flag)
-
-    # return data
+    
+    # return raw data, and derived phenology metric
+    # in a structured list (split up later on depending on use)
     return(list(plot_data, spring, fall))
   }
   
@@ -623,9 +605,11 @@ server = function(input, output, session) {
         y = 0,
         text = "NO DATA - SELECT A (DIFFERENT) SITE",
         mode = "text"
-      ) %>% layout(xaxis = ax, yaxis = ax)
+      ) %>% 
+        layout(xaxis = ax, yaxis = ax)
       
     } else{
+      
       # split up the data into true plotting data (time series) and annotation (phenology dates)
       plot_data = data[[1]]
       spring = data[[2]]
@@ -661,7 +645,7 @@ server = function(input, output, session) {
       phenology_header[7,1] = sprintf("# Aggregation period: %s", as.numeric(input$frequency))
       phenology_header[8,1] = sprintf("# Year min: %s",
                                       min(strptime(as.matrix(phenology[, 5:13]),"%Y-%m-%d")$year +
-                                            1900),
+                                            1900), # THIS IS UGLY THIS CAN BE SHORTER
                                       na.rm = TRUE)
       phenology_header[9,1] = sprintf("# Year max: %s",
                                       max(strptime(as.matrix(phenology[, 5:13]),"%Y-%m-%d")$year +
@@ -705,280 +689,210 @@ server = function(input, output, session) {
       spring = data.frame(id=1:nrow(spring),spring)
       fall = data.frame(id=1:nrow(fall),fall)
       
-      # convert to long format for confidence intervals
-      if (nrow(na.omit(spring)) == 0) {
-        
-        names(spring) = sub("_lower","", names(spring)) # rename columns
-      
-        } else{
-        
-        spring_sos = reshape(
-          spring[, grep(sprintf("_%s",lower.thresh*100), names(spring))],
-          #idvar = sprintf("threshold_%s",lower.thresh*100),
-          idvar = "id",
-          direction = "long",
-          varying = list(c(2, 3))
-        )
-        
-        spring_eos = reshape(
-          spring[, grep(sprintf("_%s",upper.thresh*100), names(spring))],
-          #idvar = sprintf("threshold_%s",upper.thresh*100),
-          idvar = "id",
-          direction = "long",
-          varying = list(c(2, 3))
-        )
-        
-        spring_mos = reshape(
-          spring[, grep(sprintf("_%s",middle.thresh*100), names(spring))],
-          #idvar = sprintf("threshold_%s",middle.thresh*100),
-          idvar = "id",
-          direction = "long",
-          varying = list(c(2, 3))
-        )
-        
-        # merge data
-        spring = cbind(spring_sos,spring_mos,spring_eos)
-        spring = spring[,-grep("time",names(spring))]
-        names(spring) = sub("_lower","", names(spring)) # rename columns
-
-      }
-      
-      if (nrow(na.omit(fall)) == 0) { # when no data is available, should check this
-        
-        names(fall) = sub("_lower","", names(fall)) # rename columns
-        
-      } else{
-        fall_sos =  reshape(
-          fall[, grep(sprintf("_%s",upper.thresh*100), names(fall))],
-          #idvar = sprintf("threshold_%s",upper.thresh*100),
-          idvar = "id",
-          direction = "long",
-          varying = list(c(2, 3))
-        )
-        
-        fall_mos =  reshape(
-          fall[, grep(sprintf("_%s",middle.thresh*100), names(fall))],
-          #idvar = sprintf("threshold_%s",middle.thresh*100),
-          idvar = "id",
-          direction = "long",
-          varying = list(c(2, 3))
-        )
-        
-        fall_eos =  reshape(
-          fall[, grep(sprintf("_%s",lower.thresh*100), names(fall))],
-          #idvar = sprintf("threshold_%s",lower.thresh*100),
-          idvar = "id",
-          direction = "long",
-          varying = list(c(2, 3))
-        )
-
-        # merge data
-        fall = cbind(fall_sos,fall_mos,fall_eos)
-        fall = fall[,-grep("time",names(fall))]
-        names(fall) = sub("_lower","", names(fall)) # rename columns
-        
-      }
-
       # full time series
       if (input$plot_type == "bydate") {
         
         # duplicate outlier flag data, for plotting
         plot_data$outlier_symbols = plot_data$out
         plot_data$colours = plot_data$out
-
+        
         plot_data$colours[plot_data$colours == 0] = rgb(0.3, 0.3, 0.3)
         plot_data$colours[plot_data$colours == 1] = rgb(1, 0, 0)
-                
-        # rename the outliers, make it look nice
-        plot_data$out[plot_data$out == 0] = "Gcc ok"
-        plot_data$out[plot_data$out == 1] = "Gcc outlier"
         
         # rename the outliers symbols
         plot_data$outlier_symbols[plot_data$outlier_symbol == 0] = "circle"
         plot_data$outlier_symbols[plot_data$outlier_symbol == 1] = "circle-open"
         
+        # convert date
+        plot_data$date = as.Date(plot_data$date,"%Y-%m-%d")
+        
         # when showing multiple time series
         # remove the transition dates
         if (input$rccbcc == "FALSE") {
+          
           # base plot shows the Gcc confidence interval
           # switch order for cleaner plotting
           p = plot_ly(
             data = plot_data,
-            x = date,
-            y = gcc_smooth + ci,
-            mode = "lines",
-            fill = "none",
-            line = list(width = 0, color = "rgb(200,200,200)"),
-            showlegend = FALSE,
-            name = "95% CI"
+            x = ~ date,
+            y = ~ gcc_smooth,
+            showlegend = FALSE
           ) %>%
             add_trace(
-              data = plot_data,
-              x = date,
-              y = gcc_smooth - ci,
+              x = ~ date,
+              y = ~ gcc_smooth - ci,
               mode = "lines",
+              type = "scatter",
+              line = list(width = 0, color = "rgb(200,200,200)"),
+              showlegend = FALSE,
+              name = "Gcc 95% CI"
+            ) %>%
+            add_trace(
+              y = ~ gcc_smooth + ci,
               fill = "tonexty",
+              mode = "lines",
               line = list(width = 0, color = "rgb(200,200,200)"),
               showlegend = TRUE,
               name = "Gcc 95% CI"
             ) %>%
             add_trace(
-              data = plot_data,
-              x = date,
-              y = gcc_smooth,
+              y = ~ gcc_smooth,
               mode = "lines",
               line = list(width = 2, color = "rgb(120,120,120)"),
               name = "Gcc loess fit",
               showlegend = TRUE
             ) %>%
             add_trace(
-              data = plot_data,
-              x = date,
-              y = gcc,
-              color = as.factor(out),
+              y = ~ gcc,
               mode = "markers",
-              marker=list(color=colours),
+              type = "scatter",
+              symbol = ~ I(outlier_symbols),
+              color = ~ I(rep(rgb(0.3, 0.3, 0.3),nrow(plot_data))),
+              name = "Gcc",
               showlegend = TRUE
             ) %>%
             # SOS spring
             # 10%
             add_trace(
-              x = as.Date(spring[,grep(sprintf("^transition_%s$",lower.thresh*100),names(spring))]),
-              y = spring[,grep(sprintf("threshold_%s",lower.thresh*100),names(spring))],
+              data = spring,
+              x = ~ as.Date(transition_10),
+              y = ~ threshold_10,
               mode = "markers",
+              type = "scatter",
               marker = list(color = "#7FFF00", symbol = "circle"),
-              name = sprintf("SOS (%s %%)",lower.thresh*100)
+              name = sprintf("SOS (%s%%)",lower.thresh*100)
             ) %>%
-            add_trace(
-              x = as.Date(spring[,grep(sprintf("^transition_%s_ci$",lower.thresh*100),names(spring))]),
-              y = spring[,grep(sprintf("threshold_%s",lower.thresh*100),names(spring))],
-              mode = "lines",
-              group = spring$id,
-              showlegend = FALSE,
-              line = list(color = "#7FFF00")
+            add_segments(x = ~ as.Date(transition_10_lower_ci),
+                         xend = ~ as.Date(transition_10_upper_ci),
+                         y = ~ threshold_10,
+                         yend = ~ threshold_10,
+                         line = list(color = "#7FFF00"),
+                         name = "SOS (10%) - CI"
             ) %>%
             # 25 %
             add_trace(
-              x = as.Date(spring[,grep(sprintf("^transition_%s$",middle.thresh*100),names(spring))]),
-              y = spring[,grep(sprintf("threshold_%s",middle.thresh*100),names(spring))],
+              x = ~ as.Date(transition_25),
+              y = ~ threshold_25,
               mode = "markers",
+              type = "scatter",
               marker = list(color = "#66CD00", symbol = "square"),
-              name = sprintf("SOS (%s %%)",middle.thresh*100)
+              showlegend = TRUE,
+              name = sprintf("SOS (%s%%)",middle.thresh*100)
             ) %>%
-            add_trace(
-              x = as.Date(spring[,grep(sprintf("^transition_%s_ci$",middle.thresh*100),names(spring))]),
-              y = spring[,grep(sprintf("threshold_%s",middle.thresh*100),names(spring))],
-              mode = "lines",
-              group = spring$id,
-              showlegend = F,
-              line = list(color = "#66CD00")
+            add_segments(x = ~ as.Date(transition_25_lower_ci),
+                         xend = ~ as.Date(transition_25_upper_ci),
+                         y = ~ threshold_25,
+                         yend = ~ threshold_25,
+                         line = list(color = "#66CD00"),
+                         name = "SOS (25%) - CI"
             ) %>%
-
             # 50 %
             add_trace(
-              x = as.Date(spring[,grep(sprintf("^transition_%s$",upper.thresh*100),names(spring))]),
-              y = spring[,grep(sprintf("threshold_%s",upper.thresh*100),names(spring))],
+              x = ~ as.Date(transition_50),
+              y = ~ threshold_50,
               mode = "markers",
+              type = "scatter",
               marker = list(color = "#458B00", symbol = "diamond"),
-              name = sprintf("SOS (%s %%)",upper.thresh*100)
+              showlegend = TRUE,
+              name = sprintf("SOS (%s%%)",upper.thresh*100)
             ) %>%
-            add_trace(
-              x = as.Date(spring[,grep(sprintf("^transition_%s_ci$",upper.thresh*100),names(spring))]),
-              y = spring[,grep(sprintf("threshold_%s",upper.thresh*100),names(spring))],
-              mode = "lines",
-              group = spring$id,
-              showlegend = FALSE,
-              line = list(color = "#458B00")
+            add_segments(x = ~ as.Date(transition_50_lower_ci),
+                         xend = ~ as.Date(transition_50_upper_ci),
+                         y = ~ threshold_50,
+                         yend = ~ threshold_50,
+                         line = list(color = "#458B00"),
+                         name = "SOS (50%) - CI"
             ) %>%
-
+            
             # EOS fall
             # 50%
             add_trace(
-              x = as.Date(fall[,grep(sprintf("^transition_%s$",upper.thresh*100),names(fall))]),
-              y = fall[,grep(sprintf("threshold_%s",upper.thresh*100),names(fall))],
+              data = fall,
+              x = ~ as.Date(transition_50),
+              y = ~ threshold_50,
               mode = "markers",
+              type = "scatter",
               marker = list(color = "#FFB90F", symbol = "diamond"),
-              name = sprintf("EOS (%s %%)",upper.thresh*100)
+              showlegend = TRUE,
+              name = sprintf("EOS (%s%%)",upper.thresh*100)
             ) %>%
-            add_trace(
-              x = as.Date(fall[,grep(sprintf("^transition_%s_ci$",upper.thresh*100),names(fall))]),
-              y = fall[,grep(sprintf("threshold_%s",upper.thresh*100),names(fall))],
-              mode = "lines",
-              group = fall$id,
-              showlegend = FALSE,
-              line = list(color = "#FFB90F")
+            add_segments(x = ~ as.Date(transition_50_lower_ci),
+                         xend = ~ as.Date(transition_50_upper_ci),
+                         y = ~ threshold_50,
+                         yend = ~ threshold_50,
+                         line = list(color = "#FFB90F"),
+                         name = "EOS (50%) - CI"
             ) %>%
             # 25 %
             add_trace(
-              x = as.Date(fall[,grep(sprintf("^transition_%s$",middle.thresh*100),names(fall))]),
-              y = fall[,grep(sprintf("threshold_%s",middle.thresh*100),names(fall))],
+              x = ~ as.Date(transition_25),
+              y = ~ threshold_25,
               mode = "markers",
+              type = "scatter",
               marker = list(color = "#CD950C", symbol = "square"),
-              name = sprintf("EOS (%s %%)",middle.thresh*100)
+              showlegend = TRUE,
+              name = sprintf("EOS (%s%%)",middle.thresh*100)
             ) %>%
-            add_trace(
-              x = as.Date(fall[,grep(sprintf("^transition_%s_ci$",middle.thresh*100),names(fall))]),
-              y = fall[,grep(sprintf("threshold_%s",middle.thresh*100),names(fall))],
-              mode = "lines",
-              group = fall$id,
-              showlegend = FALSE,
-              line = list(color = "#CD950C")
+            add_segments(x = ~ as.Date(transition_25_lower_ci),
+                         xend = ~ as.Date(transition_25_upper_ci),
+                         y = ~ threshold_25,
+                         yend = ~ threshold_25,
+                         line = list(color = "#CD950C"),
+                         name = "EOS (25%) - CI"
             ) %>%
-
             # 10 %
             add_trace(
-              x = as.Date(fall[,grep(sprintf("^transition_%s$",lower.thresh*100),names(fall))]),
-              y = fall[,grep(sprintf("threshold_%s",lower.thresh*100),names(fall))],
+              x = ~ as.Date(transition_10),
+              y = ~ threshold_10,
               mode = "markers",
               marker = list(color = "#8B6508", symbol = "circle"),
-              name = sprintf("EOS (%s %%)",lower.thresh*100)
+              showlegend = TRUE,
+              name = sprintf("EOS (%s%%)",lower.thresh*100)
             ) %>%
-            add_trace(
-              x = as.Date(fall[,grep(sprintf("^transition_%s_ci$",lower.thresh*100),names(fall))]),
-              y = fall[,grep(sprintf("threshold_%s",lower.thresh*100),names(fall))],
-              mode = "lines",
-              group = fall$id,
-              showlegend = FALSE,
-              line = list(color = "#8B6508")
+            add_segments(x = ~ as.Date(transition_10_lower_ci),
+                         xend = ~ as.Date(transition_10_upper_ci),
+                         y = ~ threshold_10,
+                         yend = ~ threshold_10,
+                         line = list(color = "#8B6508"),
+                         name = "EOS (10%) - CI"
             ) %>%
             layout(xaxis = list(title = "Date"),
                    yaxis = list(title = "Gcc"))
         } else {
-           
+          
           p = plot_ly(
-               data = plot_data,
-               x = date,
-               y = bcc,
-               mode = "markers",
-               marker = list(color = rgb(0, 0, 1), symbol = "circle"),
-               name = "Bcc",
-               showlegend = TRUE
-             ) %>%
+            data = plot_data,
+            x = ~ date,
+            y = ~ bcc,
+            showlegend = FALSE
+          ) %>%
             add_trace(
-              data = plot_data,
-              x = date,
-              y = rcc,
+              y = ~ bcc,
               mode = "markers",
-              marker = list(color = rgb(1, 0, 0), symbol = "circle"),
+              type = "scatter",
+              marker = list(color = "#0000FF", symbol = "circle"),
+              name = "Bcc",
+              showlegend = TRUE
+            ) %>%
+            add_trace(
+              y = ~ rcc,
+              marker = list(color = "#FF0000", symbol = "circle"),
               name = "Rcc",
               showlegend = TRUE
             ) %>%
             add_trace(
-              data = plot_data,
-              x = date,
-              y = gcc_smooth,
-              mode = "lines",
-              line = list(width = 2, color = "#66CD00"),
-              name = "Gcc loess fit",
-              showlegend = TRUE
-            ) %>%
-            add_trace(
-              data = plot_data,
-              x = date,
-              y = gcc,
-              mode = "markers",
-              marker = list(color = "#66CD00", symbol = outlier_symbols),
+              y = ~ gcc,
+              symbol = ~ I(outlier_symbols),
+              marker = list(color = "#00FF00", symbols = ~ outlier_symbols),
               name = "Gcc",
+              showlegend = TRUE
+            ) %>% 
+            add_trace(
+              y = ~ gcc_smooth,
+              type="scatter",
+              mode = "lines",
+              line = list(width = 2, color = "#00FF00"),
+              name = "Gcc loess fit",
               showlegend = TRUE
             ) %>%
             layout(xaxis = list(title = "Date"),
@@ -986,34 +900,30 @@ server = function(input, output, session) {
         }
         
       } else{
-        # # condense to one plot along DOY
+        
+        # condense to one plot along DOY
         if (input$plot_type == "byyear") {
+          
+          ltm = plot_data %>% group_by(doy) %>%
+            summarise(mn = mean(gcc_smooth), sd = sd(gcc_smooth), doymn = mean(doy))
+          
           # delete interpolated data
           # NA values == data available
           plot_data$gcc_smooth[!is.na(plot_data$int_flag)] = NA
           
-          gcc_smooth_ltm = by(plot_data$gcc_smooth,
-                              INDICES = plot_data$doy,
-                              mean,
-                              na.rm = TRUE)
-          gcc_smooth_sd = by(plot_data$gcc_smooth,
-                             INDICES = plot_data$doy,
-                             sd,
-                             na.rm = TRUE)
-          doy = as.numeric(names(gcc_smooth_ltm))
-          
           p = plot_ly(
-            x = doy,
-            y = gcc_smooth_ltm + gcc_smooth_sd,
+            data = ltm,
+            x = ~ doymn,
+            y = ~ mn - sd,
             mode = "lines",
             fill = "none",
+            type = 'scatter',
             line = list(width = 0, color = "rgb(200,200,200)"),
             showlegend = FALSE,
             name = "1 SD"
           ) %>%
             add_trace(
-              x = doy,
-              y = gcc_smooth_ltm - gcc_smooth_sd,
+              y = ~ mn + sd,
               mode = "lines",
               fill = "tonexty",
               line = list(width = 0, color = "rgb(200,200,200)"),
@@ -1021,8 +931,7 @@ server = function(input, output, session) {
               name = "1 SD"
             ) %>%
             add_trace(
-              x = doy,
-              y = gcc_smooth_ltm,
+              y = ~ mn,
               line = list(
                 width = 2,
                 dash = "dot",
@@ -1033,11 +942,13 @@ server = function(input, output, session) {
             ) %>%
             add_trace(
               data = plot_data,
-              x = doy,
-              y = gcc_smooth,
-              group = year,
-              colors = "Set1",
-              mode = "lines"
+              x = ~ doy,
+              y = ~ gcc_smooth,
+              split = ~ year,
+              type = "scatter",
+              mode = "lines",
+              line = list(width = 2, color = "Set1"),
+              showlegend = TRUE
             ) %>%
             layout(xaxis = list(title = "DOY"),
                    yaxis = list(title = "Gcc"))
@@ -1080,24 +991,32 @@ server = function(input, output, session) {
             p1 = plot_ly(
               x = spring_year,
               y = spring_doy,
-              marker = list(color = "#66CD00", symbol = "square"),
-              mode = "markers",
-              name = "Spring",
               yaxis = "y1",
               title = "PhenoCam Phenology (DOY)"
             ) %>%
               add_trace(
-                x = fall_year,
-                y = fall_doy,
-                marker = list(color = "#CD950C", symbol = "square"),
+                x = spring_year,
+                y = spring_doy,
+                marker = list(color = "#66CD00", symbol = "square"),
                 mode = "markers",
-                name = "Autumn",
+                type = "scatter",
+                name = "Spring",
                 yaxis = "y1"
+              ) %>%
+              add_trace(type = "scatter",
+                        x = fall_year,
+                        y = fall_doy,
+                        marker = list(color = "#CD950C", symbol = "square"),
+                        mode = "markers",
+                        type = "scatter",
+                        name = "Autumn",
+                        yaxis = "y1"
               ) %>%
               add_trace(
                 x = spring_year,
                 y = reg_spring$fitted.values,
                 mode = "lines",
+                type = "scatter",
                 name = sprintf("R2: %s| slope: %s", r2_spring, slp_spring),
                 line = list(width = 2, color = "#66CD00"),
                 yaxis = "y1"
@@ -1106,6 +1025,7 @@ server = function(input, output, session) {
                 x = fall_year,
                 y = reg_fall$fitted.values,
                 mode = "lines",
+                type = "scatter",
                 name = sprintf("R2: %s| slope: %s", r2_fall, slp_fall),
                 line = list(width = 2, color = "#CD950C"),
                 yaxis = "y1"

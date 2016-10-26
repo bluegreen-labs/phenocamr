@@ -37,7 +37,7 @@
 #' # All files will be downloaded in your current working directory
 
 download.phenocam = function(site="bartlett",
-                             vegetation="all",
+                             vegetation=NULL,
                              frequency="3",
                              roi_id=NULL,
                              top_left= NULL,
@@ -49,39 +49,43 @@ download.phenocam = function(site="bartlett",
                              phenophase=FALSE,
                              out_dir=getwd()){
   
-  # load libraries
-  require(DaymetR)
-  require(downloader, quietly = TRUE)
-  require(RCurl, quietly = TRUE)
-  
   # get site listing
-  url = getURL("https://phenocam.sr.unh.edu/webcam/roi/roilistinfo/?format=csv")
-  site.list = read.csv(text = url,header=TRUE) # this does not work in WINDOZE
+  site.list = jsonlite::fromJSON("https://phenocam.sr.unh.edu/webcam/roi/roilistinfo/")
   
   # is there a site name?
   # this excludes any geographic constraints
+  
   if (!is.null(site)){
-    if (vegetation == "all"){ 
+    if (is.null(vegetation)){ 
       loc = grep(sprintf("%s",site),site.list$site)
     }else{
       if (!is.null(roi_id)){
+        
         # list only particular vegetation types and rois
-        loc = which( grep(sprintf("%s",site),site.list$site) & site.list$veg_type %in% vegetation &
+        loc = which( grep(sprintf("%s",site),site.list$site) && site.list$veg_type %in% vegetation &&
                       site.list$roi_id_number %in% roi_id)
+        
       }else{
-        # list only vegetation types for all rois      
-        loc = which(loc = grep(sprintf("%s",site),site.list$site) & site.list$veg_type %in% vegetation)
+        
+        # list only vegetation types for all rois
+        loc = which(loc = grep(sprintf("%s",site),site.list$site) && site.list$veg_type %in% vegetation)
+        
       }
     }
-  }else{ # if there is no site name, use geographic boundaries (by default all rois are returned)
+    
+  }else{
+    
+    # if there is no site name, use geographic boundaries 
+    # (by default all rois are returned)
+    
     if (is.null(vegetation) | vegetation == "all"){
       # list all data within a geographic region
-      loc = which(site.list$lat < top_left[1] & site.list$lat > bottom_right[1] &
-                   site.list$lon > top_left[2] & site.list$lon < bottom_right[2])
+      loc = which(site.list$lat < top_left[1] && site.list$lat > bottom_right[1] &&
+                   site.list$lon > top_left[2] && site.list$lon < bottom_right[2])
     }else{
       # list only a particular vegetation type within a geographic region
-      loc = which(site.list$lat < top_left[1] & site.list$lat > bottom_right[1] &
-                   site.list$lon > top_left[2] & site.list$lon < bottom_right[2] &
+      loc = which(site.list$lat < top_left[1] && site.list$lat > bottom_right[1] &&
+                   site.list$lon > top_left[2] && site.list$lon < bottom_right[2] &&
                     site.list$veg_type %in% vegetation)
     }
   }
@@ -98,18 +102,18 @@ download.phenocam = function(site="bartlett",
   for (i in 1:dim(site.list)[1]){
     if (frequency == "raw"){
       
-      data_location=sprintf("http://phenocam.sr.unh.edu/data/archive/%s/ROI",site.list$site[i])
-      filename = sprintf("%s_%s_%04d_timeseries_v4.csv",site.list$site[i],site.list$veg_type[i],site.list$roi_id_number[i])
+      data_location=sprintf("https://phenocam.sr.unh.edu/data/archive/%s/ROI",site.list$site[i])
+      filename = sprintf("%s_%s_%04d_timeseries.csv",site.list$site[i],site.list$veg_type[i],site.list$roi_id_number[i])
       
       # feedback
       cat(sprintf("Downloading: %s/%s\n",data_location,filename))
-      try(download(sprintf("%s/%s",data_location,filename),sprintf("%s/%s",out_dir,filename),quiet=TRUE),silent=TRUE)
+      try(downloader::download(sprintf("%s/%s",data_location,filename),sprintf("%s/%s",out_dir,filename),quiet=TRUE),silent=TRUE)
       
     }else{
       
       # create server string, the location of the site data
-      data_location=sprintf("http://phenocam.sr.unh.edu/data/archive/%s/ROI",site.list$site[i])
-      filename = sprintf("%s_%s_%04d_%sday_v4.csv",site.list$site[i],site.list$veg_type[i],site.list$roi_id_number[i],frequency)
+      data_location=sprintf("https://phenocam.sr.unh.edu/data/archive/%s/ROI",site.list$site[i])
+      filename = sprintf("%s_%s_%04d_%sday.csv",site.list$site[i],site.list$veg_type[i],site.list$roi_id_number[i],frequency)
       output_filename = sprintf("%s/%s",out_dir,filename)
       
       # feedback
@@ -117,7 +121,7 @@ download.phenocam = function(site="bartlett",
       
       # download data
       url = sprintf("%s/%s",data_location,filename)
-      status = try(download(url,output_filename,quiet=TRUE),silent=TRUE)
+      status = try(downloader::download(url,output_filename,quiet=TRUE),silent=TRUE)
       
       if (inherits(status,"try-error")){
         warning(sprintf("failed to download: %s",filename))
@@ -160,7 +164,7 @@ download.phenocam = function(site="bartlett",
           cat("Merging Daymet Data! \n")
           status=try(merge.daymet(output_filename,trim_daymet=trim_daymet),silent=TRUE)
           if(inherits(status,"try-error")){
-            cat("--failed \n")
+            cat("--failed merging daymet data, check package \n")
           }
         }
       }
