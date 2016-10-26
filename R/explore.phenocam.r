@@ -1,5 +1,6 @@
-#' Start the AmerifluxR shiny interface
-#' @param ... none
+#' Starts the phenocamr shiny interface
+#' 
+#' @param none : calling the function loads the GUI
 #' @keywords GUI, front end, interactive
 #' @export
 #' @examples
