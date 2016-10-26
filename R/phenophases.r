@@ -11,21 +11,22 @@
 #' @keywords PhenoCam, transition dates, phenology, time series
 #' @export
 #' @examples
+#' 
 #' # downloads a time series for Bartlett Forest data and calculates
 #' # the matching phenophases.
 #' # Outputs a nested list of phenophases dates
 #' # where location [[1]] holds the greenup dates and location
 #' # [[2]] the greendown dates
 #' 
-#' df = download.phenocam(site="harvard",
-#'                        type="DB",
-#'                        roi="1",
-#'                        frequency=3)
-#' df = read.csv("harvard_DB_0001_1day.csv")
-#' my_dates = phenophases(df,output=FALSE)
+#' # df = download.phenocam(site="harvard",
+#' #                        type="DB",
+#' #                        roi="1",
+#' #                        frequency=3)
+#' # df = read.csv("harvard_DB_0001_1day.csv")
+#' # my_dates = phenophases(df,output=FALSE)
 #' 
 #' # dates need to be converted to standard notation using
-#' as.Date(my_dates)
+#' # as.Date(my_dates)
 
 phenophases = function(df,
                         sitename=NULL,
@@ -66,7 +67,7 @@ phenophases = function(df,
       #MAT = as.numeric(header[x])
       
       # read the original data
-      df = read.table(df, header = T, sep = ',')
+      df = utils::read.table(df, header = T, sep = ',')
     } else {
       stop("not a valid PhenoCam data frame or file")
     }
@@ -232,7 +233,7 @@ phenophases = function(df,
   )
   
   # write all data to file, first write the header then append the data
-  write.table(
+  utils::write.table(
     phenology_header,
     filename,
     row.names = FALSE,
@@ -240,7 +241,7 @@ phenophases = function(df,
     quote = FALSE
   )
   
-  write.table(
+  utils::write.table(
     phenology,
     filename,
     row.names = FALSE,

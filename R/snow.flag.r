@@ -6,7 +6,9 @@
 #' @keywords PhenoCam, pre-processing, screening, snow, outliers
 #' @export
 #' @examples
-#' # This is an internal function only.
+#' 
+#' # Internal function only, should not be used stand-alone.
+#' # As such no documentation is provided.
 
 snow.flag = function(df) {
   # read file if not a data frame

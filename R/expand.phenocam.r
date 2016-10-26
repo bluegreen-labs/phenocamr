@@ -8,12 +8,12 @@
 #' @export
 #' @examples
 #'
-#' df = download.phenocam(site="harvard",
-#'                        type="DB",
-#'                        roi="1",
-#'                        frequency=3)
+#' # df = download.phenocam(site="harvard",
+#' #                        type="DB",
+#' #                        roi="1",
+#' #                        frequency=3)
 #'
-#' expand.phenocam("harvard_DB_0001_1day.csv")
+#' # expand.phenocam("harvard_DB_0001_1day.csv")
 #' # overwrites the original file, increasing
 #' # it's file size. shrink the file using
 #' # contract.phenocam()

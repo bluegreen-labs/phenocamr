@@ -2,34 +2,49 @@
 % Please edit documentation in R/phenophases.r
 \name{phenophases}
 \alias{phenophases}
-\title{Calculates phenophases for all 'seasons' in a PhenoCam
-time series. This routine combines a forward and backward
-run of transition.dates() to calculate all phenophases.}
+\title{Calculates phenophases, both greenup and senescence, for all 'seasons'
+in a PhenoCam time series. This routine combines a forward and backward
+run of transition.dates() to calculate the phenophases.}
 \usage{
-phenophases(df, plot = TRUE, pdf = FALSE)
+phenophases(df, sitename = NULL, veg_type = NULL, roi_id = NULL,
+  freq = NULL, lat = NULL, MAT = NULL, output = FALSE,
+  out_dir = getwd())
 }
 \arguments{
-\item{df:}{a PhenoCam data file or data frame}
+\item{df:}{a PhenoCam data file (or data frame)}
 
-\item{plot:}{provide a basic graph of the data and estimated
-dates}
+\item{sitename:}{a PhenoCam data file or data frame}
 
-\item{pdf:}{output plot as pdf in current working directory}
+\item{veg_type:}{a PhenoCam data file or data frame}
+
+\item{roi_id:}{a PhenoCam data file or data frame}
+
+\item{freq:}{a PhenoCam data file or data frame}
+
+\item{output:}{a PhenoCam data file or data frame}
 }
 \description{
-Calculates phenophases for all 'seasons' in a PhenoCam
-time series. This routine combines a forward and backward
-run of transition.dates() to calculate all phenophases.
+Calculates phenophases, both greenup and senescence, for all 'seasons'
+in a PhenoCam time series. This routine combines a forward and backward
+run of transition.dates() to calculate the phenophases.
 }
 \examples{
-# with defaults, outputting a nested list of phenophases dates
-# where location [[1]] holds the greenup dates and location
-[[2]] the greendown dates
 
-my_dates <- phenophases(df,plot=TRUE)
+# downloads a time series for Bartlett Forest data and calculates
+# the matching phenophases.
+# Outputs a nested list of phenophases dates
+# where location [[1]] holds the greenup dates and location
+# [[2]] the greendown dates
+
+# df = download.phenocam(site="harvard",
+#                        type="DB",
+#                        roi="1",
+#                        frequency=3)
+# df = read.csv("harvard_DB_0001_1day.csv")
+# my_dates = phenophases(df,output=FALSE)
 
 # dates need to be converted to standard notation using
-as.Date(my_dates)
+# as.Date(my_dates)
 }
 \keyword{PhenoCam,}
 \keyword{dates,}

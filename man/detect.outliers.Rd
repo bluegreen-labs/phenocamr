@@ -2,21 +2,40 @@
 % Please edit documentation in R/detect.outliers.r
 \name{detect.outliers}
 \alias{detect.outliers}
-\title{Detect outliers in PhenoCam time series}
+\title{Detect outliers in PhenoCam time series (data frame or file)
+The function fills in the existing column to hold outlier flags,
+and either overwrites the original file or outputs a new data frame.}
 \usage{
-detect.outliers(data, iterations = 10, vis = FALSE)
+detect.outliers(data, iterations = 10, vis = FALSE, snowflag = FALSE)
 }
 \arguments{
 \item{data:}{PhenoCam data frame or filename}
 
 \item{iterations:}{number of itterations over which to cycle to detect outliers ()}
+
+\item{vis:}{visualize the process, mostly for debugging (TRUE / FALSE)}
 }
 \description{
-Detect outliers in PhenoCam time series
+Detect outliers in PhenoCam time series (data frame or file)
+The function fills in the existing column to hold outlier flags,
+and either overwrites the original file or outputs a new data frame.
 }
 \examples{
-# with defaults, overwriting the original data frame:
-df <- detect.outliers(df, iterations=5)
+
+# download demo data (do not detect outliers)
+# download.phenocam(site="harvard",
+#                   vegetation="DB",
+#                   roi_id=1,
+#                   frequency=3,
+#                 outlier_detection=FALSE)
+
+# detect outliers in the downloaded file
+# detect.outliers("harvard_DB_0001_1day.csv")
+
+# This function is rarely used stand-alone as it is called by the
+# download.phenocam() function and does not serve any other purpose
+# as it needs the outlier_flag_xxx field to work (and does not verify this).
+# Use stand-alone at your own risk.
 }
 \keyword{PhenoCam,}
 \keyword{outliers,}

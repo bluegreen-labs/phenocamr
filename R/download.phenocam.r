@@ -21,20 +21,18 @@
 #' 
 #' # download the first ROI time series for the Harvard PhenoCam site
 #' # and an aggregation frequency of 3-days.
-#' download.phenocam(site="harvard",
-#'                   vegetation="DB",
-#'                   roi_id=1,
-#'                   frequency=3)
+#' # download.phenocam(site="harvard",
+#' #                   vegetation="DB",
+#' #                   roi_id=1,
+#' #                   frequency=3)
 #'                   
 #' # download all Harvard Forest deciduous broadleaf sites using
 #' # geographic constraints.
-#' download.phenocam(vegetation="DB",
-#'                   roi_id=1,
-#'                   frequency=3,
-#'                   top_left=c(42.545657, -72.197524),
-#'                   bottom_right=c(42.527079, -72.158128))
-#'                   
-#' # All files will be downloaded in your current working directory
+#' # download.phenocam(vegetation="DB",
+#' #                   roi_id=1,
+#' #                   frequency=3,
+#' #                   top_left=c(42.545657, -72.197524),
+#' #                   bottom_right=c(42.527079, -72.158128))
 
 download.phenocam = function(site="bartlett",
                              vegetation=NULL,
@@ -68,7 +66,7 @@ download.phenocam = function(site="bartlett",
       }else{
         
         # list only vegetation types for all rois
-        loc = which(loc = grep(sprintf("%s",site),site.list$site) && site.list$veg_type %in% vegetation)
+        loc = which( grep(sprintf("%s",site),site.list$site) && site.list$veg_type %in% vegetation)
         
       }
     }
@@ -107,7 +105,12 @@ download.phenocam = function(site="bartlett",
       
       # feedback
       cat(sprintf("Downloading: %s/%s\n",data_location,filename))
-      try(downloader::download(sprintf("%s/%s",data_location,filename),sprintf("%s/%s",out_dir,filename),quiet=TRUE),silent=TRUE)
+      try(curl::curl_download(sprintf("%s/%s",data_location,filename),sprintf("%s/%s",out_dir,filename),quiet=TRUE),silent=TRUE)
+      
+      if (inherits(status,"try-error")){
+        warning(sprintf("failed to download: %s",filename))
+        next
+      }
       
     }else{
       
@@ -121,7 +124,7 @@ download.phenocam = function(site="bartlett",
       
       # download data
       url = sprintf("%s/%s",data_location,filename)
-      status = try(downloader::download(url,output_filename,quiet=TRUE),silent=TRUE)
+      status = try(curl::curl_download(url,output_filename,quiet=TRUE),silent=TRUE)
       
       if (inherits(status,"try-error")){
         warning(sprintf("failed to download: %s",filename))

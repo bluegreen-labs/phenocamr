@@ -10,19 +10,18 @@
 #' @keywords time series, smoothing, phenocam
 #' @export
 #' @examples
-#' df = download.phenocam(site="harvard",
-#'                        type="DB",
-#'                        roi="1",
-#'                        frequency=3)
+#' # df = download.phenocam(site = "harvard",
+#' #                        type = "DB",
+#' #                        roi = "1",
+#' #                        frequency = 3)
 #'
-#' expand.phenocam("harvard_DB_0001_1day.csv")
+#' # expand.phenocam("harvard_DB_0001_1day.csv")
 #' # Overwrites the original file, increasing
 #' # it's file size.
 #'
-#' contract.phenocam("harvard_DB_0001_1day.csv")
+#' # contract.phenocam("harvard_DB_0001_1day.csv")
 #' # Contracts the file to it's original size, skipping
 #' # two days.
-
 
 contract.phenocam = function(filename) {
   # check validaty of the input
@@ -35,7 +34,7 @@ contract.phenocam = function(filename) {
   header = try(readLines(filename, n = 22), silent = TRUE)
   
   # directly read data from the server into data.table
-  data = read.table(filename, header = TRUE, sep = ",")
+  data = utils::read.table(filename, header = TRUE, sep = ",")
   
   # drop the lines which should be empty
   loc = seq(2, 366, 3)
@@ -46,7 +45,7 @@ contract.phenocam = function(filename) {
   df[df == -9999] = NA
   
   # writing the final data frame to file, retaining the original header
-  write.table(
+  utils::write.table(
     header,
     filename,
     quote = FALSE,
@@ -54,7 +53,7 @@ contract.phenocam = function(filename) {
     col.names = FALSE,
     sep = ""
   )
-  write.table(
+  utils::write.table(
     data,
     filename,
     quote = FALSE,

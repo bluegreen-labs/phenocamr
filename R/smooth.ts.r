@@ -4,28 +4,26 @@
 #' @keywords time series, smoothing, phenocam
 #' @export
 #' @examples
+#' 
 #' # with defaults, outputting a data frame
 #' # with smoothed values, overwriting the original
 #' 
 #' # download demo data (do not smooth)
-#' download.phenocam(site="harvard",
-#'                   vegetation="DB",
-#'                   roi_id=1,
-#'                   frequency=3,
-#'                   smooth=FALSE)
+#' # download.phenocam(site="harvard",
+#' #                   vegetation="DB",
+#' #                  roi_id=1,
+#' #                   frequency=3,
+#' #                  smooth=FALSE)
 #' 
 #' # smooth the downloaded file (and overwrite the original)
-#' smooth.ts("harvard_DB_0001_1day.csv")
+#' # smooth.ts("harvard_DB_0001_1day.csv")
 #' 
 #' # the function also works on a PhenoCam data frame
 #' # but you will lose the extensive header in the process
-#' df = read.csv("harvard_DB_0001_1day.csv")
-#' df = smooth.ts(df)
+#' # df = read.csv("harvard_DB_0001_1day.csv")
+#' # df = smooth.ts(df)
 
 smooth.ts <- function(df, force = TRUE) {
-  
-  # load libraries
-  require(zoo)
 
   # if the data is not a data frame, load
   # the file (assuming it is a phenocam)
@@ -39,7 +37,7 @@ smooth.ts <- function(df, force = TRUE) {
       
       # read data file
       header = try(readLines(df, n = 22), silent = TRUE)
-      df = read.table(df, header = TRUE, sep = ",")
+      df = utils::read.table(df, header = TRUE, sep = ",")
     } else{
       stop("not a valid PhenoCam data frame or file")
     }
@@ -133,7 +131,7 @@ smooth.ts <- function(df, force = TRUE) {
       
       # for short series, where averaging over years isn't possible
       # linearly interpolate the data for gap filling
-      gap_filled = na.approx(values, na.rm = FALSE)
+      gap_filled = zoo::na.approx(values, na.rm = FALSE)
       
     } 
     
@@ -144,8 +142,8 @@ smooth.ts <- function(df, force = TRUE) {
     # Calculate the locations of long NA gaps.
     # (find remaining NA values after interpolation,
     # limited to 2 weeks in time)
-    long_na = which(is.na(na.approx(
-      values, maxgap = maxgap ,na.rm = FALSE
+    long_na = which(is.na(zoo::na.approx(
+      values, maxgap = maxgap , na.rm = FALSE
     )))
     
     # create weight vector
@@ -186,7 +184,7 @@ smooth.ts <- function(df, force = TRUE) {
     # max gap is 10 days, to avoid flagging periods where
     # you only lack some data
     # this is redundant should only do this once (fix)
-    int = na.approx(values, maxgap = maxgap)
+    int = zoo::na.approx(values, maxgap = maxgap)
     
     # put everything in the output matrix
     output$int_flag[which(is.na(int))] = 1

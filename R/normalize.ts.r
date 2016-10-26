@@ -6,6 +6,7 @@
 #' @keywords time series, smoothing, phenocam
 #' @export
 #' @examples
+#' 
 #' # Internal function only, should not be used stand-alone.
 #' # As such no documentation is provided.
 

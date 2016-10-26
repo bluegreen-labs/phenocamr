@@ -1,15 +1,23 @@
-Package: PhenoCam
+Package: phenocamr
 Title: Facilitating PhenoCam data access
 Version: 1.0
 Authors@R: c(person("Hufkens","Koen", email="koen.hufkens@gmail.com",role=c("aut", "cre")),
 	           person("Aubrecht","Donald", role=c("ctb")),
 	           person("Richardson","Andrew", role=c("ctb")))
-Description: Functions to download (and merge) preprocessed PhenoCam time
-    series.
+Description: Functions to download and preprocessed PhenoCam time series.
 Depends:
-    R (>= 3.2.5)
-Suggests:
-    DaymetR
-License: AGPLv3 + file LICENSE
+    R (>= 3.2.5),
+    shiny (>= 0.14.1),
+    shinydashboard (>= 0.5.3),
+    leaflet (>= 1.0.1),
+    plotly (>= 4.5.2),
+    jsonlite (>= 1.1),
+    changepoint (>= 2.2.2),
+    curl (>= 2.2),
+    zoo (>= 1.7),
+    utils (>= 3.2.5),
+    graphics (>= 3.2.5),
+    stats (>= 3.2.5)
+License: AGPLv3
 LazyData: true
 RoxygenNote: 5.0.1

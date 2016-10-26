@@ -7,18 +7,13 @@
 #' @export
 #' @examples
 #' # download demo data (do not smooth)
-#' download.phenocam(site="harvard",
-#'                   vegetation="DB",
-#'                   roi_id=1,
-#'                   frequency=3)
-#'  
-#'  merge.daymet("harvard_DB_0001_1day.csv")
-#'  # the function will overwrite the original file.
+#' # download.phenocam(site="harvard",
+#' #                   vegetation="DB",
+#' #                   roi_id=1,
+#' #                   frequency=3)
+#' #  merge.daymet("harvard_DB_0001_1day.csv")
 
 merge.daymet  = function(df,trim_daymet=FALSE){
-
-  # load required routines
-  require(DaymetR, quietly = TRUE)
   
   # grab site name from filename
   site = strsplit(basename(df),split="_")[[1]][1]

@@ -2,15 +2,24 @@
 % Please edit documentation in R/snow.flag.r
 \name{snow.flag}
 \alias{snow.flag}
-\title{Flags snowy pictures based upon Citizen Science analysis of the imagery (zooniverse)}
+\title{Flags snowy pictures based upon Citizen Science analysis
+of the select imagery (zooniverse). Will be included in dataset but
+currently does not serve any real purpose.}
 \usage{
-snow.flag(filename)
+snow.flag(df)
 }
 \arguments{
-\item{filename:}{filename of a downloaded time series}
+\item{df:}{a PhenoCam data file or data frame}
 }
 \description{
-Flags snowy pictures based upon Citizen Science analysis of the imagery (zooniverse)
+Flags snowy pictures based upon Citizen Science analysis
+of the select imagery (zooniverse). Will be included in dataset but
+currently does not serve any real purpose.
+}
+\examples{
+
+# Internal function only, should not be used stand-alone.
+# As such no documentation is provided.
 }
 \keyword{PhenoCam,}
 \keyword{outliers}

@@ -7,10 +7,10 @@ site name, vegetation type, geographic bounding box.
 You can optionally merge them with Daymet climate data
 when located within the Daymet data range.}
 \usage{
-download.phenocam(site = "bartlett", vegetation = "all", frequency = "3",
-  roi_id = NULL, top_left = NULL, bottom_right = NULL, daymet = FALSE,
-  trim_daymet = TRUE, outlier_detection = FALSE, phenophase = FALSE,
-  out_dir = getwd())
+download.phenocam(site = "bartlett", vegetation = NULL, frequency = "3",
+  roi_id = NULL, top_left = NULL, bottom_right = NULL,
+  outlier_detection = TRUE, smooth = TRUE, daymet = FALSE,
+  trim_daymet = TRUE, phenophase = FALSE, out_dir = getwd())
 }
 \arguments{
 \item{site}{: the site name, as mentioned on the PhenoCam web page.}
@@ -23,11 +23,14 @@ download.phenocam(site = "bartlett", vegetation = "all", frequency = "3",
 
 \item{roi_id:}{the id of the ROI to download, if not specified download all}
 
-\item{top_lef:}{latitude, longitude tupple as a vector or a list (c(45.5, -80)), requires bottom_right}
+\item{top_lef:}{latitude, longitude tupple as a vector c(45.5, -80), requires bottom_right}
 
-\item{bottom_right:}{latitude, longitude tupple as a vector or a list (c(45.5, -80)), requires top_left}
+\item{bottom_right:}{latitude, longitude tupple as a vector c(45.5, -80), requires top_left}
 
-\item{trim_daymet:}{TRUE or FALSE, if TRUE only download Daymet data for the dates matching the Gcc data. If FALSE, provide the whole Daymet series (for modelling spinup purposes).}
+\item{smooth:}{smooth data for future plotting (TRUE / FALSE, default is TRUE)}
+
+\item{trim_daymet:}{TRUE or FALSE, if TRUE only download Daymet data for the dates matching the Gcc data. 
+If FALSE, I provide the whole Daymet series (for modelling spin-up purposes).}
 
 \item{outlier_detection:}{TRUE or FALSE, detect outliers}
 
@@ -40,9 +43,23 @@ You can optionally merge them with Daymet climate data
 when located within the Daymet data range.
 }
 \examples{
-download.phenocam(site="harvard",vegetation="DB",frequency=3,daymet=TRUE)
+
+# download the first ROI time series for the Harvard PhenoCam site
+# and an aggregation frequency of 3-days.
+# download.phenocam(site="harvard",
+#                   vegetation="DB",
+#                   roi_id=1,
+#                   frequency=3)
+                  
+# download all Harvard Forest deciduous broadleaf sites using
+# geographic constraints.
+# download.phenocam(vegetation="DB",
+#                   roi_id=1,
+#                   frequency=3,
+#                   top_left=c(42.545657, -72.197524),
+#                   bottom_right=c(42.527079, -72.158128))
 }
-\keyword{DAYMET,}
+\keyword{Daymet,}
 \keyword{PhenoCam,}
 \keyword{climate}
 \keyword{data,}

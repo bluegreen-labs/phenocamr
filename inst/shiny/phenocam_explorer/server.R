@@ -1,14 +1,6 @@
 # phenocamr shiny interface / server back-end
 # see matching ui.R code for formatting
 
-# load required libraries
-# MOVE THESE OUT OF THE CODE UPON PACKAGING
-require(shiny, quietly = TRUE)
-require(shinydashboard, quietly = TRUE)
-require(leaflet, quietly = TRUE)
-require(plotly, quietly = TRUE)
-require(jsonlite)
-
 # create temporary directory and move into it
 if (!dir.exists("~/phenocam_data")) {
   dir.create("~/phenocam_data")

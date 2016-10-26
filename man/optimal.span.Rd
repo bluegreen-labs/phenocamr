@@ -4,7 +4,7 @@
 \alias{optimal.span}
 \title{Calculates the optimal span for a loess spline
 smoother based upon the bayesian information
-criterion (BCI).}
+criterion (BIC).}
 \usage{
 optimal.span(y, x = NULL, weights = NULL, step = 0.005)
 }
@@ -20,13 +20,12 @@ optimal.span(y, x = NULL, weights = NULL, step = 0.005)
 \description{
 Calculates the optimal span for a loess spline
 smoother based upon the bayesian information
-criterion (BCI).
+criterion (BIC).
 }
 \examples{
-span <- optimal.span(y)
 
-# dates need to be converted to standard notation using
-as.Date(my_dates)
+# Internal function only, should not be used stand-alone.
+# As such no documentation is provided.
 }
 \keyword{loess,}
 \keyword{series}

@@ -2,45 +2,64 @@
 % Please edit documentation in R/transition.dates.r
 \name{transition.dates}
 \alias{transition.dates}
-\title{Calculates transition dates on the upward (spring)
+\title{Calculates transition dates on the upward
 segments of a PhenoCam time series. This function
-should not be run stand-alone. The required input
-is a PhenoCam data file or data frame smoothed 
-with the smooth.ts() routine using the BCI
-optimized smoothing parameter}
+should not be run stand-alone. Use phenophases() instead!
+The required input is a smoothed PhenoCam data file or data frame.}
 \usage{
-transition.dates(df, lower.thresh = 0.2, upper.thresh = 0.8,
-  reverse = TRUE)
+transition.dates(df, lower.thresh = 0.1, middle.thresh = 0.25,
+  upper.thresh = 0.5, percentile = 90, reverse = FALSE, plot = FALSE)
 }
 \arguments{
 \item{df:}{a PhenoCam data file or data frame}
 
-\item{lower.thresh:}{the minimum threshold used 
-to determine the transition dates (default=0.2)}
+\item{percentile:}{which index to use for the calculation
+of transition dates}
+
+\item{lower.thresh:}{the minimum threshold used
+to determine the transition dates (default=0.1)}
+
+\item{middle.thresh:}{the middle threshold used
+to determine the transition dates (default=0.25)}
 
 \item{upper.thresh:}{the maximum threshold used
-to determine the transition dates (default=0.8)}
+to determine the transition dates (default=0.5)}
 
-\item{reverse:}{flip the direction of processing
+\item{percentile:}{which percentile time series to process
+(mean,50 75, 90)}
+
+\item{reverse:}{flip the direction of the processing
 if TRUE you calculate the senescence phase of the season}
+
+\item{plot:}{plot for debugging purposes}
 }
 \description{
-Calculates transition dates on the upward (spring)
+Calculates transition dates on the upward
 segments of a PhenoCam time series. This function
-should not be run stand-alone. The required input
-is a PhenoCam data file or data frame smoothed 
-with the smooth.ts() routine using the BCI
-optimized smoothing parameter
+should not be run stand-alone. Use phenophases() instead!
+The required input is a smoothed PhenoCam data file or data frame.
 }
 \examples{
 # with defaults, outputting a data frame of transition dates
 # for both the smoothed time series as well as the CI on this
 # smoothed time series
 
-my_dates <- transition.dates(df)
+# df = download.phenocam(site="harvard",
+#                        type="DB",
+#                        roi="1",
+#                        frequency=3)
+                       
+# df = utils::read.csv("harvard_DB_0001_1day_v4.csv")
+# my_dates = transition.dates(df,
+#                             lower.thresh = 0.1,
+#                             middle.thresh = 0.25,
+#                             upper.thresh = 0.5,
+#                             percentile = 90,
+#                             reverse = FALSE,
+#                             plot = FALSE)
 
 # dates need to be converted to standard notation using
-as.Date(my_dates)
+# as.Date(my_dates)
 }
 \keyword{PhenoCam,}
 \keyword{dates,}

@@ -8,20 +8,21 @@
 #' @keywords PhenoCam, outliers, smoothing, pre-processing
 #' @export
 #' @examples
+#' 
 #' # download demo data (do not detect outliers)
-#' download.phenocam(site="harvard",
-#'                   vegetation="DB",
-#'                   roi_id=1,
-#'                   frequency=3,
-#'                   outlier_detection=FALSE)
+#' # download.phenocam(site="harvard",
+#' #                   vegetation="DB",
+#' #                   roi_id=1,
+#' #                   frequency=3,
+#' #                 outlier_detection=FALSE)
 #' 
 #' # detect outliers in the downloaded file
-#' detect.outliers("harvard_DB_0001_1day.csv")
+#' # detect.outliers("harvard_DB_0001_1day.csv")
 #' 
-#' This function is rarely used stand-alone as it is called by the
-#' download.phenocam() function and does not serve any other purpose
-#' as it needs the outlier_flag_xxx field to work (and does not verify this).
-#' Use stand-alone at your own risk.
+#' # This function is rarely used stand-alone as it is called by the
+#' # download.phenocam() function and does not serve any other purpose
+#' # as it needs the outlier_flag_xxx field to work (and does not verify this).
+#' # Use stand-alone at your own risk.
 
 detect.outliers = function(data,iterations=10,vis=FALSE, snowflag=FALSE ){
   
@@ -43,7 +44,7 @@ detect.outliers = function(data,iterations=10,vis=FALSE, snowflag=FALSE ){
       header = readLines(data,n=22)
       
       # read the original data
-      df = read.table(data,header=T,sep=',')
+      df = utils::read.table(data,header=T,sep=',')
     }else{
       stop("not a valid PhenoCam data frame or file")
     }
@@ -119,7 +120,7 @@ detect.outliers = function(data,iterations=10,vis=FALSE, snowflag=FALSE ){
         span = optimal.span(gcc)
         
         # calculate fit using the optimal span / smoothing factor
-        fit = suppressWarnings(loess(gcc ~ as.numeric(dates), span = span))
+        fit = suppressWarnings(stats::loess(gcc ~ as.numeric(dates), span = span))
         
         # predict values using the fit
         pred = predict(fit,as.numeric(dates))
@@ -214,8 +215,8 @@ detect.outliers = function(data,iterations=10,vis=FALSE, snowflag=FALSE ){
     if(file.exists(data)){
       # write everything to file using append
       # write the original header first
-      write.table(header,data,quote=FALSE,row.names=FALSE,col.names=FALSE)
-      write.table(df,data,row.names=FALSE,col.names=TRUE,quote=FALSE,sep=",",append = TRUE)
+      utils::write.table(header,data,quote=FALSE,row.names=FALSE,col.names=FALSE)
+      utils::write.table(df,data,row.names=FALSE,col.names=TRUE,quote=FALSE,sep=",",append = TRUE)
     }
   } else {
     # if provided a data frame 

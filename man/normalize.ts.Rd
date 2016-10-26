@@ -2,24 +2,24 @@
 % Please edit documentation in R/normalize.ts.r
 \name{normalize.ts}
 \alias{normalize.ts}
-\title{Normalize time series, between 0-1 to to standardize
+\title{Normalize PhenoCam time series, between 0-1 to to standardize
 further processing, independent of the relative amplitude
-of the time series}
+of the time series (works on vectors not data frames)}
 \usage{
-normalize.ts(df)
+normalize.ts(df, percentile = 90)
 }
 \arguments{
-\item{df:}{a PhenoCam data file or data frame}
+\item{df:}{a PhenoCam data frame}
 }
 \description{
-Normalize time series, between 0-1 to to standardize
+Normalize PhenoCam time series, between 0-1 to to standardize
 further processing, independent of the relative amplitude
-of the time series
+of the time series (works on vectors not data frames)
 }
 \examples{
-# with defaults, outputting a data frame
-# with normalized values (0-1), overwriting the original
-df <- normalize.ts(df)
+
+# Internal function only, should not be used stand-alone.
+# As such no documentation is provided.
 }
 \keyword{phenocam}
 \keyword{series,}
