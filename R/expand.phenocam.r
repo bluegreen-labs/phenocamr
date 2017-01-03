@@ -19,6 +19,7 @@
 #' # contract.phenocam()
 
 expand.phenocam = function(df) {
+  
   # check validaty of the input
   if (is.data.frame(df)) {
     stop("not a PhenoCam data file")

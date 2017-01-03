@@ -1,6 +1,20 @@
 # phenocamr shiny interface / server back-end
 # see matching ui.R code for formatting
 
+library(jsonlite)
+library(DT)
+library(shiny)
+library(shinydashboard)
+library(changepoint)
+library(zoo)
+library(leaflet)
+
+files = list.files("/data/Dropbox/Research_Projects/code_repository/bitbucket/phenocamr/R/","*.r",full.names = TRUE)
+
+for (i in files){
+  source(i)
+}
+
 # create temporary directory and move into it
 if (!dir.exists("~/phenocam_data")) {
   dir.create("~/phenocam_data")
@@ -51,10 +65,10 @@ metadata = fromJSON("https://phenocam.sr.unh.edu/webcam/network/siteinfo/")
 
 # use gridded (daymet / worldclim) data in case of missing site specific MAT / MAP
 metadata$MAT = ifelse(is.na(metadata$MAT_site),
-                      metadata$MAT_gridded,
+                      metadata$MAT_worldclim,
                       metadata$MAT_site)
 metadata$MAP = ifelse(is.na(metadata$MAP_site),
-                      metadata$MAP_gridded,
+                      metadata$MAP_worldclim,
                       metadata$MAP_site)
 
 # what variables do I retain
@@ -163,17 +177,21 @@ server = function(input, output, session) {
     total_sites = length(unique(table$site))
     
     output$site_count = renderInfoBox({
-    valueBox(total_sites,
-               "Sites",
-               icon = icon("list"),
-               color = "blue")
+    infoBox("Sites",
+            total_sites,
+            icon = icon("list"),
+            color = "blue",
+            fill = TRUE
+            )
     })
     
     output$year_count = renderInfoBox({
-    valueBox(total_site_years,
-               "Site Years",
-               icon = icon("list"),
-               color = "blue")
+    infoBox("Site Years",
+            total_site_years,
+            icon = icon("list"),
+            color = "blue",
+            fill = TRUE
+            )
     })
   }
   
@@ -596,7 +614,8 @@ server = function(input, output, session) {
         x = 0,
         y = 0,
         text = "NO DATA - SELECT A (DIFFERENT) SITE",
-        mode = "text"
+        mode = "text",
+        textfont = list(color = '#000000', size = 16)
       ) %>% 
         layout(xaxis = ax, yaxis = ax)
       
@@ -743,6 +762,7 @@ server = function(input, output, session) {
               name = "Gcc",
               showlegend = TRUE
             ) %>%
+            
             # SOS spring
             # 10%
             add_trace(
@@ -752,7 +772,8 @@ server = function(input, output, session) {
               mode = "markers",
               type = "scatter",
               marker = list(color = "#7FFF00", symbol = "circle"),
-              name = sprintf("SOS (%s%%)",lower.thresh*100)
+              name = "SOS (10%)",
+              showlegend = TRUE
             ) %>%
             add_segments(x = ~ as.Date(transition_10_lower_ci),
                          xend = ~ as.Date(transition_10_upper_ci),
@@ -769,7 +790,7 @@ server = function(input, output, session) {
               type = "scatter",
               marker = list(color = "#66CD00", symbol = "square"),
               showlegend = TRUE,
-              name = sprintf("SOS (%s%%)",middle.thresh*100)
+              name = "SOS (25%)"
             ) %>%
             add_segments(x = ~ as.Date(transition_25_lower_ci),
                          xend = ~ as.Date(transition_25_upper_ci),
@@ -786,7 +807,7 @@ server = function(input, output, session) {
               type = "scatter",
               marker = list(color = "#458B00", symbol = "diamond"),
               showlegend = TRUE,
-              name = sprintf("SOS (%s%%)",upper.thresh*100)
+              name = "SOS (50%)"
             ) %>%
             add_segments(x = ~ as.Date(transition_50_lower_ci),
                          xend = ~ as.Date(transition_50_upper_ci),
@@ -806,7 +827,7 @@ server = function(input, output, session) {
               type = "scatter",
               marker = list(color = "#FFB90F", symbol = "diamond"),
               showlegend = TRUE,
-              name = sprintf("EOS (%s%%)",upper.thresh*100)
+              name = "EOS (50%)"
             ) %>%
             add_segments(x = ~ as.Date(transition_50_lower_ci),
                          xend = ~ as.Date(transition_50_upper_ci),
@@ -823,7 +844,7 @@ server = function(input, output, session) {
               type = "scatter",
               marker = list(color = "#CD950C", symbol = "square"),
               showlegend = TRUE,
-              name = sprintf("EOS (%s%%)",middle.thresh*100)
+              name = "EOS (25%)"
             ) %>%
             add_segments(x = ~ as.Date(transition_25_lower_ci),
                          xend = ~ as.Date(transition_25_upper_ci),
@@ -839,7 +860,7 @@ server = function(input, output, session) {
               mode = "markers",
               marker = list(color = "#8B6508", symbol = "circle"),
               showlegend = TRUE,
-              name = sprintf("EOS (%s%%)",lower.thresh*100)
+              name = "EOS (10%)"
             ) %>%
             add_segments(x = ~ as.Date(transition_10_lower_ci),
                          xend = ~ as.Date(transition_10_upper_ci),
@@ -952,7 +973,8 @@ server = function(input, output, session) {
               x = 0,
               y = 0,
               text = "TOO FEW (<9) DATES FOR MEANINGFUL REGRESSION ANALYSIS",
-              mode = "text"
+              mode = "text",
+              textfont = list(color = '#000000', size = 16)
             ) %>% layout(xaxis = ax, yaxis = ax)
           } else {
             

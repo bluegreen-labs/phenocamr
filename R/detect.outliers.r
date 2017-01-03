@@ -4,7 +4,10 @@
 #' 
 #' @param data: PhenoCam data frame or filename
 #' @param iterations: number of itterations over which to cycle to detect outliers ()
+#' @param grvi: reverse the direction of the screening intervals
+#' to accomodate for GRVI outliers
 #' @param vis: visualize the process, mostly for debugging (TRUE / FALSE)
+#' @param snowflag: integrate snow flags?
 #' @keywords PhenoCam, outliers, smoothing, pre-processing
 #' @export
 #' @examples
@@ -24,7 +27,11 @@
 #' # as it needs the outlier_flag_xxx field to work (and does not verify this).
 #' # Use stand-alone at your own risk.
 
-detect.outliers = function(data,iterations=10,vis=FALSE, snowflag=FALSE ){
+detect.outliers = function(data,
+                           iterations=10,
+                           grvi=FALSE,
+                           vis=FALSE,
+                           snowflag=FALSE ){
   
   # specify the double exponential (laplace) distribution 
   # standard deviation function, used to screen outliers
@@ -57,8 +64,15 @@ detect.outliers = function(data,iterations=10,vis=FALSE, snowflag=FALSE ){
   month = as.numeric(format(as.Date(df$date),"%m"))
   df$year = as.numeric(format(as.Date(df$date),"%Y")) # just to be sure overwrite year column
   
+  # which time series to evaluate
+  if (grvi == TRUE){
+    ts = c("grvi")
+  } else {
+    ts = c("mean",90,75,50)
+  }
+  
   # loop over gcc 90 / 75 / 50 time series
-  for (k in c("mean",90,75,50)){
+  for (k in ts){
 
     # loop over all years to calculate outliers in each year
     for (i in unique(df$year)){
@@ -109,8 +123,13 @@ detect.outliers = function(data,iterations=10,vis=FALSE, snowflag=FALSE ){
         sigma = 4
       }
       
-      j = 1
+      # set sigma for grvi
+      if (grvi == TRUE){
+        sigma = 1
+      }
       
+      # set iterator for while loop
+      j = 1
       while (j < iterations){
         if (j == 1){
          gcc[selection] = NA
@@ -131,11 +150,17 @@ detect.outliers = function(data,iterations=10,vis=FALSE, snowflag=FALSE ){
         # get the difference
         gcc.dif = gcc.orig - gcc_smooth
 
-        # calculate outliers (up or down)
-        loc_up = which(gcc.dif > 2 * sigma  * daily.var )
-        loc_down = which(gcc.dif <=  sigma * -daily.var )
-        loc = c(loc_up,loc_down)
-
+        # calculate outliers (up or down), change direction of the
+        # assymetrical criteria for the GRVI (outliers are upward)
+        if (grvi == FALSE){
+          loc_up = which(gcc.dif > 2 * sigma  * daily.var )
+          loc_down = which(gcc.dif <=  sigma * -daily.var )
+          loc = c(loc_up,loc_down)
+        } else {
+          loc_up = which(gcc.dif > sigma  * daily.var )
+          loc_down = which(gcc.dif <= sigma * -daily.var )
+          loc = c(loc_up,loc_down)
+        }
         # only retain last iteration values
         # in the next iteration
         gcc = gcc.orig # reset to original values
@@ -181,6 +206,10 @@ detect.outliers = function(data,iterations=10,vis=FALSE, snowflag=FALSE ){
       if (k == 50){
         df$outlierflag_gcc_50[df$year==i] = outliers[current.year.loc]
       }
+      if (k == "grvi"){
+        df$outlierflag_gcc_grvi[df$year==i] = outliers[current.year.loc]
+      }
+      
     } # loop over years
     
     # Bcc > Gcc (a sign of snow / weather contamination).

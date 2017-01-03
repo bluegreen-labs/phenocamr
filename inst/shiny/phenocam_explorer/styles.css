@@ -47,3 +47,19 @@ h1, h2, h3, h4, h5, h6 { font-weight: 400; }
 .leaflet-container {
   background-color: white;
 }
+
+/* infobox settings and styling */
+
+.info-box {
+	min-height: 60px;
+} 
+
+.info-box-icon {
+	height: 60px;
+	line-height: 60px;
+}
+
+.info-box-content {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}

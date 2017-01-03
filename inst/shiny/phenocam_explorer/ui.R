@@ -55,7 +55,7 @@ body <- dashboardBody(tags$head(tags$script(
     window.dispatchEvent(new Event('resize'));
     });
     function resizeMap(){
-    var h = window.innerHeight - $('.navbar').height() - 270; // Get dashboardBody height
+    var h = window.innerHeight - $('.navbar').height() - 225; // Get dashboardBody height
     $('#map').height(h);
     }
     function resizeTable(){
@@ -78,8 +78,8 @@ body <- dashboardBody(tags$head(tags$script(
         tabPanel(
           "Map & Site selection",icon = icon("globe"),
           fluidRow(
-            valueBoxOutput("site_count"),
-            valueBoxOutput("year_count"),
+            infoBoxOutput("site_count"),
+            infoBoxOutput("year_count"),
             column(4,
                    selectInput("colors", "Vegetation Type",vegtype))
           ),

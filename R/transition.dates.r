@@ -53,34 +53,32 @@ transition.dates = function(df,
                             reverse = FALSE,
                             plot = FALSE) {
   
-  # load the changepoint library needed
-  # to divide the time series in segments
-  # to be evaluated for seasonal dynamics
-  require(changepoint, quietly = TRUE)
-  
-  # error function
+  # error function, outputs empty data file
+  # in case of failure
   err_function = function() {
     
-    err_mat = matrix(NA, 1, 12)
+    err_mat = matrix(NA, 1, 14)
     
     # assign column names if not empty
-      colnames(err_mat) = c(
-        'gcc_value',
-        'start',
-        'middle',
-        'end',
-        'start_lower_ci',
-        'middle_lower_ci',
-        'end_lower_ci',
-        'start_upper_ci',
-        'middle_upper_ci',
-        'end_upper_ci',
-        'start_threshold',
-        'middle_threshold',
-        'end_threshold',
-        'min_gcc',
-        'max_gcc'
-      )
+    colnames(err_mat) =
+        c(
+          sprintf("transition_%s",lower.thresh*100),
+          sprintf("transition_%s",middle.thresh*100),
+          sprintf("transition_%s",upper.thresh*100),
+          sprintf("transition_%s_lower_ci",lower.thresh*100),
+          sprintf("transition_%s_lower_ci",middle.thresh*100),
+          sprintf("transition_%s_lower_ci",upper.thresh*100),  
+          sprintf("transition_%s_upper_ci",lower.thresh*100),
+          sprintf("transition_%s_upper_ci",middle.thresh*100),
+          sprintf("transition_%s_upper_ci",upper.thresh*100),  
+          sprintf("threshold_%s",lower.thresh*100),
+          sprintf("threshold_%s",middle.thresh*100),
+          sprintf("threshold_%s",upper.thresh*100),
+          'min_gcc',
+          'max_gcc'
+        )
+      
+      
     return(as.data.frame(err_mat))
   }
   
@@ -105,7 +103,7 @@ transition.dates = function(df,
   # sensitivity relative to high amplitude ones.
   
   multiplier = 5
-  seg_length = 21
+  seg_length = 14
   
   # if the data is not a data frame, load
   # the file (assuming it is a phenocam)
@@ -116,8 +114,6 @@ transition.dates = function(df,
       
       # read the original data
       df = read.table(df, header = T, sep = ',')
-      
-      # QUIT if not smooth data is present!!!
       
     } else{
       stop("not a valid PhenoCam data file")
@@ -142,8 +138,8 @@ transition.dates = function(df,
   raw_data = df[, which(colnames(df) == sprintf("gcc_%s", percentile))]
   
   # if the variability over the whole time series is too
-  # small, no pattern will be detected, output empty string
-  if (sd(raw_data, na.rm = TRUE) < 0.005) {
+  # small, no pattern will be detected, output empty data frame
+  if (sd(raw_data, na.rm = TRUE) < 0.004) {
     return(err_function())
   }
   
@@ -156,7 +152,7 @@ transition.dates = function(df,
   norm_data = norm_data * multiplier
   
   # Gcc values can't be within the range 0-1, causes
-  # trouble with the changepoint algorithm (divisions somewhere)
+  # trouble with the changepoint algorithm
   # multiply with a set factor
   # normalize the time series first - to avoid giving more weight
   # to series with more amplitude.
@@ -166,16 +162,21 @@ transition.dates = function(df,
   
   # put the dates in a separate vector
   date = as.Date(df$date)
-  
+
+  # switch the direction depending on the metric
+  # needed (forward = rising edge, reverse = falling edge)
   if (reverse == FALSE) {
-    cpt_obj = cpt.mean(
+    
+    cpt_obj = changepoint::cpt.mean(
       as.numeric(smooth),
       method = 'PELT',
       test.stat = 'Normal',
       minseglen = seg_length,
       param.estimates = TRUE
     )
-  } else{
+    
+  } else {
+    
     # reverse all input data
     lower = rev(lower)
     upper = rev(upper)
@@ -183,13 +184,15 @@ transition.dates = function(df,
     date = rev(date)
     smooth_orig = rev(smooth_orig)
     raw_data = rev(raw_data)
-    cpt_obj = cpt.mean(
+    
+    cpt_obj = changepoint::cpt.mean(
       as.numeric(rev(smooth)),
       method = 'PELT',
       test.stat = 'Normal',
       minseglen = seg_length,
       param.estimates = TRUE
     )
+
   }
   
   # deconstruct the changepoint object into
@@ -323,17 +326,16 @@ transition.dates = function(df,
     offset = start
     breakpoint = pbreaks[i]
   
-    low_loc = which(index_segment <= breakpoint &
-                    is.na(int_flag_segment))
+    # only use values before and after the breakpoint
+    # to evaluate the quantiles to set boundaries for the amplitude
+    low_loc = which(index_segment <= breakpoint) # & is.na(int_flag_segment))
+    high_loc = which(index_segment >= breakpoint) # & is.na(int_flag_segment))
     
-    high_loc = which(index_segment >= breakpoint &
-                    is.na(int_flag_segment))
-    
-    # calculate segment amplitude
+    # calculate segment amplitude (normalized)
     low_gcc = quantile(segment[low_loc], 0.5, na.rm = TRUE)
     high_gcc = quantile(segment[high_loc], 0.9, na.rm = TRUE)
     
-    # original values to report
+    # original values to report in output
     low_gcc_orig = quantile(segment_orig[low_loc], 0.5 ,na.rm = TRUE)
     high_gcc_orig = quantile(segment_orig[high_loc], 0.9 ,na.rm = TRUE)
     
@@ -356,7 +358,7 @@ transition.dates = function(df,
   
     min_loc = index_segment[which(segment == min(segment[index_segment <= breakpoint]))]
     max_loc = index_segment[which(segment == max(segment[index_segment >= breakpoint]))]
-      
+    
     # end of season
     eos_loc = suppressWarnings(min(
       which(
@@ -407,10 +409,13 @@ transition.dates = function(df,
       if (!is.na(int_flag[eos_loc])) {
         # find the min max values on either side of the
         # date
-        eos_lower_loc = min(index_segment[which(index_segment >= eos_loc &
-                                                  is.na(int_flag_segment))])
-        eos_upper_loc = max(index_segment[which(index_segment <= eos_loc &
-                                                  is.na(int_flag_segment))])
+        #eos_lower_loc = min(index_segment[which(index_segment >= eos_loc &
+        #                                          is.na(int_flag_segment))])
+        # eos_upper_loc = max(index_segment[which(index_segment <= eos_loc &
+        #                                           is.na(int_flag_segment))])
+        
+        eos_lower_loc = min(index[which(index >= eos_loc & is.na(int_flag))])
+        eos_upper_loc = max(index[which(index <= eos_loc & is.na(int_flag))])
         
       } else {
         eos_lower_loc = min(index_segment[which(
@@ -425,13 +430,18 @@ transition.dates = function(df,
             index_segment < max_loc
         )])
       }
-      
+
       # middle of the season
       if (!is.na(int_flag[mos_loc])) {
-        mos_lower_loc = min(index_segment[which(index_segment >= mos_loc &
-                                                  is.na(int_flag_segment))])
-        mos_upper_loc = max(index_segment[which(index_segment <= mos_loc &
-                                                  is.na(int_flag_segment))])        
+        # mos_lower_loc = min(index_segment[which(index_segment >= mos_loc &
+        #                                           is.na(int_flag_segment))])
+        # mos_upper_loc = max(index_segment[which(index_segment <= mos_loc &
+        #                                           is.na(int_flag_segment))])
+        
+        mos_lower_loc = min(index[which(index >= mos_loc & is.na(int_flag))])
+        mos_upper_loc = max(index[which(index <= mos_loc & is.na(int_flag))]) 
+        
+        
       } else {
         mos_lower_loc = min(index_segment[which(
           lower_segment >= middle_threshold &
@@ -448,10 +458,15 @@ transition.dates = function(df,
       
       # start of the season
       if (!is.na(int_flag[sos_loc])) {
-        sos_lower_loc = min(index_segment[which(index_segment >= sos_loc &
-                                                  is.na(int_flag_segment))])
-        sos_upper_loc = max(index_segment[which(index_segment <= sos_loc &
-                                                  is.na(int_flag_segment))])
+        
+        # sos_lower_loc = min(index_segment[which(index_segment >= sos_loc &
+        #                                           is.na(int_flag_segment))])
+        # sos_upper_loc = max(index_segment[which(index_segment <= sos_loc &
+        #                                           is.na(int_flag_segment))])
+        
+        sos_lower_loc = min(index[which(index >= sos_loc & is.na(int_flag))])
+        sos_upper_loc = max(index[which(index <= sos_loc & is.na(int_flag))])
+        
       } else {
         
         sos_lower_loc = min(index_segment[which(
@@ -528,12 +543,12 @@ transition.dates = function(df,
                x1=as.Date(date[c(mos_upper_loc,eos_upper_loc,sos_upper_loc)]),
                y0=smooth_orig[c(mos_loc,eos_loc, sos_loc)],
                y1=smooth_orig[c(mos_loc,eos_loc, sos_loc)],
-               lwd=2
+               lwd=3
                )
       
       abline(h=low_gcc_orig)
       abline(h=high_gcc_orig)
-      abline(v=as.Date(date[pbreaks]))
+      abline(v=as.Date(date[pbreaks]), lty = 2)
     }
     
   }

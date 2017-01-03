@@ -13,19 +13,23 @@
 snow.flag = function(df) {
   # read file if not a data frame
   if (!is.data.frame(df)) {
-    phenocam_data = read.table(df, header = T, sep = ',')
+    filename = df
+    df = read.table(df, header = T, sep = ',')
+    dfcheck = FALSE
+  } else {
+    dfcheck = TRUE
   }
   
   # include this in the data part of the package, good for now
   snow_data = read.table(
-    '/data/Dropbox/Research_Projects/working/FOV_crunch/snow_data_final.csv',
+    '/data/Dropbox/Research_Projects/working/data_paper/data/snow_data_final.csv',
     sep = ',',
     header = T
   )
   
   # extract the site name from an image filename
   mysite = unlist(lapply(strsplit(
-    as.character(phenocam_data$midday_filename), "_"
+    as.character(df$midday_filename), "_"
   )[1], "[[", 1))
   
   # subset site snow data
@@ -39,23 +43,23 @@ snow.flag = function(df) {
   # get image dates
   phenocam_dates = as.Date(df$date, "%Y-%m-%d")
   
-  for (k in ss_dates) {
+  for (k in snow_subset_dates) {
     value = snow_subset$snow_majority_text[which(snow_subset_dates %in% k)]
-    phenocam_data$snow_flag[which(phenocam_dates %in% k)] = value
+    df$snow_flag[which(phenocam_dates %in% k)] = value
   }
   
-  if (is.data.frame(df)) {
-    return(phenocam_data)
+  if (dfcheck) {
+    return(df)
   } else{
     # get colnames
-    phenocam_colnames = names(phenocam_data)
+    phenocam_colnames = names(df)
     phenocam_colnames = matrix(phenocam_colnames, 1, length(phenocam_colnames))
     
     # pluck real header from the phenocam file
-    phenocam_header = readLines(df, n = 22)
+    phenocam_header = readLines(filename, n = 22)
     
     # create output filename string
-    output_file_name = sprintf("%s.csv", unlist(strsplit(df, ".csv")))
+    output_file_name = sprintf("%s.csv", unlist(strsplit(filename, ".csv")))
     
     # write everything to file using append
     write.table(
@@ -79,7 +83,7 @@ snow.flag = function(df) {
       sep = ","
     )
     write.table(
-      phenocam_data,
+      df,
       output_file_name,
       quote = F,
       row.names = F,

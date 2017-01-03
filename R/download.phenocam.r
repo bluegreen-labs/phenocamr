@@ -54,19 +54,21 @@ download.phenocam = function(site="bartlett",
   # this excludes any geographic constraints
   
   if (!is.null(site)){
+    
     if (is.null(vegetation)){ 
-      loc = grep(sprintf("%s",site),site.list$site)
+      loc = grep(site,site.list$site)
     }else{
+      
       if (!is.null(roi_id)){
         
         # list only particular vegetation types and rois
-        loc = which( grep(sprintf("%s",site),site.list$site) && site.list$veg_type %in% vegetation &&
+        loc = which( grepl(site,site.list$site) & site.list$veg_type %in% vegetation &
                       site.list$roi_id_number %in% roi_id)
         
       }else{
         
         # list only vegetation types for all rois
-        loc = which( grep(sprintf("%s",site),site.list$site) && site.list$veg_type %in% vegetation)
+        loc = which( grepl(site,site.list$site) & site.list$veg_type %in% vegetation)
         
       }
     }
@@ -78,12 +80,12 @@ download.phenocam = function(site="bartlett",
     
     if (is.null(vegetation) | vegetation == "all"){
       # list all data within a geographic region
-      loc = which(site.list$lat < top_left[1] && site.list$lat > bottom_right[1] &&
-                   site.list$lon > top_left[2] && site.list$lon < bottom_right[2])
+      loc = which(site.list$lat < top_left[1] & site.list$lat > bottom_right[1] &
+                   site.list$lon > top_left[2] & site.list$lon < bottom_right[2])
     }else{
       # list only a particular vegetation type within a geographic region
-      loc = which(site.list$lat < top_left[1] && site.list$lat > bottom_right[1] &&
-                   site.list$lon > top_left[2] && site.list$lon < bottom_right[2] &&
+      loc = which(site.list$lat < top_left[1] & site.list$lat > bottom_right[1] &
+                   site.list$lon > top_left[2] & site.list$lon < bottom_right[2] &
                     site.list$veg_type %in% vegetation)
     }
   }
