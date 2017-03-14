@@ -5,34 +5,35 @@
 #'
 #' @param site : the site name, as mentioned on the PhenoCam web page.
 #' @param vegetation : vegeation type (DB, EN, ... default = ALL)
-#' @param frequency : frequency of the PhenoCam time series product, in days (1,3, "raw" are allowed)
-#' @param roi_id: the id of the ROI to download, if not specified download all
-#' @param top_lef: latitude, longitude tupple as a vector c(45.5, -80), requires bottom_right
-#' @param bottom_right: latitude, longitude tupple as a vector c(45.5, -80), requires top_left
-#' @param smooth: smooth data for future plotting (TRUE / FALSE, default is TRUE)
-#' @param daymet : TRUE or FALSE, if true merges the daymet data at the location (only for frequency 1 and 3)
-#' @param trim_daymet: TRUE or FALSE, if TRUE only download Daymet data for the dates matching the Gcc data. 
-#' If FALSE, I provide the whole Daymet series (for modelling spin-up purposes).
+#' @param frequency : frequency of the time series product (1,3, "raw")
+#' @param roi_id: the id of the ROI to download (default = ALL)
+#' @param top_lef: latitude, longitude tupple as a vector c(45.5, -80)
+#' @param bottom_right: latitude, longitude tupple as a vector c(45.5, -80)
+#' @param smooth: smooth data (TRUE / FALSE, default is TRUE)
+#' @param daymet : TRUE or FALSE, merges the daymet data
+#' @param trim_daymet: TRUE or FALSE, trims data to match PhenoCam data
 #' @param outlier_detection: TRUE or FALSE, detect outliers
-#' @param phenophase: TRUE or FALSE, calculate threshold based phenological transition dates (this will generate a non standard product)
+#' @param phenophase: TRUE or FALSE, calculate transition dates
 #' @keywords PhenoCam, Daymet, climate data, modelling
 #' @export
 #' @examples
 #' 
+#' \dontrun{
 #' # download the first ROI time series for the Harvard PhenoCam site
 #' # and an aggregation frequency of 3-days.
-#' # download.phenocam(site="harvard",
-#' #                   vegetation="DB",
-#' #                   roi_id=1,
-#' #                   frequency=3)
+#' download.phenocam(site = "harvard",
+#'                   vegetation = "DB",
+#'                   roi_id = 1,
+#'                   frequency = 3)
 #'                   
 #' # download all Harvard Forest deciduous broadleaf sites using
 #' # geographic constraints.
-#' # download.phenocam(vegetation="DB",
-#' #                   roi_id=1,
-#' #                   frequency=3,
-#' #                   top_left=c(42.545657, -72.197524),
-#' #                   bottom_right=c(42.527079, -72.158128))
+#' download.phenocam(vegetation = "DB",
+#'                   roi_id  =1,
+#'                   frequency = 3,
+#'                   top_left = c(42.545657, -72.197524),
+#'                   bottom_right = c(42.527079, -72.158128))
+#' }
 
 download.phenocam = function(site="bartlett",
                              vegetation=NULL,

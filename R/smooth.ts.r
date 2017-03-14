@@ -7,23 +7,25 @@
 #' @export
 #' @examples
 #'
+#' \dontrun{
 #' # with defaults, outputting a data frame
 #' # with smoothed values, overwriting the original
 #'
 #' # download demo data (do not smooth)
-#' # download.phenocam(site="harvard",
-#' #                   vegetation="DB",
-#' #                  roi_id=1,
-#' #                   frequency=3,
-#' #                  smooth=FALSE)
+#' download.phenocam(site="harvard",
+#'                   vegetation="DB",
+#'                   roi_id=1,
+#'                   frequency=3,
+#'                   smooth=FALSE)
 #'
 #' # smooth the downloaded file (and overwrite the original)
-#' # smooth.ts("harvard_DB_0001_1day.csv")
+#' smooth.ts("harvard_DB_0001_1day.csv")
 #'
 #' # the function also works on a PhenoCam data frame
 #' # but you will lose the extensive header in the process
-#' # df = read.csv("harvard_DB_0001_1day.csv")
-#' # df = smooth.ts(df)
+#' df = read.csv("harvard_DB_0001_1day.csv")
+#' df = smooth.ts(df)
+#' }
 
 smooth.ts = function(df,
                      metrics = c("gcc_mean",
@@ -131,12 +133,11 @@ smooth.ts = function(df,
       values, maxgap = maxgap, na.rm = FALSE
     )))
     
+    # also find the short gaps (inverse long gaps)
+    # to smooth spikes
     short_na = which(!is.na(zoo::na.approx(
       values, maxgap = maxgap, na.rm = FALSE
     )))
-    
-    # also find the short gaps (inverse long gaps)
-    # to smooth spikes
     short_na = which(short_na %in% is.na(values))
     
     # this routine takes care of gap filling large gaps

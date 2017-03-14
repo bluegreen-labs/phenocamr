@@ -8,9 +8,11 @@
 #' @export
 #' @examples
 #' 
+#' \dontrun{
 #' # calcualte the hours of sunlight and solar elevation on day of year 1
-#' # ephem = daylength(1,51)
-#' # print(ephem)
+#' ephem = daylength(1,51)
+#' print(ephem)
+#' }
 
 daylength = function(doy, latitude) {
   

@@ -11,6 +11,7 @@
 #' # As such no documentation is provided.
 
 snow.flag = function(df) {
+  
   # read file if not a data frame
   if (!is.data.frame(df)) {
     filename = df

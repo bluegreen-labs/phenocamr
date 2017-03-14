@@ -7,26 +7,30 @@
 #' @param veg_type: a PhenoCam data file or data frame
 #' @param roi_id: a PhenoCam data file or data frame
 #' @param frequency: a PhenoCam data file or data frame
+#' @param mat: mean annual temperature
 #' @param output: a PhenoCam data file or data frame
+#' @param output_dir: output directory
 #' @keywords PhenoCam, transition dates, phenology, time series
 #' @export
 #' @examples
 #'
+#' \dontrun{
 #' # downloads a time series for Bartlett Forest data and calculates
 #' # the matching phenophases.
 #' # Outputs a nested list of phenophases dates
 #' # where location [[1]] holds the greenup dates and location
 #' # [[2]] the greendown dates
 #'
-#' # df = download.phenocam(site="harvard",
-#' #                        type="DB",
-#' #                        roi="1",
-#' #                        frequency=3)
-#' # df = read.csv("harvard_DB_0001_1day.csv")
-#' # my_dates = phenophases(df,output=FALSE)
+#' df = download.phenocam(site="harvard",
+#'                        type="DB",
+#'                        roi="1",
+#'                        frequency=3)
+#' df = read.csv("harvard_DB_0001_1day.csv")
+#' my_dates = phenophases(df,output=FALSE)
 #'
 #' # dates need to be converted to standard notation using
 #' # as.Date(my_dates)
+#' }
 
 phenophases = function(df,
                         sitename=NULL,
@@ -34,7 +38,6 @@ phenophases = function(df,
                         roi_id=NULL,
                         frequency=NULL,
                         mat = NULL,
-                        latitude = NULL,
                         output = FALSE,
                         out_dir=getwd()){
 
@@ -82,6 +85,13 @@ phenophases = function(df,
   # set threshold values
   mat_threshold = 10
 
+  # if no mean annual temperature is provided
+  # set to the threshold value, invalidating
+  # further screening
+  if (is.null(mat)){
+    mat = mat_threshold
+  }
+  
   # calculate rising greenness transtions dates
   # all percentiles
   for ( i in c(90,75,50,"mean") ){
@@ -90,8 +100,7 @@ phenophases = function(df,
     tmp = transition.dates(df,
                            reverse=FALSE,
                            percentile=i,
-                           frequency = frequency,
-                           latitude = latitude)
+                           frequency = frequency)
     
     # screen for false rising parts
     loc = strptime(as.Date(tmp$transition_10, origin = "1970-01-01"),"%Y-%m-%d")$yday
@@ -117,11 +126,9 @@ phenophases = function(df,
     tmp = transition.dates(df,
                            reverse=TRUE,
                            percentile=i,
-                           frequency = frequency,
-                           latitude = latitude)
+                           frequency = frequency)
     
     # screen for false falling curves
-    # NOTE SHOULD BECOME HEMISPHERE SENSITIVE
     loc = strptime(as.Date(tmp$transition_10, origin = "1970-01-01"),
                    "%Y-%m-%d")$yday
     l = which(loc > 30 & loc < 240)
@@ -153,7 +160,6 @@ phenophases = function(df,
 
     # bind spring and fall phenology data in a coherent format
     phenology = rbind(rising,falling)
-    print(phenology)
 
     # get the nr rows for each run
     rising_length = dim(rising)[1]

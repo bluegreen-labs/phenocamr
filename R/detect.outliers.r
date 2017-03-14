@@ -13,20 +13,22 @@
 #' @export
 #' @examples
 #'
+#' \dontrun{
 #' # download demo data (do not detect outliers)
-#' # download.phenocam(site="harvard",
-#' #                   vegetation="DB",
-#' #                   roi_id=1,
-#' #                   frequency=3,
-#' #                 outlier_detection=FALSE)
+#' download.phenocam(site = "harvard",
+#'                   vegetation = "DB",
+#'                   roi_id = 1,
+#'                   frequency = 3,
+#'                   outlier_detection = FALSE)
 #'
 #' # detect outliers in the downloaded file
-#' # detect.outliers("harvard_DB_0001_1day.csv")
+#' detect.outliers("harvard_DB_0001_1day.csv")
 #'
 #' # This function is rarely used stand-alone as it is called by the
 #' # download.phenocam() function and does not serve any other purpose
 #' # as it needs the outlier_flag_xxx field to work (and does not verify this).
 #' # Use stand-alone at your own risk.
+#' }
 
 detect.outliers = function(data,
                            iterations=20,

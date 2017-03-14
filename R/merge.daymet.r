@@ -6,12 +6,15 @@
 #' @keywords time series, PhenoCam, Daymet, data integration
 #' @export
 #' @examples
+#' 
+#' \dontrun{
 #' # download demo data (do not smooth)
-#' # download.phenocam(site="harvard",
-#' #                   vegetation="DB",
-#' #                   roi_id=1,
-#' #                   frequency=3)
-#' #  merge.daymet("harvard_DB_0001_1day.csv")
+#' download.phenocam(site = "harvard",
+#'                   vegetation = "DB",
+#'                   roi_id = 1,
+#'                   frequency = 3)
+#' merge.daymet("harvard_DB_0001_1day.csv")
+#' }
 
 merge.daymet  = function(df,trim_daymet=FALSE){
   

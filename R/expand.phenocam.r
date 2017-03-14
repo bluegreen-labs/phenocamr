@@ -10,15 +10,17 @@
 #' @export
 #' @examples
 #'
-#' # df = download.phenocam(site="harvard",
-#' #                        type="DB",
-#' #                        roi="1",
-#' #                        frequency=3)
+#' \dontrun{
+#' df = download.phenocam(site = "harvard",
+#'                        type = "DB",
+#'                        roi = "1",
+#'                        frequency = 3)
 #'
 #' # expand.phenocam("harvard_DB_0001_1day.csv")
 #' # overwrites the original file, increasing
 #' # it's file size. shrink the file using
-#' # contract.phenocam()
+#' contract.phenocam()
+#' }
 
 expand.phenocam = function(df, truncate = NULL) {
   
