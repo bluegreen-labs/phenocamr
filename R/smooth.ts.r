@@ -25,7 +25,7 @@
 #' # df = read.csv("harvard_DB_0001_1day.csv")
 #' # df = smooth.ts(df)
 
-smooth.ts.corr = function(df,
+smooth.ts = function(df,
                      metrics = c("gcc_mean",
                                  "gcc_50",
                                  "gcc_75",
@@ -80,7 +80,7 @@ smooth.ts.corr = function(df,
   # create convenient date vector
   # (static for all data)
   dates = as.Date(df$date)
-
+  
   # create output matrix
   output = matrix(NA, length(dates), length(metrics) * 2 + 1)
   output = as.data.frame(output)
@@ -106,7 +106,7 @@ smooth.ts.corr = function(df,
     # if the metric is gcc / grvi based
     if (grepl("gcc", i) || i == "grvi") {
       outliers = df[, which(colnames(df) == "snow_flag")]
-      values[outliers == 1] = NA
+      #values[df$snow_flag == 1] = NA
     }
 
     # create yearly mean values and fill in time series
@@ -118,29 +118,46 @@ smooth.ts.corr = function(df,
     # to use to fill these gaps later
     na_orig = which(is.na(values))
 
-    # na locations (default locations for 3day product)
+    # na locations (default locations for 3-day product)
     # this to prevent inflation of the number of true
     # values in the 3-day product
     loc = seq(2,366,3)
     loc = (df$doy %in% loc)
-
+    
+    # Calculate the locations of long NA gaps.
+    # (find remaining NA values after interpolation,
+    # limited to 2 weeks in time)
+    long_na = which(is.na(zoo::na.approx(
+      values, maxgap = maxgap, na.rm = FALSE
+    )))
+    
+    short_na = which(!is.na(zoo::na.approx(
+      values, maxgap = maxgap, na.rm = FALSE
+    )))
+    
+    # also find the short gaps (inverse long gaps)
+    # to smooth spikes
+    short_na = which(short_na %in% is.na(values))
+    
     # this routine takes care of gap filling large gaps
     # using priors derived from averaging values across
     # years or linearly interpolating. The averaging over
     # years is needed to limit artifacts at the beginning
     # and end of cycles in subsequent phenophase extraction
     if (nr_years >= 2) {
+      
       # used to be 3, fill values using those of the remaining year
 
       # calculate the mean values for locations
       # where there are no values across years
-      fill_values = by(values,INDICES = df$doy, mean,na.rm = TRUE)
+      fill_values = by(values,INDICES = df$doy, mean, na.rm = TRUE)
       doy_fill_values = as.numeric(names(fill_values))
-      doy_na = df$doy[na_orig]
-
+      #doy_na = df$doy[na_orig]
+      doy_na = df$doy[long_na]
+      
       # calculate the interpolated data based on
       # the whole dataset
-      int_data = lapply(doy_na,
+      int_data = unlist(lapply(doy_na,
                     function(x,...) {
                       fv = fill_values[which(doy_fill_values == x)]
                       if (length(fv) == 0) {
@@ -148,13 +165,17 @@ smooth.ts.corr = function(df,
                       }else{
                         return(fv)
                       }
-                    })
-
+                    }))
+      
       # gap fill the original dataset using
       # the interpolated values
       gap_filled_prior = values
-      gap_filled_prior[na_orig] = unlist(int_data)
-      #gap_filled_linear = gap_filled_prior
+      #gap_filled_prior[na_orig] = int_data
+      gap_filled_prior[long_na] = int_data
+      
+      # reset NA short sections to NA and interpolate these linearly
+      # only long NA periods merit using priors
+      gap_filled_prior[short_na] = NA
       gap_filled_linear = zoo::na.approx(gap_filled_prior, na.rm = FALSE)
 
       # the above value should be independent of the ones used in the carry
@@ -194,65 +215,32 @@ smooth.ts.corr = function(df,
     # to calculate the ideal fit, down weighing those areas
     # which were interpolated
 
-    # Calculate the locations of long NA gaps.
-    # (find remaining NA values after interpolation,
-    # limited to 2 weeks in time)
-    long_na = which(is.na(zoo::na.approx(
-      values, maxgap = maxgap, na.rm = FALSE
-    )))
-
-    # weigh monotenous rising / falling points more
-    # to constrain the curve to the most dynamic
-    # parts first
-    mw = 5
-
-    # rising
-    rising = diff(gap_filled ) > 0
-    rising[is.na(rising)] = 0
-    rising[rising == FALSE] = 0
-    rising[rising == TRUE] = 1
-    rising = zoo::rollapply(rising,mw,function(x){
-      if(sum(x) == mw){
-        1
-      }else {
-        0
-      }}, fill = 0)
-
-    # falling
-    falling = diff(gap_filled ) < 0
-    falling[is.na(falling)] = 0
-    falling[falling == FALSE] = 0
-    falling[falling == TRUE] = 1
-    falling = zoo::rollapply(falling,mw,function(x){
-      if(sum(x) == mw){
-        1
-      }else {
-        0
-      }}, fill = 0)
-
-    # combine rising and falling dynamics
-    # these value locations can be used to
-    # weigh continuously rising/falling sections
-    # more in order to constrain the smoothing
-    # spline (not used by default)
-    shape_constraints = rising + falling
-
     # create weight vector
     weights = rep(1,length(values))
-    weights[na_orig] = 0.0001 # PARAMETER
-
+    weights[na_orig] = 0.001
+    
     # smooth input series for plotting
     # set locations to NA which would otherwise not exist in the
     # 3-day product, as not to inflate the number of measurements
     if (freq == 3){
+      
+      optim.span = optimal.span(x = as.numeric(dates[loc]),
+                                y = gap_filled[loc],
+                                plot = FALSE) # plot for debugging
+      
+      fit = loess(gap_filled[loc] ~ as.numeric(dates[loc]),
+                  span = optim.span,
+                  weights = weights[loc])
 
-      optim.span = optimal.span(gap_filled[loc], weights = weights[loc])
-      fit = loess(gap_filled[loc] ~ as.numeric(dates[loc]), span = optim.span, weights = weights[loc])
+    } else { # 1-day product
 
-    } else {
+      optim.span = optimal.span(x = as.numeric(dates),
+                                y = gap_filled,
+                                plot = FALSE) # plot for debugging
 
-      optim.span = optimal.span(gap_filled, weights = weights)
-      fit = loess(gap_filled ~ as.numeric(dates), span = optim.span, weights = weights)
+      fit = loess(gap_filled ~ as.numeric(dates),
+                  span = optim.span,
+                  weights = weights)
 
     }
 
@@ -278,22 +266,15 @@ smooth.ts.corr = function(df,
     # (consider setting those to NA, although this
     # might mess up plotting routines)
     values_ci[long_na] = 0.02 # previously 0 now 0.02
-
-    # skip further processing if the sum of the
-    # differences between the true data and the
-    # smooth data is 0, an indication of overfitting
-    if (sum(values_smooth - values, na.rm = TRUE) == 0 |
-        any(is.infinite(fit$se)) ) {
-
-      #| any(is.na(fit$se))
-      # if the latter is true, return the original
-      # values as smoothed values
-      values_smooth = gap_filled
-      values_ci = 0.02
-    }
-
+    
+    # trap values where no CI was calculated and
+    # assign the fixed value
+    values_ci[is.nan(fit$se)] = 0.02
+    values_ci[is.na(fit$se)] = 0.02
+    values_ci[is.infinite(fit$se)] = 0.02
+    
     # set values to NA if interpolated
-    # max gap is 10 days, to avoid flagging periods where
+    # max gap is 'maxgap' days, to avoid flagging periods where
     # you only lack some data
     # this is redundant should only do this once (fix)
     int = zoo::na.approx(values, maxgap = maxgap, na.rm = FALSE)
@@ -303,9 +284,13 @@ smooth.ts.corr = function(df,
     output[, which(colnames(output) == sprintf("smooth_%s", i))] = round(values_smooth,5)
     output[, which(colnames(output) == sprintf("smooth_ci_%s", i))] = round(values_ci,5)
 
-    #plot(values)
-    #lines(values_smooth,col="blue")
-
+    cols = rep("red",length(gap_filled))
+    cols[long_na] = "green"
+    
+    # plot(values)
+    # lines(values_smooth,col="blue")
+    # points(gap_filled, col = cols, cex = 0.3)
+    # lines(values_smooth + values_ci)
   }
 
   # drop previously smoothed data from

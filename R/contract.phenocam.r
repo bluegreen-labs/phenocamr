@@ -42,7 +42,7 @@ contract.phenocam = function(filename) {
   
   # replace all -9999 values with NA
   # for consistency
-  df[df == -9999] = NA
+  data[data == -9999] = NA
   
   # writing the final data frame to file, retaining the original header
   utils::write.table(

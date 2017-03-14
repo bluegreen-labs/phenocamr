@@ -4,6 +4,8 @@
 #' and increase consistency across processing.
 #'
 #' @param file: a PhenoCam data file with a 3 day time step
+#' @param truncate: year (numerical), limit the time series
+#' to a particular year
 #' @keywords time series, smoothing, phenocam
 #' @export
 #' @examples
@@ -18,7 +20,7 @@
 #' # it's file size. shrink the file using
 #' # contract.phenocam()
 
-expand.phenocam = function(df) {
+expand.phenocam = function(df, truncate = NULL) {
   
   # check validaty of the input
   if (is.data.frame(df)) {
@@ -29,22 +31,37 @@ expand.phenocam = function(df) {
   # messing up the feedback to the CLI
   header = try(readLines(df, n = 22), silent = TRUE)
   
-  # PUT ERROR TRAP IN HERE IF THE TRY STATEMENT FAILS
-  
   # directly read data from the server into data.table
   phenocam_data = read.table(df, header = TRUE, sep = ",")
-  
-  # create phenocam dates string
   phenocam_dates = as.Date(phenocam_data$date)
-  min_range = min(phenocam_dates)
-  max_range = max(phenocam_dates)
+  
+  # truncate the data if necessary
+  max_date = max(phenocam_dates)
+  
+  # pad with 90 days (regardless)
+  min_range = min(as.Date(phenocam_data$date)) - 90
+  max_range = max(as.Date(phenocam_data$date)) + 90
+  
+  # set truncate date if value provided
+  truncate_date = as.Date(ifelse(is.null(truncate),
+                         max_date,
+                         as.Date(sprintf("%s-12-31",truncate))),"1970-01-01")
+  
+  # if truncated, correct boundaries
+  if ( max_date > truncate_date ) {
+    phenocam_data = phenocam_data[which(as.Date(phenocam_data$date) <= truncate_date),]
+    phenocam_dates = as.Date(phenocam_data$date)
+    max_range = truncate_date + 90
+  }
+  
+  # create vectors to populate final output with
   all_dates = seq(as.Date(min_range), as.Date(max_range), "days")
   all_years = format(all_dates, "%Y")
   all_doy = format(all_dates, "%j")
   
-  # combine data with missing dates filled in
+  # combine original data with missing dates filled in
   output = matrix(NA, length(all_dates), dim(phenocam_data)[2])
-  output[which(all_dates %in% phenocam_dates), ] = as.matrix(phenocam_data)
+  output[which(all_dates %in% phenocam_dates), ] = as.matrix(phenocam_data)[phenocam_dates %in% all_dates,]
   output[, 1] = as.character(all_dates)
   output[, 2] = all_years
   output[, 3] = all_doy

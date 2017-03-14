@@ -44,7 +44,7 @@ snow.flag = function(df) {
   phenocam_dates = as.Date(df$date, "%Y-%m-%d")
   
   for (k in snow_subset_dates) {
-    value = snow_subset$snow_majority_text[which(snow_subset_dates %in% k)]
+    value = as.numeric(snow_subset$snow_majority_text[which(snow_subset_dates %in% k)])
     df$snow_flag[which(phenocam_dates %in% k)] = value
   }
   

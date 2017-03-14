@@ -45,7 +45,7 @@ col_text = "#787878"
 
 # grab the latest roi list using jsonlite
 # this should work across all platforms regardless
-df = fromJSON("https://phenocam.sr.unh.edu/webcam/roi/roilistinfo/")
+df = jsonlite::fromJSON("https://phenocam.sr.unh.edu/webcam/roi/roilistinfo/")
 
 df = df[, c(
   "site",
@@ -61,7 +61,7 @@ df = df[, c(
 )]
 
 # download metadata, and select useful columns for the explorer
-metadata = fromJSON("https://phenocam.sr.unh.edu/webcam/network/siteinfo/")
+metadata = jsonlite::fromJSON("https://phenocam.sr.unh.edu/webcam/network/siteinfo/")
 
 # use gridded (daymet / worldclim) data in case of missing site specific MAT / MAP
 metadata$MAT = ifelse(is.na(metadata$MAT_site),

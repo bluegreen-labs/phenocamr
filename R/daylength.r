@@ -13,18 +13,29 @@
 #' # print(ephem)
 
 daylength = function(doy, latitude) {
+  
+  # convert to numeric to be sure
+  latitude = as.numeric(latitude)
+  
   # define constant
   p = 0
   
+  # degrees to radial conversion
+  conv = pi / 180
+  
   # Forsythe et al. 1995 eq. 1
-  Omega = 0.2163108 + 2 * atan(0.9671396 * tan (0.00860 * (doy - 186)))
+  Omega = 0.2163108 + 2 * atan(0.9671396 * tan(0.00860 * (doy - 186)))
   
   # eq. 2
   Phi = asin(0.39795 * cos(Omega))
   
   # eq. 3 / returns daylength D
-  DL = 24 - 24 / pi * acos((sin(p * pi / 180) + sin(latitude * pi / 180) *
-                              sin(Phi)) / (cos(latitude * pi / 180) * cos(Phi)))
+  DL = 24 - 24 / pi * acos((sin(p * conv) + sin(latitude * conv) *
+                              sin(Phi)) / (cos(latitude * conv) * cos(Phi)))
+  
+  # convert declination to solar elevation (above ecliptica) or
+  # 90 - zenith angle
+  solar_elev = 90 - acos(sin(latitude * conv) * sin(Phi) + cos(latitude * conv) * cos(Phi)) * 180 / pi
   
   for (i in 1:length(DL)) {
     l <- DL[i - 1] > 20
@@ -39,5 +50,5 @@ daylength = function(doy, latitude) {
       DL[i - 1] <- 0
     }
   }
-  return(list(DL, Phi * 180 / pi))
+  return(list(DL, solar_elev))
 }

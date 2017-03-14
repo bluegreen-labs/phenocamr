@@ -107,7 +107,7 @@ download.phenocam = function(site="bartlett",
       
       # feedback
       cat(sprintf("Downloading: %s/%s\n",data_location,filename))
-      try(curl::curl_download(sprintf("%s/%s",data_location,filename),sprintf("%s/%s",out_dir,filename),quiet=TRUE),silent=TRUE)
+      status = try(curl::curl_download(sprintf("%s/%s",data_location,filename),sprintf("%s/%s",out_dir,filename),quiet=TRUE),silent=TRUE)
       
       if (inherits(status,"try-error")){
         warning(sprintf("failed to download: %s",filename))
