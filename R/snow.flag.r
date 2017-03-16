@@ -52,6 +52,7 @@ snow.flag = function(df) {
   if (dfcheck) {
     return(df)
   } else{
+    
     # get colnames
     phenocam_colnames = names(df)
     phenocam_colnames = matrix(phenocam_colnames, 1, length(phenocam_colnames))

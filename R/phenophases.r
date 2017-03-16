@@ -149,11 +149,12 @@ phenophases = function(df,
   # calculate the RMSE for all spline fits
   smooth_data = df[,grep("smooth_gcc",colnames(df))]
   original_data = df[,grep("^gcc",colnames(df))]
+  
+  # remove the gcc_std column
   original_data = original_data[,-2]
   
-  s = (smooth_data - original_data)^2
-  ss = apply(s,2,sum,na.rm=TRUE)
-  RMSE = round(sqrt(ss/dim(smooth_data)[2]),5)
+  # calculate the RMSE
+  RMSE = round(sqrt(apply((smooth_data - original_data)^2,2,mean,na.rm=TRUE)),5)
 
   # output data to file
   if (output){
@@ -188,7 +189,6 @@ phenophases = function(df,
     # create header with output information
     # can be done with one sprintf statement
     # and \n line endings, fix
-
     phenology_header = paste(
       "#\n",
       sprintf("# Transition date estimate for %s\n",sitename[1]),
