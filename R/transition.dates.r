@@ -5,11 +5,11 @@
 #'
 #' @param df: a PhenoCam data file or data frame
 #' @param percentile: index to use when calculating transitions
-#' @param lower.thresh: the minimum threshold used(default=0.1)
-#' @param middle.thresh: the middle threshold used (default=0.25)
-#' @param upper.thresh: the maximum threshold used (default=0.5)
-#' @param percentile: time series percentiles to process (mean,50 75, 90)
-#' @param sensitivity: how sensitive is the changepoint algorithm (value > 0)
+#' @param lower.thresh: the minimum threshold used (default = 0.1)
+#' @param middle.thresh: the middle threshold used (default = 0.25)
+#' @param upper.thresh: the maximum threshold used (default = 0.5)
+#' @param percentile: time series percentiles to process (mean, 50, 75, 90)
+#' @param penalty: how sensitive is the algorithm, lower is more sensitve (< 0 )
 #' @param reverse: flip the direction of the processing
 #' @param frequency: 1 or 3, default is NULL (ignored = automatic)
 #' @param plot: plot for debugging purposes
@@ -41,7 +41,7 @@ transition.dates = function(df,
                             middle.thresh = 0.25,
                             upper.thresh = 0.5,
                             percentile = 90,
-                            sensitivity = 8,
+                            penalty = 0.5,
                             seg_length = 14,
                             frequency = NULL,
                             reverse = FALSE,
@@ -172,7 +172,7 @@ transition.dates = function(df,
   int_flag = df$int_flag
   
   # read in data based upon the parameters provided
-  norm_data = normalize.ts(df, percentile = percentile) * sensitivity
+  norm_data = normalize.ts(df, percentile = percentile)
 
   # Gcc values can't be within the range 0-1, causes
   # trouble with the changepoint algorithm
@@ -194,7 +194,6 @@ transition.dates = function(df,
     lower = rev(lower)
     upper = rev(upper)
     int_flag = rev(int_flag)
-    #solar_elev = rev(solar_elev)
     date = rev(date)
     smooth_orig = rev(smooth_orig)
     raw_data = rev(raw_data)
@@ -206,6 +205,8 @@ transition.dates = function(df,
     as.numeric(smooth[loc_freq]),
     method = 'PELT',
     test.stat = 'Normal',
+    penalty = "Manual",
+    pen.value = penalty,
     minseglen = seg_length,
     param.estimates = TRUE
   )

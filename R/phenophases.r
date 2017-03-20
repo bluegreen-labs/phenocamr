@@ -214,7 +214,7 @@ phenophases = function(df,
 
     # set filename
     filename = sprintf(
-      '%s/transition_dates_%s_%s_%s_%sday.csv',
+      '%s/%s_%s_%s_%sday_transition_dates.csv',
       out_dir,
       sitename[1],
       veg_type[1],

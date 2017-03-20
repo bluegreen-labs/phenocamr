@@ -248,11 +248,11 @@ smooth.ts = function(df,
     # make projections based upon the optimal fit
     fit = predict(fit, as.numeric(dates), se = TRUE)
 
-    # grab the smoothed series and the CI
+    # grab the smoothed series and the CI (from SE)
     # set to 0 if no SE is provided
     values_smooth = fit$fit
 
-    # calculate the SE
+    # calculate the CI (from SE)
     values_ci = 1.96 * fit$se
 
     # cap CI values to 0.02
