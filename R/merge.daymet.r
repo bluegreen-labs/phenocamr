@@ -16,21 +16,46 @@
 #' merge.daymet("harvard_DB_0001_1day.csv")
 #' }
 
-merge.daymet  = function(df,trim_daymet=FALSE){
-  
+merge.daymet  = function(df,trim_daymet = FALSE){
+ 
+  # check if the file exists
+  if (!file.exists(df)){
+    stop('the PhenoCam file does not exist!')
+  }
+   
   # grab site name from filename
   site = strsplit(basename(df),split="_")[[1]][1]
   
   # extract the latitude and longitude of the site
-  lat = as.numeric(scan(df, skip=6, nlines = 1, what = character(),quiet=TRUE)[3])
-  lon = as.numeric(scan(df, skip=7, nlines = 1, what = character(),quiet=TRUE)[3])
+  lat = as.numeric(scan(
+    df,
+    skip = 6,
+    nlines = 1,
+    what = character(),
+    quiet = TRUE
+  )[3])
+  lon = as.numeric(scan(
+    df,
+    skip = 7,
+    nlines = 1,
+    what = character(),
+    quiet = TRUE
+  )[3])
   
   # start and end year of daymet downloads -- download maximum range
   start_yr = 1980
   end_yr = as.numeric(format(Sys.time(), "%Y")) - 1
   
   # Download all available daymet data
-  daymet_status = try(download.daymet(site=site, lat = lat, lon = lon, end_yr = end_yr, internal=FALSE), silent=TRUE)
+  daymet_status = try(download.daymet(
+    site = site,
+    lat = lat,
+    lon = lon,
+    end_yr = end_yr,
+    internal = FALSE
+  ),
+  silent = TRUE
+  )
   
   # error trap the latency in the Daymet data releases
   if(inherits(daymet_status,"try-error")){
@@ -40,7 +65,14 @@ merge.daymet  = function(df,trim_daymet=FALSE){
       end_yr = end_yr - 1
       
       # download daymet data
-      daymet_status = try(download.daymet(site=site, lat = lat, lon = lon, end_yr = end_yr, internal=FALSE), silent=TRUE)
+      daymet_status = try(download.daymet(
+        site = site,
+        lat = lat,
+        lon = lon,
+        end_yr = end_yr,
+        internal = FALSE
+      ),
+      silent = TRUE)
       
       if (grep("check coordinates",daymet_status)==1 ){
         stop(' Daymet data not available -- server issues / or location out of range') 
@@ -49,10 +81,15 @@ merge.daymet  = function(df,trim_daymet=FALSE){
   }
 
   # read in daymet data
-  daymet_data = read.table(sprintf("%s_%s_%s.csv",site,start_yr,end_yr),skip=6,header=TRUE,sep=',')      
+  daymet_data = read.table(
+    sprintf("%s_%s_%s.csv", site, start_yr, end_yr),
+    skip = 6,
+    header = TRUE,
+    sep = ','
+  )
   
   # create date strings
-  daymet_dates = as.Date(sprintf("%s-%s",daymet_data$year,daymet_data$yday),"%Y-%j")
+  daymet_dates = as.Date(sprintf("%s-%s", daymet_data$year, daymet_data$yday), "%Y-%j")
   
   # read phenocam data
   phenocam_data = read.table(df,header=TRUE,sep=',')
@@ -119,9 +156,32 @@ merge.daymet  = function(df,trim_daymet=FALSE){
   output_file_name = sprintf("%s.csv",unlist(strsplit(df,".csv")))
   
   # write everything to file using append
-  write.table(phenocam_header,output_file_name,quote=F,row.names=F,col.names=F,sep=",")
-  write.table(output_header_names,output_file_name,quote=F,row.names=F,col.names=F,append=TRUE,sep=",")
-  write.table(output_matrix,output_file_name,quote=F,row.names=F,col.names=F,append=TRUE,sep=",")
+  write.table(
+    phenocam_header,
+    output_file_name,
+    quote = F,
+    row.names = F,
+    col.names = F,
+    sep = ","
+  )
+  write.table(
+    output_header_names,
+    output_file_name,
+    quote = F,
+    row.names = F,
+    col.names = F,
+    append = TRUE,
+    sep = ","
+  )
+  write.table(
+    output_matrix,
+    output_file_name,
+    quote = F,
+    row.names = F,
+    col.names = F,
+    append = TRUE,
+    sep = ","
+  )
   
   # clean up the daymet data files / original files
   try(file.remove(paste(site,"_",start_yr,"_",end_yr,".csv",sep="")),silent=TRUE)
