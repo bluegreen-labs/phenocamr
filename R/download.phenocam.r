@@ -98,82 +98,92 @@ download.phenocam = function(site="bartlett",
   
   # subset the site list
   site.list = site.list[loc,]
-    
+  
   # cycle through the selection
   for (i in 1:dim(site.list)[1]){
+    
+    # create server string, the location of the site data
     if (frequency == "raw"){
-      
       data_location=sprintf("https://phenocam.sr.unh.edu/data/archive/%s/ROI",site.list$site[i])
       filename = sprintf("%s_%s_%04d_timeseries.csv",site.list$site[i],site.list$veg_type[i],site.list$roi_id_number[i])
-      
-      # feedback
-      cat(sprintf("Downloading: %s/%s\n",data_location,filename))
-      status = try(curl::curl_download(sprintf("%s/%s",data_location,filename),sprintf("%s/%s",out_dir,filename),quiet=TRUE),silent=TRUE)
-      
-      if (inherits(status,"try-error")){
-        warning(sprintf("failed to download: %s",filename))
-        next
-      }
-      
-    }else{
-      
-      # create server string, the location of the site data
+    } else {
       data_location=sprintf("https://phenocam.sr.unh.edu/data/archive/%s/ROI",site.list$site[i])
       filename = sprintf("%s_%s_%04d_%sday.csv",site.list$site[i],site.list$veg_type[i],site.list$roi_id_number[i],frequency)
-      output_filename = sprintf("%s/%s",out_dir,filename)
+    }
+    
+    # formulate output file location
+    output_filename = sprintf("%s/%s",out_dir,filename)
+    
+    # download data + feedback
+    url = sprintf("%s/%s",data_location,filename)
+    cat(sprintf("Downloading: %s/%s\n",data_location,filename))
+    status = try(curl::curl_download(url,output_filename,quiet=TRUE),silent=TRUE)
+    
+    # skip if download failed  
+    if (inherits(status,"try-error")){
       
-      # feedback
-      cat(sprintf("Downloading: %s/%s\n",data_location,filename))
+      warning(sprintf("failed to download: %s",filename))
+      next
       
-      # download data
-      url = sprintf("%s/%s",data_location,filename)
-      status = try(curl::curl_download(url,output_filename,quiet=TRUE),silent=TRUE)
+    } else {
       
-      if (inherits(status,"try-error")){
-        warning(sprintf("failed to download: %s",filename))
+      # don't do any post-procesing on raw data
+      if (frequency == "raw"){
         next
-      }else{
+      }
       
-        # if the frequency is 3 expand the table to
-        # daily values for easier processing afterwards
-        # at a slight size increase cost
-        if (frequency == "3"){
-          # feedback
-          cat("Expanding data set to 1-day frequency! \n")
-          expand.phenocam(output_filename)
-        }
+      # if the frequency is 3 expand the table to
+      # daily values for easier processing afterwards
+      if (frequency == "3"){
+        # feedback
+        cat("Expanding data set to 1-day frequency! \n")
         
-        # remove outliers (overwrites original file)
-        if (outlier_detection==TRUE | outlier_detection == "true" | outlier_detection == "T"){
-          # feedback
-          cat("Flagging outliers! \n")
-          status=try(detect.outliers(output_filename),silent=TRUE)
-          if(inherits(status,"try-error")){
-            cat("--failed \n")
-          }
-        }
+        # expand the time series
+        expand.phenocam(output_filename)
+      }
+      
+      # remove outliers (overwrites original file)
+      if (outlier_detection==TRUE | outlier_detection == "true" | outlier_detection == "T"){
+        # feedback
+        cat("Flagging outliers! \n")
         
-        # Smooth data on download? Speeds up processing afterwards
-        # does increase the file size
-        if (smooth==TRUE | smooth == "true" | smooth == "T"){
-          # feedback
-          cat("Smoothing time series! \n")
-          status=try(smooth.ts(output_filename),silent=TRUE)
-          if(inherits(status,"try-error")){
-            cat("--failed \n")
-          }
-        }
+        # detect outliers
+        status=try(detect.outliers(output_filename),silent=TRUE)
         
-        # merge with daymet
-        if (daymet==TRUE | daymet == "true" | daymet == "T"){
-          # feedback
-          cat("Merging Daymet Data! \n")
-          status=try(merge.daymet(output_filename,trim_daymet=trim_daymet),silent=TRUE)
-          if(inherits(status,"try-error")){
-            cat("--failed merging daymet data, check package \n")
-          }
+        # trap errors
+        if(inherits(status,"try-error")){
+          cat("--failed \n")
         }
       }
+      
+      # Smooth data
+      if (smooth==TRUE | smooth == "true" | smooth == "T"){
+        # feedback
+        cat("Smoothing time series! \n")
+        
+        # smooth time series
+        status=try(smooth.ts(output_filename),silent=TRUE)
+        
+        # trap errors
+        if(inherits(status,"try-error")){
+          cat("--failed \n")
+        }
+      }
+      
+      # merge with daymet
+      if (daymet==TRUE | daymet == "true" | daymet == "T"){
+        # feedback
+        cat("Merging Daymet Data! \n")
+        
+        # merge daymet data into the time series file
+        status=try(merge.daymet(output_filename,trim_daymet=trim_daymet),silent=TRUE)
+        
+        # trap errors
+        if(inherits(status,"try-error")){
+          cat("--failed merging daymet data, check package \n")
+        }
+      }
+      
     }
   }
 }

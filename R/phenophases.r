@@ -51,7 +51,7 @@ phenophases = function(df,
     if (file.exists(df)) {
 
       # read header of the file
-      header = readLines(df,n=22)
+      header = readLines(df,n = 22)
 
       # unravel list
       header = strsplit(header,split=":")
