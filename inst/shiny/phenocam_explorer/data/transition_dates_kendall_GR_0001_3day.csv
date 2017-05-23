@@ -1,0 +1,21 @@
+#
+# Transition date estimate for kendall
+#
+# Site: kendall
+# Veg Type: GR
+# ROI ID Number: 0001
+# Aggregation period: 3
+# Year min: 2012
+# Year max: 2012
+# Final Processing Date: 2016-10-17
+# Final Processing Time: 08:13:40
+# Spline RMSE gcc_mean: 3e-05
+# Spline RMSE gcc_50: 2e-05
+# Spline RMSE gcc_75: 2e-05
+# Spline RMSE gcc_90: 4e-05
+#
+sitename,veg_type,roi_id,direction,gcc_value,transition_10,transition_25,transition_50,transition_10_lower_ci,transition_25_lower_ci,transition_50_lower_ci,transition_10_upper_ci,transition_25_upper_ci,transition_50_upper_ci,threshold_10,threshold_25,threshold_50,min_gcc,max_gcc
+kendall,GR,0001,falling,gcc_90,2012-10-13,2012-10-10,2012-09-28,2012-10-16,2012-10-13,2012-10-04,2012-10-10,2012-10-07,2012-09-25,0.36416,0.36911,0.39013,0.35694,0.40371
+kendall,GR,0001,falling,gcc_75,2012-10-13,2012-10-07,2012-09-28,2012-10-16,2012-10-10,2012-10-04,2012-10-10,2012-10-04,2012-09-25,0.36372,0.3704,0.38955,0.35654,0.40327
+kendall,GR,0001,falling,gcc_50,2012-10-13,2012-10-07,2012-09-28,2012-10-16,2012-10-10,2012-10-01,2012-10-10,2012-10-04,2012-09-25,0.36212,0.36934,0.38596,0.35574,0.40181
+kendall,GR,0001,falling,gcc_mean,2012-10-13,2012-10-07,2012-09-28,2012-10-16,2012-10-10,2012-10-04,2012-10-10,2012-10-04,2012-09-25,0.3617,0.36923,0.38588,0.35538,0.40147

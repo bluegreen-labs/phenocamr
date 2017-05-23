@@ -1,0 +1,22 @@
+#
+# Transition date estimate for jersand
+#
+# Site: jersand
+# Veg Type: SH
+# ROI ID Number: 0001
+# Aggregation period: 3
+# Year min: 2014
+# Year max: 2015
+# Final Processing Date: 2016-10-17
+# Final Processing Time: 08:13:39
+# Spline RMSE gcc_mean: 0.00757
+# Spline RMSE gcc_50: 0.00779
+# Spline RMSE gcc_75: 0.00808
+# Spline RMSE gcc_90: 0.01143
+#
+sitename,veg_type,roi_id,direction,gcc_value,transition_10,transition_25,transition_50,transition_10_lower_ci,transition_25_lower_ci,transition_50_lower_ci,transition_10_upper_ci,transition_25_upper_ci,transition_50_upper_ci,threshold_10,threshold_25,threshold_50,min_gcc,max_gcc
+jersand,SH,0001,rising,gcc_90,2015-03-09,2015-03-18,2015-04-05,2015-02-10,2015-03-09,2015-04-02,2015-03-18,2015-03-24,2015-07-16,0.32508,0.32651,0.32939,0.32401,0.3339
+jersand,SH,0001,falling,gcc_90,2014-11-04,2014-10-23,2014-10-11,2014-11-13,2014-11-01,2014-10-20,2014-10-26,2014-10-17,2014-10-08,0.32843,0.33021,0.33515,0.32724,0.33831
+jersand,SH,0001,falling,gcc_75,2014-10-29,2014-10-20,2014-10-08,2014-11-10,2014-10-26,2014-10-17,2014-10-23,2014-10-17,2014-10-05,0.32765,0.32936,0.33445,0.32599,0.33884
+jersand,SH,0001,falling,gcc_50,2014-11-01,2014-10-20,2014-10-08,2014-11-13,2014-10-29,2014-10-17,2014-10-26,2014-10-17,2014-10-05,0.32644,0.32856,0.33377,0.32482,0.33779
+jersand,SH,0001,falling,gcc_mean,2014-11-01,2014-10-20,2014-10-08,2014-11-10,2014-10-29,2014-10-17,2014-10-26,2014-10-17,2014-10-05,0.32684,0.32882,0.33389,0.3253,0.33781

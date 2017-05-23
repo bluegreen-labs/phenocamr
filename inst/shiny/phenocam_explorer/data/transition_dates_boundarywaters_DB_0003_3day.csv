@@ -1,0 +1,25 @@
+#
+# Transition date estimate for boundarywaters
+#
+# Site: boundarywaters
+# Veg Type: DB
+# ROI ID Number: 0003
+# Aggregation period: 3
+# Year min: 2006
+# Year max: 2006
+# Final Processing Date: 2016-10-17
+# Final Processing Time: 08:13:28
+# Spline RMSE gcc_mean: 0.00881
+# Spline RMSE gcc_50: 0.00808
+# Spline RMSE gcc_75: 0.00712
+# Spline RMSE gcc_90: 0.00606
+#
+sitename,veg_type,roi_id,direction,gcc_value,transition_10,transition_25,transition_50,transition_10_lower_ci,transition_25_lower_ci,transition_50_lower_ci,transition_10_upper_ci,transition_25_upper_ci,transition_50_upper_ci,threshold_10,threshold_25,threshold_50,min_gcc,max_gcc
+boundarywaters,DB,0003,rising,gcc_90,2006-05-05,2006-05-23,2006-05-29,2006-04-29,2006-05-20,2006-05-23,2006-05-08,2006-05-26,2006-06-01,0.33382,0.34629,0.38201,0.32454,0.3912
+boundarywaters,DB,0003,rising,gcc_75,2006-05-05,2006-05-23,2006-05-29,2006-04-26,2006-05-20,2006-05-23,2006-05-08,2006-05-26,2006-06-01,0.33317,0.34587,0.38086,0.32428,0.3895
+boundarywaters,DB,0003,rising,gcc_50,2006-05-05,2006-05-23,2006-05-29,2006-04-26,2006-05-20,2006-05-23,2006-05-08,2006-05-26,2006-06-01,0.33143,0.34021,0.37492,0.32385,0.38716
+boundarywaters,DB,0003,rising,gcc_mean,2006-05-05,2006-05-23,2006-05-29,2006-04-26,2006-05-20,2006-05-23,2006-05-08,2006-05-26,2006-06-01,0.33141,0.34061,0.37467,0.32344,0.38589
+boundarywaters,DB,0003,falling,gcc_90,2006-09-20,2006-09-14,2006-09-05,2006-09-23,2006-09-17,2006-09-11,2006-09-17,2006-09-11,2006-09-02,0.33537,0.34648,0.36557,0.32676,0.3912
+boundarywaters,DB,0003,falling,gcc_75,2006-09-20,2006-09-14,2006-09-05,2006-09-23,2006-09-20,2006-09-11,2006-09-17,2006-09-11,2006-09-02,0.33359,0.34575,0.36484,0.32588,0.3895
+boundarywaters,DB,0003,falling,gcc_50,2006-09-20,2006-09-14,2006-09-05,2006-09-23,2006-09-20,2006-09-11,2006-09-17,2006-09-11,2006-09-02,0.33151,0.34444,0.36297,0.3243,0.38716
+boundarywaters,DB,0003,falling,gcc_mean,2006-09-20,2006-09-14,2006-09-05,2006-09-23,2006-09-20,2006-09-11,2006-09-17,2006-09-11,2006-09-02,0.33159,0.34432,0.36324,0.32391,0.38589

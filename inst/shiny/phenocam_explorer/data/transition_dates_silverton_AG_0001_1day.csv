@@ -1,0 +1,22 @@
+#
+# Transition date estimate for silverton
+#
+# Site: silverton
+# Veg Type: AG
+# ROI ID Number: 0001
+# Aggregation period: 1
+# Year min: 2013
+# Year max: 2014
+# Final Processing Date: 2016-10-17
+# Final Processing Time: 08:06:16
+# Spline RMSE gcc_mean: 0.06244
+# Spline RMSE gcc_50: 0.05902
+# Spline RMSE gcc_75: 0.05716
+# Spline RMSE gcc_90: 0.05642
+#
+sitename,veg_type,roi_id,direction,gcc_value,transition_10,transition_25,transition_50,transition_10_lower_ci,transition_25_lower_ci,transition_50_lower_ci,transition_10_upper_ci,transition_25_upper_ci,transition_50_upper_ci,threshold_10,threshold_25,threshold_50,min_gcc,max_gcc
+silverton,AG,0001,rising,gcc_mean,2014-03-24,2014-03-30,2014-04-14,2014-03-18,2014-03-24,2014-04-05,2014-03-27,2014-04-02,2014-04-17,0.3625,0.3697,0.38913,0.35337,0.4111
+silverton,AG,0001,falling,gcc_90,2014-01-26,2014-01-17,2013-12-07,2014-02-01,2014-01-23,2013-12-16,2014-01-23,2014-01-14,2013-12-04,0.35264,0.36713,0.3875,0.34491,0.41364
+silverton,AG,0001,falling,gcc_75,2014-01-26,2014-01-17,2013-12-04,2014-02-01,2014-01-20,2013-12-13,2014-01-23,2014-01-14,2013-12-01,0.35081,0.36248,0.38651,0.34388,0.41081
+silverton,AG,0001,falling,gcc_50,2014-01-23,2014-01-17,2013-12-04,2014-02-01,2014-01-20,2013-12-10,2014-01-20,2014-01-14,2013-12-01,0.3514,0.36,0.37952,0.34249,0.40684
+silverton,AG,0001,falling,gcc_mean,2014-01-17,2013-12-16,2013-11-28,2014-01-23,2013-12-25,2013-12-07,2014-01-14,2013-12-10,2013-11-25,0.35992,0.36787,0.3872,0.35337,0.40806

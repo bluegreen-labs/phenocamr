@@ -1,0 +1,21 @@
+#
+# Transition date estimate for harvardlph
+#
+# Site: harvardlph
+# Veg Type: DB
+# ROI ID Number: 0001
+# Aggregation period: 3
+# Year min: 2010
+# Year max: 2010
+# Final Processing Date: 2016-10-17
+# Final Processing Time: 08:13:36
+# Spline RMSE gcc_mean: 0.01372
+# Spline RMSE gcc_50: 0.01681
+# Spline RMSE gcc_75: 0.0118
+# Spline RMSE gcc_90: 0.01056
+#
+sitename,veg_type,roi_id,direction,gcc_value,transition_10,transition_25,transition_50,transition_10_lower_ci,transition_25_lower_ci,transition_50_lower_ci,transition_10_upper_ci,transition_25_upper_ci,transition_50_upper_ci,threshold_10,threshold_25,threshold_50,min_gcc,max_gcc
+harvardlph,DB,0001,falling,gcc_90,2010-10-17,2010-10-14,2010-10-05,2010-10-23,2010-10-17,2010-10-14,2010-10-14,2010-10-11,2010-10-02,0.35867,0.36613,0.38276,0.34637,0.40298
+harvardlph,DB,0001,falling,gcc_75,2010-10-17,2010-10-14,2010-10-05,2010-10-23,2010-10-17,2010-10-11,2010-10-14,2010-10-11,2010-10-02,0.35505,0.36183,0.37832,0.34454,0.40037
+harvardlph,DB,0001,falling,gcc_50,2010-10-17,2010-10-14,2010-10-05,2010-10-23,2010-10-17,2010-10-11,2010-10-14,2010-10-11,2010-10-02,0.35147,0.35704,0.37466,0.34077,0.39555
+harvardlph,DB,0001,falling,gcc_mean,2010-10-17,2010-10-14,2010-10-05,2010-10-23,2010-10-20,2010-10-14,2010-10-14,2010-10-11,2010-10-02,0.35174,0.3586,0.3746,0.34024,0.39402

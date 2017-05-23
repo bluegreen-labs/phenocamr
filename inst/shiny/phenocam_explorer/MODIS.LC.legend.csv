@@ -1,0 +1,18 @@
+class, colour
+water,#BAFEFD
+evergreen needleleaf forests,#006401
+evergreen broadleaf forests,#4DA557
+deciduous needleleaf forests,#7DCC0F
+deciduous broadleaf forests,#62E865
+mixed forests,#37C684
+closed shrublands,#D67775
+open shrublands,#FDEDA0
+woody savannas,#B9E78D
+savannas,#FFE01B
+grasslands,#FEC06B
+permanent wetland,#258ADC
+croplands,#FCFB00
+urban,#FB0304
+cropland / natural,#939005
+snow / ice,#FEDCD3
+barren,#BFBFBF

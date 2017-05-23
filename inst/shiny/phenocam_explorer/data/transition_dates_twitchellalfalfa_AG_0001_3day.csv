@@ -1,0 +1,25 @@
+#
+# Transition date estimate for twitchellalfalfa
+#
+# Site: twitchellalfalfa
+# Veg Type: AG
+# ROI ID Number: 0001
+# Aggregation period: 3
+# Year min: 2013
+# Year max: 2014
+# Final Processing Date: 2016-10-17
+# Final Processing Time: 08:13:56
+# Spline RMSE gcc_mean: 0.17364
+# Spline RMSE gcc_50: 0.1806
+# Spline RMSE gcc_75: 0.19434
+# Spline RMSE gcc_90: 0.21259
+#
+sitename,veg_type,roi_id,direction,gcc_value,transition_10,transition_25,transition_50,transition_10_lower_ci,transition_25_lower_ci,transition_50_lower_ci,transition_10_upper_ci,transition_25_upper_ci,transition_50_upper_ci,threshold_10,threshold_25,threshold_50,min_gcc,max_gcc
+twitchellalfalfa,AG,0001,rising,gcc_90,2014-02-22,2014-03-03,2014-03-18,2014-02-07,2014-02-28,2014-03-15,2014-02-25,2014-03-12,2014-03-24,0.40958,0.41991,0.4389,0.40182,0.46612
+twitchellalfalfa,AG,0001,rising,gcc_75,2014-02-22,2014-03-03,2014-03-15,2014-02-07,2014-02-28,2014-03-12,2014-02-25,2014-03-09,2014-03-21,0.40248,0.41355,0.43011,0.39544,0.45534
+twitchellalfalfa,AG,0001,rising,gcc_50,2014-02-22,2014-03-03,2014-03-15,2014-02-07,2014-02-28,2014-03-12,2014-02-25,2014-03-09,2014-03-21,0.39647,0.40677,0.42218,0.3898,0.44463
+twitchellalfalfa,AG,0001,rising,gcc_mean,2014-02-22,2014-03-03,2014-03-18,2014-02-07,2014-02-28,2014-03-15,2014-02-25,2014-03-09,2014-03-21,0.39553,0.40517,0.42296,0.3887,0.44396
+twitchellalfalfa,AG,0001,falling,gcc_90,2013-12-13,2013-12-04,2013-11-19,2014-01-02,2013-12-07,2013-12-04,2013-12-04,2013-11-22,2013-11-13,0.36488,0.37365,0.39176,0.35778,0.41404
+twitchellalfalfa,AG,0001,falling,gcc_75,2013-12-16,2013-12-07,2013-11-22,2014-01-02,2013-12-22,2013-12-04,2013-12-04,2013-11-28,2013-11-16,0.36111,0.3689,0.38701,0.35472,0.41018
+twitchellalfalfa,AG,0001,falling,gcc_50,2013-12-16,2013-12-07,2013-11-22,2014-01-02,2013-12-22,2013-12-04,2013-12-04,2013-11-28,2013-11-16,0.35783,0.36513,0.38216,0.35194,0.40412
+twitchellalfalfa,AG,0001,falling,gcc_mean,2013-12-16,2013-12-07,2013-11-22,2014-01-02,2013-12-22,2013-12-04,2013-12-04,2013-11-28,2013-11-13,0.3577,0.36446,0.38054,0.35201,0.40179

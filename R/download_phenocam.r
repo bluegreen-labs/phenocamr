@@ -21,21 +21,21 @@
 #' \dontrun{
 #' # download the first ROI time series for the Harvard PhenoCam site
 #' # and an aggregation frequency of 3-days.
-#' download.phenocam(site = "harvard",
+#' download_phenocam(site = "harvard",
 #'                   vegetation = "DB",
 #'                   roi_id = 1,
 #'                   frequency = 3)
 #'                   
 #' # download all Harvard Forest deciduous broadleaf sites using
 #' # geographic constraints.
-#' download.phenocam(vegetation = "DB",
+#' download_phenocam(vegetation = "DB",
 #'                   roi_id  =1,
 #'                   frequency = 3,
 #'                   top_left = c(42.545657, -72.197524),
 #'                   bottom_right = c(42.527079, -72.158128))
 #' }
 
-download.phenocam = function(site="bartlett",
+download_phenocam = function(site="bartlett",
                              vegetation=NULL,
                              frequency="3",
                              roi_id=NULL,
@@ -49,7 +49,7 @@ download.phenocam = function(site="bartlett",
                              out_dir=getwd()){
   
   # get site listing
-  site.list = jsonlite::fromJSON("https://phenocam.sr.unh.edu/webcam/roi/roilistinfo/")
+  site_list = jsonlite::fromJSON("https://phenocam.sr.unh.edu/webcam/roi/roilistinfo/")
   
   # is there a site name?
   # this excludes any geographic constraints
@@ -57,19 +57,19 @@ download.phenocam = function(site="bartlett",
   if (!is.null(site)){
     
     if (is.null(vegetation)){ 
-      loc = grep(site,site.list$site)
+      loc = grep(site,site_list$site)
     }else{
       
       if (!is.null(roi_id)){
         
         # list only particular vegetation types and rois
-        loc = which( grepl(site,site.list$site) & site.list$veg_type %in% vegetation &
-                      site.list$roi_id_number %in% roi_id)
+        loc = which( grepl(site,site_list$site) & site_list$veg_type %in% vegetation &
+                      site_list$roi_id_number %in% roi_id)
         
       }else{
         
         # list only vegetation types for all rois
-        loc = which( grepl(site,site.list$site) & site.list$veg_type %in% vegetation)
+        loc = which( grepl(site,site_list$site) & site_list$veg_type %in% vegetation)
         
       }
     }
@@ -81,13 +81,13 @@ download.phenocam = function(site="bartlett",
     
     if (is.null(vegetation) | vegetation == "all"){
       # list all data within a geographic region
-      loc = which(site.list$lat < top_left[1] & site.list$lat > bottom_right[1] &
-                   site.list$lon > top_left[2] & site.list$lon < bottom_right[2])
+      loc = which(site_list$lat < top_left[1] & site_list$lat > bottom_right[1] &
+                   site_list$lon > top_left[2] & site_list$lon < bottom_right[2])
     }else{
       # list only a particular vegetation type within a geographic region
-      loc = which(site.list$lat < top_left[1] & site.list$lat > bottom_right[1] &
-                   site.list$lon > top_left[2] & site.list$lon < bottom_right[2] &
-                    site.list$veg_type %in% vegetation)
+      loc = which(site_list$lat < top_left[1] & site_list$lat > bottom_right[1] &
+                   site_list$lon > top_left[2] & site_list$lon < bottom_right[2] &
+                    site_list$veg_type %in% vegetation)
     }
   }
   
@@ -97,18 +97,18 @@ download.phenocam = function(site="bartlett",
   }
   
   # subset the site list
-  site.list = site.list[loc,]
+  site_list = site_list[loc,]
   
   # cycle through the selection
-  for (i in 1:dim(site.list)[1]){
+  for (i in 1:dim(site_list)[1]){
     
     # create server string, the location of the site data
     if (frequency == "raw"){
-      data_location=sprintf("https://phenocam.sr.unh.edu/data/archive/%s/ROI",site.list$site[i])
-      filename = sprintf("%s_%s_%04d_timeseries.csv",site.list$site[i],site.list$veg_type[i],site.list$roi_id_number[i])
+      data_location=sprintf("https://phenocam.sr.unh.edu/data/archive/%s/ROI",site_list$site[i])
+      filename = sprintf("%s_%s_%04d_timeseries.csv",site_list$site[i],site_list$veg_type[i],site_list$roi_id_number[i])
     } else {
-      data_location=sprintf("https://phenocam.sr.unh.edu/data/archive/%s/ROI",site.list$site[i])
-      filename = sprintf("%s_%s_%04d_%sday.csv",site.list$site[i],site.list$veg_type[i],site.list$roi_id_number[i],frequency)
+      data_location=sprintf("https://phenocam.sr.unh.edu/data/archive/%s/ROI",site_list$site[i])
+      filename = sprintf("%s_%s_%04d_%sday.csv",site_list$site[i],site_list$veg_type[i],site_list$roi_id_number[i],frequency)
     }
     
     # formulate output file location
@@ -139,7 +139,7 @@ download.phenocam = function(site="bartlett",
         cat("Expanding data set to 1-day frequency! \n")
         
         # expand the time series
-        expand.phenocam(output_filename)
+        expand_phenocam(output_filename)
       }
       
       # remove outliers (overwrites original file)
@@ -148,7 +148,7 @@ download.phenocam = function(site="bartlett",
         cat("Flagging outliers! \n")
         
         # detect outliers
-        status=try(detect.outliers(output_filename),silent=TRUE)
+        status=try(detect_outliers(output_filename),silent=TRUE)
         
         # trap errors
         if(inherits(status,"try-error")){
@@ -162,7 +162,7 @@ download.phenocam = function(site="bartlett",
         cat("Smoothing time series! \n")
         
         # smooth time series
-        status=try(smooth.ts(output_filename),silent=TRUE)
+        status=try(smooth_ts(output_filename),silent=TRUE)
         
         # trap errors
         if(inherits(status,"try-error")){
@@ -176,14 +176,13 @@ download.phenocam = function(site="bartlett",
         cat("Merging Daymet Data! \n")
         
         # merge daymet data into the time series file
-        status=try(merge.daymet(output_filename,trim_daymet=trim_daymet),silent=TRUE)
+        status=try(merge_daymet(output_filename,trim_daymet=trim_daymet),silent=TRUE)
         
         # trap errors
         if(inherits(status,"try-error")){
           cat("--failed merging daymet data, check package \n")
         }
       }
-      
     }
   }
 }
