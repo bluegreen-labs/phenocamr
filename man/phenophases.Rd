@@ -7,8 +7,7 @@ in a PhenoCam time series. This routine combines a forward and backward
 run of transition.dates() to calculate the phenophases.}
 \usage{
 phenophases(df, sitename = NULL, veg_type = NULL, roi_id = NULL,
-  freq = NULL, lat = NULL, MAT = NULL, output = FALSE,
-  out_dir = getwd())
+  frequency = NULL, mat = NULL, output = FALSE, out_dir = getwd())
 }
 \arguments{
 \item{df:}{a PhenoCam data file (or data frame)}
@@ -19,9 +18,13 @@ phenophases(df, sitename = NULL, veg_type = NULL, roi_id = NULL,
 
 \item{roi_id:}{a PhenoCam data file or data frame}
 
-\item{freq:}{a PhenoCam data file or data frame}
+\item{frequency:}{a PhenoCam data file or data frame}
+
+\item{mat:}{mean annual temperature}
 
 \item{output:}{a PhenoCam data file or data frame}
+
+\item{output_dir:}{output directory}
 }
 \description{
 Calculates phenophases, both greenup and senescence, for all 'seasons'
@@ -30,21 +33,23 @@ run of transition.dates() to calculate the phenophases.
 }
 \examples{
 
+\dontrun{
 # downloads a time series for Bartlett Forest data and calculates
 # the matching phenophases.
 # Outputs a nested list of phenophases dates
 # where location [[1]] holds the greenup dates and location
 # [[2]] the greendown dates
 
-# df = download.phenocam(site="harvard",
-#                        type="DB",
-#                        roi="1",
-#                        frequency=3)
-# df = read.csv("harvard_DB_0001_1day.csv")
-# my_dates = phenophases(df,output=FALSE)
+df = download.phenocam(site="harvard",
+                       type="DB",
+                       roi="1",
+                       frequency=3)
+df = read.csv("harvard_DB_0001_1day.csv")
+my_dates = phenophases(df,output=FALSE)
 
 # dates need to be converted to standard notation using
 # as.Date(my_dates)
+}
 }
 \keyword{PhenoCam,}
 \keyword{dates,}
@@ -52,4 +57,3 @@ run of transition.dates() to calculate the phenophases.
 \keyword{series}
 \keyword{time}
 \keyword{transition}
-
