@@ -10,14 +10,14 @@
 #' 
 #' \dontrun{
 #' # download demo data (do not smooth)
-#' download.phenocam(site = "harvard",
+#' download_phenocam(site = "harvard",
 #'                   vegetation = "DB",
 #'                   roi_id = 1,
 #'                   frequency = 3)
-#' merge.modis("harvard_DB_0001_1day.csv")
+#' merge_modis("harvard_DB_0001_1day.csv")
 #' }
 
-merge.modis = function(df, size = c(0,0) ){
+merge_modis = function(df, size = c(0,0) ){
   
   # load data and check input parameters
     if (file.exists(df)) {
@@ -54,10 +54,10 @@ merge.modis = function(df, size = c(0,0) ){
   output_dir = tempdir()
   
   # create the location file used in downloading the MODIS data
-  start.date = min(df$year)
-  end.date = max(df$year)
+  start_date = min(df$year)
+  end_date = max(df$year)
   ID = sitename
-  site = data.frame(lat, long, start.date, end.date, ID)
+  site = data.frame(lat, long, start_date, end_date, ID)
   
   # set phenology bands to download according to the latitude
   phenology_bands = c("Onset_Greenness_Minimum",

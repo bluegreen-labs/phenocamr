@@ -19,15 +19,15 @@
 #'                   smooth=FALSE)
 #'
 #' # smooth the downloaded file (and overwrite the original)
-#' smooth.ts("harvard_DB_0001_1day.csv")
+#' smooth_ts("harvard_DB_0001_1day.csv")
 #'
 #' # the function also works on a PhenoCam data frame
 #' # but you will lose the extensive header in the process
 #' df = read.csv("harvard_DB_0001_1day.csv")
-#' df = smooth.ts(df)
+#' df = smooth_ts(df)
 #' }
 
-smooth.ts = function(df,
+smooth_ts = function(df,
                      metrics = c("gcc_mean",
                                  "gcc_50",
                                  "gcc_75",
@@ -225,22 +225,22 @@ smooth.ts = function(df,
     # 3-day product, as not to inflate the number of measurements
     if (freq == 3){
       
-      optim.span = optimal.span(x = as.numeric(dates[loc]),
+      optim_span = optimal_span(x = as.numeric(dates[loc]),
                                 y = gap_filled[loc],
                                 plot = FALSE) # plot for debugging
       
       fit = loess(gap_filled[loc] ~ as.numeric(dates[loc]),
-                  span = optim.span,
+                  span = optim_span,
                   weights = weights[loc])
 
     } else { # 1-day product
 
-      optim.span = optimal.span(x = as.numeric(dates),
+      optim_span = optimal_span(x = as.numeric(dates),
                                 y = gap_filled,
                                 plot = FALSE) # plot for debugging
 
       fit = loess(gap_filled ~ as.numeric(dates),
-                  span = optim.span,
+                  span = optim_span,
                   weights = weights)
 
     }
@@ -287,11 +287,6 @@ smooth.ts = function(df,
 
     cols = rep("red",length(gap_filled))
     cols[long_na] = "green"
-    
-    # plot(values)
-    # lines(values_smooth,col="blue")
-    # points(gap_filled, col = cols, cex = 0.3)
-    # lines(values_smooth + values_ci)
   }
 
   # drop previously smoothed data from

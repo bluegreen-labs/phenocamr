@@ -19,11 +19,11 @@
 #' # Overwrites the original file, increasing
 #' # it's file size.
 #'
-#' # contract.phenocam("harvard_DB_0001_1day.csv")
+#' # contract_phenocam("harvard_DB_0001_1day.csv")
 #' # Contracts the file to it's original size, skipping
 #' # two days.
 
-contract.phenocam = function(filename) {
+contract_phenocam = function(filename) {
   # check validaty of the input
   if (is.data.frame(filename)) {
     stop("not a PhenoCam data file")

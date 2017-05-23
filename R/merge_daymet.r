@@ -9,14 +9,14 @@
 #' 
 #' \dontrun{
 #' # download demo data (do not smooth)
-#' download.phenocam(site = "harvard",
+#' download_phenocam(site = "harvard",
 #'                   vegetation = "DB",
 #'                   roi_id = 1,
 #'                   frequency = 3)
-#' merge.daymet("harvard_DB_0001_1day.csv")
+#' merge_daymet("harvard_DB_0001_1day.csv")
 #' }
 
-merge.daymet  = function(df,trim_daymet = FALSE){
+merge_daymet  = function(df,trim_daymet = FALSE){
  
   # check if the file exists
   if (!file.exists(df)){
@@ -65,7 +65,7 @@ merge.daymet  = function(df,trim_daymet = FALSE){
       end_yr = end_yr - 1
       
       # download daymet data
-      daymet_status = try(download.daymet(
+      daymet_status = try(download_daymet(
         site = site,
         lat = lat,
         lon = lon,
@@ -124,8 +124,8 @@ merge.daymet  = function(df,trim_daymet = FALSE){
   # create output matrix
   daymet_col = dim(daymet_data)[2]
   phenocam_col = dim(phenocam_data)[2]
-  nr.cols = daymet_col + phenocam_col
-  output_matrix = matrix(NA,length(all_dates),nr.cols)
+  nr_cols = daymet_col + phenocam_col
+  output_matrix = matrix(NA,length(all_dates),nr_cols)
   
   # now fill up the matrix matching dates
   # clean up the code, this is messy with the references to the columns

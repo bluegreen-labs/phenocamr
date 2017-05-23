@@ -5,9 +5,9 @@
 #'
 #' @param df: a PhenoCam data file or data frame
 #' @param percentile: index to use when calculating transitions
-#' @param lower.thresh: the minimum threshold used (default = 0.1)
-#' @param middle.thresh: the middle threshold used (default = 0.25)
-#' @param upper.thresh: the maximum threshold used (default = 0.5)
+#' @param lower_thresh: the minimum threshold used (default = 0.1)
+#' @param middle_thresh: the middle threshold used (default = 0.25)
+#' @param upper_thresh: the maximum threshold used (default = 0.5)
 #' @param percentile: time series percentiles to process (mean, 50, 75, 90)
 #' @param penalty: how sensitive is the algorithm, lower is more sensitve (< 0 )
 #' @param reverse: flip the direction of the processing
@@ -25,9 +25,9 @@
 #'
 #' df = utils::read.csv("harvard_DB_0001_1day_v4.csv")
 #' my_dates = transition.dates(df,
-#'                             lower.thresh = 0.1,
-#'                             middle.thresh = 0.25,
-#'                             upper.thresh = 0.5,
+#'                             lower_thresh = 0.1,
+#'                             middle_thresh = 0.25,
+#'                             upper_thresh = 0.5,
 #'                             percentile = 90,
 #'                             reverse = FALSE,
 #'                             plot = FALSE)
@@ -36,10 +36,10 @@
 #' as.Date(my_dates)
 #' }
 
-transition.dates = function(df,
-                            lower.thresh = 0.1,
-                            middle.thresh = 0.25,
-                            upper.thresh = 0.5,
+transition_dates = function(df,
+                            lower_thresh = 0.1,
+                            middle_thresh = 0.25,
+                            upper_thresh = 0.5,
                             percentile = 90,
                             penalty = 0.5,
                             seg_length = 14,
@@ -56,18 +56,18 @@ transition.dates = function(df,
     # assign column names if not empty
     colnames(err_mat) =
         c(
-          sprintf("transition_%s",lower.thresh*100),
-          sprintf("transition_%s",middle.thresh*100),
-          sprintf("transition_%s",upper.thresh*100),
-          sprintf("transition_%s_lower_ci",lower.thresh*100),
-          sprintf("transition_%s_lower_ci",middle.thresh*100),
-          sprintf("transition_%s_lower_ci",upper.thresh*100),
-          sprintf("transition_%s_upper_ci",lower.thresh*100),
-          sprintf("transition_%s_upper_ci",middle.thresh*100),
-          sprintf("transition_%s_upper_ci",upper.thresh*100),
-          sprintf("threshold_%s",lower.thresh*100),
-          sprintf("threshold_%s",middle.thresh*100),
-          sprintf("threshold_%s",upper.thresh*100),
+          sprintf("transition_%s",lower_thresh*100),
+          sprintf("transition_%s",middle_thresh*100),
+          sprintf("transition_%s",upper_thresh*100),
+          sprintf("transition_%s_lower_ci",lower_thresh*100),
+          sprintf("transition_%s_lower_ci",middle_thresh*100),
+          sprintf("transition_%s_lower_ci",upper_thresh*100),
+          sprintf("transition_%s_upper_ci",lower_thresh*100),
+          sprintf("transition_%s_upper_ci",middle_thresh*100),
+          sprintf("transition_%s_upper_ci",upper_thresh*100),
+          sprintf("threshold_%s",lower_thresh*100),
+          sprintf("threshold_%s",middle_thresh*100),
+          sprintf("threshold_%s",upper_thresh*100),
           'min_gcc',
           'max_gcc'
         )
@@ -77,25 +77,7 @@ transition.dates = function(df,
 
   # Detect changes in the mean
   # using the changepoint toolbox
-  # I'll use these changepoints as a guide
-  # to cut up the time series into seasons
-  # This is way around issues with multiple growth
-  # cycles and seasons crossing the year date marker
-  # minimum segment length is seg_length days
-  #
-  # Reverse the direction of the algorythm to
-  # detect 'senescence' dynamics
-  #
-  # sensitivity to scale the time series outside
-  # the 0-1 range. The higher the value the more
-  # sensitive the changepoint detection algorithm
-  #
-  # For the sake of consistency scale the original
-  # series between 0 and 1 first (min to max),
-  # otherwise low amplitude series will see a lower
-  # sensitivity relative to high amplitude ones.
-
-
+  
   # if the data is not a data frame, load
   # the file (assuming it is a phenocam)
   # summary file, otherwise rename the
@@ -172,7 +154,7 @@ transition.dates = function(df,
   int_flag = df$int_flag
   
   # read in data based upon the parameters provided
-  norm_data = normalize.ts(df, percentile = percentile)
+  norm_data = normalize_ts(df, percentile = percentile)
 
   # Gcc values can't be within the range 0-1, causes
   # trouble with the changepoint algorithm
@@ -379,9 +361,9 @@ transition.dates = function(df,
     amplitude = high_gcc - low_gcc
 
     # calculate threshold values, based on amplitude
-    minimum_threshold = amplitude * lower.thresh + low_gcc
-    middle_threshold = amplitude * middle.thresh + low_gcc
-    maximum_threshold = amplitude * upper.thresh + low_gcc
+    minimum_threshold = amplitude * lower_thresh + low_gcc
+    middle_threshold = amplitude * middle_thresh + low_gcc
+    maximum_threshold = amplitude * upper_thresh + low_gcc
 
     # grab the end of season estimate (location in the vector)
     # offset corrects for the lack of true dates in the segment data
@@ -581,18 +563,18 @@ transition.dates = function(df,
 
   colnames(dates) =
     c(
-      sprintf("transition_%s",lower.thresh*100),
-      sprintf("transition_%s",middle.thresh*100),
-      sprintf("transition_%s",upper.thresh*100),
-      sprintf("transition_%s_lower_ci",lower.thresh*100),
-      sprintf("transition_%s_lower_ci",middle.thresh*100),
-      sprintf("transition_%s_lower_ci",upper.thresh*100),
-      sprintf("transition_%s_upper_ci",lower.thresh*100),
-      sprintf("transition_%s_upper_ci",middle.thresh*100),
-      sprintf("transition_%s_upper_ci",upper.thresh*100),
-      sprintf("threshold_%s",lower.thresh*100),
-      sprintf("threshold_%s",middle.thresh*100),
-      sprintf("threshold_%s",upper.thresh*100),
+      sprintf("transition_%s",lower_thresh*100),
+      sprintf("transition_%s",middle_thresh*100),
+      sprintf("transition_%s",upper_thresh*100),
+      sprintf("transition_%s_lower_ci",lower_thresh*100),
+      sprintf("transition_%s_lower_ci",middle_thresh*100),
+      sprintf("transition_%s_lower_ci",upper_thresh*100),
+      sprintf("transition_%s_upper_ci",lower_thresh*100),
+      sprintf("transition_%s_upper_ci",middle_thresh*100),
+      sprintf("transition_%s_upper_ci",upper_thresh*100),
+      sprintf("threshold_%s",lower_thresh*100),
+      sprintf("threshold_%s",middle_thresh*100),
+      sprintf("threshold_%s",upper_thresh*100),
       'min_gcc',
       'max_gcc'
     )

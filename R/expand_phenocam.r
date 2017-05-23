@@ -22,7 +22,7 @@
 #' contract.phenocam()
 #' }
 
-expand.phenocam = function(df, truncate = NULL) {
+expand_phenocam = function(df, truncate = NULL) {
   
   # check validaty of the input
   if (is.data.frame(df)) {

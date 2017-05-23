@@ -97,7 +97,7 @@ phenophases = function(df,
   for ( i in c(90,75,50,"mean") ){
 
     # calculate the transition dates
-    tmp = transition.dates(df,
+    tmp = transition_dates(df,
                            reverse=FALSE,
                            percentile=i,
                            frequency = frequency)
@@ -123,7 +123,7 @@ phenophases = function(df,
   # all percentiles
   for ( i in c(90,75,50,"mean") ){
 
-    tmp = transition.dates(df,
+    tmp = transition_dates(df,
                            reverse=TRUE,
                            percentile=i,
                            frequency = frequency)
