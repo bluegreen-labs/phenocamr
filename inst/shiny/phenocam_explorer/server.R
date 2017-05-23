@@ -9,12 +9,6 @@ library(changepoint)
 library(zoo)
 library(leaflet)
 
-files = list.files("/data/Dropbox/Research_Projects/code_repository/bitbucket/phenocamr/R/","*.r",full.names = TRUE)
-
-for (i in files){
-  source(i)
-}
-
 # create temporary directory and move into it
 if (!dir.exists("~/phenocam_data")) {
   dir.create("~/phenocam_data")
