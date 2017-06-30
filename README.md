@@ -1,37 +1,45 @@
-!!! This code is in active development and should currently not be used !!!
+# phenocamr R toolbox
 
-# PhenoCam R toolbox
-
-The PhenoCam R toolbox is a collection of functions to facilitate the retrieval and processing of PhenoCam time series. If requested complementary Daymet or AmeriFlux (in development) data which will be downloaded and merged with the PhenoCam data. The function will either return the original file as hosted on the PhenoCam server or the merged data file,using the same format, with the header of the original PhenoCam data file will be retained.
+The phenocamr R toolbox is a collection of functions to facilitate the retrieval and processing of PhenoCam time series. If requested complementary [Daymet climate data](https://daymet.ornl.gov/) will be downloaded and merged with the PhenoCam data. The function will either return the original file as hosted on the PhenoCam server or the merged data file,using the same format, with the header of the original PhenoCam data file will be retained.
 
 ## Installation
 
-You can quick install the package by installing the following dependencies
+Downloading the package from the github repository using:
 
 ```R
-install.packages(c("zoo","changepoint","data.table","curl","RCurl","DT","shiny","shinydashboard","leaflet","plotly","devtools"))
-```
-
-and downloading the package from the github repository
-
-```R
-require(devtools)
-install_github("khufkens/phenocamr")
+if(!require(devtools)){install.package(devtools)}
+devtools::install_github("khufkens/phenocamr")
 ```
 
 ## Use
 
-To download data for a single site use the following syntax:
+To download data for a single deciduous broadleaf forest site (harvard) use the following syntax:
 
 ```R
-download.phenocam(site="harvard",vegetation="DB",frequency=3,daymet=TRUE)  
+download_phenocam(site = "harvard",
+                  vegetation = "DB",
+                  frequency = 3,
+                  phenophases = TRUE)  
 ```
 
-This will download all deciduous broadleaf (DB) PhenoCam time series for the "harvard" site. In addition corresponding data is downloaded from the Daymet server and merged with the PhenoCam data. For detailed function overview use the R help browser
+This will download all deciduous broadleaf (DB) PhenoCam time series for the "harvard" site at a 3-day time step. In addition, the data is processed to estimate phenological transition dates (phenophases) and written to file. For detailed overview of all use the R help browser.
 
-### Notes / Dependencies
+## Citation and full description
 
-The code depends on the following R packages: [DaymetR](https://khufkens.github.io/daymetr) and [AmerifluxR](https://khufkens.github.io/amerifluxr).
+An in depth description and worked example of the phenocamr R package can be found in
+
+- Hufkens et al. (2017), An integrated phenology modelling framework in R. XYZ. xyz : xyz-xyz
+
+Please cite the package using this reference.
+
+## External Dependencies
+
+The code depends on the following R package [DaymetR](https://khufkens.github.io/daymetr) which can be installed from the repository using:
+
+```R
+if(!require(devtools)){install.package(devtools)}
+devtools::install_github("khufkens/daymetr")
+```
 
 # Acknowledgements
 
