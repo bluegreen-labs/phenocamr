@@ -10,7 +10,7 @@
 #' # Internal function only, should not be used stand-alone.
 #' # As such no documentation is provided.
 
-normalize.ts <- function(df,percentile=90){
+normalize_ts <- function(df,percentile=90){
   
   if (!is.data.frame(df)){
     stop("not a data.frame")

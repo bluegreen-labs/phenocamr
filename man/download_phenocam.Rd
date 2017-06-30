@@ -50,7 +50,7 @@ download_phenocam(site = "harvard",
                   vegetation = "DB",
                   roi_id = 1,
                   frequency = 3)
-                  
+
 # download all Harvard Forest deciduous broadleaf sites using
 # geographic constraints.
 download_phenocam(vegetation = "DB",

@@ -21,12 +21,12 @@
 #' # where location [[1]] holds the greenup dates and location
 #' # [[2]] the greendown dates
 #'
-#' df = download.phenocam(site="harvard",
+#' df = download_phenocam(site="harvard",
 #'                        type="DB",
 #'                        roi="1",
 #'                        frequency=3)
 #' df = read.csv("harvard_DB_0001_1day.csv")
-#' my_dates = phenophases(df,output=FALSE)
+#' my_dates = phenophases(df,output = FALSE)
 #'
 #' # dates need to be converted to standard notation using
 #' # as.Date(my_dates)
@@ -98,8 +98,8 @@ phenophases = function(df,
 
     # calculate the transition dates
     tmp = transition_dates(df,
-                           reverse=FALSE,
-                           percentile=i,
+                           reverse = FALSE,
+                           percentile = i,
                            frequency = frequency)
     
     # screen for false rising parts
@@ -124,8 +124,8 @@ phenophases = function(df,
   for ( i in c(90,75,50,"mean") ){
 
     tmp = transition_dates(df,
-                           reverse=TRUE,
-                           percentile=i,
+                           reverse = TRUE,
+                           percentile = i,
                            frequency = frequency)
     
     # screen for false falling curves

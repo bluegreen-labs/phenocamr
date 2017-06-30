@@ -24,7 +24,7 @@
 #'                         frequency=3)
 #'
 #' df = utils::read.csv("harvard_DB_0001_1day_v4.csv")
-#' my_dates = transition.dates(df,
+#' my_dates = transition_dates(df,
 #'                             lower_thresh = 0.1,
 #'                             middle_thresh = 0.25,
 #'                             upper_thresh = 0.5,
@@ -171,8 +171,6 @@ transition_dates = function(df,
   # switch the direction depending on the metric
   # needed (forward = rising edge, reverse = falling edge)
   if ( reverse == TRUE ) {
-
-    # reverse all input data
     lower = rev(lower)
     upper = rev(upper)
     int_flag = rev(int_flag)
@@ -180,7 +178,6 @@ transition_dates = function(df,
     smooth_orig = rev(smooth_orig)
     raw_data = rev(raw_data)
     smooth = rev(smooth)
-
   }
 
   cpt_obj = changepoint::cpt.mean(
@@ -517,7 +514,7 @@ transition_dates = function(df,
     dates[i,10:14] = round(dates[i,10:14],5)
 
     # plot for debugging
-    if (plot == TRUE){
+    if (plot){
 
       segment_date = date[start:end]
       min_seg = segment_orig[low_loc]
