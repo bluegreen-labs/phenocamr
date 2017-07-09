@@ -47,7 +47,7 @@ df = download.phenocam(site="harvard",
                         frequency=3)
 
 df = utils::read.csv("harvard_DB_0001_1day_v4.csv")
-my_dates = transition.dates(df,
+my_dates = transition_dates(df,
                             lower_thresh = 0.1,
                             middle_thresh = 0.25,
                             upper_thresh = 0.5,
