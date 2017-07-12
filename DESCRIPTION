@@ -6,7 +6,7 @@ Authors@R: c(person("Hufkens","Koen",
 	      person("Aubrecht","Donald", role=c("ctb")),
 	      person("Richardson","Andrew", role=c("ctb")))
 Description: 
-  Functions to download and preprocessed PhenoCam time series into derived
+  Functions to download and preprocess PhenoCam time series into derived
   phenology products such as various seasonal phenophase dates for model
   development. A GUI is provided to interactively explore downloaded data
   if so desired.
@@ -29,4 +29,5 @@ Remotes:
     khufkens/daymetr
 License: AGPLv3
 LazyData: true
+ByteCompile: true
 RoxygenNote: 6.0.1
