@@ -9,6 +9,7 @@ Downloading the package from the github repository using:
 ```R
 if(!require(devtools)){install.package(devtools)}
 devtools::install_github("khufkens/phenocamr")
+library(phenocamr)
 ```
 
 ## Use
