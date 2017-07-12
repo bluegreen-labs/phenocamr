@@ -41,6 +41,10 @@ if(!require(devtools)){install.package(devtools)}
 devtools::install_github("khufkens/daymetr")
 ```
 
+# Citation
+
+Hufkens K., Basler J. D., Milliman T. Melaas E., Richardson A.D. 2017 An integrated phenology modelling framework in R: Phenology modelling with phenor. in review
+
 # Acknowledgements
 
 This project was is supported by the National Science Foundation’s Macro-system Biology Program (award EF-1065029).
