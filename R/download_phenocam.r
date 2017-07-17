@@ -1,14 +1,9 @@
-#' Function to download PhenoCam time series based upon:
-#' site name, vegetation type, geographic bounding box.
-#' You can optionally merge them with Daymet climate data
-#' when located within the Daymet data range.
+#' Function to download and post-process PhenoCam time series
 #'
 #' @param site : the site name, as mentioned on the PhenoCam web page.
 #' @param vegetation : vegeation type (DB, EN, ... default = ALL)
 #' @param frequency : frequency of the time series product (1,3, "raw")
 #' @param roi_id: the id of the ROI to download (default = ALL)
-#' @param top_lef: latitude, longitude tupple as a vector c(45.5, -80)
-#' @param bottom_right: latitude, longitude tupple as a vector c(45.5, -80)
 #' @param smooth: smooth data (TRUE / FALSE, default is TRUE)
 #' @param daymet : TRUE or FALSE, merges the daymet data
 #' @param trim_daymet: TRUE or FALSE, trims data to match PhenoCam data
@@ -26,21 +21,12 @@
 #'                   roi_id = 1,
 #'                   frequency = 3)
 #'
-#' # download all Harvard Forest deciduous broadleaf sites using
-#' # geographic constraints.
-#' download_phenocam(vegetation = "DB",
-#'                   roi_id  =1,
-#'                   frequency = 3,
-#'                   top_left = c(42.545657, -72.197524),
-#'                   bottom_right = c(42.527079, -72.158128))
 #' }
 
 download_phenocam = function(site="bartlett",
                              vegetation=NULL,
                              frequency="3",
                              roi_id=NULL,
-                             top_left= NULL,
-                             bottom_right = NULL,
                              outlier_detection=TRUE,
                              smooth=TRUE,
                              daymet=FALSE,
@@ -55,7 +41,6 @@ download_phenocam = function(site="bartlett",
   # this excludes any geographic constraints
 
   if (!is.null(site)){
-
     if (is.null(vegetation)){
       loc = grep(site,site_list$site)
     }else{
@@ -75,20 +60,7 @@ download_phenocam = function(site="bartlett",
     }
 
   }else{
-
-    # if there is no site name, use geographic boundaries
-    # (by default all rois are returned)
-
-    if (is.null(vegetation) | vegetation == "all"){
-      # list all data within a geographic region
-      loc = which(site_list$lat < top_left[1] & site_list$lat > bottom_right[1] &
-                   site_list$lon > top_left[2] & site_list$lon < bottom_right[2])
-    }else{
-      # list only a particular vegetation type within a geographic region
-      loc = which(site_list$lat < top_left[1] & site_list$lat > bottom_right[1] &
-                   site_list$lon > top_left[2] & site_list$lon < bottom_right[2] &
-                    site_list$veg_type %in% vegetation)
-    }
+    stop("No site selected, at a minimum provide a site name")
   }
 
   # if no valid files are detected stop any download attempts
