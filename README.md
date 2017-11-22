@@ -33,4 +33,4 @@ Richardson, A.D., Hufkens, K., Milliman, T., Aubrecht, D.M., Chen, M., Gray, J.M
 
 ## Acknowledgements
 
-This project was is supported by the National Science Foundation’s Macro-system Biology Program (award EF-1065029).
+This project was supported by the National Science Foundation’s Macro-system Biology Program (award EF-1065029).
