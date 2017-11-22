@@ -1,8 +1,8 @@
 #' Smooths a standard PhenoCam file or data frame using
 #' the BCI optimized smoothing parameter
-#' @param df: a PhenoCam data file or data frame
-#' @param metrics: which metrics to process, normally all default ones
-#' @param force: TRUE / FALSE, force reprocessing?
+#' @param df a PhenoCam data file or data frame
+#' @param metrics which metrics to process, normally all default ones
+#' @param force TRUE / FALSE, force reprocessing?
 #' @keywords time series, smoothing, phenocam
 #' @export
 #' @examples
@@ -55,12 +55,6 @@ smooth_ts = function(df,
       # read data file
       header = try(readLines(df, n = 22), silent = TRUE)
 
-      # grab processing frequency, needed for proper
-      # processing use either the file name or the header
-      freq = ifelse(grepl("3day",filename) | grepl("3-day",header[2]),
-                    3,
-                    1)
-
       # read in the data frame
       df = utils::read.table(df, header = TRUE, sep = ",")
 
@@ -69,6 +63,9 @@ smooth_ts = function(df,
     }
   }
 
+  # detect frequency
+  freq = median(diff(na.omit(df$doy)))
+  
   # if it's a smoothed file, bail unless you want to
   # force the smoothing again
   if (any(grepl("smooth_*", colnames(df))) & force == FALSE) {
