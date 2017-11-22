@@ -27,7 +27,7 @@ This will download all deciduous broadleaf (DB) PhenoCam time series for the "ha
 
 ## References
 
-Hufkens K., Basler J. D., Milliman T. Melaas E., Richardson A.D. 2017 An integrated phenology modelling framework in R: Phenology modelling with phenor. In Review
+Hufkens K., Basler J. D., Milliman T. Melaas E., Richardson A.D. 2017 An integrated phenology modelling framework in R: Phenology modelling with phenor. (accepted)
 
 Richardson, A.D., Hufkens, K., Milliman, T., Aubrecht, D.M., Chen, M., Gray, J.M., Johnston, M.R., Keenan, T.F., Klosterman, S.T., Kosmala, M., Melaas, E.K., Friedl, M.A., Frolking, S.  2017. Tracking vegetation phenology across diverse North American biomes using PhenoCam imagery. In Review.
 
