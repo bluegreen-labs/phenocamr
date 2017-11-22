@@ -27,7 +27,7 @@ Imports:
     daymetr
 Remotes:
     khufkens/daymetr
-License:
+License: file LICENSE
 LazyData: true
 ByteCompile: true
 RoxygenNote: 6.0.1
