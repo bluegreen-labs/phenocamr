@@ -1,4 +1,4 @@
-#' Calculate GRVI for a PhenoCam file or data frame using
+#' Calculate GRVI for a PhenoCam file or data frame
 #' 
 #' @param df: a PhenoCam data file or data frame
 #' @param par: grvi parameters (weights)
