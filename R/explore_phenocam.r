@@ -1,5 +1,7 @@
 #' Starts the phenocamr shiny interface
-#' in your default browser
+#' in your default browser. The GUI
+#' allows you to interactively download
+#' data and visualize timeseries.
 #' 
 #' @param none : calling the function loads the GUI
 #' @keywords GUI, front end, interactive
@@ -7,7 +9,7 @@
 #' @examples
 #' 
 #' \dontrun{
-#' # Starts the PhenoCam explorer in a browser
+#' # Starts the PhenoCam explorer GUI in a browser
 #' explore_phenocam()
 #' }
 
