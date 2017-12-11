@@ -2,7 +2,7 @@ Package: phenocamr
 Title: facilitates PhenoCam data access and post-processing in R
 Version: 1.0
 Authors@R: c(person("Hufkens","Koen",
-        email="koen.hufkens@gmail.com",role=c("aut", "cre"))
+  email="koen.hufkens@gmail.com",role=c("aut", "cre")))
 Description: 
   Functions to download and preprocess PhenoCam time series into derived
   phenology products such as various seasonal phenophase dates for model
