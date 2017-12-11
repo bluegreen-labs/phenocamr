@@ -11,7 +11,7 @@
 #' # with smoothed values, overwriting the original
 #' 
 #' # download demo data (do not smooth)
-#' download.phenocam(site = "harvard",
+#' download_phenocam(site = "harvard",
 #'                   vegetation = "DB",
 #'                   roi_id = 1,
 #'                   frequency = 3,
@@ -76,7 +76,8 @@ grvi = function(df, par=c(1,1,1), plot = FALSE ) {
     
     # calculate the GRVI
     # df$grvi = (g^a - r^b)/(g^a + r^b)
-    df$gcc_grvi = (green * a - red * b  - blue * c) / (green * a + red * b + blue * c)
+    df$gcc_grvi = (green * a - red * b  - blue * c) /
+      (green * a + red * b + blue * c)
     
   }
   
@@ -93,7 +94,7 @@ grvi = function(df, par=c(1,1,1), plot = FALSE ) {
          col = "red")
     
     # mark 0 baseline
-    abline(h=0)
+    abline(h = 0)
   }
   
   # if the data is not a data frame, write
