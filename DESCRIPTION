@@ -6,8 +6,7 @@ Authors@R: c(person("Hufkens","Koen",
 Description: 
   Functions to download and preprocess PhenoCam time series into derived
   phenology products such as various seasonal phenophase dates for model
-  development. A GUI is provided to interactively explore downloaded data
-  if so desired.
+  development. A GUI is provided to interactively explore downloaded data.
 Depends:
     R (>= 3.2.5),
 Imports:
