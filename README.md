@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/khufkens/phenocamr.svg?branch=master)](https://travis-ci.org/khufkens/phenocamr)
+
 # phenocamr
 
 The phenocamr R package is a collection of functions to facilitate the retrieval and processing of PhenoCam time series. The package ensures proper post-processing of PhenoCam data in data products such as phenological transition dates. If requested complementary [Daymet climate data](https://daymet.ornl.gov/) will be downloaded and merged with the PhenoCam data for modelling purposes. For detailed overview of all functions and worked example we reference to the R help documentation and the manuscripts below (Hufkens et al. 2017, Richardson et al. 2017).
