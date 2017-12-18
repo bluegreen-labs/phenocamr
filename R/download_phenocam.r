@@ -115,7 +115,7 @@ download_phenocam = function(site="bartlett",
       }
 
       # remove outliers (overwrites original file)
-      if (outlier_detection==TRUE | outlier_detection == "true" | outlier_detection == "T"){
+      if (outlier_detection == TRUE | outlier_detection == "true" | outlier_detection == "T"){
         # feedback
         cat("Flagging outliers! \n")
 
@@ -129,12 +129,12 @@ download_phenocam = function(site="bartlett",
       }
 
       # Smooth data
-      if (smooth==TRUE | smooth == "true" | smooth == "T"){
+      if (smooth == TRUE | smooth == "true" | smooth == "T"){
         # feedback
         cat("Smoothing time series! \n")
 
         # smooth time series
-        status = try(smooth_ts(output_filename),silent=TRUE)
+        status = try(smooth_ts(output_filename), silent = TRUE)
 
         # trap errors
         if(inherits(status,"try-error")){
@@ -143,12 +143,14 @@ download_phenocam = function(site="bartlett",
       }
 
       # Output transition dates
-      if (phenophase==TRUE | phenophase == "true" | phenophase == "T"){
+      if (phenophase == TRUE | phenophase == "true" | phenophase == "T"){
         # feedback
         cat("Estimating transition dates! \n")
 
         # smooth time series
-        status = try(phenophases(output_filename, output = TRUE), silent=TRUE)
+        status = try(phenophases(output_filename,
+                                 out_dir = out_dir,
+                                 output = TRUE), silent=TRUE)
 
         # trap errors
         if(inherits(status,"try-error")){
@@ -157,12 +159,12 @@ download_phenocam = function(site="bartlett",
       }
 
       # merge with daymet
-      if (daymet==TRUE | daymet == "true" | daymet == "T"){
+      if (daymet == TRUE | daymet == "true" | daymet == "T"){
         # feedback
         cat("Merging Daymet Data! \n")
 
         # merge daymet data into the time series file
-        status=try(merge_daymet(output_filename,
+        status = try(merge_daymet(output_filename,
                                 trim_daymet = trim_daymet),silent=TRUE)
 
         # trap errors
