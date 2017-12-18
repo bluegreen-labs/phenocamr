@@ -463,7 +463,7 @@ server = function(input, output, session) {
       # do this separately to allow for proper progresss
       # bar updating (keep people busy as this takes a while)
       
-      download.phenocam(
+      download_phenocam(
         site = site,
         vegetation = veg_type,
         roi_id = roi_id,
@@ -499,11 +499,11 @@ server = function(input, output, session) {
     # trap errors, mainly if no dates can be detected return an empty
     # string (NAs) to prevent plotting errors further down.
     # code this up in the transition.dates() function TODO TODO TODO
-    spring = transition.dates(data,
+    spring = transition_dates(data,
                               percentile = percentile,
                               reverse = FALSE)
     
-    fall = transition.dates(data,
+    fall = transition_dates(data,
                             percentile = percentile,
                             reverse = TRUE)
 
