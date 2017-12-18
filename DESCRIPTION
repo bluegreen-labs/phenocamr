@@ -20,6 +20,7 @@ Imports:
     zoo,
     utils,
     graphics,
+    DT,
     stats,
     daymetr
 Remotes:
