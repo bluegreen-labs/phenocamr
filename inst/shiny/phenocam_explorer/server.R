@@ -1,14 +1,6 @@
 # phenocamr shiny interface / server back-end
 # see matching ui.R code for formatting
 
-library(jsonlite)
-library(DT)
-library(shiny)
-library(shinydashboard)
-library(changepoint)
-library(zoo)
-library(leaflet)
-
 # create temporary directory and move into it
 if (!dir.exists("~/phenocam_data")) {
   dir.create("~/phenocam_data")
@@ -22,6 +14,9 @@ if (!dir.exists("~/phenocam_data")) {
 # location of the data to be used in
 # strings throughout
 path = "~/phenocam_data"
+
+# set unix time origin
+unix = "1970-01-01"
 
 # list all colours to be used in plotting
 # this allows for quick changes
@@ -475,7 +470,7 @@ server = function(input, output, session) {
       
       # detect outliers
       progress$set(value = 0.3, detail = "detecting outliers")
-      status = try(detect.outliers(data_file), silent = TRUE)
+      status = try(detect_outliers(data_file), silent = TRUE)
       
       # trap errors
       if (inherits(status, "try-error")) {
@@ -484,7 +479,7 @@ server = function(input, output, session) {
       
       # smooth data
       progress$set(value = 0.6, detail = "smoothing data")
-      status = try(smooth.ts(data_file), silent = TRUE)
+      status = try(smooth_ts(data_file), silent = TRUE)
       
       # trap errors
       if (inherits(status, "try-error")) {
@@ -501,11 +496,13 @@ server = function(input, output, session) {
     # code this up in the transition.dates() function TODO TODO TODO
     spring = transition_dates(data,
                               percentile = percentile,
-                              reverse = FALSE)
+                              reverse = FALSE,
+                              frequency = frequency)
     
     fall = transition_dates(data,
                             percentile = percentile,
-                            reverse = TRUE)
+                            reverse = TRUE,
+                            frequency = frequency)
 
     # Final plot preparations
     progress$set(value = 0.7, detail = "preparing final plot")
@@ -620,6 +617,12 @@ server = function(input, output, session) {
       spring = data[[2]]
       fall = data[[3]]
       
+      # format dates correctly (unix time to date format)
+      spring[, 1:9] = apply(spring[, 1:9], 2, function(x)
+        as.character(as.Date(x, origin = unix)))
+      fall[, 1:9] = apply(fall[, 1:9], 2, function(x)
+        as.character(as.Date(x, origin = unix)))
+      
       # bind spring and fall phenology data in a coherent format
       phenology = rbind(spring,fall)
       rising_length = dim(spring)[1]
@@ -631,7 +634,7 @@ server = function(input, output, session) {
       roi_id = rep(sprintf("%04d",roi),rising_length + falling_length)
       
       phenology[, 1:9] = apply(phenology[, 1:9], 2, function(x)
-        as.character(as.Date(x)))
+        as.character(as.Date(x, origin = unix)))
       
       # bind in new labels
       phenology = cbind(sitename,veg_type,roi_id,direction,phenology)
