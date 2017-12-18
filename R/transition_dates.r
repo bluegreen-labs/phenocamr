@@ -110,7 +110,7 @@ transition_dates = function(df,
 
   # grab processing frequency, needed for proper
   # processing use either the file name or the header
-  if (is.null(frequency) & is.data.frame(df)) {
+  if (is.null(frequency)) {
     stop("missing frequency information")
   }
 
