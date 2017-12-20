@@ -8,9 +8,4 @@ http://cran.r-project.org/web/packages/policies.html
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 notes
-
-This is a new submission.
-
-Thanks! Koen Hufkens
- 
+0 errors | 2 warnings | 1 notes
