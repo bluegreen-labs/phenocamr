@@ -1,8 +1,8 @@
-[![Build Status](https://travis-ci.org/khufkens/phenocamr.svg?branch=master)](https://travis-ci.org/khufkens/phenocamr)
+[![Build Status](https://travis-ci.org/khufkens/phenocamr.svg?branch=master)](https://travis-ci.org/khufkens/phenocamr) [![DOI](https://www.zenodo.org/badge/48943895.svg)](https://www.zenodo.org/badge/latestdoi/48943895)
 
 # phenocamr
 
-The phenocamr R package is a collection of functions to facilitate the retrieval and processing of PhenoCam time series. The package ensures proper post-processing of PhenoCam data in data products such as phenological transition dates. If requested complementary [Daymet climate data](https://daymet.ornl.gov/) will be downloaded and merged with the PhenoCam data for modelling purposes. For detailed overview of all functions and worked example we reference to the R help documentation and the manuscripts below (Hufkens et al. 2017, Richardson et al. 2017).
+Phenocamr facilitates the retrieval and processing of PhenoCam time series. Post-processing of PhenoCam data includes outlier removal and the generation of data products such as phenological transition dates. If requested complementary [Daymet climate data](https://daymet.ornl.gov/) will be downloaded and merged with the PhenoCam data for modelling purposes. For a detailed overview of all functions and worked examples we refer to the R package documentation and publications by Hufkens et al. (2018) and Richardson et al. (2018).
 
 ## Installation
 
@@ -29,9 +29,9 @@ This will download all deciduous broadleaf (DB) PhenoCam time series for the "ha
 
 ## References
 
-Hufkens K., Basler J. D., Milliman T. Melaas E., Richardson A.D. 2017 An integrated phenology modelling framework in R: Phenology modelling with phenor. (in press)
+Hufkens K., Basler J. D., Milliman T. Melaas E., Richardson A.D. 2017. Methods in Ecology & Evolution. An integrated phenology modelling framework in R: Phenology modelling with phenor. (in press)
 
-Richardson, A.D., Hufkens, K., Milliman, T., Aubrecht, D.M., Chen, M., Gray, J.M., Johnston, M.R., Keenan, T.F., Klosterman, S.T., Kosmala, M., Melaas, E.K., Friedl, M.A., Frolking, S.  2017. Tracking vegetation phenology across diverse North American biomes using PhenoCam imagery. (in press)
+Richardson, A.D., Hufkens, K., Milliman, T., Aubrecht, D.M., Chen, M., Gray, J.M., Johnston, M.R., Keenan, T.F., Klosterman, S.T., Kosmala, M., Melaas, E.K., Friedl, M.A., Frolking, S.  2017. Scientific Data. Tracking vegetation phenology across diverse North American biomes using PhenoCam imagery. (in press)
 
 ## Acknowledgements
 
