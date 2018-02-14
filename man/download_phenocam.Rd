@@ -2,44 +2,36 @@
 % Please edit documentation in R/download_phenocam.r
 \name{download_phenocam}
 \alias{download_phenocam}
-\title{Function to download PhenoCam time series based upon:
-site name, vegetation type, geographic bounding box.
-You can optionally merge them with Daymet climate data
-when located within the Daymet data range.}
+\title{Function to download and post-process PhenoCam time series}
 \usage{
 download_phenocam(site = "bartlett", vegetation = NULL, frequency = "3",
-  roi_id = NULL, top_left = NULL, bottom_right = NULL,
-  outlier_detection = TRUE, smooth = TRUE, daymet = FALSE,
-  trim_daymet = TRUE, phenophase = FALSE, out_dir = getwd())
+  roi_id = NULL, outlier_detection = TRUE, smooth = TRUE,
+  daymet = FALSE, trim_daymet = TRUE, phenophase = FALSE,
+  out_dir = getwd())
 }
 \arguments{
-\item{site}{: the site name, as mentioned on the PhenoCam web page.}
+\item{site}{the site name, as mentioned on the PhenoCam web page.}
 
-\item{vegetation}{: vegeation type (DB, EN, ... default = ALL)}
+\item{vegetation}{vegeation type (DB, EN, ... default = ALL)}
 
-\item{frequency}{: frequency of the time series product (1,3, "raw")}
+\item{frequency}{frequency of the time series product (1,3, "raw")}
 
-\item{daymet}{: TRUE or FALSE, merges the daymet data}
+\item{roi_id}{the id of the ROI to download (default = ALL)}
 
-\item{roi_id:}{the id of the ROI to download (default = ALL)}
+\item{outlier_detection}{TRUE or FALSE, detect outliers}
 
-\item{top_lef:}{latitude, longitude tupple as a vector c(45.5, -80)}
+\item{smooth}{smooth data (TRUE / FALSE, default is TRUE)}
 
-\item{bottom_right:}{latitude, longitude tupple as a vector c(45.5, -80)}
+\item{daymet}{TRUE or FALSE, merges the daymet data}
 
-\item{smooth:}{smooth data (TRUE / FALSE, default is TRUE)}
+\item{trim_daymet}{TRUE or FALSE, trims data to match PhenoCam data}
 
-\item{trim_daymet:}{TRUE or FALSE, trims data to match PhenoCam data}
+\item{phenophase}{TRUE or FALSE, calculate transition dates}
 
-\item{outlier_detection:}{TRUE or FALSE, detect outliers}
-
-\item{phenophase:}{TRUE or FALSE, calculate transition dates}
+\item{out_dir}{output directory where to store downloaded data}
 }
 \description{
-Function to download PhenoCam time series based upon:
-site name, vegetation type, geographic bounding box.
-You can optionally merge them with Daymet climate data
-when located within the Daymet data range.
+Function to download and post-process PhenoCam time series
 }
 \examples{
 
@@ -51,13 +43,6 @@ download_phenocam(site = "harvard",
                   roi_id = 1,
                   frequency = 3)
 
-# download all Harvard Forest deciduous broadleaf sites using
-# geographic constraints.
-download_phenocam(vegetation = "DB",
-                  roi_id  =1,
-                  frequency = 3,
-                  top_left = c(42.545657, -72.197524),
-                  bottom_right = c(42.527079, -72.158128))
 }
 }
 \keyword{Daymet,}

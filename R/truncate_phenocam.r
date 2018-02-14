@@ -3,8 +3,8 @@
 #' prefered. This function remains as it might serve a purpose to
 #' some.
 #'
-#' @param file: a PhenoCam data file with a 3 day time step
-#' @param year: the last valid year, discard the rest
+#' @param df a PhenoCam data frame
+#' @param year the last valid year, discard the rest
 #' @keywords time series, smoothing, phenocam
 #' @export
 #' @examples

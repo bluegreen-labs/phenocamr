@@ -1,7 +1,7 @@
 #' Merge Daymet data with a PhenoCam data file.
 #' 
-#' @param df: a PhenoCam data file
-#' @param trim_daymet: TRUE / FALSE, trim the daymet data to the length of the
+#' @param df a PhenoCam data file
+#' @param trim_daymet TRUE / FALSE, trim the daymet data to the length of the
 #' PhenoCam time series or include the whole Daymet time series (1980-current).
 #' @keywords time series, PhenoCam, Daymet, data integration
 #' @export

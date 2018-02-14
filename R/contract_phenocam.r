@@ -2,11 +2,9 @@
 #' reverting the expand.phenocam() routine in order
 #' to save space and generate files as outlined in
 #' the data paper. This routine is used as a post-production
-#' measure, and not used in general manipulation
-#' of the data as even 1-day files are sufficiently
-#' small. Once expanded they are kept this way.
+#' measure.
 #'
-#' @param file: a phenocam data file with a 3 day time step
+#' @param filename a phenocam data file with a 3 day time step
 #' @keywords time series, smoothing, phenocam
 #' @export
 #' @examples
@@ -24,6 +22,7 @@
 #' # two days.
 
 contract_phenocam = function(filename) {
+  
   # check validaty of the input
   if (is.data.frame(filename)) {
     stop("not a PhenoCam data file")

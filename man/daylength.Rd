@@ -9,9 +9,9 @@ This routine uses Forsythe et al. 1995.}
 daylength(doy, latitude)
 }
 \arguments{
-\item{doy:}{a vector with doy values 1 - 365(6)}
+\item{doy}{a vector with doy values 1 - 365(6)}
 
-\item{latitude:}{a given latitude}
+\item{latitude}{a given latitude}
 }
 \description{
 Calculates day length (in hours) and the solar elevation above the

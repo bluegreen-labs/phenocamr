@@ -6,23 +6,19 @@
 reverting the expand.phenocam() routine in order
 to save space and generate files as outlined in
 the data paper. This routine is used as a post-production
-measure, and not used in general manipulation
-of the data as even 1-day files are sufficiently
-small. Once expanded they are kept this way.}
+measure.}
 \usage{
 contract_phenocam(filename)
 }
 \arguments{
-\item{file:}{a phenocam data file with a 3 day time step}
+\item{filename}{a phenocam data file with a 3 day time step}
 }
 \description{
 Contracts the file from 1-day to a 3-day time step
 reverting the expand.phenocam() routine in order
 to save space and generate files as outlined in
 the data paper. This routine is used as a post-production
-measure, and not used in general manipulation
-of the data as even 1-day files are sufficiently
-small. Once expanded they are kept this way.
+measure.
 }
 \examples{
 # df = download.phenocam(site = "harvard",

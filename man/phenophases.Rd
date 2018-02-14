@@ -4,32 +4,34 @@
 \alias{phenophases}
 \title{Calculates phenophases, both greenup and senescence, for all 'seasons'
 in a PhenoCam time series. This routine combines a forward and backward
-run of transition.dates() to calculate the phenophases.}
+run of transition_dates() to calculate the phenophases.}
 \usage{
 phenophases(df, sitename = NULL, veg_type = NULL, roi_id = NULL,
-  frequency = NULL, mat = NULL, output = FALSE, out_dir = getwd())
+  frequency = NULL, mat = NULL, output = FALSE, out_dir = getwd(), ...)
 }
 \arguments{
-\item{df:}{a PhenoCam data file (or data frame)}
+\item{df}{a PhenoCam data file (or data frame)}
 
-\item{sitename:}{a PhenoCam data file or data frame}
+\item{sitename}{a PhenoCam data file or data frame}
 
-\item{veg_type:}{a PhenoCam data file or data frame}
+\item{veg_type}{a PhenoCam data file or data frame}
 
-\item{roi_id:}{a PhenoCam data file or data frame}
+\item{roi_id}{a PhenoCam data file or data frame}
 
-\item{frequency:}{a PhenoCam data file or data frame}
+\item{frequency}{a PhenoCam data file or data frame}
 
-\item{mat:}{mean annual temperature}
+\item{mat}{mean annual temperature}
 
-\item{output:}{a PhenoCam data file or data frame}
+\item{output}{a PhenoCam data file or data frame}
 
-\item{output_dir:}{output directory}
+\item{out_dir}{output directory}
+
+\item{...}{pass parameters to the transition_dates() function}
 }
 \description{
 Calculates phenophases, both greenup and senescence, for all 'seasons'
 in a PhenoCam time series. This routine combines a forward and backward
-run of transition.dates() to calculate the phenophases.
+run of transition_dates() to calculate the phenophases.
 }
 \examples{
 

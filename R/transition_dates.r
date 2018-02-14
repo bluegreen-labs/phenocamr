@@ -3,16 +3,16 @@
 #' should not be run stand-alone. Use phenophases() instead!
 #' The required input is a smoothed PhenoCam data file or data frame.
 #'
-#' @param df: a PhenoCam data file or data frame
-#' @param percentile: index to use when calculating transitions
-#' @param lower_thresh: the minimum threshold used (default = 0.1)
-#' @param middle_thresh: the middle threshold used (default = 0.25)
-#' @param upper_thresh: the maximum threshold used (default = 0.5)
-#' @param percentile: time series percentiles to process (mean, 50, 75, 90)
-#' @param penalty: how sensitive is the algorithm, lower is more sensitve (< 0 )
-#' @param reverse: flip the direction of the processing
-#' @param frequency: 1 or 3, default is NULL (ignored = automatic)
-#' @param plot: plot for debugging purposes
+#' @param df a PhenoCam data file or data frame
+#' @param lower_thresh the minimum threshold used (default = 0.1)
+#' @param middle_thresh the middle threshold used (default = 0.25)
+#' @param upper_thresh the maximum threshold used (default = 0.5)
+#' @param percentile time series percentiles to process (mean, 50, 75, 90)
+#' @param penalty how sensitive is the algorithm, lower is more sensitve (< 0 )
+#' @param seg_length minimum length of a segment to be evaluated
+#' @param reverse flip the direction of the processing
+#' @param frequency 1 or 3, default is NULL (ignored = automatic)
+#' @param plot plot for debugging purposes
 #' @keywords PhenoCam, transition dates, phenology, time series
 #' @export
 #' @examples
@@ -326,7 +326,7 @@ transition_dates = function(df,
     # solar elevation constraint on arctic sites
     # to prevent grabbing really early minima due to
     # skewed data
-    loc = which(segment == min(segment[index_segment <= breakpoint])) # & solar_elev_segment > 20)
+    loc = which(segment == min(segment[index_segment <= breakpoint]))
     
     # if no such point exists use the default (for most sites)
     if (length(loc) == 0 ){

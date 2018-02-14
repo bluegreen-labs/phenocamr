@@ -3,8 +3,8 @@
 #' to store subsequent interpolated (1-day data)
 #' and increase consistency across processing.
 #'
-#' @param file: a PhenoCam data file with a 3 day time step
-#' @param truncate: year (numerical), limit the time series
+#' @param df a PhenoCam data frame
+#' @param truncate year (numerical), limit the time series
 #' to a particular year
 #' @keywords time series, smoothing, phenocam
 #' @export

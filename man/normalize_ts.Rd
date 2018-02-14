@@ -9,7 +9,9 @@ of the time series (works on vectors not data frames)}
 normalize_ts(df, percentile = 90)
 }
 \arguments{
-\item{df:}{a PhenoCam data frame}
+\item{df}{a PhenoCam data frame}
+
+\item{percentile}{percentile value to interprete}
 }
 \description{
 Normalize PhenoCam time series, between 0-1 to to standardize

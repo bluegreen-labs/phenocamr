@@ -2,14 +2,15 @@
 #' in a PhenoCam time series. This routine combines a forward and backward
 #' run of transition_dates() to calculate the phenophases.
 #'
-#' @param df: a PhenoCam data file (or data frame)
-#' @param sitename: a PhenoCam data file or data frame
-#' @param veg_type: a PhenoCam data file or data frame
-#' @param roi_id: a PhenoCam data file or data frame
-#' @param frequency: a PhenoCam data file or data frame
-#' @param mat: mean annual temperature
-#' @param output: a PhenoCam data file or data frame
-#' @param output_dir: output directory
+#' @param df a PhenoCam data file (or data frame)
+#' @param sitename a PhenoCam data file or data frame
+#' @param veg_type a PhenoCam data file or data frame
+#' @param roi_id a PhenoCam data file or data frame
+#' @param frequency a PhenoCam data file or data frame
+#' @param mat mean annual temperature
+#' @param output a PhenoCam data file or data frame
+#' @param out_dir output directory
+#' @param ... pass parameters to the transition_dates() function
 #' @keywords PhenoCam, transition dates, phenology, time series
 #' @export
 #' @examples
@@ -33,13 +34,15 @@
 #' }
 
 phenophases = function(df,
-                        sitename=NULL,
-                        veg_type=NULL,
-                        roi_id=NULL,
-                        frequency=NULL,
-                        mat = NULL,
-                        output = FALSE,
-                        out_dir=getwd()){
+                       sitename=NULL,
+                       veg_type=NULL,
+                       roi_id=NULL,
+                       frequency=NULL,
+                       mat = NULL,
+                       output = FALSE,
+                       out_dir=getwd(),
+                       ...
+                       ){
 
   # check if the output directory exists
   if (!dir.exists(out_dir)) {
@@ -100,7 +103,8 @@ phenophases = function(df,
     tmp = transition_dates(df,
                            reverse = FALSE,
                            percentile = i,
-                           frequency = frequency)
+                           frequency = frequency,
+                           ...)
     
     # screen for false rising parts
     loc = strptime(as.Date(tmp$transition_10, origin = "1970-01-01"),"%Y-%m-%d")$yday

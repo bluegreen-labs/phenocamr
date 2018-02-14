@@ -2,7 +2,7 @@
 #' of the select imagery (zooniverse). Will be included in dataset but
 #' currently does not serve any real purpose.
 #'
-#' @param df: a PhenoCam data file or data frame
+#' @param df a PhenoCam data file or data frame
 #' @keywords PhenoCam, pre-processing, screening, snow, outliers
 #' @export
 #' @examples

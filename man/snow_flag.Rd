@@ -9,7 +9,7 @@ currently does not serve any real purpose.}
 snow_flag(df)
 }
 \arguments{
-\item{df:}{a PhenoCam data file or data frame}
+\item{df}{a PhenoCam data file or data frame}
 }
 \description{
 Flags snowy pictures based upon Citizen Science analysis

@@ -10,18 +10,18 @@ detect_outliers(data, iterations = 20, sigma = 2, grvi = FALSE,
   snowflag = FALSE, plot = FALSE)
 }
 \arguments{
-\item{data:}{PhenoCam data frame or filename}
+\item{data}{PhenoCam data frame or filename}
 
-\item{iterations:}{number of itterations over which to cycle to detect outliers ()}
+\item{iterations}{number of itterations over which to cycle to detect outliers ()}
 
-\item{sigma:}{number of deviations to exclude outliers at}
+\item{sigma}{number of deviations to exclude outliers at}
 
-\item{grvi:}{reverse the direction of the screening intervals
+\item{grvi}{reverse the direction of the screening intervals
 to accomodate for GRVI outliers}
 
-\item{plot:}{visualize the process, mostly for debugging (TRUE / FALSE)}
+\item{snowflag}{integrate snow flags?}
 
-\item{snowflag:}{integrate snow flags?}
+\item{plot}{visualize the process, mostly for debugging (TRUE / FALSE)}
 }
 \description{
 Detect outliers in PhenoCam time series (data frame or file)

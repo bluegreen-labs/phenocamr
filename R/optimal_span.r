@@ -2,10 +2,12 @@
 #' smoother based upon the bayesian information
 #' criterion (BIC).
 #'
-#' @param y: a vector with measurement values to smooth
-#' @param x: a vector with dates / time steps
-#' @param weights: optional values to weigh the loess fit with
-#' @param step: span increment size
+#' @param y a vector with measurement values to smooth
+#' @param x a vector with dates / time steps
+#' @param weights optional values to weigh the loess fit with
+#' @param step span increment size
+#' @param label title to be used when plot == FALSE
+#' @param plot plot visual output of the optimization routine
 #' @keywords smoother, span, loess, time series
 #' @export
 #' @examples
@@ -24,9 +26,10 @@
 # downloaded phenocam file if downloaded with the default
 # settings for download_phenocam()
 
-optimal_span = function(y,x=NULL,
-                        weights=NULL,
-                        step=0.01,
+optimal_span = function(y,
+                        x = NULL,
+                        weights = NULL,
+                        step = 0.01,
                         label = NULL,
                         plot = FALSE){
 

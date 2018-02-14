@@ -2,7 +2,8 @@
 #' further processing, independent of the relative amplitude
 #' of the time series (works on vectors not data frames)
 #' 
-#' @param df: a PhenoCam data frame
+#' @param df a PhenoCam data frame
+#' @param percentile percentile value to interprete
 #' @keywords time series, smoothing, phenocam
 #' @export
 #' @examples
@@ -10,7 +11,7 @@
 #' # Internal function only, should not be used stand-alone.
 #' # As such no documentation is provided.
 
-normalize_ts <- function(df,percentile=90){
+normalize_ts <- function(df, percentile = 90){
   
   if (!is.data.frame(df)){
     stop("not a data.frame")
@@ -31,5 +32,5 @@ normalize_ts <- function(df,percentile=90){
   lower  = (lower - min_val)/(max_val - min_val)
   
   # return data
-  return(data.frame(smooth,upper,lower))
+  return(data.frame(smooth, upper, lower))
 }

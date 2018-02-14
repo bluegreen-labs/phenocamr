@@ -10,13 +10,17 @@ optimal_span(y, x = NULL, weights = NULL, step = 0.01, label = NULL,
   plot = FALSE)
 }
 \arguments{
-\item{y:}{a vector with measurement values to smooth}
+\item{y}{a vector with measurement values to smooth}
 
-\item{x:}{a vector with dates / time steps}
+\item{x}{a vector with dates / time steps}
 
-\item{weights:}{optional values to weigh the loess fit with}
+\item{weights}{optional values to weigh the loess fit with}
 
-\item{step:}{span increment size}
+\item{step}{span increment size}
+
+\item{label}{title to be used when plot == FALSE}
+
+\item{plot}{plot visual output of the optimization routine}
 }
 \description{
 Calculates the optimal span for a loess spline

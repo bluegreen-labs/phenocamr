@@ -1,14 +1,15 @@
 #' Function to download and post-process PhenoCam time series
 #'
-#' @param site : the site name, as mentioned on the PhenoCam web page.
-#' @param vegetation : vegeation type (DB, EN, ... default = ALL)
-#' @param frequency : frequency of the time series product (1,3, "raw")
-#' @param roi_id: the id of the ROI to download (default = ALL)
-#' @param smooth: smooth data (TRUE / FALSE, default is TRUE)
-#' @param daymet : TRUE or FALSE, merges the daymet data
-#' @param trim_daymet: TRUE or FALSE, trims data to match PhenoCam data
-#' @param outlier_detection: TRUE or FALSE, detect outliers
-#' @param phenophase: TRUE or FALSE, calculate transition dates
+#' @param site the site name, as mentioned on the PhenoCam web page.
+#' @param vegetation vegeation type (DB, EN, ... default = ALL)
+#' @param frequency frequency of the time series product (1,3, "raw")
+#' @param roi_id the id of the ROI to download (default = ALL)
+#' @param smooth smooth data (TRUE / FALSE, default is TRUE)
+#' @param daymet TRUE or FALSE, merges the daymet data
+#' @param trim_daymet TRUE or FALSE, trims data to match PhenoCam data
+#' @param outlier_detection TRUE or FALSE, detect outliers
+#' @param phenophase TRUE or FALSE, calculate transition dates
+#' @param out_dir output directory where to store downloaded data
 #' @keywords PhenoCam, Daymet, climate data, modelling
 #' @export
 #' @examples

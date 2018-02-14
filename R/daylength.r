@@ -2,8 +2,8 @@
 #' ecliptic plane based upon latitude and a day of year value.
 #' This routine uses Forsythe et al. 1995.
 #'
-#' @param doy: a vector with doy values 1 - 365(6)
-#' @param latitude: a given latitude
+#' @param doy a vector with doy values 1 - 365(6)
+#' @param latitude a given latitude
 #' @keywords solar, ephemerids
 #' @export
 #' @examples

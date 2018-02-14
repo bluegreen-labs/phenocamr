@@ -10,9 +10,9 @@ and increase consistency across processing.}
 expand_phenocam(df, truncate = NULL)
 }
 \arguments{
-\item{file:}{a PhenoCam data file with a 3 day time step}
+\item{df}{a PhenoCam data frame}
 
-\item{truncate:}{year (numerical), limit the time series
+\item{truncate}{year (numerical), limit the time series
 to a particular year}
 }
 \description{

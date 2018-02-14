@@ -12,25 +12,25 @@ transition_dates(df, lower_thresh = 0.1, middle_thresh = 0.25,
   frequency = NULL, reverse = FALSE, plot = FALSE)
 }
 \arguments{
-\item{df:}{a PhenoCam data file or data frame}
+\item{df}{a PhenoCam data file or data frame}
 
-\item{percentile:}{index to use when calculating transitions}
+\item{lower_thresh}{the minimum threshold used (default = 0.1)}
 
-\item{lower_thresh:}{the minimum threshold used (default = 0.1)}
+\item{middle_thresh}{the middle threshold used (default = 0.25)}
 
-\item{middle_thresh:}{the middle threshold used (default = 0.25)}
+\item{upper_thresh}{the maximum threshold used (default = 0.5)}
 
-\item{upper_thresh:}{the maximum threshold used (default = 0.5)}
+\item{percentile}{time series percentiles to process (mean, 50, 75, 90)}
 
-\item{percentile:}{time series percentiles to process (mean, 50, 75, 90)}
+\item{penalty}{how sensitive is the algorithm, lower is more sensitve (< 0 )}
 
-\item{penalty:}{how sensitive is the algorithm, lower is more sensitve (< 0 )}
+\item{seg_length}{minimum length of a segment to be evaluated}
 
-\item{reverse:}{flip the direction of the processing}
+\item{frequency}{1 or 3, default is NULL (ignored = automatic)}
 
-\item{frequency:}{1 or 3, default is NULL (ignored = automatic)}
+\item{reverse}{flip the direction of the processing}
 
-\item{plot:}{plot for debugging purposes}
+\item{plot}{plot for debugging purposes}
 }
 \description{
 Calculates transition dates on the upward

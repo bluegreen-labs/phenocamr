@@ -2,17 +2,19 @@
 % Please edit documentation in R/grvi.r
 \name{grvi}
 \alias{grvi}
-\title{Calculate GRVI for a PhenoCam file or data frame using}
+\title{Calculate GRVI for a PhenoCam file or data frame}
 \usage{
 grvi(df, par = c(1, 1, 1), plot = FALSE)
 }
 \arguments{
-\item{df:}{a PhenoCam data file or data frame}
+\item{df}{a PhenoCam data file or data frame}
 
-\item{par:}{grvi parameters (weights)}
+\item{par}{grvi parameters (weights)}
+
+\item{plot}{plot the data while being evaluated}
 }
 \description{
-Calculate GRVI for a PhenoCam file or data frame using
+Calculate GRVI for a PhenoCam file or data frame
 }
 \examples{
 
@@ -21,7 +23,7 @@ Calculate GRVI for a PhenoCam file or data frame using
 # with smoothed values, overwriting the original
 
 # download demo data (do not smooth)
-download.phenocam(site = "harvard",
+download_phenocam(site = "harvard",
                   vegetation = "DB",
                   roi_id = 1,
                   frequency = 3,

@@ -9,11 +9,11 @@ smooth_ts(df, metrics = c("gcc_mean", "gcc_50", "gcc_75", "gcc_90",
   "rcc_mean", "rcc_50", "rcc_75", "rcc_90"), force = TRUE)
 }
 \arguments{
-\item{df:}{a PhenoCam data file or data frame}
+\item{df}{a PhenoCam data file or data frame}
 
-\item{metrics:}{which metrics to process, normally all default ones}
+\item{metrics}{which metrics to process, normally all default ones}
 
-\item{force:}{TRUE / FALSE, force reprocessing?}
+\item{force}{TRUE / FALSE, force reprocessing?}
 }
 \description{
 Smooths a standard PhenoCam file or data frame using

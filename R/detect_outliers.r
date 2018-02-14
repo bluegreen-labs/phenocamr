@@ -2,13 +2,13 @@
 #' The function fills in the existing column to hold outlier flags,
 #' and either overwrites the original file or outputs a new data frame.
 #'
-#' @param data: PhenoCam data frame or filename
-#' @param iterations: number of itterations over which to cycle to detect outliers ()
-#' @param sigma: number of deviations to exclude outliers at
-#' @param grvi: reverse the direction of the screening intervals
+#' @param data PhenoCam data frame or filename
+#' @param iterations number of itterations over which to cycle to detect outliers ()
+#' @param sigma number of deviations to exclude outliers at
+#' @param grvi reverse the direction of the screening intervals
 #' to accomodate for GRVI outliers
-#' @param plot: visualize the process, mostly for debugging (TRUE / FALSE)
-#' @param snowflag: integrate snow flags?
+#' @param plot visualize the process, mostly for debugging (TRUE / FALSE)
+#' @param snowflag integrate snow flags?
 #' @keywords PhenoCam, outliers, smoothing, pre-processing
 #' @export
 #' @examples
