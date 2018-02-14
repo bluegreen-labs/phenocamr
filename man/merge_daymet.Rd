@@ -7,9 +7,9 @@
 merge_daymet(df, trim_daymet = FALSE)
 }
 \arguments{
-\item{df:}{a PhenoCam data file}
+\item{df}{a PhenoCam data file}
 
-\item{trim_daymet:}{TRUE / FALSE, trim the daymet data to the length of the
+\item{trim_daymet}{TRUE / FALSE, trim the daymet data to the length of the
 PhenoCam time series or include the whole Daymet time series (1980-current).}
 }
 \description{
