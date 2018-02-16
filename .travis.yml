@@ -1,10 +1,15 @@
-dist: trusty
-
-language: r
+language: R
+sudo: required
 cache: packages
+warnings_are_errors: false
 
+before_install:
+    - sudo apt-get install --yes udunits-bin libudunits2-dev
+    - sudo apt-get install --yes libproj-dev libgeos-dev libgdal-dev libgdal1-dev 
+    - sudo apt-get install --yes libnetcdf-dev netcdf-bin
 r:
   - release
   - devel
 
-warnings_are_errors: false
+r_packages:
+  - devtools
