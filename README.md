@@ -29,10 +29,10 @@ This will download all deciduous broadleaf (DB) PhenoCam time series for the "ha
 
 ## References
 
-Hufkens K., Basler J. D., Milliman T. Melaas E., Richardson A.D. 2017. Methods in Ecology & Evolution. An integrated phenology modelling framework in R: Phenology modelling with phenor. (in press)
+Hufkens K., Basler J. D., Milliman T. Melaas E., Richardson A.D. 2018 [An integrated phenology modelling framework in R: Phenology modelling with phenor. Methods in Ecology & Evolution](http://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12970/full), 9: 1-10.
 
-Richardson, A.D., Hufkens, K., Milliman, T., Aubrecht, D.M., Chen, M., Gray, J.M., Johnston, M.R., Keenan, T.F., Klosterman, S.T., Kosmala, M., Melaas, E.K., Friedl, M.A., Frolking, S.  2017. Scientific Data. Tracking vegetation phenology across diverse North American biomes using PhenoCam imagery. (in press)
+Richardson, A.D., Hufkens, K., Milliman, T., Aubrecht, D.M., Chen, M., Gray, J.M., Johnston, M.R., Keenan, T.F., Klosterman, S.T., Kosmala, M., Melaas, E.K., Friedl, M.A., Frolking, S. 2017. Tracking vegetation phenology across diverse North American biomes using PhenoCam imagery. Scientific Data (in press).
 
 ## Acknowledgements
 
-This project was supported by the National Science Foundation’s Macro-system Biology Program (award EF-1065029).
+This project was is supported by the National Science Foundation’s Macro-system Biology Program (awards EF-1065029 and EF-1702697).
