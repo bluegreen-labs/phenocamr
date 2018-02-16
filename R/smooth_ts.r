@@ -101,13 +101,6 @@ smooth_ts = function(df,
       values[outliers == 1] = NA
     }
 
-    # flag all snow_flagged data as NA
-    # if the metric is gcc / grvi based
-    if (grepl("gcc", i) || i == "grvi") {
-      outliers = df[, which(colnames(df) == "snow_flag")]
-      #values[df$snow_flag == 1] = NA
-    }
-
     # create yearly mean values and fill in time series
     # with those, keep track of which values are filled
     # using the int_flag data
@@ -182,8 +175,11 @@ smooth_ts = function(df,
       # traps values stuck at the end in NA mode, use carry
       # forward and backward to fill these in! These errors
       # don't pop up when using a fitting model (see above)
-      gap_filled_forward = zoo::na.locf(gap_filled_linear, na.rm = FALSE)
-      gap_filled_backward = zoo::na.locf(gap_filled_linear, na.rm = FALSE, fromLast = TRUE)
+      gap_filled_forward = zoo::na.locf(gap_filled_linear,
+                                        na.rm = FALSE)
+      gap_filled_backward = zoo::na.locf(gap_filled_linear,
+                                         na.rm = FALSE,
+                                         fromLast = TRUE)
 
       # drop in values at remaining NA places
       gap_filled_forward[is.na(gap_filled_forward)] = gap_filled_backward[is.na(gap_filled_forward)]
@@ -213,9 +209,11 @@ smooth_ts = function(df,
     # to calculate the ideal fit, down weighing those areas
     # which were interpolated
 
-    # create weight vector
+    # create weight vector for original NA
+    # values and snow flag data
     weights = rep(1,length(values))
     weights[na_orig] = 0.001
+    #weights[df$snow_flag == 1] = 0.001
     
     # smooth input series for plotting
     # set locations to NA which would otherwise not exist in the
