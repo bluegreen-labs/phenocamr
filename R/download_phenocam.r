@@ -24,16 +24,16 @@
 #'
 #' }
 
-download_phenocam = function(site="bartlett",
-                             vegetation=NULL,
-                             frequency="3",
-                             roi_id=NULL,
-                             outlier_detection=TRUE,
-                             smooth=TRUE,
-                             daymet=FALSE,
-                             trim_daymet=TRUE,
-                             phenophase=FALSE,
-                             out_dir=getwd()){
+download_phenocam = function(site = "bartlett",
+                             vegetation = NULL,
+                             frequency = "3",
+                             roi_id = NULL,
+                             outlier_detection = TRUE,
+                             smooth = TRUE,
+                             daymet = FALSE,
+                             trim_daymet = TRUE,
+                             phenophase = FALSE,
+                             out_dir = getwd()) {
 
   # get site listing
   site_list = jsonlite::fromJSON("https://phenocam.sr.unh.edu/webcam/roi/roilistinfo/")
@@ -105,16 +105,6 @@ download_phenocam = function(site="bartlett",
         next
       }
 
-      # if the frequency is 3 expand the table to
-      # daily values for easier processing afterwards
-      if (frequency == "3"){
-        # feedback
-        cat("Expanding data set to 1-day frequency! \n")
-
-        # expand the time series
-        expand_phenocam(output_filename)
-      }
-
       # remove outliers (overwrites original file)
       if (outlier_detection == TRUE | outlier_detection == "true" | outlier_detection == "T"){
         # feedback
@@ -160,9 +150,22 @@ download_phenocam = function(site="bartlett",
       }
 
       # merge with daymet
-      if (daymet == TRUE | daymet == "true" | daymet == "T"){
+      if (daymet == TRUE |
+          daymet == "true" |
+          tolower(daymet) == "t"){
+        
         # feedback
         cat("Merging Daymet Data! \n")
+        
+        # if the frequency is 3 expand the table to
+        # daily values for easier processing afterwards
+        if (frequency == "3"){
+          # feedback
+          cat("-- Expanding data set to 1-day frequency! \n")
+          
+          # expand the time series
+          expand_phenocam(output_filename)
+        }
 
         # merge daymet data into the time series file
         status = try(merge_daymet(output_filename,
