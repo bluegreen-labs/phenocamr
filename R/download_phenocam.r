@@ -169,7 +169,8 @@ download_phenocam = function(site = "bartlett",
 
         # merge daymet data into the time series file
         status = try(merge_daymet(output_filename,
-                                trim_daymet = trim_daymet),silent=TRUE)
+                                trim_daymet = trim_daymet),
+                     silent=TRUE)
 
         # trap errors
         if(inherits(status,"try-error")){
