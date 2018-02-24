@@ -90,7 +90,10 @@ download_phenocam = function(site = "bartlett",
     # download data + feedback
     url = sprintf("%s/%s",data_location,filename)
     cat(sprintf("Downloading: %s/%s\n",data_location,filename))
-    status = try(curl::curl_download(url,output_filename,quiet=TRUE),silent=TRUE)
+    status = try(curl::curl_download(url,
+                                     output_filename,
+                                     quiet = TRUE),
+                 silent=TRUE)
 
     # skip if download failed
     if (inherits(status,"try-error")){
@@ -111,7 +114,7 @@ download_phenocam = function(site = "bartlett",
         cat("Flagging outliers! \n")
 
         # detect outliers
-        status=try(detect_outliers(output_filename),silent=TRUE)
+        status = try(detect_outliers(output_filename),silent=TRUE)
 
         # trap errors
         if(inherits(status,"try-error")){
