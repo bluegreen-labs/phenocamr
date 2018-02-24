@@ -20,7 +20,8 @@
 #' # decreasing the file size a given year as maximum.
 #' }
 
-truncate_phenocam = function(df, year=2015) {
+truncate_phenocam = function(df,
+                             year = 2015) {
   
   # check validaty of the input
   if (is.data.frame(df)) {
