@@ -16,7 +16,8 @@
 #' merge_daymet("harvard_DB_0001_1day.csv")
 #' }
 
-merge_daymet  = function(df,trim_daymet = FALSE){
+merge_daymet  = function(df,
+                         trim_daymet = FALSE){
  
   # check if the file exists
   if (!file.exists(df)){
@@ -42,12 +43,12 @@ merge_daymet  = function(df,trim_daymet = FALSE){
     quiet = TRUE
   )[3])
   
-  # start and end year of daymet downloads -- download maximum range
+  # start and end year of daymet downloads
   start_yr = 1980
   end_yr = as.numeric(format(Sys.time(), "%Y")) - 1
   
   # Download all available daymet data
-  daymet_status = try(download.daymet(
+  daymet_status = try(download_daymet(
     site = site,
     lat = lat,
     lon = lon,
@@ -74,7 +75,7 @@ merge_daymet  = function(df,trim_daymet = FALSE){
       ),
       silent = TRUE)
       
-      if (grep("check coordinates",daymet_status)==1 ){
+      if (grep("check coordinates", daymet_status) == 1 ){
         stop(' Daymet data not available -- server issues / or location out of range') 
       }
     }
