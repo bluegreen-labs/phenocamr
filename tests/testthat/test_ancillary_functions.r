@@ -3,6 +3,7 @@
 # ancillary functions
 test_that("check ancillary routines",{
   
+  # download initial data
   df = try(download_phenocam(site = "harvard$",
                          vegetation = "DB",
                          roi_id = "1",
@@ -22,8 +23,7 @@ test_that("check ancillary routines",{
   contract = try(contract_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv")))
   
   # test grvi routine
-  grvi_test = try(grvi(paste0(tempdir(),"/harvard_DB_0001_3day.csv"),
-                       plot = TRUE))
+  grvi_test = try(grvi(paste0(tempdir(),"/harvard_DB_0001_3day.csv")))
   
   # check daylength routine
   dl = try(daylength(doy = 180,
