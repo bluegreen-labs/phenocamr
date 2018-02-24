@@ -21,11 +21,26 @@ test_that("check ancillary routines",{
   # test contract
   contract = try(contract_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv")))
   
+  # check daylength routine
+  dl = try(daylength(doy = 180,
+                     latitude = 44))
+  
+  # optimal span routine
+  l = sin(seq(1,10,0.01))
+  l = l + runif(length(l))
+  os = try(optimal_span(l,
+                        plot = TRUE))
+  os_w = try(optimal_span(l,
+                          weights = runif(length(l))))
+  
   # see if any of the runs failed
   check = !inherits(df,"try-error") &
           !inherits(truncate, "try-error") &
           !inherits(expand, "try-error") &
-          !inherits(contract, "try-error")
+          !inherits(contract, "try-error") &
+          !inherits(dl, "try-error") &
+          !inherits(os, "try-error") &
+          !inherits(os_w, "try-error")
   
   # check if no error occured
   expect_true(check)
