@@ -21,6 +21,10 @@ test_that("check ancillary routines",{
   # test contract
   contract = try(contract_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv")))
   
+  # test grvi routine
+  grvi_test = try(grvi(paste0(tempdir(),"/harvard_DB_0001_3day.csv"),
+                       plot = TRUE))
+  
   # check daylength routine
   dl = try(daylength(doy = 180,
                      latitude = 44))
@@ -40,7 +44,8 @@ test_that("check ancillary routines",{
           !inherits(contract, "try-error") &
           !inherits(dl, "try-error") &
           !inherits(os, "try-error") &
-          !inherits(os_w, "try-error")
+          !inherits(os_w, "try-error") &
+          !inherits(grvi_test, "try-error")
   
   # check if no error occured
   expect_true(check)
