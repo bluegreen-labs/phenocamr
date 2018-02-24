@@ -10,7 +10,8 @@ download_phenocam(site = "bartlett", vegetation = NULL, frequency = "3",
   out_dir = getwd())
 }
 \arguments{
-\item{site}{the site name, as mentioned on the PhenoCam web page.}
+\item{site}{the site name, as mentioned on the PhenoCam web page expressed
+as a regular expression ("harvard$" == exact match)}
 
 \item{vegetation}{vegeation type (DB, EN, ... default = ALL)}
 

@@ -1,6 +1,7 @@
 #' Function to download and post-process PhenoCam time series
 #'
-#' @param site the site name, as mentioned on the PhenoCam web page.
+#' @param site the site name, as mentioned on the PhenoCam web page expressed
+#' as a regular expression ("harvard$" == exact match)
 #' @param vegetation vegeation type (DB, EN, ... default = ALL)
 #' @param frequency frequency of the time series product (1,3, "raw")
 #' @param roi_id the id of the ROI to download (default = ALL)
