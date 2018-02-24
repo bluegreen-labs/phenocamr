@@ -2,7 +2,6 @@
 #' 
 #' @param df a PhenoCam data file or data frame
 #' @param par grvi parameters (weights)
-#' @param plot plot the data while being evaluated
 #' @keywords time series, smoothing, phenocam
 #' @export
 #' @examples
@@ -27,7 +26,8 @@
 #' df = grvi(df)
 #' }
 
-grvi = function(df, par=c(1,1,1), plot = FALSE ) {
+grvi = function(df,
+                par=c(1,1,1)) {
   
   # read parameters into readable formats
   a = par[1]
@@ -50,20 +50,19 @@ grvi = function(df, par=c(1,1,1), plot = FALSE ) {
       header = try(readLines(df, n = 22), silent = TRUE)
       df = utils::read.table(df, header = TRUE, sep = ",")
       
-      if (grep("timeseries",filename)){
+      if (grepl("timeseries", filename)){
         # select for solar elevation > 10
         df = df[df$solar_elev > 10,] 
-        
-        # strip out necessary data into readable variables
-        date = as.Date(df$date,"%Y-%m-%d")
-        year = as.numeric(format(as.Date(df$date),"%Y"))
-        doy = df$doy
-        g = df$g_mean
-        r = df$r_mean
-        
-        # calculate the GRVI
-        df$grvi = (a * g - b * r)/(a * g + b * r)
       }
+      
+      # strip out necessary data into readable variables
+      green = df$g_mean
+      red = df$r_mean
+      blue = df$b_mean
+      
+      # calculate the GRVI
+      df$grvi = (green * a - red * b  - blue * c) /
+        (green * a + red * b + blue * c)
       
     } else{
       stop("not a valid PhenoCam data frame or file")
@@ -76,26 +75,8 @@ grvi = function(df, par=c(1,1,1), plot = FALSE ) {
     blue = df$b_mean
     
     # calculate the GRVI
-    # df$grvi = (g^a - r^b)/(g^a + r^b)
-    df$gcc_grvi = (green * a - red * b  - blue * c) /
+    df$grvi = (green * a - red * b  - blue * c) /
       (green * a + red * b + blue * c)
-    
-  }
-  
-  # plot data
-  if (plot == TRUE){
-    plot(as.Date(df$date),df$grvi,
-         type = 'l',
-         xlab = "date",
-         ylab = "GRVI",
-         ylim = c(-1,1))
-    
-    lines(as.Date(df$date),df$gcc_90,
-         xlab = "date",
-         col = "red")
-    
-    # mark 0 baseline
-    abline(h = 0)
   }
   
   # if the data is not a data frame, write

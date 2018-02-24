@@ -4,14 +4,12 @@
 \alias{grvi}
 \title{Calculate GRVI for a PhenoCam file or data frame}
 \usage{
-grvi(df, par = c(1, 1, 1), plot = FALSE)
+grvi(df, par = c(1, 1, 1))
 }
 \arguments{
 \item{df}{a PhenoCam data file or data frame}
 
 \item{par}{grvi parameters (weights)}
-
-\item{plot}{plot the data while being evaluated}
 }
 \description{
 Calculate GRVI for a PhenoCam file or data frame
