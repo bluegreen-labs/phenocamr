@@ -36,7 +36,7 @@ optimal_span = function(y,
   # custom AIC function which accepts loess regressions
   myAIC = function(x){
 
-    if (!(inherits(x,"loess"))){
+    if (!(inherits(x, "loess"))){
       stop("Error: argument must be a loess object")
     }
 
@@ -69,17 +69,17 @@ optimal_span = function(y,
     # check if there are weights, if so use them
     if ( is.null(weights) ){
       fit = suppressWarnings(try(loess(y ~ as.numeric(x),
-                                       span=span),
-                                 silent=TRUE))
+                                       span = span),
+                                 silent = TRUE))
     } else {
       fit = suppressWarnings(try(loess(y ~ as.numeric(x),
-                                       span=span, 
+                                       span = span, 
                                        weights = weights),
-                                 silent=TRUE))
+                                 silent = TRUE))
     }
 
     # check if the fit failed if so return NA
-    if (inherits(fit,"try-error")){
+    if (inherits(fit, "try-error")){
       return(NA)
     }else{
       return(myAIC(fit))
@@ -87,7 +87,7 @@ optimal_span = function(y,
   }
 
   # parameter range
-  span = seq(0.01,1,by=step)
+  span = seq(0.01, 1, by = step)
 
   # temporary AIC matrix, lapply loop
   # (instead of for loop) cleaner syntax
@@ -95,7 +95,7 @@ optimal_span = function(y,
   
   # find the optimal span as the minimal AICc1 value
   # in the calculated range (span variable)
-  opt_span = span[which(tmp == min(tmp,na.rm=TRUE))][1]
+  opt_span = span[which(tmp == min(tmp, na.rm = TRUE))][1]
   
   # plot the optimization if requested
   if (plot == TRUE){
