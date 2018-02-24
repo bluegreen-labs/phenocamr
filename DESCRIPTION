@@ -23,6 +23,9 @@ Imports:
     DT,
     stats,
     daymetr
+Suggests:
+    covr,
+    testthat
 Remotes:
     khufkens/daymetr
 License: AGPL-3
