@@ -107,7 +107,8 @@ phenophases = function(df,
                            ...)
     
     # screen for false rising parts
-    loc = strptime(as.Date(tmp$transition_10, origin = "1970-01-01"),"%Y-%m-%d")$yday
+    loc = strptime(as.Date(tmp$transition_10, origin = "1970-01-01"),
+                   "%Y-%m-%d")$yday
     l = which(loc < 30 | loc > 250)
     if ( mat < mat_threshold & veg_type %in% c("DB","SH","GR","EN") & !length(l)==0L ){
       tmp = tmp[-l,]
@@ -130,11 +131,14 @@ phenophases = function(df,
     tmp = transition_dates(df,
                            reverse = TRUE,
                            percentile = i,
-                           frequency = frequency)
+                           frequency = frequency,
+                           ...)
     
     # screen for false falling curves
     loc = strptime(as.Date(tmp$transition_10, origin = "1970-01-01"),
                    "%Y-%m-%d")$yday
+    
+    
     l = which(loc > 30 & loc < 240)
     if ( mat < mat_threshold & veg_type %in% c("DB","SH","GR","EN") & !length(l)==0L ){
       tmp = tmp[-l,]
