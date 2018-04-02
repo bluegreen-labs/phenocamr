@@ -10,7 +10,8 @@
 #' @param trim_daymet TRUE or FALSE, trims data to match PhenoCam data
 #' @param outlier_detection TRUE or FALSE, detect outliers
 #' @param phenophase TRUE or FALSE, calculate transition dates
-#' @param out_dir output directory where to store downloaded data
+#' @param out_dir output directory where to store downloaded data 
+#' (default = tempdir())
 #' @keywords PhenoCam, Daymet, climate data, modelling
 #' @export
 #' @examples
@@ -34,7 +35,7 @@ download_phenocam = function(site = "bartlett",
                              daymet = FALSE,
                              trim_daymet = TRUE,
                              phenophase = FALSE,
-                             out_dir = getwd()) {
+                             out_dir = tempdir()) {
 
   # get site listing
   site_list = jsonlite::fromJSON("https://phenocam.sr.unh.edu/webcam/roi/roilistinfo/")
