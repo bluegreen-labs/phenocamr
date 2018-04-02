@@ -1,14 +1,16 @@
 Package: phenocamr
-Title: facilitates PhenoCam data access and post-processing in R
-Version: 1.0
-Authors@R: c(person("Hufkens","Koen",
-  email="koen.hufkens@gmail.com",role=c("aut", "cre")))
+Title: Facilitates 'PhenoCam' Data Access and Post-Processing
+Version: 1.1
+Authors@R: person("Hufkens","Koen",
+		  email="koen.hufkens@gmail.com",
+		  role=c("aut", "cre"))
 Description: 
-  Functions to download and preprocess PhenoCam time series into derived
-  phenology products such as various seasonal phenophase dates for model
-  development. A GUI is provided to interactively explore downloaded data.
+    Programmatic interface to the 'PhenoCam' web services. Allows for easy
+    downloading of PhenoCam data directly to your R workspace or your computer.
+    Post-processing routines provide consistent and easy timeseries smoothing
+    and estimation of various seasonal phenophase dates for model development.
 Depends:
-    R (>= 3.2.5),
+    R (>= 3.4.0),
 Imports:
     shiny,
     shinydashboard,
@@ -26,8 +28,6 @@ Imports:
 Suggests:
     covr,
     testthat
-Remotes:
-    khufkens/daymetr
 License: AGPL-3
 LazyData: true
 ByteCompile: true
