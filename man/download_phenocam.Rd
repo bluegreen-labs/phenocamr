@@ -7,7 +7,7 @@
 download_phenocam(site = "bartlett", vegetation = NULL, frequency = "3",
   roi_id = NULL, outlier_detection = TRUE, smooth = TRUE,
   daymet = FALSE, trim_daymet = TRUE, phenophase = FALSE,
-  out_dir = getwd())
+  out_dir = tempdir())
 }
 \arguments{
 \item{site}{the site name, as mentioned on the PhenoCam web page expressed
@@ -29,7 +29,8 @@ as a regular expression ("harvard$" == exact match)}
 
 \item{phenophase}{TRUE or FALSE, calculate transition dates}
 
-\item{out_dir}{output directory where to store downloaded data}
+\item{out_dir}{output directory where to store downloaded data 
+(default = tempdir())}
 }
 \description{
 Function to download and post-process PhenoCam time series

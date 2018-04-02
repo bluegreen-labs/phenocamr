@@ -42,11 +42,11 @@ run of transition_dates() to calculate the phenophases.
 # where location [[1]] holds the greenup dates and location
 # [[2]] the greendown dates
 
-df = download_phenocam(site="harvard",
-                       type="DB",
-                       roi="1",
-                       frequency=3)
-df = read.csv("harvard_DB_0001_1day.csv")
+df = download_phenocam(site = "harvard$",
+                       vegetation = "DB",
+                       roi_id = "1",
+                       frequency = 3)
+df = read.csv("harvard_DB_0001_3day.csv")
 my_dates = phenophases(df,output = FALSE)
 
 # dates need to be converted to standard notation using

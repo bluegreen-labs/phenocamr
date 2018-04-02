@@ -41,10 +41,10 @@ The required input is a smoothed PhenoCam data file or data frame.
 \examples{
 
 \dontrun{
-df = download.phenocam(site="harvard",
-                        type="DB",
-                        roi="1",
-                        frequency=3)
+df = download_phenocam(site = "harvard$",
+                       vegetation = "DB",
+                       roi_id = "1",
+                       frequency = 3)
 
 df = utils::read.csv("harvard_DB_0001_1day_v4.csv")
 my_dates = transition_dates(df,
