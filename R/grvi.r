@@ -1,6 +1,7 @@
 #' Calculate GRVI for a PhenoCam file or data frame
 #' 
-#' @param df a PhenoCam data file or data frame
+#' @param df a PhenoCam data file or data frame (when using a file provide a
+#' full path if not in the current working directory)
 #' @param par grvi parameters (weights)
 #' @keywords time series, smoothing, phenocam
 #' @export
