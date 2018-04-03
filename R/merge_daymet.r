@@ -13,7 +13,7 @@
 #'                   vegetation = "DB",
 #'                   roi_id = 1,
 #'                   frequency = 3)
-#' merge_daymet("harvard_DB_0001_1day.csv")
+#' merge_daymet("harvard_DB_0001_3day.csv")
 #' }
 
 merge_daymet  = function(df,
@@ -45,22 +45,23 @@ merge_daymet  = function(df,
   
   # start and end year of daymet downloads
   start_yr = 1980
-  end_yr = as.numeric(format(Sys.time(), "%Y")) - 1
+  end_yr = as.numeric(format(Sys.time(), "%Y")) - 2
   
   # Download all available daymet data
   daymet_status = try(download_daymet(
     site = site,
     lat = lat,
     lon = lon,
-    end_yr = end_yr,
-    internal = FALSE
+    end = end_yr,
+    internal = TRUE,
+    silent = TRUE
   ),
   silent = TRUE
   )
   
   # error trap the latency in the Daymet data releases
   if(inherits(daymet_status,"try-error")){
-    if (grep("End Year",daymet_status)==1){
+    if (grepl("End Year",daymet_status)){
       
       # reset end year
       end_yr = end_yr - 1
@@ -70,30 +71,29 @@ merge_daymet  = function(df,
         site = site,
         lat = lat,
         lon = lon,
-        end_yr = end_yr,
-        internal = FALSE
+        end = end_yr,
+        internal = TRUE,
+        silent = TRUE
       ),
       silent = TRUE)
       
-      if (grep("check coordinates", daymet_status) == 1 ){
+      if (grepl("check coordinates", daymet_status) ){
         stop(' Daymet data not available -- server issues / or location out of range') 
       }
     }
   }
 
   # read in daymet data
-  daymet_data = read.table(
-    sprintf("%s_%s_%s.csv", site, start_yr, end_yr),
-    skip = 6,
-    header = TRUE,
-    sep = ','
-  )
-  
+  daymet_data = daymet_status$data
+
   # create date strings
-  daymet_dates = as.Date(sprintf("%s-%s", daymet_data$year, daymet_data$yday), "%Y-%j")
+  daymet_dates = as.Date(sprintf("%s-%s",
+                                 daymet_data$year,
+                                 daymet_data$yday),
+                         "%Y-%j")
   
   # read phenocam data
-  phenocam_data = read.table(df,header=TRUE,sep=',')
+  phenocam_data = read.table(df, header=TRUE, sep=',')
   
   # create phenocam dates string
   phenocam_dates = as.Date(phenocam_data$date)
@@ -101,7 +101,8 @@ merge_daymet  = function(df,
   # set year ranges
   if (trim_daymet == FALSE){
     min_range = min(daymet_dates)
-    max_range = max(max(daymet_dates),max(phenocam_dates))
+    max_range = max(max(daymet_dates),
+                    max(phenocam_dates))
   }else{
     min_range = min(phenocam_dates)
     max_range = max(phenocam_dates)
@@ -116,11 +117,9 @@ merge_daymet  = function(df,
   # create daymet subset matrix
   daymet_data = daymet_data[,-c(1:2)]
   
-  # find overlap between datasets
+  # find overlap between datasets / USE MERGE
   cor_daymet_dates = which(all_dates %in% daymet_dates)
   cor_phenocam_dates = which(all_dates %in% phenocam_dates)
-  print(length(cor_daymet_dates))
-  print(length(all_dates))
   
   # create output matrix
   daymet_col = dim(daymet_data)[2]
@@ -157,7 +156,7 @@ merge_daymet  = function(df,
   output_file_name = sprintf("%s.csv",unlist(strsplit(df,".csv")))
   
   # write everything to file using append
-  write.table(
+  utils::write.table(
     phenocam_header,
     output_file_name,
     quote = F,
@@ -165,7 +164,7 @@ merge_daymet  = function(df,
     col.names = F,
     sep = ","
   )
-  write.table(
+  utils::write.table(
     output_header_names,
     output_file_name,
     quote = F,
@@ -174,7 +173,7 @@ merge_daymet  = function(df,
     append = TRUE,
     sep = ","
   )
-  write.table(
+  utils::write.table(
     output_matrix,
     output_file_name,
     quote = F,
@@ -183,9 +182,6 @@ merge_daymet  = function(df,
     append = TRUE,
     sep = ","
   )
-  
-  # clean up the daymet data files / original files
-  try(file.remove(paste(site,"_",start_yr,"_",end_yr,".csv",sep="")),silent=TRUE)
   
   # give some feedback
   cat(paste('Finished downloading data for site: ',site,'\n',sep=''))
