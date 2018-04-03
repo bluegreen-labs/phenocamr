@@ -1,19 +1,9 @@
 # phenocamr shiny interface / server back-end
 # see matching ui.R code for formatting
 
-# create temporary directory and move into it
-if (!dir.exists("~/phenocam_data")) {
-  dir.create("~/phenocam_data")
-}
-
-# set the base directory to the cache directory
-# this prevents any temporary files interfering with
-# local data
-#setwd("~/phenocam_data")
-
 # location of the data to be used in
 # strings throughout
-path = "~/phenocam_data"
+path = tempdir()
 
 # set unix time origin
 unix = "1970-01-01"
