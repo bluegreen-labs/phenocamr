@@ -12,8 +12,9 @@
 #' download_phenocam(site = "harvard",
 #'                   vegetation = "DB",
 #'                   roi_id = 1,
-#'                   frequency = 3)
-#' merge_daymet("harvard_DB_0001_3day.csv")
+#'                   frequency = 3,
+#'                   out_dir = tempdir())
+#' merge_daymet(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
 #' }
 
 merge_daymet  = function(df,
@@ -48,7 +49,7 @@ merge_daymet  = function(df,
   end_yr = as.numeric(format(Sys.time(), "%Y")) - 1
   
   # Download all available daymet data
-  daymet_status = try(download_daymet(
+  daymet_status = try(daymetr::download_daymet(
     site = site,
     lat = lat,
     lon = lon,
@@ -58,16 +59,16 @@ merge_daymet  = function(df,
   ),
   silent = TRUE
   )
-  
+    
   # error trap the latency in the Daymet data releases
   if(inherits(daymet_status,"try-error")){
-    if (grepl("End Year",daymet_status)){
+    if (grepl("check coordinates", daymet_status)){
       
       # reset end year
       end_yr = end_yr - 1
       
       # download daymet data
-      daymet_status = try(download_daymet(
+      daymet_status = try(daymetr::download_daymet(
         site = site,
         lat = lat,
         lon = lon,
@@ -77,7 +78,7 @@ merge_daymet  = function(df,
       ),
       silent = TRUE)
       
-      if (grepl("check coordinates", daymet_status) ){
+      if (inherits(daymet_status, "try-error")){
         stop(' Daymet data not available -- server issues / or location out of range') 
       }
     }
@@ -117,7 +118,7 @@ merge_daymet  = function(df,
   # create daymet subset matrix
   daymet_data = daymet_data[,-c(1:2)]
   
-  # find overlap between datasets / USE MERGE
+  # find overlap between datasets / USE MERGE / CLEAN UP SECTION
   cor_daymet_dates = which(all_dates %in% daymet_dates)
   cor_phenocam_dates = which(all_dates %in% phenocam_dates)
   
@@ -150,7 +151,7 @@ merge_daymet  = function(df,
                                byrow=TRUE)
   
   # pluck real header from the PhenoCam file
-  phenocam_header = readLines(df,n=22)
+  phenocam_header = readLines(df, n=22)
   
   # create output filename string
   output_file_name = sprintf("%s.csv",unlist(strsplit(df,".csv")))
@@ -182,7 +183,4 @@ merge_daymet  = function(df,
     append = TRUE,
     sep = ","
   )
-  
-  # give some feedback
-  cat(paste('Finished downloading data for site: ',site,'\n',sep=''))
 }
