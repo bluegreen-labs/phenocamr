@@ -45,7 +45,7 @@ merge_daymet  = function(df,
   
   # start and end year of daymet downloads
   start_yr = 1980
-  end_yr = as.numeric(format(Sys.time(), "%Y")) - 2
+  end_yr = as.numeric(format(Sys.time(), "%Y")) - 1
   
   # Download all available daymet data
   daymet_status = try(download_daymet(
