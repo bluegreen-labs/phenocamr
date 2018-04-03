@@ -111,7 +111,10 @@ download_phenocam = function(site = "bartlett",
       }
 
       # remove outliers (overwrites original file)
-      if (outlier_detection == TRUE | outlier_detection == "true" | outlier_detection == "T"){
+      if (outlier_detection == TRUE |
+          tolower(outlier_detection) == "true" |
+          tolower(outlier_detection) == "t"){
+        
         # feedback
         cat("Flagging outliers! \n")
 
@@ -139,7 +142,9 @@ download_phenocam = function(site = "bartlett",
       }
 
       # Output transition dates
-      if (phenophase == TRUE | phenophase == "true" | phenophase == "T"){
+      if (phenophase == TRUE |
+          tolower(phenophase) == "true" |
+          tolower(phenophase) == "t"){
         # feedback
         cat("Estimating transition dates! \n")
 
@@ -156,7 +161,7 @@ download_phenocam = function(site = "bartlett",
 
       # merge with daymet
       if (daymet == TRUE |
-          daymet == "true" |
+          tolower(daymet) == "true" |
           tolower(daymet) == "t"){
         
         # feedback
