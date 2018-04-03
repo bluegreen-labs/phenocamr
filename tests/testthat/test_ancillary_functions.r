@@ -24,7 +24,7 @@ test_that("check ancillary routines",{
   
   # test grvi routine
   grvi_test = try(grvi(paste0(tempdir(),"/harvard_DB_0001_3day.csv")))
-  
+
   # check daylength routine
   dl = try(daylength(doy = 180,
                      latitude = 44))
