@@ -9,10 +9,10 @@
 #' 
 #' \dontrun{
 #' # Starts the PhenoCam explorer GUI in a browser
-#' explore_phenocam()
+#' phenocam_explorer()
 #' }
 
-explore_phenocam = function(){
+phenocam_explorer = function(){
   appDir = sprintf("%s/shiny/phenocam_explorer",path.package("phenocamr"))
   shiny::runApp(appDir,
                 display.mode = "normal",
