@@ -128,7 +128,9 @@ download_phenocam = function(site = "bartlett",
       }
 
       # Smooth data
-      if (smooth == TRUE | smooth == "true" | smooth == "T"){
+      if (smooth == TRUE |
+          tolower(smooth) == "true" |
+          tolower(smooth) == "t"){
         # feedback
         cat("Smoothing time series! \n")
 
