@@ -7,7 +7,8 @@
 grvi(df, par = c(1, 1, 1))
 }
 \arguments{
-\item{df}{a PhenoCam data file or data frame}
+\item{df}{a PhenoCam data file or data frame (when using a file provide a
+full path if not in the current working directory)}
 
 \item{par}{grvi parameters (weights)}
 }
