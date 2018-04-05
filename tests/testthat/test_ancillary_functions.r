@@ -20,6 +20,11 @@ test_that("check ancillary routines",{
   truncate = try(truncate_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv"),
                                    year = 2015))
   
+  # test outlier routine
+  outliers = try(detect_outliers(paste0(tempdir(),"/harvard_DB_0001_3day.csv"),
+                                 plot = TRUE,
+                                 snowflag = TRUE))
+  
   # test expand
   expand = try(expand_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv")))
   
@@ -44,6 +49,7 @@ test_that("check ancillary routines",{
   # see if any of the runs failed
   check = !inherits(df,"try-error") &
           !inherits(truncate, "try-error") &
+          !inherits(outliers, "try-error") &
           !inherits(transitions, "try-error") &
           !inherits(expand, "try-error") &
           !inherits(contract, "try-error") &
