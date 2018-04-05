@@ -9,12 +9,16 @@ test_that("check ancillary routines",{
                          roi_id = "1",
                          frequency = 3,
                          outlier_detection = FALSE,
-                         smooth = FALSE,
+                         smooth = TRUE,
                          out_dir = tempdir()))
+  
+  # transtion dates routine
+  transitions = try(transition_dates(paste0(tempdir(),"/harvard_DB_0001_3day.csv"),
+                                     plot = TRUE))
   
   # test truncate
   truncate = try(truncate_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv"),
-                    year = 2015))
+                                   year = 2015))
   
   # test expand
   expand = try(expand_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv")))
@@ -40,6 +44,7 @@ test_that("check ancillary routines",{
   # see if any of the runs failed
   check = !inherits(df,"try-error") &
           !inherits(truncate, "try-error") &
+          !inherits(transitions, "try-error") &
           !inherits(expand, "try-error") &
           !inherits(contract, "try-error") &
           !inherits(dl, "try-error") &
