@@ -101,7 +101,7 @@ transition_dates = function(df,
       frequency = header[9]
 
       # read the original data
-      df = read.table(df, header = T, sep = ',')
+      df = utils::read.table(df, header = T, sep = ',')
 
     } else {
       stop("not a valid PhenoCam data file")
@@ -310,7 +310,7 @@ transition_dates = function(df,
     raw_data_segment = raw_data[start:end]
 
     # grab the length of the longest interpolated stretch
-    int_length = try(length(na.contiguous(int_flag_segment)), silent = TRUE)
+    int_length = try(length(stats::na.contiguous(int_flag_segment)), silent = TRUE)
     if (inherits(int_length, "try-error")) {
       int_length = 0
     }
@@ -345,14 +345,14 @@ transition_dates = function(df,
     high_loc = which(index_segment >= breakpoint & index_segment <= max_loc)
 
     # calculate segment amplitude (normalized)
-    low_gcc = quantile(segment[low_loc], 0.5, na.rm = TRUE)
-    high_gcc = quantile(segment[high_loc], 0.9, na.rm = TRUE)
+    low_gcc = stats::quantile(segment[low_loc], 0.5, na.rm = TRUE)
+    high_gcc = stats::quantile(segment[high_loc], 0.9, na.rm = TRUE)
 
     # original values to report in output
     # this step does not use interpolated data so it can lead
     # to discrepancies between the values used and those reported
-    low_gcc_orig = quantile(segment_orig[low_loc], 0.5 ,na.rm = TRUE)
-    high_gcc_orig = quantile(segment_orig[high_loc], 0.9 ,na.rm = TRUE)
+    low_gcc_orig = stats::quantile(segment_orig[low_loc], 0.5 ,na.rm = TRUE)
+    high_gcc_orig = stats::quantile(segment_orig[high_loc], 0.9 ,na.rm = TRUE)
 
     # calculate amplitude
     amplitude = high_gcc - low_gcc
@@ -527,16 +527,16 @@ transition_dates = function(df,
            col='grey',
            xlab='Date',
            ylab='Gcc')
-      lines(as.Date(max_date),max_seg,col='blue',lty=2)
-      lines(as.Date(min_date),min_seg,col='red',lty=2)
+      graphics::lines(as.Date(max_date),max_seg,col='blue',lty=2)
+      graphics::lines(as.Date(min_date),min_seg,col='red',lty=2)
 
-      segments(x0=as.Date(date[c(mos_lower_loc,eos_lower_loc,sos_lower_loc)]),
+      graphics::segments(x0=as.Date(date[c(mos_lower_loc,eos_lower_loc,sos_lower_loc)]),
                x1=as.Date(date[c(mos_upper_loc,eos_upper_loc,sos_upper_loc)]),
                y0=smooth_orig[c(mos_loc,eos_loc, sos_loc)],
                y1=smooth_orig[c(mos_loc,eos_loc, sos_loc)],
                lwd=3
                )
-      abline(v=as.Date(date[pbreaks]), lty = 2)
+      graphics::abline(v=as.Date(date[pbreaks]), lty = 2)
     }
 
   }

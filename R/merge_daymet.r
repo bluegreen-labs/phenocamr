@@ -94,7 +94,7 @@ merge_daymet  = function(df,
                          "%Y-%j")
   
   # read phenocam data
-  phenocam_data = read.table(df, header=TRUE, sep=',')
+  phenocam_data = utils::read.table(df, header=TRUE, sep=',')
   
   # create phenocam dates string
   phenocam_dates = as.Date(phenocam_data$date)

@@ -68,11 +68,11 @@ optimal_span = function(y,
   loessAIC = function(span){
     # check if there are weights, if so use them
     if ( is.null(weights) ){
-      fit = suppressWarnings(try(loess(y ~ as.numeric(x),
+      fit = suppressWarnings(try(stats::loess(y ~ as.numeric(x),
                                        span = span),
                                  silent = TRUE))
     } else {
-      fit = suppressWarnings(try(loess(y ~ as.numeric(x),
+      fit = suppressWarnings(try(stats::loess(y ~ as.numeric(x),
                                        span = span, 
                                        weights = weights),
                                  silent = TRUE))
@@ -91,7 +91,7 @@ optimal_span = function(y,
 
   # temporary AIC matrix, lapply loop
   # (instead of for loop) cleaner syntax
-  tmp = unlist(lapply(span,loessAIC))
+  tmp = unlist(lapply(span, loessAIC))
   
   # find the optimal span as the minimal AICc1 value
   # in the calculated range (span variable)
@@ -100,7 +100,7 @@ optimal_span = function(y,
   # plot the optimization if requested
   if (plot == TRUE){
     
-    par(mfrow = c(2,1))
+    graphics::par(mfrow = c(2,1))
     plot(as.numeric(x),y,
          xlab = 'value',
          ylab = 'Gcc',
@@ -108,21 +108,21 @@ optimal_span = function(y,
          pch = 19,
          main = label)
     
-    col = rainbow(length(span),alpha = 0.5)
+    col = grDevices::rainbow(length(span),alpha = 0.5)
     
     for (i in 1:length(span)){
-      fit = loess(y ~ as.numeric(x),
+      fit = stats::loess(y ~ as.numeric(x),
                   span = span[i])
-      lines(fit$x,
+      graphics::lines(fit$x,
             fit$fitted,
             lwd = 1,
             col = col[i])
     }
     
-    fit = loess(y ~ as.numeric(x),
+    fit = stats::loess(y ~ as.numeric(x),
                 span = opt_span)
     
-    lines(fit$x,
+    graphics::lines(fit$x,
           fit$fitted,
           lwd = 3,
           col = 'black',
@@ -135,7 +135,7 @@ optimal_span = function(y,
          ylab = 'AICc1',
          col = col)
     
-    abline(v = opt_span,col = 'black')
+    graphics::abline(v = opt_span,col = 'black')
     
   }
 

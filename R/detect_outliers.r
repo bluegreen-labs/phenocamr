@@ -103,8 +103,8 @@ detect_outliers = function(data,
 
       # calculate the amplitude, and threshold t
       # of the time series
-      upper = quantile(gcc,0.9,na.rm=T)
-      lower = quantile(gcc,0.1,na.rm=T)
+      upper = stats::quantile(gcc,0.9,na.rm=T)
+      lower = stats::quantile(gcc,0.1,na.rm=T)
       amp = upper - lower
       t = amp / 4
 
@@ -171,7 +171,7 @@ detect_outliers = function(data,
           fit = suppressWarnings(stats::loess(gcc ~ as.numeric(dates), span = span))
 
           # predict values using the fit
-          pred = predict(fit,as.numeric(dates), se = TRUE)
+          pred = stats::predict(fit,as.numeric(dates), se = TRUE)
 
           # loess data
           gcc_smooth = pred$fit
@@ -210,12 +210,12 @@ detect_outliers = function(data,
 
           # visualize iterations, for debugging
           if ( plot == TRUE ){
-            par(mfrow=c(1,1))
+            graphics::par(mfrow=c(1,1))
             plot(dates,gcc_orig)
-            points(dates[loc],gcc_orig[loc],col='red',pch=19)
+            graphics::points(dates[loc],gcc_orig[loc],col='red',pch=19)
 
             if ( exists('pred') ){
-              lines(dates,pred$fit)
+              graphics::lines(dates,pred$fit)
             }
             Sys.sleep(1)
           }

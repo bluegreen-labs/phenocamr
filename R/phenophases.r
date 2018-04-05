@@ -192,7 +192,7 @@ phenophases = function(df,
     phenology = cbind(sitename,veg_type,roi_id,direction,phenology)
 
     # drop NA lines if any
-    phenology = na.omit(phenology)
+    phenology = stats::na.omit(phenology)
 
     # create header with output information
     # can be done with one sprintf statement

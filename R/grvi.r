@@ -85,7 +85,7 @@ grvi = function(df,
   if (!df_check) {
     # writing the final data frame to file, 
     # retaining the original header
-    write.table(
+    utils::write.table(
       header,
       filename,
       quote = FALSE,
@@ -93,7 +93,7 @@ grvi = function(df,
       col.names = FALSE,
       sep = ""
     )
-    write.table(
+    utils::write.table(
       df,
       filename,
       quote = FALSE,

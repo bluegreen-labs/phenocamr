@@ -34,7 +34,7 @@ expand_phenocam = function(df, truncate = NULL) {
   header = try(readLines(df, n = 22), silent = TRUE)
   
   # directly read data from the server into data.table
-  phenocam_data = read.table(df, header = TRUE, sep = ",")
+  phenocam_data = utils::read.table(df, header = TRUE, sep = ",")
   phenocam_dates = as.Date(phenocam_data$date)
   
   # truncate the data if necessary
@@ -69,7 +69,7 @@ expand_phenocam = function(df, truncate = NULL) {
   output[, 3] = all_doy
   
   # writing the final data frame to file, retaining the original header
-  write.table(
+  utils::write.table(
     header,
     df,
     quote = FALSE,
@@ -77,7 +77,7 @@ expand_phenocam = function(df, truncate = NULL) {
     col.names = FALSE,
     sep = ""
   )
-  write.table(
+  utils::write.table(
     t(matrix(colnames(phenocam_data))),
     df,
     quote = FALSE,
@@ -86,7 +86,7 @@ expand_phenocam = function(df, truncate = NULL) {
     append = TRUE,
     sep = ","
   )
-  write.table(
+  utils::write.table(
     output,
     df,
     quote = FALSE,

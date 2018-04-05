@@ -33,14 +33,14 @@ truncate_phenocam = function(df,
   header = try(readLines(df, n = 22), silent = TRUE)
   
   # directly read data from the server into data.table
-  phenocam_data = read.table(df, header = TRUE, sep = ",")
+  phenocam_data = utils::read.table(df, header = TRUE, sep = ",")
   
   # truncate the data using a given year as last viable year
   # of data points
   phenocam_data = phenocam_data[phenocam_data$year <= year,]
   
   # writing the final data frame to file, retaining the original header
-  write.table(
+  utils::write.table(
     header,
     df,
     quote = FALSE,
@@ -48,7 +48,7 @@ truncate_phenocam = function(df,
     col.names = FALSE,
     sep = ""
   )
-  write.table(
+  utils::write.table(
     t(matrix(colnames(phenocam_data))),
     df,
     quote = FALSE,
@@ -57,7 +57,7 @@ truncate_phenocam = function(df,
     append = TRUE,
     sep = ","
   )
-  write.table(
+  utils::write.table(
     phenocam_data,
     df,
     quote = FALSE,

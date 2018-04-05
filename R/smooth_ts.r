@@ -64,7 +64,7 @@ smooth_ts = function(df,
   }
 
   # detect frequency
-  freq = median(diff(na.omit(df$doy)))
+  freq = stats::median(diff(stats::na.omit(df$doy)))
   
   # if it's a smoothed file, bail unless you want to
   # force the smoothing again
@@ -224,7 +224,7 @@ smooth_ts = function(df,
                                 y = gap_filled[loc],
                                 plot = FALSE) # plot for debugging
       
-      fit = loess(gap_filled[loc] ~ as.numeric(dates[loc]),
+      fit = stats::loess(gap_filled[loc] ~ as.numeric(dates[loc]),
                   span = optim_span,
                   weights = weights[loc])
 
@@ -234,14 +234,14 @@ smooth_ts = function(df,
                                 y = gap_filled,
                                 plot = FALSE) # plot for debugging
 
-      fit = loess(gap_filled ~ as.numeric(dates),
+      fit = stats::loess(gap_filled ~ as.numeric(dates),
                   span = optim_span,
                   weights = weights)
 
     }
 
     # make projections based upon the optimal fit
-    fit = predict(fit, as.numeric(dates), se = TRUE)
+    fit = stats::predict(fit, as.numeric(dates), se = TRUE)
 
     # grab the smoothed series and the CI (from SE)
     # set to 0 if no SE is provided
@@ -295,7 +295,7 @@ smooth_ts = function(df,
   if (!df_check) {
 
     # writing the final data frame to file, retaining the original header
-    write.table(
+    utils::write.table(
       header,
       filename,
       quote = FALSE,
@@ -303,7 +303,7 @@ smooth_ts = function(df,
       col.names = FALSE,
       sep = ""
     )
-    write.table(
+    utils::write.table(
       df,
       filename,
       quote = FALSE,
