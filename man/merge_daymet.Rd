@@ -22,8 +22,9 @@ Merge Daymet data with a PhenoCam data file.
 download_phenocam(site = "harvard",
                   vegetation = "DB",
                   roi_id = 1,
-                  frequency = 3)
-merge_daymet("harvard_DB_0001_1day.csv")
+                  frequency = 3,
+                  out_dir = tempdir())
+merge_daymet(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
 }
 }
 \keyword{Daymet,}
