@@ -1,6 +1,5 @@
 [![Build Status](https://travis-ci.org/khufkens/phenocamr.svg?branch=master)](https://travis-ci.org/khufkens/phenocamr)
 [![codecov](https://codecov.io/gh/khufkens/phenocamr/branch/master/graph/badge.svg)](https://codecov.io/gh/khufkens/phenocamr)
-[![DOI](https://www.zenodo.org/badge/48943895.svg)](https://www.zenodo.org/badge/latestdoi/48943895)
 
 # phenocamr
 
