@@ -40,7 +40,7 @@ phenophases = function(df,
                        frequency=NULL,
                        mat = NULL,
                        output = FALSE,
-                       out_dir=getwd(),
+                       out_dir=tempdir(),
                        ...
                        ){
 
@@ -80,8 +80,8 @@ phenophases = function(df,
 
     # check if I have all parameters if fed in a data frame
     # [can't be derived from data frame itself]
-    if ( any(is.null(c(sitename,veg_type,roi_id,frequency))) ){
-      stop("Not all required parameters provided")
+    if (any(is.null(c(veg_type, frequency))) ){
+      stop("veg_type or frequency parameter missing...")
     }
   }
 
@@ -251,6 +251,7 @@ phenophases = function(df,
 
   } else {
     # return dates as a list if no output file is required
-    return(list(rising,falling))
+    return(list("rising" = rising,
+                "falling" = falling))
   }
 }
