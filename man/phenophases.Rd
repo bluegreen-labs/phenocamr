@@ -7,7 +7,8 @@ in a PhenoCam time series. This routine combines a forward and backward
 run of transition_dates() to calculate the phenophases.}
 \usage{
 phenophases(df, sitename = NULL, veg_type = NULL, roi_id = NULL,
-  frequency = NULL, mat = NULL, output = FALSE, out_dir = getwd(), ...)
+  frequency = NULL, mat = NULL, output = FALSE, out_dir = tempdir(),
+  ...)
 }
 \arguments{
 \item{df}{a PhenoCam data file (or data frame)}
