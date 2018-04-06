@@ -26,28 +26,61 @@ The package gives access to the latest generated PhenoCam time series (at most 1
 
 For a quality controlled and fully described dataset I suggest downloading the dataset as described by Richardson et al. (2018). This dataset uses the phenocamr packages in its final processing steps however quality control is gauranteed through careful review of the data. The data can be interactivly explored on [explore.phenocam.us](http://explore.phenocam.us) and downloaded in full from the [ORNL DAAC](https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1511). If in need of more recent data you can use the package and its functionality but be mindful of quality control especially the region-of-interest (ROI) used and potential unaccounted field-of-view (FOV) shifts in the dataset.
 
-### Downloading a PhenoCam time series.
+### Download a PhenoCam time series.
 
+The below code shows you how to download a PhenoCam time series for the "harvard" site, region-of-interest (roi_id) 1 and a time step frequency of 3-days. In this case I've disabled the default outlier detection and smoothing routines which will be run separately in subsequent steps. In normal use these will be enabled by default. The default output directory is tempdir() but any directory can be specified for data management purposes.
 
 ```{r eval = TRUE}
-#df <- download_phenocam()
+  download_phenocam(site = "harvard$",
+                    vegetation = "DB",
+                    roi_id = "1",
+                    frequency = 3,
+                    outlier_detection = FALSE,
+                    smooth = FALSE,
+                    out_dir = tempdir())
 ```
 
+After downloading we read in the data from disk. The data has a header and is comma separated.
+
+```{r eval = TRUE}
+df <- read.table(paste0(tempdir(),"/harvard_DB_0001_3day.csv"),
+                 header = TRUE,
+                 sep = ",")
+
+print(head(df))
+```
+
+### Detect data outlier
+
+After reading in the data as a data frame you can apply the outlier detection routine. This routine uses an iterative method to detect outlier values in the Gcc time series. This routine filters out most spurious values due contaminiation by snow, mist, rain or otherwise very bright events. I suppress warnings as the routine is iterative and might throw warnings if it does not converge on a solution. This has no implications for the routine and data returned.
+
+```{r eval = TRUE}
+  df <- suppressWarnings(detect_outliers(df))
+```
 
 ### Smoothing a time series
 
+After detecting outliers you can smooth the data. This function uses an AIC based methodology to find the opitmal loess smoothing window. Again, I suppress warnings as the routine uses an optimization in which certain parameter settings return warnings. This has no implications for the routine and data returned.
 
 ```{r eval = TRUE}
-#df <- smooth_ts()
+  df <- suppressWarnings(smooth_ts(df))
 ```
-
 
 ### Calculating phenophases
 
+Finally, if smoothed data is available you can calculate phenological transition dates. This routine uses a PELT changepoint detection based approach to find meaningful seasonal cycles in the data. By default start of growing season dates are returned. If the reverse parameter is set to TRUE the end of growing season dates are returned. Dates are formatted as unix time and will be provided for three default threshold values (10 / 25 / 50%) of the Gcc amplitude.
 
 ```{r eval = TRUE}
-#df <- phenophases()
+start_of_season <- transition_dates(df, frequency = 3)
+print(head(start_of_season))
 ```
+
+Alternatively you can use the phenophases() function which is a wrapper of the transition_dates() function. However, as it potentially writes data to disk it needs additional information such as the roi_id, site name etc. The phenophases() function is the function which generated the final data products in the Richardson et al. (2018) paper. If used internally the output will be formatted in unix time, when written to file the dates will be human readable in YYYY-MM-DD format. Both start and end of season estimates will be provided.
+
+```{r eval = TRUE}
+phenology_dates <- phenophases(df, frequency = 3, veg_type = "DB")
+```
+
 
 
 ## References
