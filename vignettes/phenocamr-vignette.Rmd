@@ -1,0 +1,61 @@
+---
+title: "phenocamr"
+author: "Koen Hufkens"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{phenocamr functionality}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+# load the library
+library(phenocamr)
+
+```
+
+A programmatic interface to the [PhenoCam web services](https://phenocam.sr.unh.edu/). Allows for easy downloads of PhenoCam near-surface remote sensing time series directly to your R workspace or your computer. Post-processing allows for the smoothing of the time-series and the calculation of phenological transition dates as a final product.
+
+The package gives access to the latest generated PhenoCam time series (at most 1-day old for running sites) and allows for the extraction of up-to-date phenological transition dates. However, the data acquired through the package will not be curated and vetted for data quality.
+
+For a quality controlled and fully described dataset I suggest downloading the dataset as described by Richardson et al. (2018). This dataset uses the phenocamr packages in its final processing steps however quality control is gauranteed through careful review of the data. The data can be interactivly explored on [explore.phenocam.us](http://explore.phenocam.us) and downloaded in full from the [ORNL DAAC](https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1511). If in need of more recent data you can use the package and its functionality but be mindful of quality control especially the region-of-interest (ROI) used and potential unaccounted field-of-view (FOV) shifts in the dataset.
+
+### Downloading a PhenoCam time series.
+
+
+```{r eval = TRUE}
+#df <- download_phenocam()
+```
+
+
+### Smoothing a time series
+
+
+```{r eval = TRUE}
+#df <- smooth_ts()
+```
+
+
+### Calculating phenophases
+
+
+```{r eval = TRUE}
+#df <- phenophases()
+```
+
+
+## References
+
+Hufkens K., Basler J. D., Milliman T. Melaas E., Richardson A.D. 2018 [An integrated phenology modelling framework in R: Phenology modelling with phenor. Methods in Ecology & Evolution](http://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12970/full), 9: 1-10.
+
+Richardson, A.D., Hufkens, K., Milliman, T., Aubrecht, D.M., Chen, M., Gray, J.M., Johnston, M.R., Keenan, T.F., Klosterman, S.T., Kosmala, M., Melaas, E.K., Friedl, M.A., Frolking, S. 2017. [Tracking vegetation phenology across diverse North American biomes using PhenoCam imagery](https://www.nature.com/articles/sdata201828). Scientific Data, 5, 180028.
+
+## Acknowledgements
+
+This project was is supported by the National Science Foundation’s Macro-system Biology Program (awards EF-1065029 and EF-1702697).

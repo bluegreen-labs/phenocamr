@@ -4,7 +4,7 @@ Version: 1.1
 Authors@R: person("Hufkens","Koen",
 		  email="koen.hufkens@gmail.com",
 		  role=c("aut", "cre"))
-Description: 
+Description:
     Programmatic interface to the 'PhenoCam' web services. Allows for easy
     downloading of PhenoCam data directly to your R workspace or your computer.
     Post-processing routines provide consistent and easy timeseries smoothing
@@ -27,8 +27,11 @@ Imports:
     daymetr
 Suggests:
     covr,
-    testthat
+    testthat,
+    knitr,
+    rmarkdown
 License: AGPL-3
 LazyData: true
 ByteCompile: true
 RoxygenNote: 6.0.1
+VignetteBuilder: knitr
