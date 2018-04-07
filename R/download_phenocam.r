@@ -79,19 +79,29 @@ download_phenocam = function(site = "bartlett",
 
     # create server string, the location of the site data
     if (frequency == "raw"){
-      data_location=sprintf("https://phenocam.sr.unh.edu/data/archive/%s/ROI",site_list$site[i])
-      filename = sprintf("%s_%s_%04d_timeseries.csv",site_list$site[i],site_list$veg_type[i],site_list$roi_id_number[i])
+      data_location=sprintf("https://phenocam.sr.unh.edu/data/archive/%s/ROI",
+                            site_list$site[i])
+      filename = sprintf("%s_%s_%04d_timeseries.csv",
+                         site_list$site[i],
+                         site_list$veg_type[i],
+                         site_list$roi_id_number[i])
     } else {
-      data_location=sprintf("https://phenocam.sr.unh.edu/data/archive/%s/ROI",site_list$site[i])
-      filename = sprintf("%s_%s_%04d_%sday.csv",site_list$site[i],site_list$veg_type[i],site_list$roi_id_number[i],frequency)
+      data_location=sprintf("https://phenocam.sr.unh.edu/data/archive/%s/ROI",
+                            site_list$site[i])
+      filename = sprintf("%s_%s_%04d_%sday.csv",
+                         site_list$site[i],
+                         site_list$veg_type[i],
+                         site_list$roi_id_number[i],
+                         frequency)
     }
 
     # formulate output file location
     output_filename = sprintf("%s/%s",out_dir,filename)
 
     # download data + feedback
-    url = sprintf("%s/%s",data_location,filename)
-    cat(sprintf("Downloading: %s/%s\n",data_location,filename))
+    cat(sprintf("Downloading: %s\n", filename))
+    
+    url = sprintf("%s/%s",data_location, filename)
     status = try(curl::curl_download(url,
                                      output_filename,
                                      quiet = TRUE),
@@ -119,7 +129,8 @@ download_phenocam = function(site = "bartlett",
         cat("Flagging outliers! \n")
 
         # detect outliers
-        status = try(detect_outliers(output_filename),silent=TRUE)
+        status = try(suppressWarnings(detect_outliers(output_filename)),
+                                      silent = TRUE)
 
         # trap errors
         if(inherits(status,"try-error")){
@@ -135,7 +146,8 @@ download_phenocam = function(site = "bartlett",
         cat("Smoothing time series! \n")
 
         # smooth time series
-        status = try(smooth_ts(output_filename), silent = TRUE)
+        status = try(suppressWarnings(smooth_ts(output_filename)),
+                                      silent = TRUE)
 
         # trap errors
         if(inherits(status,"try-error")){
@@ -151,9 +163,10 @@ download_phenocam = function(site = "bartlett",
         cat("Estimating transition dates! \n")
 
         # smooth time series
-        status = try(phenophases(output_filename,
+        status = try(suppressWarnings(phenophases(output_filename,
                                  out_dir = out_dir,
-                                 output = TRUE), silent=TRUE)
+                                 output = TRUE)),
+                     silent = TRUE)
 
         # trap errors
         if(inherits(status,"try-error")){
