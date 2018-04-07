@@ -22,10 +22,9 @@ list_sites <- function(out_dir = tempdir(),
     return(meta_data)
   } else {
     utils::write.table(meta_data,
-                       paste0(tempdir(),"site_meta_data.csv"),
+                       paste0(tempdir(),"/site_meta_data.csv"),
                        col.names = TRUE,
                        row.names = FALSE,
                        quote = FALSE) 
   }
-  
 }

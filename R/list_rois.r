@@ -22,7 +22,7 @@ list_rois <- function(out_dir = tempdir(),
     return(roi_data)
   } else {
    utils::write.table(roi_data,
-                      paste0(tempdir(),"roi_data.csv"),
+                      paste0(tempdir(),"/roi_data.csv"),
                       col.names = TRUE,
                       row.names = FALSE,
                       quote = FALSE) 
