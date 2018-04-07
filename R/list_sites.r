@@ -1,4 +1,4 @@
-#' Function to list site meta-data
+#' Function to list all site meta-data
 #' 
 #' @param out_dir output directory (default = tempdir())
 #' @param internal TRUE or FALSE (default = TRUE)
