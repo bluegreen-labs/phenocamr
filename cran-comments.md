@@ -8,4 +8,4 @@ http://cran.r-project.org/web/packages/policies.html
 
 ## R CMD check results
 
-0 errors | 2 warnings | 1 notes
+0 errors | 0 warnings | 0 notes
