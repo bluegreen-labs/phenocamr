@@ -20,7 +20,7 @@ library(phenocamr)
 
 ```
 
-A programmatic interface to the [PhenoCam web services](https://phenocam.sr.unh.edu/). Allows for easy downloads of PhenoCam near-surface remote sensing time series directly to your R workspace or your computer. Post-processing allows for the smoothing of the time-series and the calculation of phenological transition dates as a final product.
+A programmatic interface to the [PhenoCam web services](https://phenocam.sr.unh.edu/). Allows for easy downloads of PhenoCam near-surface remote sensing greenness (Gcc) time series directly to your R workspace or your computer. Post-processing allows for the smoothing of the time-series and the calculation of phenological transition dates as a final product.
 
 The package gives access to the latest generated PhenoCam time series (at most 1-day old for running sites) and allows for the extraction of up-to-date phenological transition dates. However, the data acquired through the package will not be curated and vetted for data quality.
 
@@ -48,7 +48,7 @@ print(head(sites))
 
 ### Download a PhenoCam time series.
 
-The below code shows you how to download a PhenoCam time series for the "**harvard**" site, region-of-interest (roi_id) 1 and a time step frequency of 3-days. In this case I've disabled the default outlier detection and smoothing routines which will be run separately in subsequent steps. In normal use these will be enabled by default. The default output directory is tempdir() but any directory can be specified for data management purposes. If default settings are maintained, outlier detection and smoothing will be performed automatically. If so desired phenology dates can be estimated in one pass. In the latter case new data will be written in the same directory as specified for downloading the time series data.
+The below code shows you how to download a PhenoCam time series for the "**harvard**" site, ROI (roi_id) 1 and a time step frequency of 3-days. In this case the default outlier detection and smoothing routines has been disabled and will be run separately in subsequent steps. In normal use these will be enabled by default. The default output directory is tempdir() but any directory can be specified for data management purposes. If default settings are maintained, outlier detection and smoothing will be performed automatically. If so desired phenology dates can be estimated in one pass. In the latter case new data will be written in the same directory as specified for downloading the time series data.
 
 ```{r eval = TRUE}
   download_phenocam(site = "harvard$",
@@ -72,7 +72,7 @@ print(head(df))
 
 ### Detect data outlier
 
-After reading in the data as a data frame you can apply the outlier detection routine. This routine uses an iterative method to detect outlier values in the Gcc time series. This routine filters out most spurious values due contaminiation by snow, mist, rain or otherwise very bright events. I suppress warnings as the routine is iterative and might throw warnings if it does not converge on a solution. This has no implications for the routine and data returned.
+After reading in the data as a data frame you can apply the outlier detection routine. This routine uses an iterative method to detect outlier values in the Gcc time series. This routine filters out most spurious values due contaminiation by snow, mist, rain or otherwise very bright events. Warnings are suppressed as the routine is iterative and might throw warnings if it does not converge on a solution. This has no implications for the routine and data returned.
 
 ```{r eval = TRUE}
   df <- suppressWarnings(detect_outliers(df))
@@ -80,7 +80,7 @@ After reading in the data as a data frame you can apply the outlier detection ro
 
 ### Smoothing a time series
 
-After detecting outliers you can smooth the data. This function uses an AIC based methodology to find the opitmal loess smoothing window. Again, I suppress warnings as the routine uses an optimization in which certain parameter settings return warnings. This has no implications for the routine and data returned.
+After detecting outliers you can smooth the data. This function uses an AIC based methodology to find the opitmal loess smoothing window. Warnings are suppressed as the routine uses an optimization in which certain parameter settings return warnings. This has no implications for the routine and data returned.
 
 ```{r eval = TRUE}
   df <- suppressWarnings(smooth_ts(df))
@@ -101,6 +101,24 @@ Alternatively you can use the phenophases() function which is a wrapper of the t
 phenology_dates <- phenophases(df, frequency = 3, veg_type = "DB")
 ```
 
+With the phenoogy dates calculated we can plot their respective locations on the smoothed time series. In this case the plot will show the 50% amplitude threshold values for both rising and falling parts of the 90th percentile Gcc curve, marked with green and brown vertical lines respectivelly.
+
+```{r fig.width = 7, fig.height = 3}
+plot(as.Date(df$date),
+     df$smooth_gcc_90,
+     type = "l",
+     xlab = "date",
+     ylab = "Gcc")
+
+# rising "spring" greenup dates
+abline(v = phenology_dates$rising$transition_50,
+       col = "green")
+
+# falling "autumn" senescence dates
+abline(v = phenology_dates$falling$transition_50,
+       col = "brown")
+
+```
 
 
 ## References
