@@ -152,7 +152,7 @@ server = function(input, output, session) {
      
     # calculate the total number of site years
     # and sites in the dataset
-    total_site_years = sum(table$site_years)
+    total_site_years = sum(table$site_years, na.rm = TRUE)
     total_sites = length(unique(table$site))
     
     output$site_count = renderInfoBox({
