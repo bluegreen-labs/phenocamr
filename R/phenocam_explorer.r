@@ -14,7 +14,7 @@
 
 phenocam_explorer = function(){
   appDir = sprintf("%s/shiny/phenocam_explorer",path.package("phenocamr"))
-  shiny::runApp(appDir,
+  suppressWarnings(shiny::runApp(appDir,
                 display.mode = "normal",
-                launch.browser = TRUE)
+                launch.browser = TRUE))
 }
