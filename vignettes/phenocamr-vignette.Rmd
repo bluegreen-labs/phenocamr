@@ -26,9 +26,29 @@ The package gives access to the latest generated PhenoCam time series (at most 1
 
 For a quality controlled and fully described dataset I suggest downloading the dataset as described by Richardson et al. (2018). This dataset uses the phenocamr packages in its final processing steps however quality control is gauranteed through careful review of the data. The data can be interactivly explored on [explore.phenocam.us](http://explore.phenocam.us) and downloaded in full from the [ORNL DAAC](https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1511). If in need of more recent data you can use the package and its functionality but be mindful of quality control especially the region-of-interest (ROI) used and potential unaccounted field-of-view (FOV) shifts in the dataset.
 
+## A worked example
+
+Below I describe the most common use of the package, downloading recent PhenoCam time series and generating phenological transition dates for a given site and data type. I intentionally disable most automated processing and step through some of the routines to illustrate the workflow which normally happens internally to the main function download_phenocam(). Generated transition date files can be used in later analysis or modelling exercises using for example the [phenor R package](https://github.com/khufkens/phenor).
+
+### Select a site
+
+To select a site first download an overview meta-data table of all available sites together with their ROI id's and vegetation type and a limited set of meta-data parameters.
+
+```{r eval = TRUE}
+rois <- list_rois()
+print(head(rois))
+```
+
+A full list of meta-data for all sites can be queried using the list_sites() function.
+
+```{r eval = TRUE}
+sites <- list_sites()
+print(head(sites))
+```
+
 ### Download a PhenoCam time series.
 
-The below code shows you how to download a PhenoCam time series for the "harvard" site, region-of-interest (roi_id) 1 and a time step frequency of 3-days. In this case I've disabled the default outlier detection and smoothing routines which will be run separately in subsequent steps. In normal use these will be enabled by default. The default output directory is tempdir() but any directory can be specified for data management purposes.
+The below code shows you how to download a PhenoCam time series for the "**harvard**" site, region-of-interest (roi_id) 1 and a time step frequency of 3-days. In this case I've disabled the default outlier detection and smoothing routines which will be run separately in subsequent steps. In normal use these will be enabled by default. The default output directory is tempdir() but any directory can be specified for data management purposes. If default settings are maintained, outlier detection and smoothing will be performed automatically. If so desired phenology dates can be estimated in one pass. In the latter case new data will be written in the same directory as specified for downloading the time series data.
 
 ```{r eval = TRUE}
   download_phenocam(site = "harvard$",
