@@ -1,14 +1,14 @@
 Package: phenocamr
-Title: Facilitates 'PhenoCam' Data Access and Post-Processing
+Title: Facilitates 'PhenoCam' Data Access and Time Series Post-Processing
 Version: 1.1
 Authors@R: person("Hufkens","Koen",
 		  email="koen.hufkens@gmail.com",
 		  role=c("aut", "cre"))
 Description:
-    Programmatic interface to the 'PhenoCam' web services. Allows for easy
-    downloading of PhenoCam data directly to your R workspace or your computer.
-    Post-processing routines provide consistent and easy timeseries smoothing
-    and estimation of various seasonal phenophase dates for model development.
+    Programmatic interface to the 'PhenoCam' web services (<http://phenocam.sr.unh.edu>).
+    Allows for easy downloading of 'PhenoCam' data directly to your R workspace
+    or your computer and provides post-processing routines for consistent and easy
+    timeseries outlier detection, smoothing and estimation of phenological transition dates.
 Depends:
     R (>= 3.4.0),
 Imports:
