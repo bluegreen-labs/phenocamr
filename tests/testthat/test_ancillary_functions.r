@@ -3,6 +3,14 @@
 # ancillary functions
 test_that("check ancillary routines",{
   
+  # test roi downloads
+  roi = try(list_rois())
+  roi_disk = try(list_rois(internal = FALSE))
+  
+  # test meta-data downloads
+  sites = try(list_sites())
+  sites_disk = try(list_sites(internal = FALSE))
+  
   # download initial data
   df = try(download_phenocam(site = "harvard$",
                          vegetation = "DB",
@@ -47,7 +55,11 @@ test_that("check ancillary routines",{
                           weights = runif(length(l))))
   
   # see if any of the runs failed
-  check = !inherits(df,"try-error") &
+  check = !inherits(roi,"try-error") &
+          !inherits(roi_disk,"try-error") &
+          !inherits(sites,"try-error") &
+          !inherits(sites_disk,"try-error") &
+          !inherits(df,"try-error") &
           !inherits(truncate, "try-error") &
           !inherits(outliers, "try-error") &
           !inherits(transitions, "try-error") &
