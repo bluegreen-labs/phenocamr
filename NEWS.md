@@ -1,6 +1,6 @@
 # phenocamr 1.1
 
-* new meta-data functions list_rois() and list_sites()
+* New meta-data functions list_rois() and list_sites()
 * Added a `NEWS.md` file to track changes to the package
 * Included code coverage checks and status badge [![codecov](https://codecov.io/gh/khufkens/daymetr/branch/master/graph/badge.svg)](https://codecov.io/gh/khufkens/daymetr)
 * Travis CI warnings == errors
