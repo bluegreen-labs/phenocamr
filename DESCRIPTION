@@ -9,6 +9,7 @@ Description:
     Allows for easy downloading of 'PhenoCam' data directly to your R workspace
     or your computer and provides post-processing routines for consistent and easy
     timeseries outlier detection, smoothing and estimation of phenological transition dates.
+    Methods for this package are described in detail in Hufkens et. al (2018) <doi:10.1111/2041-210X.12970>.
 Depends:
     R (>= 3.4.0),
 Imports:
