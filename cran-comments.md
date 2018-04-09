@@ -3,7 +3,7 @@ http://cran.r-project.org/web/packages/policies.html
 
 ## test environments
 
-- local OSX install on R 3.4.0
+- local OSX / Ubuntu 16.04 install on R 3.4.0
 - Ubuntu 14.04 on Travis-CI (devel / release)
 
 ## R CMD check results
