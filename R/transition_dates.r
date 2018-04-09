@@ -1,6 +1,6 @@
 #' Calculates transition dates on the upward
 #' segments of a PhenoCam time series. This function
-#' should not be run stand-alone. Use phenophases() instead!
+#' should not be run stand-alone. Use phenophases function instead!
 #' The required input is a smoothed PhenoCam data file or data frame.
 #'
 #' @param df a PhenoCam data file or data frame

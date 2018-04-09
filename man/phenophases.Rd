@@ -4,7 +4,7 @@
 \alias{phenophases}
 \title{Calculates phenophases, both greenup and senescence, for all 'seasons'
 in a PhenoCam time series. This routine combines a forward and backward
-run of transition_dates() to calculate the phenophases.}
+run of transition_dates function to calculate the phenophases.}
 \usage{
 phenophases(df, sitename = NULL, veg_type = NULL, roi_id = NULL,
   frequency = NULL, mat = NULL, output = FALSE, out_dir = tempdir(),
@@ -32,7 +32,7 @@ phenophases(df, sitename = NULL, veg_type = NULL, roi_id = NULL,
 \description{
 Calculates phenophases, both greenup and senescence, for all 'seasons'
 in a PhenoCam time series. This routine combines a forward and backward
-run of transition_dates() to calculate the phenophases.
+run of transition_dates function to calculate the phenophases.
 }
 \examples{
 

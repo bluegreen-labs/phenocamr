@@ -4,7 +4,7 @@
 \alias{transition_dates}
 \title{Calculates transition dates on the upward
 segments of a PhenoCam time series. This function
-should not be run stand-alone. Use phenophases() instead!
+should not be run stand-alone. Use phenophases function instead!
 The required input is a smoothed PhenoCam data file or data frame.}
 \usage{
 transition_dates(df, lower_thresh = 0.1, middle_thresh = 0.25,
@@ -35,7 +35,7 @@ transition_dates(df, lower_thresh = 0.1, middle_thresh = 0.25,
 \description{
 Calculates transition dates on the upward
 segments of a PhenoCam time series. This function
-should not be run stand-alone. Use phenophases() instead!
+should not be run stand-alone. Use phenophases function instead!
 The required input is a smoothed PhenoCam data file or data frame.
 }
 \examples{

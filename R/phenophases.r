@@ -1,6 +1,6 @@
 #' Calculates phenophases, both greenup and senescence, for all 'seasons'
 #' in a PhenoCam time series. This routine combines a forward and backward
-#' run of transition_dates() to calculate the phenophases.
+#' run of transition_dates function to calculate the phenophases.
 #'
 #' @param df a PhenoCam data file (or data frame)
 #' @param sitename a PhenoCam data file or data frame
