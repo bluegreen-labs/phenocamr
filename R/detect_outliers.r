@@ -7,7 +7,7 @@
 #' @param sigma number of deviations to exclude outliers at
 #' @param grvi reverse the direction of the screening intervals
 #' to accomodate for GRVI outliers
-#' @param plot visualize the process, mostly for debugging (TRUE / FALSE)
+#' @param plot visualize the process, mostly for debugging (\code{TRUE} / \code{FALSE})
 #' @param snowflag integrate snow flags?
 #' @keywords PhenoCam, outliers, smoothing, pre-processing
 #' @export

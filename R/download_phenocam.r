@@ -1,15 +1,18 @@
-#' Function to download and post-process PhenoCam time series
+#' Function to download and post-process PhenoCam time series. This is a
+#' wrapper around most of all the other functions and in most cases all you
+#' need to download a time series and extract relevant phenological transition
+#' dates or phenophases.
 #'
 #' @param site the site name, as mentioned on the PhenoCam web page expressed
 #' as a regular expression ("harvard$" == exact match)
 #' @param veg_type vegetation type (DB, EN, ... default = ALL)
 #' @param frequency frequency of the time series product (1, 3, "raw")
 #' @param roi_id the id of the ROI to download (default = ALL)
-#' @param smooth smooth data (TRUE / FALSE, default is TRUE)
+#' @param smooth smooth data (logical, default is \code{TRUE})
 #' @param daymet TRUE or FALSE, merges the daymet data
 #' @param trim_daymet TRUE or FALSE, trims data to match PhenoCam data
 #' @param outlier_detection TRUE or FALSE, detect outliers
-#' @param phenophase TRUE or FALSE, calculate transition dates
+#' @param phenophase logical, calculate transition dates (default = \code{FALSE})
 #' @param out_dir output directory where to store downloaded data 
 #' (default = tempdir())
 #' @keywords PhenoCam, Daymet, climate data, modelling

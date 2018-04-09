@@ -3,7 +3,7 @@
 \name{contract_phenocam}
 \alias{contract_phenocam}
 \title{Contracts the file from 1-day to a 3-day time step
-reverting the expand.phenocam() routine in order
+reverting the expand_phenocam function in order
 to save space and generate files as outlined in
 the data paper. This routine is used as a post-production
 measure.}
@@ -15,7 +15,7 @@ contract_phenocam(filename)
 }
 \description{
 Contracts the file from 1-day to a 3-day time step
-reverting the expand.phenocam() routine in order
+reverting the expand_phenocam function in order
 to save space and generate files as outlined in
 the data paper. This routine is used as a post-production
 measure.

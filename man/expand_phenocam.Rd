@@ -7,10 +7,10 @@ All values will be filled with NA. This is usefull
 to store subsequent interpolated (1-day data)
 and increase consistency across processing.}
 \usage{
-expand_phenocam(df, truncate = NULL)
+expand_phenocam(filename, truncate = NULL)
 }
 \arguments{
-\item{df}{a PhenoCam data frame}
+\item{filename}{a PhenoCam file}
 
 \item{truncate}{year (numerical), limit the time series
 to a particular year}

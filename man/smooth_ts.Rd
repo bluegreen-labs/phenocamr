@@ -3,7 +3,7 @@
 \name{smooth_ts}
 \alias{smooth_ts}
 \title{Smooths a standard PhenoCam file or data frame using
-the BCI optimized smoothing parameter}
+the BCI optimized smoothing parameter.}
 \usage{
 smooth_ts(df, metrics = c("gcc_mean", "gcc_50", "gcc_75", "gcc_90",
   "rcc_mean", "rcc_50", "rcc_75", "rcc_90"), force = TRUE)
@@ -13,11 +13,11 @@ smooth_ts(df, metrics = c("gcc_mean", "gcc_50", "gcc_75", "gcc_90",
 
 \item{metrics}{which metrics to process, normally all default ones}
 
-\item{force}{TRUE / FALSE, force reprocessing?}
+\item{force}{\code{TRUE} / \code{FALSE}, force reprocessing?}
 }
 \description{
 Smooths a standard PhenoCam file or data frame using
-the BCI optimized smoothing parameter
+the BCI optimized smoothing parameter.
 }
 \examples{
 

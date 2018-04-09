@@ -1,8 +1,9 @@
 #' Merge Daymet data with a PhenoCam data file.
 #' 
-#' @param df a PhenoCam data file
-#' @param trim_daymet TRUE / FALSE, trim the daymet data to the length of the
+#' @param filename a PhenoCam data file
+#' @param trim_daymet logical, trim the daymet data to the length of the
 #' PhenoCam time series or include the whole Daymet time series (1980-current).
+#' (default = \code{FALSE})
 #' @keywords time series, PhenoCam, Daymet, data integration
 #' @export
 #' @examples
@@ -18,27 +19,27 @@
 #' merge_daymet(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
 #' }
 
-merge_daymet  = function(df,
+merge_daymet  = function(filename,
                          trim_daymet = FALSE){
  
   # check if the file exists
-  if (!file.exists(df)){
+  if (!file.exists(filename)){
     stop('the PhenoCam file does not exist!')
   }
    
   # grab site name from filename
-  site = strsplit(basename(df),split="_")[[1]][1]
+  site = strsplit(basename(filename),split="_")[[1]][1]
   
   # extract the latitude and longitude of the site
   lat = as.numeric(scan(
-    df,
+    filename,
     skip = 6,
     nlines = 1,
     what = character(),
     quiet = TRUE
   )[3])
   lon = as.numeric(scan(
-    df,
+    filename,
     skip = 7,
     nlines = 1,
     what = character(),
@@ -95,7 +96,7 @@ merge_daymet  = function(df,
                          "%Y-%j")
   
   # read phenocam data
-  phenocam_data = utils::read.table(df, header=TRUE, sep=',')
+  phenocam_data = utils::read.table(filename, header=TRUE, sep=',')
   
   # create phenocam dates string
   phenocam_dates = as.Date(phenocam_data$date)
@@ -152,10 +153,10 @@ merge_daymet  = function(df,
                                byrow=TRUE)
   
   # pluck real header from the PhenoCam file
-  phenocam_header = readLines(df, n=22)
+  phenocam_header = readLines(filename, n=22)
   
   # create output filename string
-  output_file_name = sprintf("%s.csv",unlist(strsplit(df,".csv")))
+  output_file_name = sprintf("%s.csv",unlist(strsplit(filename,".csv")))
   
   # write everything to file using append
   utils::write.table(

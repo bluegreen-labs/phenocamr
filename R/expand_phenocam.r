@@ -3,7 +3,7 @@
 #' to store subsequent interpolated (1-day data)
 #' and increase consistency across processing.
 #'
-#' @param df a PhenoCam data frame
+#' @param filename a PhenoCam file
 #' @param truncate year (numerical), limit the time series
 #' to a particular year
 #' @keywords time series, smoothing, phenocam
@@ -26,19 +26,20 @@
 #' contract_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
 #' }
 
-expand_phenocam = function(df, truncate = NULL) {
+expand_phenocam = function(filename,
+                           truncate = NULL) {
   
   # check validaty of the input
-  if (is.data.frame(df)) {
+  if (is.data.frame(filename)) {
     stop("not a PhenoCam data file")
   }
   
   # suppress warnings as it throws unnecessary warnings
   # messing up the feedback to the CLI
-  header = try(readLines(df, n = 22), silent = TRUE)
+  header = try(readLines(filename, n = 22), silent = TRUE)
   
   # directly read data from the server into data.table
-  phenocam_data = utils::read.table(df, header = TRUE, sep = ",")
+  phenocam_data = utils::read.table(filename, header = TRUE, sep = ",")
   phenocam_dates = as.Date(phenocam_data$date)
   
   # truncate the data if necessary
@@ -75,7 +76,7 @@ expand_phenocam = function(df, truncate = NULL) {
   # writing the final data frame to file, retaining the original header
   utils::write.table(
     header,
-    df,
+    filename,
     quote = FALSE,
     row.names = FALSE,
     col.names = FALSE,
@@ -83,7 +84,7 @@ expand_phenocam = function(df, truncate = NULL) {
   )
   utils::write.table(
     t(matrix(colnames(phenocam_data))),
-    df,
+    filename,
     quote = FALSE,
     row.names = FALSE,
     col.names = FALSE,
@@ -92,7 +93,7 @@ expand_phenocam = function(df, truncate = NULL) {
   )
   utils::write.table(
     output,
-    df,
+    filename,
     quote = FALSE,
     row.names = FALSE,
     col.names = FALSE,

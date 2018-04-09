@@ -3,20 +3,20 @@
 \name{truncate_phenocam}
 \alias{truncate_phenocam}
 \title{Truncate a PhenoCam file using a given year as last valid year.
-expand.phenocam() provides a similar functionality and is to be
+expand_phenocam() provides a similar functionality and is to be
 prefered. This function remains as it might serve a purpose to
 some.}
 \usage{
-truncate_phenocam(df, year = 2015)
+truncate_phenocam(filename, year = 2015)
 }
 \arguments{
-\item{df}{a PhenoCam data frame}
+\item{filename}{a PhenoCam data frame}
 
 \item{year}{the last valid year, discard the rest}
 }
 \description{
 Truncate a PhenoCam file using a given year as last valid year.
-expand.phenocam() provides a similar functionality and is to be
+expand_phenocam() provides a similar functionality and is to be
 prefered. This function remains as it might serve a purpose to
 some.
 }
@@ -28,13 +28,11 @@ download_phenocam(site = "harvard$",
                   veg_type = "DB",
                   roi_id = "1",
                   frequency = "3")
-
-# read data as data frame
-df = utils::read.csv(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
-
+                  
 # overwrites the original file, increasing
 # decreasing the file size a given year as maximum.
-truncate_phenocam(df, year = 2015)
+truncate_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv"),
+                  year = 2015)
 }
 }
 \keyword{phenocam}

@@ -21,7 +21,7 @@ to accomodate for GRVI outliers}
 
 \item{snowflag}{integrate snow flags?}
 
-\item{plot}{visualize the process, mostly for debugging (TRUE / FALSE)}
+\item{plot}{visualize the process, mostly for debugging (\code{TRUE} / \code{FALSE})}
 }
 \description{
 Detect outliers in PhenoCam time series (data frame or file)

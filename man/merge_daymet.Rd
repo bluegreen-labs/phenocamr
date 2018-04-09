@@ -4,13 +4,14 @@
 \alias{merge_daymet}
 \title{Merge Daymet data with a PhenoCam data file.}
 \usage{
-merge_daymet(df, trim_daymet = FALSE)
+merge_daymet(filename, trim_daymet = FALSE)
 }
 \arguments{
-\item{df}{a PhenoCam data file}
+\item{filename}{a PhenoCam data file}
 
-\item{trim_daymet}{TRUE / FALSE, trim the daymet data to the length of the
-PhenoCam time series or include the whole Daymet time series (1980-current).}
+\item{trim_daymet}{logical, trim the daymet data to the length of the
+PhenoCam time series or include the whole Daymet time series (1980-current).
+(default = \code{FALSE})}
 }
 \description{
 Merge Daymet data with a PhenoCam data file.

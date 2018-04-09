@@ -1,8 +1,9 @@
 #' Smooths a standard PhenoCam file or data frame using
-#' the BCI optimized smoothing parameter
+#' the BCI optimized smoothing parameter.
+#' 
 #' @param df a PhenoCam data file or data frame
 #' @param metrics which metrics to process, normally all default ones
-#' @param force TRUE / FALSE, force reprocessing?
+#' @param force \code{TRUE} / \code{FALSE}, force reprocessing?
 #' @keywords time series, smoothing, phenocam
 #' @export
 #' @examples

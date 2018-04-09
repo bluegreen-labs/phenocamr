@@ -2,7 +2,10 @@
 % Please edit documentation in R/download_phenocam.r
 \name{download_phenocam}
 \alias{download_phenocam}
-\title{Function to download and post-process PhenoCam time series}
+\title{Function to download and post-process PhenoCam time series. This is a
+wrapper around most of all the other functions and in most cases all you
+need to download a time series and extract relevant phenological transition
+dates or phenophases.}
 \usage{
 download_phenocam(site = "harvard$", veg_type = NULL, frequency = "3",
   roi_id = NULL, outlier_detection = TRUE, smooth = TRUE,
@@ -21,19 +24,22 @@ as a regular expression ("harvard$" == exact match)}
 
 \item{outlier_detection}{TRUE or FALSE, detect outliers}
 
-\item{smooth}{smooth data (TRUE / FALSE, default is TRUE)}
+\item{smooth}{smooth data (logical, default is \code{TRUE})}
 
 \item{daymet}{TRUE or FALSE, merges the daymet data}
 
 \item{trim_daymet}{TRUE or FALSE, trims data to match PhenoCam data}
 
-\item{phenophase}{TRUE or FALSE, calculate transition dates}
+\item{phenophase}{logical, calculate transition dates (default = \code{FALSE})}
 
 \item{out_dir}{output directory where to store downloaded data 
 (default = tempdir())}
 }
 \description{
-Function to download and post-process PhenoCam time series
+Function to download and post-process PhenoCam time series. This is a
+wrapper around most of all the other functions and in most cases all you
+need to download a time series and extract relevant phenological transition
+dates or phenophases.
 }
 \examples{
 

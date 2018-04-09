@@ -450,7 +450,7 @@ server = function(input, output, session) {
       
       download_phenocam(
         site = site,
-        vegetation = veg_type,
+        veg_type = veg_type,
         roi_id = roi_id,
         frequency = input$frequency,
         outlier_detection = FALSE,
