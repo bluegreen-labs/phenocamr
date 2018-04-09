@@ -4,7 +4,7 @@
 test_that("check download options",{
   
   df = try(download_phenocam(site = "harvard$",
-                         vegetation = "DB",
+                         veg_type = "DB",
                          roi_id = "1",
                          frequency = 3,
                          smooth = TRUE,
@@ -15,7 +15,7 @@ test_that("check download options",{
                          out_dir = tempdir()))
   
   df_raw = try(download_phenocam(site = "harvard$",
-                             vegetation = "DB",
+                             veg_type = "DB",
                              roi_id = "1",
                              frequency = "raw",
                              smooth = FALSE,
@@ -26,7 +26,7 @@ test_that("check download options",{
                              out_dir = tempdir()))
   
   df_daymet = try(download_phenocam(site = "harvard$",
-                             vegetation = "DB",
+                             veg_type = "DB",
                              roi_id = "1",
                              frequency = 3,
                              smooth = TRUE,
@@ -37,7 +37,7 @@ test_that("check download options",{
                              out_dir = tempdir()))
   
   df_false = try(download_phenocam(site = "harvard$",
-                             vegetation = "DB",
+                             veg_type = "DB",
                              roi_id = "1",
                              frequency = 3,
                              smooth = FALSE,

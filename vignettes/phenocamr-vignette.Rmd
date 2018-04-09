@@ -52,7 +52,7 @@ The below code shows you how to download a PhenoCam time series for the "**harva
 
 ```{r eval = TRUE}
   download_phenocam(site = "harvard$",
-                    vegetation = "DB",
+                    veg_type = "DB",
                     roi_id = "1",
                     frequency = 3,
                     outlier_detection = FALSE,

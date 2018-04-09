@@ -43,7 +43,7 @@ run of transition_dates() to calculate the phenophases.
 # where location [[1]] holds the greenup dates and location
 # [[2]] the greendown dates
 download_phenocam(site = "harvard$",
-                  vegetation = "DB",
+                  veg_type = "DB",
                   roi_id = "1",
                   frequency = "3")
                   

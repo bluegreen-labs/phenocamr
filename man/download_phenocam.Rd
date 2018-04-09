@@ -4,7 +4,7 @@
 \alias{download_phenocam}
 \title{Function to download and post-process PhenoCam time series}
 \usage{
-download_phenocam(site = "harvard$", vegetation = NULL, frequency = "3",
+download_phenocam(site = "harvard$", veg_type = NULL, frequency = "3",
   roi_id = NULL, outlier_detection = TRUE, smooth = TRUE,
   daymet = FALSE, trim_daymet = TRUE, phenophase = FALSE,
   out_dir = tempdir())
@@ -13,7 +13,7 @@ download_phenocam(site = "harvard$", vegetation = NULL, frequency = "3",
 \item{site}{the site name, as mentioned on the PhenoCam web page expressed
 as a regular expression ("harvard$" == exact match)}
 
-\item{vegetation}{vegetation type (DB, EN, ... default = ALL)}
+\item{veg_type}{vegetation type (DB, EN, ... default = ALL)}
 
 \item{frequency}{frequency of the time series product (1, 3, "raw")}
 
@@ -41,7 +41,7 @@ Function to download and post-process PhenoCam time series
 # download the first ROI time series for the Harvard PhenoCam site
 # at an aggregation frequency of 3-days.
 download_phenocam(site = "harvard$",
-                  vegetation = "DB",
+                  veg_type = "DB",
                   roi_id = "1",
                   frequency = "3")
 

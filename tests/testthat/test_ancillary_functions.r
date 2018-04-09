@@ -13,7 +13,7 @@ test_that("check ancillary routines",{
   
   # download initial data
   df = try(download_phenocam(site = "harvard$",
-                         vegetation = "DB",
+                         veg_type = "DB",
                          roi_id = "1",
                          frequency = 3,
                          outlier_detection = FALSE,

@@ -2,7 +2,7 @@
 #'
 #' @param site the site name, as mentioned on the PhenoCam web page expressed
 #' as a regular expression ("harvard$" == exact match)
-#' @param vegetation vegetation type (DB, EN, ... default = ALL)
+#' @param veg_type vegetation type (DB, EN, ... default = ALL)
 #' @param frequency frequency of the time series product (1, 3, "raw")
 #' @param roi_id the id of the ROI to download (default = ALL)
 #' @param smooth smooth data (TRUE / FALSE, default is TRUE)
@@ -20,14 +20,14 @@
 #' # download the first ROI time series for the Harvard PhenoCam site
 #' # at an aggregation frequency of 3-days.
 #' download_phenocam(site = "harvard$",
-#'                   vegetation = "DB",
+#'                   veg_type = "DB",
 #'                   roi_id = "1",
 #'                   frequency = "3")
 #'
 #' }
 
 download_phenocam = function(site = "harvard$",
-                             vegetation = NULL,
+                             veg_type = NULL,
                              frequency = "3",
                              roi_id = NULL,
                              outlier_detection = TRUE,
@@ -44,20 +44,20 @@ download_phenocam = function(site = "harvard$",
   # this excludes any geographic constraints
 
   if (!is.null(site)){
-    if (is.null(vegetation)){
+    if (is.null(veg_type)){
       loc = grep(site,site_list$site)
     }else{
 
       if (!is.null(roi_id)){
 
         # list only particular vegetation types and rois
-        loc = which( grepl(site,site_list$site) & site_list$veg_type %in% vegetation &
+        loc = which( grepl(site,site_list$site) & site_list$veg_type %in% veg_type &
                       site_list$roi_id_number %in% roi_id)
 
       }else{
 
         # list only vegetation types for all rois
-        loc = which( grepl(site,site_list$site) & site_list$veg_type %in% vegetation)
+        loc = which( grepl(site,site_list$site) & site_list$veg_type %in% veg_type)
 
       }
     }
