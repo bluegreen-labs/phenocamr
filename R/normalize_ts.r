@@ -17,14 +17,14 @@ normalize_ts <- function(df, percentile = 90){
     stop("not a data.frame")
   }
   
-  smooth = df[,which(colnames(df)==sprintf("smooth_gcc_%s",percentile))]
-  ci = df[,which(colnames(df)==sprintf("smooth_ci_gcc_%s",percentile))]
-  upper = smooth+ci
-  lower = smooth-ci
+  smooth = df[,which(colnames(df) == sprintf("smooth_gcc_%s",percentile))]
+  ci = df[,which(colnames(df) == sprintf("smooth_ci_gcc_%s",percentile))]
+  upper = smooth + ci
+  lower = smooth - ci
   
   # find range
-  max_val = max(c(smooth,upper,lower),na.rm=T)
-  min_val = min(c(smooth,upper,lower),na.rm=T)
+  max_val = max(c(smooth, upper, lower), na.rm=T)
+  min_val = min(c(smooth, upper, lower), na.rm=T)
   
   # normalize
   smooth  = (smooth - min_val)/(max_val - min_val)

@@ -7,23 +7,22 @@
 #' @export
 #' @examples
 #' 
-#' \dontrun{
+#' \donttest{
 #' # with defaults, outputting a data frame
 #' # with smoothed values, overwriting the original
 #' 
-#' # download demo data (do not smooth)
-#' download_phenocam(site = "harvard",
+#' # download demo data
+#' download_phenocam(site = "harvard$",
 #'                   vegetation = "DB",
-#'                   roi_id = 1,
-#'                   frequency = 3,
-#'                   smooth = FALSE)
+#'                   roi_id = "1",
+#'                   frequency = "3")
 #' 
-#' # calculate and append the GRVI for a file (and overwrite the original)
-#' grvi("harvard_DB_0001_1day.csv")
+#' # calculate and append the GRVI for a file (overwrites the original)
+#' grvi(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
 #' 
 #' # the function also works on a PhenoCam data frame
-#' # but you will lose the extensive header in the process
-#' df = read.csv("harvard_DB_0001_1day.csv")
+#' # but you will lose the extensive header meta-data in the process
+#' df = utils::read.csv(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
 #' df = grvi(df)
 #' }
 

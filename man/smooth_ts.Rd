@@ -21,23 +21,23 @@ the BCI optimized smoothing parameter
 }
 \examples{
 
-\dontrun{
+\donttest{
 # with defaults, outputting a data frame
 # with smoothed values, overwriting the original
 
 # download demo data (do not smooth)
-download.phenocam(site="harvard",
-                  vegetation="DB",
-                  roi_id=1,
-                  frequency=3,
-                  smooth=FALSE)
+download_phenocam(site = "harvard$",
+                  vegetation = "DB",
+                  roi_id = "1",
+                  frequency = "3",
+                  smooth = FALSE)
 
 # smooth the downloaded file (and overwrite the original)
-smooth_ts("harvard_DB_0001_1day.csv")
+smooth_ts(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
 
 # the function also works on a PhenoCam data frame
 # but you will lose the extensive header in the process
-df = read.csv("harvard_DB_0001_1day.csv")
+df = read.csv(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
 df = smooth_ts(df)
 }
 }

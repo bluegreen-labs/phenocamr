@@ -17,7 +17,7 @@ data and visualize timeseries.
 }
 \examples{
 
-\dontrun{
+\donttest{
 # Starts the PhenoCam explorer GUI in a browser
 phenocam_explorer()
 }

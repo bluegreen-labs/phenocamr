@@ -22,15 +22,18 @@ some.
 }
 \examples{
 
-\dontrun{
-df = download_phenocam(site = "harvard",
-                       type = "DB",
-                       roi = "1",
-                       frequency = 3)
+\donttest{
+download_phenocam(site = "harvard$",
+                  vegetation = "DB",
+                  roi_id = "1",
+                  frequency = "3")
 
-truncate_phenocam("harvard_DB_0001_1day.csv", year = 2015)
+# read data as data frame
+df = utils::read.csv(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
+
 # overwrites the original file, increasing
 # decreasing the file size a given year as maximum.
+truncate_phenocam(df, year = 2015)
 }
 }
 \keyword{phenocam}

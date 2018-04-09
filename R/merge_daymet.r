@@ -7,13 +7,14 @@
 #' @export
 #' @examples
 #' 
-#' \dontrun{
+#' \donttest{
 #' # download demo data (do not smooth)
-#' download_phenocam(site = "harvard",
+#' download_phenocam(site = "harvard$",
 #'                   vegetation = "DB",
-#'                   roi_id = 1,
-#'                   frequency = 3,
-#'                   out_dir = tempdir())
+#'                   roi_id = "1",
+#'                   frequency = "3")
+#'
+#' # merge data with daymet data
 #' merge_daymet(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
 #' }
 

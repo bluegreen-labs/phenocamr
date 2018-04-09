@@ -30,21 +30,17 @@ and either overwrites the original file or outputs a new data frame.
 }
 \examples{
 
-\dontrun{
+\donttest{
 # download demo data (do not detect outliers)
-download.phenocam(site = "harvard",
+download_phenocam(site = "harvard$",
                   vegetation = "DB",
-                  roi_id = 1,
-                  frequency = 3,
+                  roi_id = "1",
+                  frequency = "3",
                   outlier_detection = FALSE)
 
 # detect outliers in the downloaded file
-detect_outliers("harvard_DB_0001_1day.csv")
+detect_outliers(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
 
-# This function is rarely used stand-alone as it is called by the
-# download_phenocam() function and does not serve any other purpose
-# as it needs the outlier_flag_xxx field to work (and does not verify this).
-# Use stand-alone at your own risk.
 }
 }
 \keyword{PhenoCam,}

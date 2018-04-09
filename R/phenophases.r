@@ -8,29 +8,26 @@
 #' @param roi_id a PhenoCam data file or data frame
 #' @param frequency a PhenoCam data file or data frame
 #' @param mat mean annual temperature
-#' @param output a PhenoCam data file or data frame
+#' @param output return PhenoCam data file or data frame
 #' @param out_dir output directory
 #' @param ... pass parameters to the transition_dates() function
 #' @keywords PhenoCam, transition dates, phenology, time series
 #' @export
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
 #' # downloads a time series for Bartlett Forest data and calculates
 #' # the matching phenophases.
 #' # Outputs a nested list of phenophases dates
 #' # where location [[1]] holds the greenup dates and location
 #' # [[2]] the greendown dates
-#'
-#' df = download_phenocam(site = "harvard$",
-#'                        vegetation = "DB",
-#'                        roi_id = "1",
-#'                        frequency = 3)
-#' df = read.csv("harvard_DB_0001_3day.csv")
-#' my_dates = phenophases(df,output = FALSE)
-#'
-#' # dates need to be converted to standard notation using
-#' # as.Date(my_dates)
+#' download_phenocam(site = "harvard$",
+#'                   vegetation = "DB",
+#'                   roi_id = "1",
+#'                   frequency = "3")
+#'                   
+#' df = utils::read.csv(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
+#' my_dates = phenophases(df, output = FALSE)
 #' }
 
 phenophases = function(df,

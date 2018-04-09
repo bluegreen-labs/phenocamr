@@ -2,8 +2,8 @@
 #'
 #' @param site the site name, as mentioned on the PhenoCam web page expressed
 #' as a regular expression ("harvard$" == exact match)
-#' @param vegetation vegeation type (DB, EN, ... default = ALL)
-#' @param frequency frequency of the time series product (1,3, "raw")
+#' @param vegetation vegetation type (DB, EN, ... default = ALL)
+#' @param frequency frequency of the time series product (1, 3, "raw")
 #' @param roi_id the id of the ROI to download (default = ALL)
 #' @param smooth smooth data (TRUE / FALSE, default is TRUE)
 #' @param daymet TRUE or FALSE, merges the daymet data
@@ -16,17 +16,17 @@
 #' @export
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
 #' # download the first ROI time series for the Harvard PhenoCam site
-#' # and an aggregation frequency of 3-days.
-#' download_phenocam(site = "harvard",
+#' # at an aggregation frequency of 3-days.
+#' download_phenocam(site = "harvard$",
 #'                   vegetation = "DB",
-#'                   roi_id = 1,
-#'                   frequency = 3)
+#'                   roi_id = "1",
+#'                   frequency = "3")
 #'
 #' }
 
-download_phenocam = function(site = "bartlett",
+download_phenocam = function(site = "harvard$",
                              vegetation = NULL,
                              frequency = "3",
                              roi_id = NULL,

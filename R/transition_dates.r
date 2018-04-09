@@ -17,13 +17,13 @@
 #' @export
 #' @examples
 #' 
-#' \dontrun{
-#' df = download_phenocam(site = "harvard$",
-#'                        vegetation = "DB",
-#'                        roi_id = "1",
-#'                        frequency = 3)
+#' \donttest{
+#' download_phenocam(site = "harvard$",
+#'                   vegetation = "DB",
+#'                   roi_id = "1",
+#'                   frequency = "3")
 #'
-#' df = utils::read.csv("harvard_DB_0001_1day_v4.csv")
+#' df = utils::read.csv(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
 #' my_dates = transition_dates(df,
 #'                             lower_thresh = 0.1,
 #'                             middle_thresh = 0.25,
@@ -31,9 +31,6 @@
 #'                             percentile = 90,
 #'                             reverse = FALSE,
 #'                             plot = FALSE)
-#'
-#' dates need to be converted to standard notation using
-#' as.Date(my_dates)
 #' }
 
 transition_dates = function(df,

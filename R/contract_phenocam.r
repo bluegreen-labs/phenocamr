@@ -8,18 +8,21 @@
 #' @keywords time series, smoothing, phenocam
 #' @export
 #' @examples
-#' # df = download.phenocam(site = "harvard",
-#' #                        type = "DB",
-#' #                        roi = "1",
-#' #                        frequency = 3)
+#' 
+#' \donttest{
+#' download_phenocam(site = "harvard$",
+#'                   vegetation = "DB",
+#'                   roi_id = "1",
+#'                   frequency = "3")
 #'
-#' # expand.phenocam("harvard_DB_0001_1day.csv")
 #' # Overwrites the original file, increasing
 #' # it's file size.
+#' expand_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
 #'
-#' # contract_phenocam("harvard_DB_0001_1day.csv")
 #' # Contracts the file to it's original size, skipping
 #' # two days.
+#' contract_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
+#' }
 
 contract_phenocam = function(filename) {
   

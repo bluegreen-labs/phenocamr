@@ -2,7 +2,7 @@
 % Please edit documentation in R/list_sites.r
 \name{list_sites}
 \alias{list_sites}
-\title{Function to list site meta-data}
+\title{Function to list all site meta-data}
 \usage{
 list_sites(out_dir = tempdir(), internal = TRUE)
 }
@@ -12,11 +12,11 @@ list_sites(out_dir = tempdir(), internal = TRUE)
 \item{internal}{TRUE or FALSE (default = TRUE)}
 }
 \description{
-Function to list site meta-data
+Function to list all site meta-data
 }
 \examples{
 
-\dontrun{
+\donttest{
 # download the site meta-data
 df <- list_sites()
 }

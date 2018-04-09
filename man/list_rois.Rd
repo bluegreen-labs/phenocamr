@@ -16,7 +16,7 @@ Function to list all site regions-of-interst (ROIs)
 }
 \examples{
 
-\dontrun{
+\donttest{
 # download the site meta-data
 df <- list_rois()
 }

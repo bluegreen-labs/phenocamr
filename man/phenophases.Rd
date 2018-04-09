@@ -23,7 +23,7 @@ phenophases(df, sitename = NULL, veg_type = NULL, roi_id = NULL,
 
 \item{mat}{mean annual temperature}
 
-\item{output}{a PhenoCam data file or data frame}
+\item{output}{return PhenoCam data file or data frame}
 
 \item{out_dir}{output directory}
 
@@ -36,22 +36,19 @@ run of transition_dates() to calculate the phenophases.
 }
 \examples{
 
-\dontrun{
+\donttest{
 # downloads a time series for Bartlett Forest data and calculates
 # the matching phenophases.
 # Outputs a nested list of phenophases dates
 # where location [[1]] holds the greenup dates and location
 # [[2]] the greendown dates
-
-df = download_phenocam(site = "harvard$",
-                       vegetation = "DB",
-                       roi_id = "1",
-                       frequency = 3)
-df = read.csv("harvard_DB_0001_3day.csv")
-my_dates = phenophases(df,output = FALSE)
-
-# dates need to be converted to standard notation using
-# as.Date(my_dates)
+download_phenocam(site = "harvard$",
+                  vegetation = "DB",
+                  roi_id = "1",
+                  frequency = "3")
+                  
+df = utils::read.csv(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
+my_dates = phenophases(df, output = FALSE)
 }
 }
 \keyword{PhenoCam,}

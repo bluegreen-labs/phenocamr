@@ -6,7 +6,7 @@
 #' @export
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
 #' # download the site meta-data
 #' df <- list_sites()
 #' }
