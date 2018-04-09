@@ -460,7 +460,7 @@ server = function(input, output, session) {
       
       # detect outliers
       progress$set(value = 0.3, detail = "detecting outliers")
-      status = try(detect_outliers(data_file), silent = TRUE)
+      status = try(suppressWarnings(detect_outliers(data_file)), silent = TRUE)
       
       # trap errors
       if (inherits(status, "try-error")) {
@@ -469,7 +469,7 @@ server = function(input, output, session) {
       
       # smooth data
       progress$set(value = 0.6, detail = "smoothing data")
-      status = try(smooth_ts(data_file), silent = TRUE)
+      status = try(suppressWarnings(smooth_ts(data_file)), silent = TRUE)
       
       # trap errors
       if (inherits(status, "try-error")) {
@@ -568,7 +568,7 @@ server = function(input, output, session) {
     )
     
     # plotting routine
-    if (is.null(data)) {
+    if (is.null(data) |  all((is.na(data[[1]])) & all(is.na(data[[2]])))  ) {
       # populate the download handler with error message
       output$downloadData <- downloadHandler(
         filename = sprintf(
