@@ -1,8 +1,13 @@
-#' Calculate GRVI for a PhenoCam file or data frame
-#' 
+#' Calculate green-red vegetation index (GRVI) for a PhenoCam file or data frame
+#'
+#' The GRVI is defined as the normalized ratio between the red and green channel
+#' of a RGB image or digital number triplet. However, the blue channel can be
+#' used as well using a weighting factor. As such a paramter vector is provided
+#' so different channels / DN can be weighted separately.
+#'   
 #' @param df a PhenoCam data file or data frame (when using a file provide a
 #' full path if not in the current working directory)
-#' @param par grvi parameters (weights)
+#' @param par grvi parameters (digital number weights)
 #' @keywords time series, smoothing, phenocam
 #' @export
 #' @examples
@@ -23,11 +28,11 @@
 #' # the function also works on a PhenoCam data frame
 #' # but you will lose the extensive header meta-data in the process
 #' df = utils::read.csv(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
-#' df = grvi(df)
+#' df = grvi(df, par = c(1, 1, 0))
 #' }
 
 grvi = function(df,
-                par=c(1,1,1)) {
+                par=c(1, 1, 1)) {
   
   # read parameters into readable formats
   a = par[1]

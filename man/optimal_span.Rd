@@ -18,7 +18,7 @@ optimal_span(y, x = NULL, weights = NULL, step = 0.01, label = NULL,
 
 \item{step}{span increment size}
 
-\item{label}{title to be used when plot == FALSE}
+\item{label}{title to be used when plotting function output}
 
 \item{plot}{plot visual output of the optimization routine}
 }

@@ -22,6 +22,7 @@ This routine uses Forsythe et al. 1995.
 
 \donttest{
 # calcualte the hours of sunlight and solar elevation on day of year 1
+# and latitude 51
 ephem = daylength(1, 51)
 print(ephem)
 }
