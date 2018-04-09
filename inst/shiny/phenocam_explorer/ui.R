@@ -5,8 +5,8 @@ require(leaflet, quietly = TRUE)
 require(plotly, quietly = TRUE)
 require(DT, quietly = TRUE)
 
-# source about page content
-about = source('about.r')
+# source citation page content
+citation = source('./citation.R')
 
 # vegetation type list
 vegtype = c(
@@ -32,10 +32,7 @@ sidebar <- dashboardSidebar(sidebarMenu(
     "Explore data", tabName = "explorer", icon = icon("bar-chart-o")
   ),
   menuItem(
-    "About the data", tabName = "about", icon = icon("info-circle")
-  ),
-  menuItem(
-    "R Toolbox on Github", icon = icon("github"),href = "https://github.com/khufkens"
+    "Cite Data", tabName = "citation", icon = icon("creative-commons")
   )
 ))
 
@@ -145,8 +142,8 @@ body <- dashboardBody(tags$head(tags$script(
       )
     ),
     tabItem(# the about page
-      tabName = "about",
-      tabPanel("About", box(width = NULL,about$value)))
+      tabName = "citation",
+      tabPanel("Citing Data", box(width = NULL, citation$value)))
   ))
 
 ui <- dashboardPage(skin = "green", header, sidebar, body)
