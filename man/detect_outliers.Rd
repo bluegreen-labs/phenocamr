@@ -7,7 +7,7 @@ The function fills in the existing column to hold outlier flags,
 and either overwrites the original file or outputs a new data frame.}
 \usage{
 detect_outliers(data, iterations = 20, sigma = 2, grvi = FALSE,
-  snowflag = FALSE, plot = FALSE)
+  snowflag = FALSE, plot = FALSE, internal = TRUE, out_dir = tempdir())
 }
 \arguments{
 \item{data}{PhenoCam data frame or filename}
@@ -21,7 +21,14 @@ to accomodate for GRVI outliers}
 
 \item{snowflag}{integrate snow flags?}
 
-\item{plot}{visualize the process, mostly for debugging (\code{TRUE} / \code{FALSE})}
+\item{plot}{visualize the process, mostly for debugging
+(\code{TRUE} / \code{FALSE} = default)}
+
+\item{internal}{return a data structure if given a file on disk
+(\code{TRUE} / \code{FALSE} = default)
+to accomodate for GRVI outliers}
+
+\item{out_dir}{output directory where to store data}
 }
 \description{
 Detect outliers in PhenoCam time series (data frame or file)

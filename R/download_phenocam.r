@@ -6,10 +6,11 @@
 #' @param site the site name, as mentioned on the PhenoCam web page expressed
 #' as a regular expression ("harvard$" == exact match)
 #' @param veg_type vegetation type (DB, EN, ... default = ALL)
-#' @param frequency frequency of the time series product (1, 3, "raw")
+#' @param frequency frequency of the time series product (1, 3, "roistats")
 #' @param roi_id the id of the ROI to download (default = ALL)
 #' @param smooth smooth data (logical, default is \code{TRUE})
 #' @param daymet TRUE or FALSE, merges the daymet data
+#' @param contract contract 3-day data (logical, default is \code{TRUE})
 #' @param trim_daymet TRUE or FALSE, trims data to match PhenoCam data
 #' @param outlier_detection TRUE or FALSE, detect outliers
 #' @param phenophase logical, calculate transition dates (default = \code{FALSE})
@@ -35,6 +36,7 @@ download_phenocam = function(site = "harvard$",
                              roi_id = NULL,
                              outlier_detection = TRUE,
                              smooth = TRUE,
+                             contract = FALSE,
                              daymet = FALSE,
                              trim_daymet = TRUE,
                              phenophase = FALSE,
@@ -70,7 +72,7 @@ download_phenocam = function(site = "harvard$",
   }
 
   # if no valid files are detected stop any download attempts
-  if (length(loc)==0){
+  if (length(loc) == 0){
     stop("No files are available for download! \n",call.=TRUE)
   }
 
@@ -112,99 +114,106 @@ download_phenocam = function(site = "harvard$",
 
     # skip if download failed
     if (inherits(status,"try-error")){
-
-      warning(sprintf("failed to download: %s",filename))
+      warning(sprintf("failed to download: %s", filename))
       next
-
     } else {
-
+      
       # don't do any post-procesing on raw data
-      if (frequency == "raw"){
+      if (frequency == "roistats"){
         next
       }
 
+      # read in data using read_phenocam to process all in memory
+      df = read_phenocam(output_filename)
+      
+      # always expand the time series to get maximal
+      # phenophase date resolution
+      df = expand_phenocam(df)
+      
       # remove outliers (overwrites original file)
-      if (outlier_detection == TRUE |
-          tolower(outlier_detection) == "true" |
-          tolower(outlier_detection) == "t"){
+      if (outlier_detection == TRUE){
         
         # feedback
         cat("Flagging outliers! \n")
 
         # detect outliers
-        status = try(suppressWarnings(detect_outliers(output_filename)),
+        df = try(suppressWarnings(detect_outliers(df)),
                                       silent = TRUE)
 
         # trap errors
-        if(inherits(status,"try-error")){
+        if(inherits(df,"try-error")){
           cat("--failed \n")
         }
       }
-
+      
       # Smooth data
-      if (smooth == TRUE |
-          tolower(smooth) == "true" |
-          tolower(smooth) == "t"){
+      if (smooth == TRUE){
         # feedback
         cat("Smoothing time series! \n")
-
+        
         # smooth time series
-        status = try(suppressWarnings(smooth_ts(output_filename)),
+        df = try(suppressWarnings(smooth_ts(df)),
                                       silent = TRUE)
 
         # trap errors
-        if(inherits(status,"try-error")){
-          cat("--failed \n")
+        if(inherits(df,"try-error")){
+          warning("smoothing failed...")
         }
       }
 
       # Output transition dates
-      if (phenophase == TRUE |
-          tolower(phenophase) == "true" |
-          tolower(phenophase) == "t"){
+      if (phenophase == TRUE){
+        
         # feedback
         cat("Estimating transition dates! \n")
 
         # smooth time series
-        status = try(suppressWarnings(phenophases(output_filename,
+        df = try(suppressWarnings(phenophases(df,
                                  out_dir = out_dir,
                                  output = TRUE)),
                      silent = TRUE)
 
         # trap errors
-        if(inherits(status,"try-error")){
-          cat("--failed \n")
+        if(inherits(df,"try-error")){
+          warning("estimating transition dates failed...")
         }
       }
 
       # merge with daymet
-      if (daymet == TRUE |
-          tolower(daymet) == "true" |
-          tolower(daymet) == "t"){
+      if (daymet == TRUE){
         
         # feedback
         cat("Merging Daymet Data! \n")
-        
-        # if the frequency is 3 expand the table to
-        # daily values for easier processing afterwards
-        if (frequency == "3"){
-          # feedback
-          cat("-- Expanding data set to 1-day frequency! \n")
-          
-          # expand the time series
-          expand_phenocam(output_filename)
-        }
 
         # merge daymet data into the time series file
-        status = try(merge_daymet(output_filename,
-                                trim_daymet = trim_daymet),
-                     silent=TRUE)
+        df = try(merge_daymet(df,
+                              trim_daymet = trim_daymet),
+                     silent = TRUE)
 
         # trap errors
-        if(inherits(status,"try-error")){
-          cat("--failed merging daymet data, check package \n")
+        if(inherits(df,"try-error")){
+          warning("merging daymet data failed...")
         }
       }
+      
+      # contract datasets if so desired
+      if (contract == TRUE & df$frequency == "3day"){
+        
+        # feedback
+        cat("Contracting Data! \n")
+        
+        # merge daymet data into the time series file
+        df = try(contract_phenocam(df),
+                 silent = TRUE)
+        
+        # trap errors
+        if(inherits(df,"try-error")){
+          warning("contracting data failed...")
+        }
+      }
+      
+      # finally output all the data to file
+      write_phenocam(df, out_dir = out_dir)
     }
   }
 }

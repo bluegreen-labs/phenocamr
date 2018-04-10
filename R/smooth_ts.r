@@ -1,9 +1,12 @@
 #' Smooths a standard PhenoCam file or data frame using
 #' the BCI optimized smoothing parameter.
 #' 
-#' @param df a PhenoCam data file or data frame
+#' @param data a PhenoCam data file or data structure
 #' @param metrics which metrics to process, normally all default ones
 #' @param force \code{TRUE} / \code{FALSE}, force reprocessing?
+#' @param internal return a data structure if given a file on disk
+#' (\code{TRUE} / \code{FALSE} = default)
+#' @param out_dir output directory where to store data 
 #' @keywords time series, smoothing, phenocam
 #' @export
 #' @examples
@@ -28,7 +31,7 @@
 #' df = smooth_ts(df)
 #' }
 
-smooth_ts = function(df,
+smooth_ts = function(data,
                      metrics = c("gcc_mean",
                                  "gcc_50",
                                  "gcc_75",
@@ -37,35 +40,27 @@ smooth_ts = function(df,
                                  "rcc_50",
                                  "rcc_75",
                                  "rcc_90"),
-                     force = TRUE) {
+                     force = TRUE,
+                     internal = TRUE,
+                     out_dir = tempdir()) {
 
   # if the data is not a data frame, load
   # the file (assuming it is a phenocam)
   # summary file, otherwise rename the
   # input data to df
-
-  # check if it's a filename or data frame
-  df_check = is.data.frame(df)
-
-  if (!df_check) {
-    if (file.exists(df)) {
-
-      # assign filename
-      filename = df
-
-      # read data file
-      header = try(readLines(df, n = 22), silent = TRUE)
-
-      # read in the data frame
-      df = utils::read.table(df, header = TRUE, sep = ",")
-
-    } else{
+  if(class(data) != "phenocamr"){
+    if(file.exists(data)){
+      data = read_phenocam(data)
+      on_disk = TRUE
+    } else {
       stop("not a valid PhenoCam data frame or file")
     }
+  } else {
+    on_disk = FALSE
   }
-
-  # detect frequency
-  freq = stats::median(diff(stats::na.omit(df$doy)))
+  
+  # split out data from read in or provided data
+  df = data$data
   
   # if it's a smoothed file, bail unless you want to
   # force the smoothing again
@@ -219,7 +214,7 @@ smooth_ts = function(df,
     # smooth input series for plotting
     # set locations to NA which would otherwise not exist in the
     # 3-day product, as not to inflate the number of measurements
-    if (freq == 3){
+    if (data$frequency == "3day"){
       
       optim_span = optimal_span(x = as.numeric(dates[loc]),
                                 y = gap_filled[loc],
@@ -255,14 +250,17 @@ smooth_ts = function(df,
     values_ci[values_ci > 0.02] = 0.02
 
     # trap trailing and starting NA values
-    values_smooth = zoo::na.locf(values_smooth, na.rm=FALSE)
-    values_smooth = zoo::na.locf(values_smooth, fromLast = TRUE, na.rm=FALSE)
+    values_smooth = zoo::na.locf(values_smooth,
+                                 na.rm=FALSE)
+    values_smooth = zoo::na.locf(values_smooth,
+                                 fromLast = TRUE,
+                                 na.rm=FALSE)
 
     # set values for long interpolated values to 0
     # these are effectively missing or inaccurate
     # (consider setting those to NA, although this
     # might mess up plotting routines)
-    values_ci[long_na] = 0.02 # previously 0 now 0.02
+    values_ci[long_na] = 0.02
     
     # trap values where no CI was calculated and
     # assign the fixed value
@@ -291,29 +289,16 @@ smooth_ts = function(df,
   df = df[!dropvar]
   df = cbind(df, output)
 
-  # if the data is not a data frame, write
-  # to the same file else return df
-  if (!df_check) {
-
-    # writing the final data frame to file, retaining the original header
-    utils::write.table(
-      header,
-      filename,
-      quote = FALSE,
-      row.names = FALSE,
-      col.names = FALSE,
-      sep = ""
-    )
-    utils::write.table(
-      df,
-      filename,
-      quote = FALSE,
-      row.names = FALSE,
-      col.names = TRUE,
-      sep = ",",
-      append = TRUE
-    )
-  } else{
-    return(df)
+  # put data back into the data structure
+  data$data = df
+  
+  # write the data to the original data frame or the
+  # original file (overwrites the data!!!)
+  if(on_disk | !internal ){
+    write_phenocam(data, out_dir = out_dir)
+  } else {
+    # if provided a data frame
+    # return the original data frame, with flagged outliers
+    return(data)
   }
 }

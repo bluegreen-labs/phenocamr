@@ -4,13 +4,18 @@
 \alias{grvi}
 \title{Calculate green-red vegetation index (GRVI) for a PhenoCam file or data frame}
 \usage{
-grvi(df, par = c(1, 1, 1))
+grvi(data, par = c(1, 1, 1), internal = TRUE, out_dir = tempdir())
 }
 \arguments{
+\item{par}{grvi parameters (digital number weights)}
+
+\item{internal}{return a data structure if given a file on disk
+(\code{TRUE} / \code{FALSE} = default)}
+
+\item{out_dir}{output directory where to store data}
+
 \item{df}{a PhenoCam data file or data frame (when using a file provide a
 full path if not in the current working directory)}
-
-\item{par}{grvi parameters (digital number weights)}
 }
 \description{
 The GRVI is defined as the normalized ratio between the red and green channel

@@ -9,8 +9,8 @@ dates or phenophases.}
 \usage{
 download_phenocam(site = "harvard$", veg_type = NULL, frequency = "3",
   roi_id = NULL, outlier_detection = TRUE, smooth = TRUE,
-  daymet = FALSE, trim_daymet = TRUE, phenophase = FALSE,
-  out_dir = tempdir())
+  contract = FALSE, daymet = FALSE, trim_daymet = TRUE,
+  phenophase = FALSE, out_dir = tempdir())
 }
 \arguments{
 \item{site}{the site name, as mentioned on the PhenoCam web page expressed
@@ -18,13 +18,15 @@ as a regular expression ("harvard$" == exact match)}
 
 \item{veg_type}{vegetation type (DB, EN, ... default = ALL)}
 
-\item{frequency}{frequency of the time series product (1, 3, "raw")}
+\item{frequency}{frequency of the time series product (1, 3, "roistats")}
 
 \item{roi_id}{the id of the ROI to download (default = ALL)}
 
 \item{outlier_detection}{TRUE or FALSE, detect outliers}
 
 \item{smooth}{smooth data (logical, default is \code{TRUE})}
+
+\item{contract}{contract 3-day data (logical, default is \code{TRUE})}
 
 \item{daymet}{TRUE or FALSE, merges the daymet data}
 

@@ -8,6 +8,9 @@
 #' @param df a PhenoCam data file or data frame (when using a file provide a
 #' full path if not in the current working directory)
 #' @param par grvi parameters (digital number weights)
+#' @param internal return a data structure if given a file on disk
+#' (\code{TRUE} / \code{FALSE} = default)
+#' @param out_dir output directory where to store data 
 #' @keywords time series, smoothing, phenocam
 #' @export
 #' @examples
@@ -31,82 +34,50 @@
 #' df = grvi(df, par = c(1, 1, 0))
 #' }
 
-grvi = function(df,
-                par=c(1, 1, 1)) {
+grvi = function(data,
+                par=c(1, 1, 1),
+                internal = TRUE,
+                out_dir = tempdir()) {
   
   # read parameters into readable formats
   a = par[1]
   b = par[2]
   c = par[3]
   
-  # check if it's a filename or data frame
-  df_check = is.data.frame(df)
-
   # if the data is not a data frame, load
   # the file (assuming it is a phenocam)
   # summary file, otherwise rename the
   # input data to df
-  if (!df_check) {
-    if (file.exists(df)) {
-      # create filename
-      filename = df
-      
-      # read data file
-      header = try(readLines(df, n = 22), silent = TRUE)
-      df = utils::read.table(df, header = TRUE, sep = ",")
-      
-      if (grepl("timeseries", filename)){
-        # select for solar elevation > 10
-        df = df[df$solar_elev > 10,] 
-      }
-      
-      # strip out necessary data into readable variables
-      green = df$g_mean
-      red = df$r_mean
-      blue = df$b_mean
-      
-      # calculate the GRVI
-      df$grvi = (green * a - red * b  - blue * c) /
-        (green * a + red * b + blue * c)
-      
-    } else{
+  if(class(data) != "phenocamr"){
+    if(file.exists(data)){
+      data = read_phenocam(data)
+      on_disk = TRUE
+    } else {
       stop("not a valid PhenoCam data frame or file")
     }
-    
   } else {
-    # strip out necessary data into readable variables
-    green = df$g_mean
-    red = df$r_mean
-    blue = df$b_mean
-    
-    # calculate the GRVI
-    df$grvi = (green * a - red * b  - blue * c) /
-      (green * a + red * b + blue * c)
+    on_disk = FALSE
   }
   
-  # if the data is not a data frame, write
-  # to the same file else return df
-  if (!df_check) {
-    # writing the final data frame to file, 
-    # retaining the original header
-    utils::write.table(
-      header,
-      filename,
-      quote = FALSE,
-      row.names = FALSE,
-      col.names = FALSE,
-      sep = ""
-    )
-    utils::write.table(
-      df,
-      filename,
-      quote = FALSE,
-      row.names = FALSE,
-      col.names = TRUE,
-      sep = ",",
-      append = TRUE
-    )
-  } else{
-    return(df)
+  # strip out necessary data into readable variables
+  green = df$g_mean
+  red = df$r_mean
+  blue = df$b_mean
+    
+  # calculate the GRVI
+  df$grvi = (green * a - red * b  - blue * c) /
+      (green * a + red * b + blue * c)
+  
+  # put data back into the data structure
+  data$data = df
+  
+  # write the data to the original data frame or the
+  # original file (overwrites the data!!!)
+  if(on_disk | !internal ){
+    write_phenocam(data, out_dir = out_dir)
+  } else {
+    # if provided a data frame
+    # return the original data frame, with flagged outliers
+    return(data)
   }
 }

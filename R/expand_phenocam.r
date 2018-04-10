@@ -3,9 +3,12 @@
 #' to store subsequent interpolated (1-day data)
 #' and increase consistency across processing.
 #'
-#' @param filename a PhenoCam file
+#' @param data a PhenoCam file
 #' @param truncate year (numerical), limit the time series
-#' to a particular year
+#' to a particular year (default = NULL)
+#' @param internal return a data structure if given a file on disk
+#' (\code{TRUE} / \code{FALSE} = default)
+#' @param out_dir output directory where to store data (default = tempdir())
 #' @keywords time series, smoothing, phenocam
 #' @export
 #' @examples
@@ -26,20 +29,30 @@
 #' contract_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
 #' }
 
-expand_phenocam = function(filename,
-                           truncate = NULL) {
+expand_phenocam = function(data,
+                           truncate = NULL,
+                           internal = TRUE,
+                           out_dir = tempdir()) {
   
-  # check validaty of the input
-  if (is.data.frame(filename)) {
-    stop("not a PhenoCam data file")
+  # if the data is not a data frame, load
+  # the file (assuming it is a phenocam)
+  # summary file, otherwise rename the
+  # input data to df
+  if(class(data) != "phenocamr"){
+    if(file.exists(data)){
+      data = read_phenocam(data)
+      on_disk = TRUE
+    } else {
+      stop("not a valid PhenoCam data frame or file")
+    }
+  } else {
+    on_disk = FALSE
   }
   
-  # suppress warnings as it throws unnecessary warnings
-  # messing up the feedback to the CLI
-  header = try(readLines(filename, n = 22), silent = TRUE)
+  # split out data from read in or provided data
+  phenocam_data = data$data
   
-  # directly read data from the server into data.table
-  phenocam_data = utils::read.table(filename, header = TRUE, sep = ",")
+  # convert dates
   phenocam_dates = as.Date(phenocam_data$date)
   
   # truncate the data if necessary
@@ -63,41 +76,28 @@ expand_phenocam = function(filename,
   
   # create vectors to populate final output with
   all_dates = seq(as.Date(min_range), as.Date(max_range), "days")
-  all_years = format(all_dates, "%Y")
-  all_doy = format(all_dates, "%j")
+  all_years = as.integer(format(all_dates, "%Y"))
+  all_doy = as.integer(format(all_dates, "%j"))
   
-  # combine original data with missing dates filled in
-  output = matrix(NA, length(all_dates), dim(phenocam_data)[2])
-  output[which(all_dates %in% phenocam_dates), ] = as.matrix(phenocam_data)[phenocam_dates %in% all_dates,]
-  output[, 1] = as.character(all_dates)
-  output[, 2] = all_years
-  output[, 3] = all_doy
+  # create data frame with dates to merge with original data
+  all_dates = as.data.frame(as.character(all_dates))
+  colnames(all_dates) = "date"
   
-  # writing the final data frame to file, retaining the original header
-  utils::write.table(
-    header,
-    filename,
-    quote = FALSE,
-    row.names = FALSE,
-    col.names = FALSE,
-    sep = ""
-  )
-  utils::write.table(
-    t(matrix(colnames(phenocam_data))),
-    filename,
-    quote = FALSE,
-    row.names = FALSE,
-    col.names = FALSE,
-    append = TRUE,
-    sep = ","
-  )
-  utils::write.table(
-    output,
-    filename,
-    quote = FALSE,
-    row.names = FALSE,
-    col.names = FALSE,
-    sep = ",",
-    append = TRUE
-  )
+  output = merge(all_dates, phenocam_data, by = "date", all.x = TRUE)
+  output$date = as.character(output$date)
+  output$year = all_years
+  output$doy = all_doy
+  
+  # stuff expanded data back into original data structure
+  data$data = output
+  
+  # write the data to the original data frame or the
+  # original file (overwrites the data!!!)
+  if(on_disk | !internal ){
+    write_phenocam(data, out_dir = out_dir)
+  } else {
+    # if provided a data frame
+    # return the original data frame, with flagged outliers
+    return(data)
+  }
 }

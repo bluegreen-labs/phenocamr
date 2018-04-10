@@ -441,7 +441,7 @@ server = function(input, output, session) {
       data = read.table(data_file, header = TRUE, sep = ',')
     } else{
       # kick start progress bar
-      progress$set(value = 0.2, detail = "Downloading PhenoCam data")
+      progress$set(value = 0.5, detail = "Downloading PhenoCam data")
       
       # download phenocam data from the server
       # do not detect outliers and smooth in this step
@@ -453,28 +453,10 @@ server = function(input, output, session) {
         veg_type = veg_type,
         roi_id = roi_id,
         frequency = input$frequency,
-        outlier_detection = FALSE,
-        smooth = FALSE,
+        outlier_detection = TRUE,
+        smooth = TRUE,
         out_dir = path
       )
-      
-      # detect outliers
-      progress$set(value = 0.3, detail = "detecting outliers")
-      status = try(suppressWarnings(detect_outliers(data_file)), silent = TRUE)
-      
-      # trap errors
-      if (inherits(status, "try-error")) {
-        return(NULL)
-      }
-      
-      # smooth data
-      progress$set(value = 0.6, detail = "smoothing data")
-      status = try(suppressWarnings(smooth_ts(data_file)), silent = TRUE)
-      
-      # trap errors
-      if (inherits(status, "try-error")) {
-        return(NULL)
-      }
       
       # read the data to plot_data
       data = read.table(data_file, header = TRUE, sep = ',')
@@ -495,7 +477,7 @@ server = function(input, output, session) {
                             frequency = frequency)
 
     # Final plot preparations
-    progress$set(value = 0.7, detail = "preparing final plot")
+    progress$set(value = 0.8, detail = "preparing final plot")
     
     # formulate variable names dynamically
     gcc_val = sprintf("gcc_%s", percentile)

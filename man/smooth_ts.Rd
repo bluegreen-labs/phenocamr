@@ -5,15 +5,21 @@
 \title{Smooths a standard PhenoCam file or data frame using
 the BCI optimized smoothing parameter.}
 \usage{
-smooth_ts(df, metrics = c("gcc_mean", "gcc_50", "gcc_75", "gcc_90",
-  "rcc_mean", "rcc_50", "rcc_75", "rcc_90"), force = TRUE)
+smooth_ts(data, metrics = c("gcc_mean", "gcc_50", "gcc_75", "gcc_90",
+  "rcc_mean", "rcc_50", "rcc_75", "rcc_90"), force = TRUE, internal = TRUE,
+  out_dir = tempdir())
 }
 \arguments{
-\item{df}{a PhenoCam data file or data frame}
+\item{data}{a PhenoCam data file or data structure}
 
 \item{metrics}{which metrics to process, normally all default ones}
 
 \item{force}{\code{TRUE} / \code{FALSE}, force reprocessing?}
+
+\item{internal}{return a data structure if given a file on disk
+(\code{TRUE} / \code{FALSE} = default)}
+
+\item{out_dir}{output directory where to store data}
 }
 \description{
 Smooths a standard PhenoCam file or data frame using

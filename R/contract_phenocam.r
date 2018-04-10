@@ -5,6 +5,9 @@
 #' measure.
 #'
 #' @param filename a phenocam data file with a 3 day time step
+#' @param internal return a data structure if given a file on disk
+#' (\code{TRUE} / \code{FALSE} = default)
+#' @param out_dir output directory where to store data (default = tempdir())
 #' @keywords time series, smoothing, phenocam
 #' @export
 #' @examples
@@ -25,44 +28,42 @@
 #' contract_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
 #' }
 
-contract_phenocam = function(filename) {
+contract_phenocam = function(data,
+                             internal = TRUE,
+                             out_dir = tempdir()) {
   
-  # check validaty of the input
-  if (is.data.frame(filename)) {
-    stop("not a PhenoCam data file")
+  # if the data is not a data frame, load
+  # the file (assuming it is a phenocam)
+  # summary file, otherwise rename the
+  # input data to df
+  if(class(data) != "phenocamr"){
+    if(file.exists(data)){
+      data = read_phenocam(data)
+      on_disk = TRUE
+    } else {
+      stop("not a valid PhenoCam data frame or file")
+    }
+  } else {
+    on_disk = FALSE
   }
   
-  # suppress warnings as it throws unnecessary warnings
-  # messing up the feedback to the CLI
-  header = try(readLines(filename, n = 22), silent = TRUE)
-  
-  # directly read data from the server into data.table
-  data = utils::read.table(filename, header = TRUE, sep = ",")
+  # split out data
+  df = data$data
   
   # drop the lines which should be empty
   loc = seq(2, 366, 3)
-  data = data[which(data$doy %in% loc), ]
+  df = df[which(as.numeric(df$doy) %in% loc), ]
   
-  # replace all -9999 values with NA
-  # for consistency
-  data[data == -9999] = NA
+  # put data back into original data structure
+  data$data = df
   
-  # writing the final data frame to file, retaining the original header
-  utils::write.table(
-    header,
-    filename,
-    quote = FALSE,
-    row.names = FALSE,
-    col.names = FALSE,
-    sep = ""
-  )
-  utils::write.table(
-    data,
-    filename,
-    quote = FALSE,
-    row.names = FALSE,
-    col.names = TRUE,
-    sep = ",",
-    append = TRUE
-  )
+  # write the data to the original data frame or the
+  # original file (overwrites the data!!!)
+  if(on_disk | !internal ){
+    write_phenocam(data, out_dir = out_dir)
+  } else {
+    # if provided a data frame
+    # return the original data frame, with flagged outliers
+    return(data)
+  }
 }

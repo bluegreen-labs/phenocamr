@@ -7,8 +7,13 @@
 #' @param sigma number of deviations to exclude outliers at
 #' @param grvi reverse the direction of the screening intervals
 #' to accomodate for GRVI outliers
-#' @param plot visualize the process, mostly for debugging (\code{TRUE} / \code{FALSE})
+#' @param internal return a data structure if given a file on disk
+#' (\code{TRUE} / \code{FALSE} = default)
+#' to accomodate for GRVI outliers
+#' @param plot visualize the process, mostly for debugging
+#' (\code{TRUE} / \code{FALSE} = default)
 #' @param snowflag integrate snow flags?
+#' @param out_dir output directory where to store data 
 #' @keywords PhenoCam, outliers, smoothing, pre-processing
 #' @export
 #' @examples
@@ -31,7 +36,9 @@ detect_outliers = function(data,
                            sigma = 2,
                            grvi = FALSE,
                            snowflag = FALSE,
-                           plot = FALSE){
+                           plot = FALSE,
+                           internal = TRUE,
+                           out_dir = tempdir()){
 
   # specify the double exponential (laplace) distribution
   # standard deviation function, used to screen outliers
@@ -45,20 +52,20 @@ detect_outliers = function(data,
   # the file (assuming it is a phenocam)
   # summary file, otherwise rename the
   # input data to df
-  if(!is.data.frame(data)){
+  if(class(data) != "phenocamr"){
     if(file.exists(data)){
-      # pluck real header from the phenocam file
-      header = readLines(data,n=22)
-
-      # read the original data
-      df = utils::read.table(data,header=T,sep=',')
-    }else{
+      data = read_phenocam(data)
+      on_disk = TRUE
+    } else {
       stop("not a valid PhenoCam data frame or file")
     }
   } else {
-    df = data
+    on_disk = FALSE
   }
-
+  
+  # split out data from read in or provided data
+  df = data$data
+  
   # create year column in df / will be removed in new
   # data files as the year column exists
   month = as.numeric(format(as.Date(df$date),"%m"))
@@ -150,7 +157,7 @@ detect_outliers = function(data,
         }
 
         # calculate optimal span / smoothing factor
-        span = optimal_span(gcc, step = 0.01)
+        span = suppressWarnings(optimal_span(gcc, step = 0.01))
 
         # remove old projections
         if ( exists('pred') ){
@@ -167,7 +174,7 @@ detect_outliers = function(data,
           fit = suppressWarnings(stats::loess(gcc ~ as.numeric(dates), span = span))
 
           # predict values using the fit
-          pred = stats::predict(fit,as.numeric(dates), se = TRUE)
+          pred = suppressWarnings(stats::predict(fit,as.numeric(dates), se = TRUE))
 
           # loess data
           gcc_smooth = pred$fit
@@ -271,18 +278,16 @@ detect_outliers = function(data,
 
   } # loop over metrics
 
+  # put data back into the data structure
+  data$data = df
+  
   # write the data to the original data frame or the
   # original file (overwrites the data!!!)
-  if(!is.data.frame(data)){
-    if(file.exists(data)){
-      # write everything to file using append
-      # write the original header first
-      utils::write.table(header,data,quote=FALSE,row.names=FALSE,col.names=FALSE)
-      utils::write.table(df,data,row.names=FALSE,col.names=TRUE,quote=FALSE,sep=",",append = TRUE)
-    }
+  if(on_disk | !internal ){
+    write_phenocam(data, out_dir = out_dir)
   } else {
     # if provided a data frame
     # return the original data frame, with flagged outliers
-    return(df)
+    return(data)
   }
 }

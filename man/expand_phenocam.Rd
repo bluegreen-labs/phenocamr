@@ -7,13 +7,19 @@ All values will be filled with NA. This is usefull
 to store subsequent interpolated (1-day data)
 and increase consistency across processing.}
 \usage{
-expand_phenocam(filename, truncate = NULL)
+expand_phenocam(data, truncate = NULL, internal = TRUE,
+  out_dir = tempdir())
 }
 \arguments{
-\item{filename}{a PhenoCam file}
+\item{data}{a PhenoCam file}
 
 \item{truncate}{year (numerical), limit the time series
-to a particular year}
+to a particular year (default = NULL)}
+
+\item{internal}{return a data structure if given a file on disk
+(\code{TRUE} / \code{FALSE} = default)}
+
+\item{out_dir}{output directory where to store data (default = tempdir())}
 }
 \description{
 Expand a PhenoCam file from 3-day to a 1-day time step

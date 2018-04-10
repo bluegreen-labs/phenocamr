@@ -2,13 +2,9 @@
 #' in a PhenoCam time series. This routine combines a forward and backward
 #' run of transition_dates function to calculate the phenophases.
 #'
-#' @param df a PhenoCam data file (or data frame)
-#' @param sitename a PhenoCam data file or data frame
-#' @param veg_type a PhenoCam data file or data frame
-#' @param roi_id a PhenoCam data file or data frame
-#' @param frequency a PhenoCam data file or data frame
+#' @param data a PhenoCam data file (or data frame)
 #' @param mat mean annual temperature
-#' @param output return PhenoCam data file or data frame
+#' @param internal return PhenoCam data file or data frame
 #' @param out_dir output directory
 #' @param ... pass parameters to the transition_dates() function
 #' @keywords PhenoCam, transition dates, phenology, time series
@@ -30,57 +26,30 @@
 #' my_dates = phenophases(df, output = FALSE)
 #' }
 
-phenophases = function(df,
-                       sitename=NULL,
-                       veg_type=NULL,
-                       roi_id=NULL,
-                       frequency=NULL,
-                       mat = NULL,
+phenophases = function(data,
                        output = FALSE,
+                       mat = NULL,
                        out_dir=tempdir(),
                        ...
                        ){
 
-  # check if the output directory exists
-  if (!dir.exists(out_dir)) {
-    stop("provide a valid output directory")
-  }
-
-  # load data and check input parameters
-  if (!is.data.frame(df)) {
-    if (file.exists(df)) {
-
-      # read header of the file
-      header = readLines(df,n = 22)
-
-      # unravel list
-      header = strsplit(header,split=":")
-      l = lapply(header,length)
-      header = unlist(lapply(header[which(l>1)],"[[",2))
-
-      # remove leading spaces
-      header = gsub(" ","",header)
-
-      # extract metadata from the header field
-      sitename = header[1]
-      veg_type = header[2]
-      roi_id = as.numeric(header[3])
-      frequency = header[9]
-
-      # read the original data
-      df = utils::read.table(df, header = T, sep = ',')
+  # if the data is not a data frame, load
+  # the file (assuming it is a phenocam)
+  # summary file, otherwise rename the
+  # input data to df
+  if(class(data) != "phenocamr"){
+    if(file.exists(data)){
+      data = read_phenocam(data)
+      on_disk = TRUE
     } else {
       stop("not a valid PhenoCam data frame or file")
     }
-
   } else {
-
-    # check if I have all parameters if fed in a data frame
-    # [can't be derived from data frame itself]
-    if (any(is.null(c(veg_type, frequency))) ){
-      stop("veg_type or frequency parameter missing...")
-    }
+    on_disk = FALSE
   }
+  
+  # split out data from read in or provided data
+  df = data$data
 
   # set threshold values
   mat_threshold = 10
