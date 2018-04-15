@@ -43,6 +43,26 @@ write_phenocam <- function(df = NULL,
                      df$roi_id,
                      df$frequency)
   
+  # processing time locations
+  proc_loc = grep("Final Processing", names(df$header))
+  
+  # remove Final Processinig time stamps
+  if( length(proc_loc) > 0  ){
+    df$header = df$header[-proc_loc]
+  }
+  
+  # add processing time info
+  df$header = df$header[-max(which(is.na(df$header)))]
+  vector_names = names(df$header)
+  df$header = c(df$header,
+                format(Sys.Date(),"%Y-%m-%d"),
+                format(Sys.time(), "%H:%M:%S"),
+                NA)
+  names(df$header) = c(vector_names,
+                      "# Final Processing Date:",
+                      "# Final Processing Time:",
+                      "#")
+  
   # collapse named vector into a matrix
   header = apply(cbind(names(df$header), df$header),
                  1,
