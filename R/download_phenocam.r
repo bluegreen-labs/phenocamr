@@ -13,6 +13,7 @@
 #' @param contract contract 3-day data (logical, default is \code{TRUE})
 #' @param trim_daymet TRUE or FALSE, trims data to match PhenoCam data
 #' @param outlier_detection TRUE or FALSE, detect outliers
+#' @param trim year (numeric) to which to constrain the output (default = \code{NULL})
 #' @param phenophase logical, calculate transition dates (default = \code{FALSE})
 #' @param out_dir output directory where to store downloaded data 
 #' (default = tempdir())
@@ -38,6 +39,7 @@ download_phenocam = function(site = "harvard$",
                              contract = FALSE,
                              daymet = FALSE,
                              trim_daymet = TRUE,
+                             trim = NULL,
                              phenophase = FALSE,
                              out_dir = tempdir()) {
 
@@ -132,8 +134,14 @@ download_phenocam = function(site = "harvard$",
       # read in data using read_phenocam to process all in memory
       df = read_phenocam(output_filename)
       
+      # limit the data output to a particular year
+      if(!is.null(trim) & is.numeric(trim)){
+        df$data = df$data[which(df$data$year <= trim),]
+      }
+      
       # always expand the time series to get maximal
-      # phenophase date resolution
+      # phenophase date resolution as well as additional
+      # padding around the ends - 90 days
       df = expand_phenocam(df)
       
       # remove outliers (overwrites original file)

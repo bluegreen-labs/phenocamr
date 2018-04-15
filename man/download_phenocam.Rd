@@ -9,7 +9,7 @@ dates or phenophases.}
 \usage{
 download_phenocam(site = "harvard$", veg_type = NULL, frequency = "3",
   roi_id = NULL, outlier_detection = TRUE, smooth = TRUE,
-  contract = FALSE, daymet = FALSE, trim_daymet = TRUE,
+  contract = FALSE, daymet = FALSE, trim_daymet = TRUE, trim = NULL,
   phenophase = FALSE, out_dir = tempdir())
 }
 \arguments{
@@ -31,6 +31,8 @@ as a regular expression ("harvard$" == exact match)}
 \item{daymet}{TRUE or FALSE, merges the daymet data}
 
 \item{trim_daymet}{TRUE or FALSE, trims data to match PhenoCam data}
+
+\item{trim}{year (numeric) to which to constrain the output (default = \code{NULL})}
 
 \item{phenophase}{logical, calculate transition dates (default = \code{FALSE})}
 
