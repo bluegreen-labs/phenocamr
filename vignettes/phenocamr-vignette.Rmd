@@ -63,11 +63,9 @@ The below code shows you how to download a PhenoCam time series for the "**harva
 After downloading we read in the data from disk. The data has a header and is comma separated.
 
 ```{r eval = TRUE}
-df <- read.table(paste0(tempdir(),"/harvard_DB_0001_3day.csv"),
-                 header = TRUE,
-                 sep = ",")
+df <- read_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
 
-print(head(df))
+print(str(df))
 ```
 
 ### Detect data outlier
@@ -75,7 +73,7 @@ print(head(df))
 After reading in the data as a data frame you can apply the outlier detection routine. This routine uses an iterative method to detect outlier values in the Gcc time series. This routine filters out most spurious values due contaminiation by snow, mist, rain or otherwise very bright events. Warnings are suppressed as the routine is iterative and might throw warnings if it does not converge on a solution. This has no implications for the routine and data returned.
 
 ```{r eval = TRUE}
-  df <- suppressWarnings(detect_outliers(df))
+  df <- detect_outliers(df)
 ```
 
 ### Smoothing a time series
@@ -83,7 +81,7 @@ After reading in the data as a data frame you can apply the outlier detection ro
 After detecting outliers you can smooth the data. This function uses an AIC based methodology to find the opitmal loess smoothing window. Warnings are suppressed as the routine uses an optimization in which certain parameter settings return warnings. This has no implications for the routine and data returned.
 
 ```{r eval = TRUE}
-  df <- suppressWarnings(smooth_ts(df))
+  df <- smooth_ts(df)
 ```
 
 ### Calculating phenophases
@@ -91,21 +89,21 @@ After detecting outliers you can smooth the data. This function uses an AIC base
 Finally, if smoothed data is available you can calculate phenological transition dates. This routine uses a PELT changepoint detection based approach to find meaningful seasonal cycles in the data. By default start of growing season dates are returned. If the reverse parameter is set to TRUE the end of growing season dates are returned. Dates are formatted as unix time and will be provided for three default threshold values (10 / 25 / 50%) of the Gcc amplitude.
 
 ```{r eval = TRUE}
-start_of_season <- transition_dates(df, frequency = 3)
+start_of_season <- transition_dates(df)
 print(head(start_of_season))
 ```
 
 Alternatively you can use the phenophases() function which is a wrapper of the transition_dates() function. However, as it potentially writes data to disk it needs additional information such as the roi_id, site name etc. The phenophases() function is the function which generated the final data products in the Richardson et al. (2018) paper. If used internally the output will be formatted in unix time, when written to file the dates will be human readable in YYYY-MM-DD format. Both start and end of season estimates will be provided.
 
 ```{r eval = TRUE}
-phenology_dates <- phenophases(df, frequency = 3, veg_type = "DB")
+phenology_dates <- phenophases(df, internal = TRUE)
 ```
 
 With the phenoogy dates calculated we can plot their respective locations on the smoothed time series. In this case the plot will show the 50% amplitude threshold values for both rising and falling parts of the 90th percentile Gcc curve, marked with green and brown vertical lines respectivelly.
 
 ```{r fig.width = 7, fig.height = 3}
-plot(as.Date(df$date),
-     df$smooth_gcc_90,
+plot(as.Date(df$data$date),
+     df$data$smooth_gcc_90,
      type = "l",
      xlab = "date",
      ylab = "Gcc")

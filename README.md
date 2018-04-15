@@ -32,7 +32,7 @@ To download data for a single deciduous broadleaf forest site (harvard) use the 
 
 ```R
 download_phenocam(site = "harvard",
-                  vegetation = "DB",
+                  veg_type = "DB",
                   frequency = 3,
                   phenophases = TRUE,
                   out_dir = "~")

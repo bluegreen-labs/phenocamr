@@ -11,12 +11,12 @@ measure.}
 contract_phenocam(data, internal = TRUE, out_dir = tempdir())
 }
 \arguments{
+\item{data}{a phenocam data file with a 3 day time step}
+
 \item{internal}{return a data structure if given a file on disk
 (\code{TRUE} / \code{FALSE} = default)}
 
 \item{out_dir}{output directory where to store data (default = tempdir())}
-
-\item{filename}{a phenocam data file with a 3 day time step}
 }
 \description{
 Contracts the file from 1-day to a 3-day time step

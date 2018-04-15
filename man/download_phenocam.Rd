@@ -52,7 +52,6 @@ download_phenocam(site = "harvard$",
                   veg_type = "DB",
                   roi_id = "1",
                   frequency = "3")
-
 }
 }
 \keyword{Daymet,}

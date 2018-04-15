@@ -27,8 +27,8 @@
 #' }
 
 phenophases = function(data,
-                       output = FALSE,
                        mat = NULL,
+                       internal = TRUE,
                        out_dir=tempdir(),
                        ...
                        ){
@@ -63,42 +63,38 @@ phenophases = function(data,
   
   # calculate rising greenness transtions dates
   # all percentiles
-  for ( i in c(90,75,50,"mean") ){
+  percentiles = c(90,75,50,"mean")
+  
+  rising = do.call("rbind", lapply(percentiles, function(i){
 
     # calculate the transition dates
-    tmp = transition_dates(df,
+    tmp = suppressWarnings(transition_dates(data,
                            reverse = FALSE,
                            percentile = i,
-                           frequency = frequency,
-                           ...)
+                           ...))
     
     # screen for false rising parts
     loc = strptime(as.Date(tmp$transition_10, origin = "1970-01-01"),
                    "%Y-%m-%d")$yday
     l = which(loc < 30 | loc > 250)
-    if ( mat < mat_threshold & veg_type %in% c("DB","SH","GR","EN") & !length(l)==0L ){
+    if ( mat < mat_threshold & data$veg_type %in% c("DB","SH","GR","EN") & !length(l)==0L ){
       tmp = tmp[-l,]
     }
     
     # formatting output
     gcc_value = rep(sprintf("gcc_%s",i),dim(tmp)[1])
     tmp = cbind(gcc_value, tmp)
-    if (i == 90){
-      rising = tmp
-    } else {
-      rising = rbind(rising,tmp)
-    }
-  }
+    return(tmp)
+  }))
 
   # calculate falling greenness transition dates
   # all percentiles
-  for ( i in c(90,75,50,"mean") ){
-
-    tmp = transition_dates(df,
+  falling = do.call("rbind", lapply(percentiles, function(i){
+    
+    tmp = suppressWarnings(transition_dates(data,
                            reverse = TRUE,
                            percentile = i,
-                           frequency = frequency,
-                           ...)
+                           ...))
     
     # screen for false falling curves
     loc = strptime(as.Date(tmp$transition_10, origin = "1970-01-01"),
@@ -106,19 +102,15 @@ phenophases = function(data,
     
     
     l = which(loc > 30 & loc < 240)
-    if ( mat < mat_threshold & veg_type %in% c("DB","SH","GR","EN") & !length(l)==0L ){
+    if ( mat < mat_threshold & data$veg_type %in% c("DB","SH","GR","EN") & !length(l)==0L ){
       tmp = tmp[-l,]
     }
     
     # formatting output
     gcc_value = rep(sprintf("gcc_%s",i),dim(tmp)[1])
     tmp = cbind(gcc_value, tmp)
-    if ( i == 90 ){
-      falling = tmp
-    } else {
-      falling = rbind(falling,tmp)
-    }
-  }
+    return(tmp)
+  }))
 
   # calculate the RMSE for all spline fits
   smooth_data = df[,grep("smooth_gcc",colnames(df))]
@@ -131,11 +123,11 @@ phenophases = function(data,
   RMSE = round(sqrt(apply((smooth_data - original_data)^2,2,mean,na.rm=TRUE)),5)
 
   # output data to file
-  if (output){
+  if (!internal){
 
     # bind spring and fall phenology data in a coherent format
     phenology = rbind(rising,falling)
-
+    
     # get the nr rows for each run
     rising_length = dim(rising)[1]
     falling_length = dim(falling)[1]
@@ -146,16 +138,16 @@ phenophases = function(data,
                   rep("falling", falling_length))
 
     # same for sitename, veg_type and roi_id
-    sitename = rep(sitename,rising_length + falling_length)
-    veg_type = rep(veg_type,rising_length + falling_length)
-    roi_id = rep(sprintf("%04d",roi_id),rising_length + falling_length)
+    site = rep(data$site,rising_length + falling_length)
+    veg_type = rep(data$veg_type,rising_length + falling_length)
+    roi_id = rep(sprintf("%s",data$roi_id),rising_length + falling_length)
 
     # convert UNIX time to normal dates
     phenology[, 2:10] = apply(phenology[, 2:10], 2, function(x)
       as.character(as.Date(x, origin = "1970-01-01")))
 
     # column bind in new labels
-    phenology = cbind(sitename,veg_type,roi_id,direction,phenology)
+    phenology = cbind(site,veg_type,roi_id,direction,phenology)
 
     # drop NA lines if any
     phenology = stats::na.omit(phenology)
@@ -165,12 +157,12 @@ phenophases = function(data,
     # and \n line endings, fix
     phenology_header = paste(
       "#\n",
-      sprintf("# Transition date estimate for %s\n",sitename[1]),
+      sprintf("# Transition date estimate for %s\n",data$site),
       "#\n",
-      sprintf("# Site: %s\n",sitename[1]),
-      sprintf("# Veg Type: %s\n",veg_type[1]),
-      sprintf("# ROI ID Number: %s\n",roi_id[1]),
-      sprintf("# Aggregation period: %s\n", frequency),
+      sprintf("# Site: %s\n",data$site),
+      sprintf("# Veg Type: %s\n",data$veg_type),
+      sprintf("# ROI ID Number: %s\n",data$roi_id),
+      sprintf("# Aggregation period: %s\n", data$frequency),
       sprintf("# Year min: %s\n",
               min(strptime(as.matrix(phenology[, 6:14]),"%Y-%m-%d")$year+1900),
               na.rm=TRUE),
@@ -188,12 +180,12 @@ phenophases = function(data,
 
     # set filename
     filename = sprintf(
-      '%s/%s_%s_%s_%sday_transition_dates.csv',
+      '%s/%s_%s_%s_%s_transition_dates.csv',
       out_dir,
-      sitename[1],
-      veg_type[1],
-      roi_id[1],
-      frequency
+      data$site,
+      data$veg_type,
+      data$roi_id,
+      data$frequency
     )
 
     # write all data to file, first write the header then append the data
@@ -205,7 +197,7 @@ phenophases = function(data,
       quote = FALSE
     )
 
-    utils::write.table(
+    suppressWarnings(utils::write.table(
       phenology,
       filename,
       row.names = FALSE,
@@ -213,7 +205,7 @@ phenophases = function(data,
       quote = FALSE,
       sep = ',',
       append = TRUE
-    )
+    ))
 
   } else {
     # return dates as a list if no output file is required

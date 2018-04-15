@@ -6,24 +6,14 @@
 in a PhenoCam time series. This routine combines a forward and backward
 run of transition_dates function to calculate the phenophases.}
 \usage{
-phenophases(df, sitename = NULL, veg_type = NULL, roi_id = NULL,
-  frequency = NULL, mat = NULL, output = FALSE, out_dir = tempdir(),
-  ...)
+phenophases(data, mat = NULL, internal = TRUE, out_dir = tempdir(), ...)
 }
 \arguments{
-\item{df}{a PhenoCam data file (or data frame)}
-
-\item{sitename}{a PhenoCam data file or data frame}
-
-\item{veg_type}{a PhenoCam data file or data frame}
-
-\item{roi_id}{a PhenoCam data file or data frame}
-
-\item{frequency}{a PhenoCam data file or data frame}
+\item{data}{a PhenoCam data file (or data frame)}
 
 \item{mat}{mean annual temperature}
 
-\item{output}{return PhenoCam data file or data frame}
+\item{internal}{return PhenoCam data file or data frame}
 
 \item{out_dir}{output directory}
 

@@ -4,7 +4,7 @@
 #' the data paper. This routine is used as a post-production
 #' measure.
 #'
-#' @param filename a phenocam data file with a 3 day time step
+#' @param data a phenocam data file with a 3 day time step
 #' @param internal return a data structure if given a file on disk
 #' (\code{TRUE} / \code{FALSE} = default)
 #' @param out_dir output directory where to store data (default = tempdir())

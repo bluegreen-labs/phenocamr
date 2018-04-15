@@ -1,7 +1,7 @@
 #' Merge Daymet data with a PhenoCam data file.
 #' 
-#' @param filename a PhenoCam data file
-#' @param trim_daymet logical, trim the daymet data to the length of the
+#' @param data a PhenoCam data file or data structure
+#' @param trim logical, trim the daymet data to the length of the
 #' PhenoCam time series or include the whole Daymet time series (1980-current).
 #' (default = \code{FALSE})
 #' @param internal return a data structure if given a file on disk
@@ -23,7 +23,7 @@
 #' }
 
 merge_daymet  = function(data,
-                         trim_daymet = FALSE,
+                         trim = FALSE,
                          internal = TRUE,
                          out_dir){
  
@@ -48,9 +48,9 @@ merge_daymet  = function(data,
   
   # Download all available daymet data
   daymet_status = try(daymetr::download_daymet(
-    site = site,
-    lat = lat,
-    lon = lon,
+    site = data$site,
+    lat = data$lat,
+    lon = data$lon,
     end = end_yr,
     internal = TRUE,
     silent = TRUE
@@ -67,9 +67,9 @@ merge_daymet  = function(data,
       
       # download daymet data
       daymet_status = try(daymetr::download_daymet(
-        site = site,
-        lat = lat,
-        lon = lon,
+        site = data$site,
+        lat = data$lat,
+        lon = data$lon,
         end = end_yr,
         internal = TRUE,
         silent = TRUE
@@ -98,7 +98,7 @@ merge_daymet  = function(data,
   phenocam_dates = as.Date(phenocam_data$date)
   
   # set year ranges
-  if (trim_daymet == FALSE){
+  if (trim == FALSE){
     min_range = min(daymet_dates)
     max_range = max(max(daymet_dates),
                     max(phenocam_dates))

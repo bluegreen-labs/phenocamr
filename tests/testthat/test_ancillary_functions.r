@@ -21,17 +21,21 @@ test_that("check ancillary routines",{
                          out_dir = tempdir()))
   
   # transtion dates routine
+  png(paste0(tempdir(),"/harvard_test.png"),900,900)
   transitions = try(transition_dates(paste0(tempdir(),"/harvard_DB_0001_3day.csv"),
                                      plot = TRUE))
+  dev.off()
   
   # test truncate
   truncate = try(truncate_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv"),
                                    year = 2015))
   
   # test outlier routine
+  png(paste0(tempdir(),"/harvard_test.png"),900,900)
   outliers = try(detect_outliers(paste0(tempdir(),"/harvard_DB_0001_3day.csv"),
                                  plot = TRUE,
                                  snowflag = TRUE))
+  dev.off()
   
   # test expand
   expand = try(expand_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv")))
@@ -49,11 +53,15 @@ test_that("check ancillary routines",{
   # optimal span routine
   l = sin(seq(1,10,0.01))
   l = l + runif(length(l))
+  
+  png(paste0(tempdir(),"/harvard_test.png"),900,900)
   os = try(optimal_span(l,
                         plot = TRUE))
+  dev.off()
+  
   os_w = try(optimal_span(l,
                           weights = runif(length(l))))
-  
+
   # see if any of the runs failed
   check = !inherits(roi,"try-error") &
           !inherits(roi_disk,"try-error") &

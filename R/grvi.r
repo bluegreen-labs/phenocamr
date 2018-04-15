@@ -5,7 +5,7 @@
 #' used as well using a weighting factor. As such a paramter vector is provided
 #' so different channels / DN can be weighted separately.
 #'   
-#' @param df a PhenoCam data file or data frame (when using a file provide a
+#' @param data a PhenoCam data file or data frame (when using a file provide a
 #' full path if not in the current working directory)
 #' @param par grvi parameters (digital number weights)
 #' @param internal return a data structure if given a file on disk
@@ -58,6 +58,9 @@ grvi = function(data,
   } else {
     on_disk = FALSE
   }
+  
+  # copy data into data frame to manipulate
+  df = data$data
   
   # strip out necessary data into readable variables
   green = df$g_mean

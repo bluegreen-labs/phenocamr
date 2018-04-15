@@ -7,12 +7,12 @@ segments of a PhenoCam time series. This function
 should not be run stand-alone. Use phenophases function instead!
 The required input is a smoothed PhenoCam data file or data frame.}
 \usage{
-transition_dates(df, lower_thresh = 0.1, middle_thresh = 0.25,
+transition_dates(data, lower_thresh = 0.1, middle_thresh = 0.25,
   upper_thresh = 0.5, percentile = 90, penalty = 0.5, seg_length = 14,
-  frequency = NULL, reverse = FALSE, plot = FALSE)
+  reverse = FALSE, plot = FALSE)
 }
 \arguments{
-\item{df}{a PhenoCam data file or data frame}
+\item{data}{a PhenoCam data file or data structure}
 
 \item{lower_thresh}{the minimum threshold used (default = 0.1)}
 
@@ -25,8 +25,6 @@ transition_dates(df, lower_thresh = 0.1, middle_thresh = 0.25,
 \item{penalty}{how sensitive is the algorithm, lower is more sensitve (< 0 )}
 
 \item{seg_length}{minimum length of a segment to be evaluated}
-
-\item{frequency}{1 or 3, default is NULL (ignored = automatic)}
 
 \item{reverse}{flip the direction of the processing}
 

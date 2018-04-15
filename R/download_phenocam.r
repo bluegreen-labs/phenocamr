@@ -27,7 +27,6 @@
 #'                   veg_type = "DB",
 #'                   roi_id = "1",
 #'                   frequency = "3")
-#'
 #' }
 
 download_phenocam = function(site = "harvard$",
@@ -42,6 +41,11 @@ download_phenocam = function(site = "harvard$",
                              phenophase = FALSE,
                              out_dir = tempdir()) {
 
+  # sanity check on frequency values
+  if (!any(frequency %in% c("1","3","roistats"))){
+    stop("No correct frequency provided...")
+  }
+  
   # get site listing
   site_list = jsonlite::fromJSON("https://phenocam.sr.unh.edu/webcam/roi/roilistinfo/")
 
@@ -50,7 +54,7 @@ download_phenocam = function(site = "harvard$",
 
   if (!is.null(site)){
     if (is.null(veg_type)){
-      loc = grep(site,site_list$site)
+      loc = grep(site, site_list$site)
     }else{
 
       if (!is.null(roi_id)){
@@ -83,10 +87,10 @@ download_phenocam = function(site = "harvard$",
   for (i in 1:dim(site_list)[1]){
 
     # create server string, the location of the site data
-    if (frequency == "raw"){
+    if (frequency == "roistats"){
       data_location=sprintf("https://phenocam.sr.unh.edu/data/archive/%s/ROI",
                             site_list$site[i])
-      filename = sprintf("%s_%s_%04d_timeseries.csv",
+      filename = sprintf("%s_%s_%04d_roistats.csv",
                          site_list$site[i],
                          site_list$veg_type[i],
                          site_list$roi_id_number[i])
@@ -101,7 +105,9 @@ download_phenocam = function(site = "harvard$",
     }
 
     # formulate output file location
-    output_filename = sprintf("%s/%s",out_dir,filename)
+    output_filename = sprintf("%s/%s",
+                              out_dir,
+                              filename)
 
     # download data + feedback
     cat(sprintf("Downloading: %s\n", filename))
@@ -110,7 +116,7 @@ download_phenocam = function(site = "harvard$",
     status = try(curl::curl_download(url,
                                      output_filename,
                                      quiet = TRUE),
-                 silent=TRUE)
+                 silent = TRUE)
 
     # skip if download failed
     if (inherits(status,"try-error")){
@@ -168,13 +174,13 @@ download_phenocam = function(site = "harvard$",
         cat("Estimating transition dates! \n")
 
         # smooth time series
-        df = try(suppressWarnings(phenophases(df,
+        phenophase_check = try(suppressWarnings(phenophases(data = df,
                                  out_dir = out_dir,
-                                 output = TRUE)),
+                                 internal = FALSE)),
                      silent = TRUE)
 
         # trap errors
-        if(inherits(df,"try-error")){
+        if(inherits(phenophase_check, "try-error")){
           warning("estimating transition dates failed...")
         }
       }
@@ -187,7 +193,7 @@ download_phenocam = function(site = "harvard$",
 
         # merge daymet data into the time series file
         df = try(merge_daymet(df,
-                              trim_daymet = trim_daymet),
+                              trim = trim_daymet),
                      silent = TRUE)
 
         # trap errors

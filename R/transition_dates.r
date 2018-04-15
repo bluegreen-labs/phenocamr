@@ -3,7 +3,7 @@
 #' should not be run stand-alone. Use phenophases function instead!
 #' The required input is a smoothed PhenoCam data file or data frame.
 #'
-#' @param df a PhenoCam data file or data frame
+#' @param data a PhenoCam data file or data structure
 #' @param lower_thresh the minimum threshold used (default = 0.1)
 #' @param middle_thresh the middle threshold used (default = 0.25)
 #' @param upper_thresh the maximum threshold used (default = 0.5)
@@ -11,7 +11,6 @@
 #' @param penalty how sensitive is the algorithm, lower is more sensitve (< 0 )
 #' @param seg_length minimum length of a segment to be evaluated
 #' @param reverse flip the direction of the processing
-#' @param frequency 1 or 3, default is NULL (ignored = automatic)
 #' @param plot plot for debugging purposes
 #' @keywords PhenoCam, transition dates, phenology, time series
 #' @export
@@ -34,14 +33,13 @@
 #'                             plot = FALSE)
 #' }
 
-transition_dates = function(df,
+transition_dates = function(data,
                             lower_thresh = 0.1,
                             middle_thresh = 0.25,
                             upper_thresh = 0.5,
                             percentile = 90,
                             penalty = 0.5,
                             seg_length = 14,
-                            frequency = NULL,
                             reverse = FALSE,
                             plot = FALSE) {
 
@@ -73,43 +71,28 @@ transition_dates = function(df,
     return(as.data.frame(err_mat))
   }
 
-  # Detect changes in the mean
-  # using the changepoint toolbox
-  
   # if the data is not a data frame, load
   # the file (assuming it is a phenocam)
   # summary file, otherwise rename the
   # input data to df
-  if (!is.data.frame(df)) {
-    if (file.exists(df)) {
-
-      # copy file name into variable
-      filename = df
-
-      # read data file
-      header = try(readLines(df, n = 22), silent = TRUE)
-
-      # unravel list
-      header = strsplit(header,split=":")
-      l = lapply(header,length)
-      header = unlist(lapply(header[which(l>1)],"[[",2))
-
-      # remove leading spaces
-      header = gsub(" ", "", header)
-      frequency = header[9]
-
-      # read the original data
-      df = utils::read.table(df, header = T, sep = ',')
-
+  if(class(data) != "phenocamr"){
+    if(file.exists(data)){
+      data = read_phenocam(data)
+      on_disk = TRUE
     } else {
-      stop("not a valid PhenoCam data file")
+      stop("not a valid PhenoCam data frame or file")
     }
+  } else {
+    on_disk = FALSE
   }
-
+  
+  # split out data from read in or provided data
+  df = data$data
+  
   # grab processing frequency, needed for proper
   # processing use either the file name or the header
-  if (is.null(frequency)) {
-    stop("missing frequency information")
+  if (data$frequency == "roistats") {
+    stop("not a 1 or 3-day time series file")
   }
 
   # check if smooth data is present, if not stop
@@ -120,7 +103,7 @@ transition_dates = function(df,
   # find days which are valid 3-day product locations
   # this creates consistency between products calculated
   # from data frames or on file
-  if (frequency == 3) {
+  if (data$frequency == "3day") {
     loc_freq = which(df$doy %in% seq(2,366,3))
   } else {
     loc_freq = 1:nrow(df)
@@ -536,7 +519,6 @@ transition_dates = function(df,
                )
       graphics::abline(v=as.Date(date[pbreaks]), lty = 2)
     }
-
   }
 
   # trim the rows which have only NA value (due to non valid segments)

@@ -4,10 +4,12 @@
 \alias{merge_daymet}
 \title{Merge Daymet data with a PhenoCam data file.}
 \usage{
-merge_daymet(data, trim_daymet = FALSE, internal = TRUE, out_dir)
+merge_daymet(data, trim = FALSE, internal = TRUE, out_dir)
 }
 \arguments{
-\item{trim_daymet}{logical, trim the daymet data to the length of the
+\item{data}{a PhenoCam data file or data structure}
+
+\item{trim}{logical, trim the daymet data to the length of the
 PhenoCam time series or include the whole Daymet time series (1980-current).
 (default = \code{FALSE})}
 
@@ -15,8 +17,6 @@ PhenoCam time series or include the whole Daymet time series (1980-current).
 (\code{TRUE} / \code{FALSE} = default)}
 
 \item{out_dir}{output directory where to store data (default = tempdir())}
-
-\item{filename}{a PhenoCam data file}
 }
 \description{
 Merge Daymet data with a PhenoCam data file.
