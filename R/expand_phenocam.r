@@ -50,10 +50,17 @@ expand_phenocam = function(data,
   }
   
   # split out data from read in or provided data
-  phenocam_data = data$data
+  # after contracting without any padding
+  phenocam_data = contract_phenocam(data,
+                                    internal = TRUE,
+                                    no_padding = TRUE)$data
   
   # convert dates
   phenocam_dates = as.Date(phenocam_data$date)
+  
+  # remove dates that were filled before expanding again
+  # this is similar to phenocam_contract() but includes
+  # the removal of the padding
   
   # truncate the data if necessary
   max_date = max(phenocam_dates)
