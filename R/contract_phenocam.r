@@ -6,6 +6,8 @@
 #'
 #' @param data a phenocam data file with a 3 day time step
 #' @param internal return a data structure if given a file on disk
+#' (\code{TRUE} / \code{FALSE} = default) 
+#' @param no_padding allow for padding to REMAIN or not  
 #' (\code{TRUE} / \code{FALSE} = default)
 #' @param out_dir output directory where to store data (default = tempdir())
 #' @keywords time series, smoothing, phenocam
@@ -30,6 +32,7 @@
 
 contract_phenocam = function(data,
                              internal = TRUE,
+                             no_padding = FALSE,
                              out_dir = tempdir()) {
   
   # if the data is not a data frame, load
@@ -50,9 +53,14 @@ contract_phenocam = function(data,
   # split out data
   df = data$data
   
-  # drop the lines which should be empty
-  loc = seq(2, 366, 3)
-  df = df[which(as.numeric(df$doy) %in% loc), ]
+  # drop the lines which should be empty or have
+  # no image count associated (removes the padding)
+  if (!no_padding){
+    loc = seq(2, 366, 3)
+    df = df[which(as.numeric(df$doy) %in% loc), ]
+  } else {
+    df = df[which(!is.na(df$image_count)),]
+  }
   
   # put data back into original data structure
   data$data = df
