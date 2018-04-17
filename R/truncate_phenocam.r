@@ -3,7 +3,7 @@
 #' prefered. This function remains as it might serve a purpose to
 #' some.
 #'
-#' @param filename a PhenoCam data frame
+#' @param data a PhenoCam file or data frame
 #' @param year the last valid year, discard the rest
 #' @keywords time series, smoothing, phenocam
 #' @export
@@ -25,47 +25,38 @@
 truncate_phenocam = function(filename,
                              year = 2015) {
   
-  # check validaty of the input
-  if (is.data.frame(filename)) {
-    stop("not a PhenoCam data file")
+  # if the data is not a data frame, load
+  # the file (assuming it is a phenocam)
+  # summary file, otherwise rename the
+  # input data to df
+  if(class(data) != "phenocamr"){
+    if(file.exists(data)){
+      data = read_phenocam(data)
+      on_disk = TRUE
+    } else {
+      stop("not a valid PhenoCam data frame or file")
+    }
+  } else {
+    on_disk = FALSE
   }
   
-  # suppress warnings as it throws unnecessary warnings
-  # messing up the feedback to the CLI
-  header = try(readLines(filename, n = 22), silent = TRUE)
-  
-  # directly read data from the server into data.table
-  phenocam_data = utils::read.table(filename, header = TRUE, sep = ",")
+  # split out data
+  df = data$data
   
   # truncate the data using a given year as last viable year
   # of data points
-  phenocam_data = phenocam_data[phenocam_data$year <= year,]
+  df = df[df$year <= year,]
   
-  # writing the final data frame to file, retaining the original header
-  utils::write.table(
-    header,
-    filename,
-    quote = FALSE,
-    row.names = FALSE,
-    col.names = FALSE,
-    sep = ""
-  )
-  utils::write.table(
-    t(matrix(colnames(phenocam_data))),
-    filename,
-    quote = FALSE,
-    row.names = FALSE,
-    col.names = FALSE,
-    append = TRUE,
-    sep = ","
-  )
-  utils::write.table(
-    phenocam_data,
-    filename,
-    quote = FALSE,
-    row.names = FALSE,
-    col.names = FALSE,
-    sep = ",",
-    append = TRUE
-  )
+  # put data back into original data structure
+  data$data = df
+  
+  # write the data to the original data frame or the
+  # original file (overwrites the data!!!)
+  if(on_disk | !internal ){
+    write_phenocam(data, out_dir = out_dir)
+  } else {
+    # if provided a data frame
+    # return the original data frame, with flagged outliers
+    return(data)
+  }
 }

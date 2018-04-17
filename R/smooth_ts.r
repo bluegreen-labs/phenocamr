@@ -27,8 +27,8 @@
 #'
 #' # the function also works on a PhenoCam data frame
 #' # but you will lose the extensive header in the process
-#' df = read.csv(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
-#' df = smooth_ts(df)
+#' df <- read_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
+#' df <- smooth_ts(df)
 #' }
 
 smooth_ts = function(data,

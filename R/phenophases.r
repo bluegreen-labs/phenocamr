@@ -12,18 +12,16 @@
 #' @examples
 #'
 #' \donttest{
-#' # downloads a time series for Bartlett Forest data and calculates
-#' # the matching phenophases.
-#' # Outputs a nested list of phenophases dates
-#' # where location [[1]] holds the greenup dates and location
+#' # downloads a time series
 #' # [[2]] the greendown dates
 #' download_phenocam(site = "harvard$",
 #'                   veg_type = "DB",
 #'                   roi_id = "1",
 #'                   frequency = "3")
-#'                   
-#' df = utils::read.csv(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
-#' my_dates = phenophases(df, output = FALSE)
+#' 
+#' # read in data as data frame and calculate phenophases
+#' df <- read_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
+#' my_dates <- phenophases(df, internal = TRUE)
 #' }
 
 phenophases = function(data,
