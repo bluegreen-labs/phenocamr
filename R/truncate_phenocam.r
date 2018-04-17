@@ -22,7 +22,7 @@
 #'                   year = 2015)
 #' }
 
-truncate_phenocam = function(filename,
+truncate_phenocam = function(data,
                              year = 2015) {
   
   # if the data is not a data frame, load

@@ -7,12 +7,12 @@ expand_phenocam function provides a similar functionality and is to be
 prefered. This function remains as it might serve a purpose to
 some.}
 \usage{
-truncate_phenocam(filename, year = 2015)
+truncate_phenocam(data, year = 2015)
 }
 \arguments{
-\item{year}{the last valid year, discard the rest}
-
 \item{data}{a PhenoCam file or data frame}
+
+\item{year}{the last valid year, discard the rest}
 }
 \description{
 Truncate a PhenoCam file using a given year as last valid year.
