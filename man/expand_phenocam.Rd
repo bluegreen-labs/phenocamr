@@ -2,10 +2,7 @@
 % Please edit documentation in R/expand_phenocam.r
 \name{expand_phenocam}
 \alias{expand_phenocam}
-\title{Expand a PhenoCam file from 3-day to a 1-day time step
-All values will be filled with NA. This is usefull
-to store subsequent interpolated (1-day data)
-and increase consistency across processing.}
+\title{Expand a PhenoCam time series from 3-day to a 1-day time step}
 \usage{
 expand_phenocam(data, truncate = NULL, internal = TRUE,
   out_dir = tempdir())
@@ -22,10 +19,8 @@ to a particular year (default = NULL)}
 \item{out_dir}{output directory where to store data (default = tempdir())}
 }
 \description{
-Expand a PhenoCam file from 3-day to a 1-day time step
-All values will be filled with NA. This is usefull
-to store subsequent interpolated (1-day data)
-and increase consistency across processing.
+Necessary step to guarantee consistent data processing between 1 and 3-day
+data products. Should rarely be used independent of `download_phenocam()`.
 }
 \examples{
 

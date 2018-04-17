@@ -2,10 +2,7 @@
 % Please edit documentation in R/transition_dates.r
 \name{transition_dates}
 \alias{transition_dates}
-\title{Calculates transition dates on the upward
-segments of a PhenoCam time series. This function
-should not be run stand-alone. Use phenophases function instead!
-The required input is a smoothed PhenoCam data file or data frame.}
+\title{Calculates transition dates for a PhenoCam file or data structure}
 \usage{
 transition_dates(data, lower_thresh = 0.1, middle_thresh = 0.25,
   upper_thresh = 0.5, percentile = 90, penalty = 0.5, seg_length = 14,
@@ -31,10 +28,8 @@ transition_dates(data, lower_thresh = 0.1, middle_thresh = 0.25,
 \item{plot}{plot for debugging purposes}
 }
 \description{
-Calculates transition dates on the upward
-segments of a PhenoCam time series. This function
-should not be run stand-alone. Use phenophases function instead!
-The required input is a smoothed PhenoCam data file or data frame.
+Segments of a PhenoCam time series and calculates threshold based transition
+dates for all segments.
 }
 \examples{
 

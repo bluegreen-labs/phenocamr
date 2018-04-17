@@ -1,4 +1,6 @@
-#' Write a nested data structure of class phenocamr to file, reconstructing
+#' Write a phenocamr data structure to file
+#' 
+#' Writes a nested data structure of class phenocamr to file, reconstructing
 #' the original data structure from included headers and data components.
 #' 
 #' @param df a nested data structure of class phenocamr

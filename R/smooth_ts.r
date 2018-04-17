@@ -1,5 +1,7 @@
-#' Smooths a standard PhenoCam file or data frame using
-#' the BCI optimized smoothing parameter.
+#' Smooths a PhenoCam time series
+#' 
+#' The loess based routine uses a bayesian information criterion based 
+#' smoothing parameter optimization to find an optimal fit.
 #' 
 #' @param data a PhenoCam data file or data structure
 #' @param metrics which metrics to process, normally all default ones

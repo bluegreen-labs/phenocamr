@@ -2,8 +2,7 @@
 % Please edit documentation in R/write_phenocam.r
 \name{write_phenocam}
 \alias{write_phenocam}
-\title{Write a nested data structure of class phenocamr to file, reconstructing
-the original data structure from included headers and data components.}
+\title{Write a phenocamr data structure to file}
 \usage{
 write_phenocam(df = NULL, out_dir = tempdir())
 }
@@ -13,7 +12,7 @@ write_phenocam(df = NULL, out_dir = tempdir())
 \item{out_dir}{output directory where to store data}
 }
 \description{
-Write a nested data structure of class phenocamr to file, reconstructing
+Writes a nested data structure of class phenocamr to file, reconstructing
 the original data structure from included headers and data components.
 }
 \examples{

@@ -1,4 +1,6 @@
-#' Normalize PhenoCam time series, between 0-1 to to standardize
+#' Normalize PhenoCam time series
+#' 
+#' Normalize PhenoCam data between 0-1 to to standardize
 #' further processing, independent of the relative amplitude
 #' of the time series (works on vectors not data frames)
 #' 

@@ -2,10 +2,7 @@
 % Please edit documentation in R/truncate_phenocam.r
 \name{truncate_phenocam}
 \alias{truncate_phenocam}
-\title{Truncate a PhenoCam file using a given year as last valid year.
-expand_phenocam function provides a similar functionality and is to be
-prefered. This function remains as it might serve a purpose to
-some.}
+\title{Truncate a PhenoCam timeseries}
 \usage{
 truncate_phenocam(data, year = 2015, internal = TRUE, out_dir = tempdir())
 }
@@ -20,8 +17,7 @@ truncate_phenocam(data, year = 2015, internal = TRUE, out_dir = tempdir())
 \item{out_dir}{output directory where to store data (default = tempdir())}
 }
 \description{
-Truncate a PhenoCam file using a given year as last valid year.
-expand_phenocam function provides a similar functionality and is to be
+The `expand_phenocam()` function provides a similar functionality and is to be
 prefered. This function remains as it might serve a purpose to
 some.
 }

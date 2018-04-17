@@ -1,4 +1,6 @@
-#' Read phenocam time series data into a nested list, preserving
+#' Read phenocam time series data
+#' 
+#' Data is read into a nested list, preserving
 #' header data and critical file name information.
 #' 
 #' @param filename a PhenoCam data file

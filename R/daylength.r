@@ -1,5 +1,5 @@
-#' Calculates day length (in hours) and the solar elevation above the
-#' ecliptic plane based upon latitude and a day of year value.
+#' Calculates day length (in hours) and the solar elevation
+#' 
 #' This routine uses Forsythe et al. 1995.
 #'
 #' @param doy a vector with doy values 1 - 365(6)

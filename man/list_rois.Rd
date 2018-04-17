@@ -12,7 +12,8 @@ list_rois(out_dir = tempdir(), internal = TRUE)
 \item{internal}{TRUE or FALSE (default = TRUE)}
 }
 \description{
-Function to list all site regions-of-interst (ROIs)
+The ROI list can be helpful in determining which time series to download
+using `download_phenocam()`.
 }
 \examples{
 

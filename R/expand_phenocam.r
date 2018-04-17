@@ -1,7 +1,7 @@
-#' Expand a PhenoCam file from 3-day to a 1-day time step
-#' All values will be filled with NA. This is usefull
-#' to store subsequent interpolated (1-day data)
-#' and increase consistency across processing.
+#' Expand a PhenoCam time series from 3-day to a 1-day time step
+#' 
+#' Necessary step to guarantee consistent data processing between 1 and 3-day
+#' data products. Should rarely be used independent of `download_phenocam()`.
 #'
 #' @param data a PhenoCam file
 #' @param truncate year (numerical), limit the time series

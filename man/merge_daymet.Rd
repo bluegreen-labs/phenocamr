@@ -2,7 +2,7 @@
 % Please edit documentation in R/merge_daymet.r
 \name{merge_daymet}
 \alias{merge_daymet}
-\title{Merge Daymet data with a PhenoCam data file.}
+\title{Merge Daymet data with a PhenoCam data file}
 \usage{
 merge_daymet(data, trim = FALSE, internal = TRUE, out_dir)
 }
@@ -19,7 +19,8 @@ PhenoCam time series or include the whole Daymet time series (1980-current).
 \item{out_dir}{output directory where to store data (default = tempdir())}
 }
 \description{
-Merge Daymet data with a PhenoCam data file.
+Combine PhenoCam time series with matching climatological variables from
+Daymet.
 }
 \examples{
 

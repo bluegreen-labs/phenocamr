@@ -2,7 +2,7 @@
 % Please edit documentation in R/grvi.r
 \name{grvi}
 \alias{grvi}
-\title{Calculate green-red vegetation index (GRVI) for a PhenoCam file or data frame}
+\title{Calculate green-red vegetation index (GRVI)}
 \usage{
 grvi(data, par = c(1, 1, 1), internal = TRUE, out_dir = tempdir())
 }

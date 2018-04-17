@@ -2,9 +2,7 @@
 % Please edit documentation in R/optimal_span.r
 \name{optimal_span}
 \alias{optimal_span}
-\title{Calculates the optimal span for a loess spline
-smoother based upon the bayesian information
-criterion (BIC).}
+\title{Calculates the optimal span for a loess spline}
 \usage{
 optimal_span(y, x = NULL, weights = NULL, step = 0.01, label = NULL,
   plot = FALSE)
@@ -23,8 +21,7 @@ optimal_span(y, x = NULL, weights = NULL, step = 0.01, label = NULL,
 \item{plot}{plot visual output of the optimization routine}
 }
 \description{
-Calculates the optimal span for a loess spline
-smoother based upon the bayesian information
+The optimal span is calculated based upon the bayesian information
 criterion (BIC).
 }
 \examples{

@@ -1,7 +1,7 @@
-#' Calculates transition dates on the upward
-#' segments of a PhenoCam time series. This function
-#' should not be run stand-alone. Use phenophases function instead!
-#' The required input is a smoothed PhenoCam data file or data frame.
+#' Calculates transition dates for a PhenoCam file or data structure
+#' 
+#' Segments of a PhenoCam time series and calculates threshold based transition
+#' dates for all segments.
 #'
 #' @param data a PhenoCam data file or data structure
 #' @param lower_thresh the minimum threshold used (default = 0.1)

@@ -2,8 +2,7 @@
 % Please edit documentation in R/read_phenocam.r
 \name{read_phenocam}
 \alias{read_phenocam}
-\title{Read phenocam time series data into a nested list, preserving
-header data and critical file name information.}
+\title{Read phenocam time series data}
 \usage{
 read_phenocam(filename)
 }
@@ -11,7 +10,7 @@ read_phenocam(filename)
 \item{filename}{a PhenoCam data file}
 }
 \description{
-Read phenocam time series data into a nested list, preserving
+Data is read into a nested list, preserving
 header data and critical file name information.
 }
 \examples{

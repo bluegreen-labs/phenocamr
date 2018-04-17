@@ -1,4 +1,7 @@
-#' Merge Daymet data with a PhenoCam data file.
+#' Merge Daymet data with a PhenoCam data file
+#' 
+#' Combine PhenoCam time series with matching climatological variables from
+#' Daymet.
 #' 
 #' @param data a PhenoCam data file or data structure
 #' @param trim logical, trim the daymet data to the length of the

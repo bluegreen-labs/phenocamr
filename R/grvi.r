@@ -1,4 +1,4 @@
-#' Calculate green-red vegetation index (GRVI) for a PhenoCam file or data frame
+#' Calculate green-red vegetation index (GRVI)
 #'
 #' The GRVI is defined as the normalized ratio between the red and green channel
 #' of a RGB image or digital number triplet. However, the blue channel can be

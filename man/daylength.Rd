@@ -2,9 +2,7 @@
 % Please edit documentation in R/daylength.r
 \name{daylength}
 \alias{daylength}
-\title{Calculates day length (in hours) and the solar elevation above the
-ecliptic plane based upon latitude and a day of year value.
-This routine uses Forsythe et al. 1995.}
+\title{Calculates day length (in hours) and the solar elevation}
 \usage{
 daylength(doy, latitude)
 }
@@ -14,8 +12,6 @@ daylength(doy, latitude)
 \item{latitude}{a given latitude}
 }
 \description{
-Calculates day length (in hours) and the solar elevation above the
-ecliptic plane based upon latitude and a day of year value.
 This routine uses Forsythe et al. 1995.
 }
 \examples{

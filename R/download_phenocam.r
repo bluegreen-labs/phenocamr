@@ -1,6 +1,7 @@
-#' Function to download and post-process PhenoCam time series. This is a
-#' wrapper around most of all the other functions and in most cases all you
-#' need to download a time series and extract relevant phenological transition
+#' Function to download and post-process PhenoCam time series
+#' 
+#' This is a wrapper around most of all the other functions.
+#' It downloads a time series and extract relevant phenological transition
 #' dates or phenophases.
 #'
 #' @param site the site name, as mentioned on the PhenoCam web page expressed
@@ -134,15 +135,14 @@ download_phenocam = function(site = "harvard$",
       # read in data using read_phenocam to process all in memory
       df = read_phenocam(output_filename)
       
-      # limit the data output to a particular year
-      if(!is.null(trim) & is.numeric(trim)){
-        df$data = df$data[which(df$data$year <= trim),]
-      }
-      
       # always expand the time series to get maximal
       # phenophase date resolution as well as additional
       # padding around the ends - 90 days
-      df = expand_phenocam(df)
+      if(!is.null(trim) & is.numeric(trim)){
+        df = expand_phenocam(df, truncate = trim)
+      } else {
+        df = expand_phenocam(df)
+      }
       
       # remove outliers (overwrites original file)
       if (outlier_detection == TRUE){

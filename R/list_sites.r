@@ -1,5 +1,10 @@
 #' Function to list all site meta-data
 #' 
+#' The site list can be helpful in determining which time series to download
+#' using `download_phenocam()`. The site list also includes meta-data 
+#' concerning plant functional types, general climatological
+#' conditions such as mean annual temperature or geographic location.
+#' 
 #' @param out_dir output directory (default = tempdir())
 #' @param internal TRUE or FALSE (default = TRUE)
 #' @keywords PhenoCam, meta-data

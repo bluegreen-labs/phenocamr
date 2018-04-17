@@ -1,6 +1,8 @@
-#' Calculates phenophases, both greenup and senescence, for all 'seasons'
-#' in a PhenoCam time series. This routine combines a forward and backward
-#' run of transition_dates function to calculate the phenophases.
+#' Calculates phenophases, for rising and falling parts of a time series
+#' 
+#' This routine combines a forward and backward
+#' run of transition_dates function to calculate the phenophases in both
+#' rising and falling parts of a PhenoCam timeseries.
 #'
 #' @param data a PhenoCam data file (or data frame)
 #' @param mat mean annual temperature

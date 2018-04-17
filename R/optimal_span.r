@@ -1,5 +1,6 @@
 #' Calculates the optimal span for a loess spline
-#' smoother based upon the bayesian information
+#' 
+#' The optimal span is calculated based upon the bayesian information
 #' criterion (BIC).
 #'
 #' @param y a vector with measurement values to smooth

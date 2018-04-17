@@ -2,11 +2,7 @@
 % Please edit documentation in R/contract_phenocam.r
 \name{contract_phenocam}
 \alias{contract_phenocam}
-\title{Contracts the file from 1-day to a 3-day time step
-reverting the expand_phenocam function in order
-to save space and generate files as outlined in
-the data paper. This routine is used as a post-production
-measure.}
+\title{Contracts the file from 1-day to a 3-day time step}
 \usage{
 contract_phenocam(data, internal = TRUE, no_padding = FALSE,
   out_dir = tempdir())
@@ -23,11 +19,10 @@ contract_phenocam(data, internal = TRUE, no_padding = FALSE,
 \item{out_dir}{output directory where to store data (default = tempdir())}
 }
 \description{
-Contracts the file from 1-day to a 3-day time step
-reverting the expand_phenocam function in order
+Reverts the `expand_phenocam()` function in order
 to save space and generate files as outlined in
-the data paper. This routine is used as a post-production
-measure.
+the cited data paper. This routine is used as a 
+post-production measure.
 }
 \examples{
 

@@ -2,9 +2,7 @@
 % Please edit documentation in R/normalize_ts.r
 \name{normalize_ts}
 \alias{normalize_ts}
-\title{Normalize PhenoCam time series, between 0-1 to to standardize
-further processing, independent of the relative amplitude
-of the time series (works on vectors not data frames)}
+\title{Normalize PhenoCam time series}
 \usage{
 normalize_ts(df, percentile = 90)
 }
@@ -14,7 +12,7 @@ normalize_ts(df, percentile = 90)
 \item{percentile}{percentile value to interprete}
 }
 \description{
-Normalize PhenoCam time series, between 0-1 to to standardize
+Normalize PhenoCam data between 0-1 to to standardize
 further processing, independent of the relative amplitude
 of the time series (works on vectors not data frames)
 }

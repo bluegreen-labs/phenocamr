@@ -2,8 +2,7 @@
 % Please edit documentation in R/smooth_ts.r
 \name{smooth_ts}
 \alias{smooth_ts}
-\title{Smooths a standard PhenoCam file or data frame using
-the BCI optimized smoothing parameter.}
+\title{Smooths a PhenoCam time series}
 \usage{
 smooth_ts(data, metrics = c("gcc_mean", "gcc_50", "gcc_75", "gcc_90",
   "rcc_mean", "rcc_50", "rcc_75", "rcc_90"), force = TRUE, internal = TRUE,
@@ -22,8 +21,8 @@ smooth_ts(data, metrics = c("gcc_mean", "gcc_50", "gcc_75", "gcc_90",
 \item{out_dir}{output directory where to store data}
 }
 \description{
-Smooths a standard PhenoCam file or data frame using
-the BCI optimized smoothing parameter.
+The loess based routine uses a bayesian information criterion based 
+smoothing parameter optimization to find an optimal fit.
 }
 \examples{
 

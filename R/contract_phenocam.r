@@ -1,8 +1,9 @@
 #' Contracts the file from 1-day to a 3-day time step
-#' reverting the expand_phenocam function in order
+#' 
+#' Reverts the `expand_phenocam()` function in order
 #' to save space and generate files as outlined in
-#' the data paper. This routine is used as a post-production
-#' measure.
+#' the cited data paper. This routine is used as a 
+#' post-production measure.
 #'
 #' @param data a phenocam data file with a 3 day time step
 #' @param internal return a data structure if given a file on disk

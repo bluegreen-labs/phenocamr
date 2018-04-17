@@ -2,9 +2,7 @@
 % Please edit documentation in R/phenophases.r
 \name{phenophases}
 \alias{phenophases}
-\title{Calculates phenophases, both greenup and senescence, for all 'seasons'
-in a PhenoCam time series. This routine combines a forward and backward
-run of transition_dates function to calculate the phenophases.}
+\title{Calculates phenophases, for rising and falling parts of a time series}
 \usage{
 phenophases(data, mat = NULL, internal = TRUE, out_dir = tempdir(), ...)
 }
@@ -20,9 +18,9 @@ phenophases(data, mat = NULL, internal = TRUE, out_dir = tempdir(), ...)
 \item{...}{pass parameters to the transition_dates() function}
 }
 \description{
-Calculates phenophases, both greenup and senescence, for all 'seasons'
-in a PhenoCam time series. This routine combines a forward and backward
-run of transition_dates function to calculate the phenophases.
+This routine combines a forward and backward
+run of transition_dates function to calculate the phenophases in both
+rising and falling parts of a PhenoCam timeseries.
 }
 \examples{
 
