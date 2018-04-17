@@ -23,7 +23,7 @@
 #'                   frequency = "3")
 #'                   
 #' # overwrites the original file, increasing
-#' # decreasing the file size a given year as maximum.
+#' # decreasing the file size, with given year as maximum.
 #' truncate_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv"),
 #'                   year = 2015)
 #' }
