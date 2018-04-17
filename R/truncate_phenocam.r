@@ -5,6 +5,9 @@
 #'
 #' @param data a PhenoCam file or data frame
 #' @param year the last valid year, discard the rest
+#' @param internal return a data structure if given a file on disk
+#' (\code{TRUE} / \code{FALSE} = default)
+#' @param out_dir output directory where to store data (default = tempdir())
 #' @keywords time series, smoothing, phenocam
 #' @export
 #' @examples
@@ -23,7 +26,9 @@
 #' }
 
 truncate_phenocam = function(data,
-                             year = 2015) {
+                             year = 2015,
+                             internal = TRUE,
+                             out_dir = tempdir()) {
   
   # if the data is not a data frame, load
   # the file (assuming it is a phenocam)
