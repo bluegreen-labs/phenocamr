@@ -9,6 +9,8 @@
 #' @param internal return a data structure if given a file on disk
 #' (\code{TRUE} / \code{FALSE} = default)
 #' @param out_dir output directory where to store data (default = tempdir())
+#' @return A truncated PhenoCam data structure or file, with data limited to
+#' the year specified.
 #' @keywords time series, smoothing, phenocam
 #' @export
 #' @examples

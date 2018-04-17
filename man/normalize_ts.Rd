@@ -11,6 +11,9 @@ normalize_ts(df, percentile = 90)
 
 \item{percentile}{percentile value to interprete}
 }
+\value{
+A normalized PhenoCam time series.
+}
 \description{
 Normalize PhenoCam data between 0-1 to to standardize
 further processing, independent of the relative amplitude

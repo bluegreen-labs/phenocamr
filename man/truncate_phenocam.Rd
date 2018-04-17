@@ -16,6 +16,10 @@ truncate_phenocam(data, year = 2015, internal = TRUE, out_dir = tempdir())
 
 \item{out_dir}{output directory where to store data (default = tempdir())}
 }
+\value{
+A truncated PhenoCam data structure or file, with data limited to
+the year specified.
+}
 \description{
 The `expand_phenocam()` function provides a similar functionality and is to be
 prefered. This function remains as it might serve a purpose to

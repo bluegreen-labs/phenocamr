@@ -9,6 +9,10 @@ read_phenocam(filename)
 \arguments{
 \item{filename}{a PhenoCam data file}
 }
+\value{
+A nested data structure including site meta-data, the full
+header and the data as a `data.frame()`.
+}
 \description{
 Data is read into a nested list, preserving
 header data and critical file name information.

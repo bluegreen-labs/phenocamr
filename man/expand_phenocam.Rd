@@ -18,6 +18,10 @@ to a particular year (default = NULL)}
 
 \item{out_dir}{output directory where to store data (default = tempdir())}
 }
+\value{
+Expanded PhenoCam data structure or file, including 90 day padding
+if requested.
+}
 \description{
 Necessary step to guarantee consistent data processing between 1 and 3-day
 data products. Should rarely be used independent of `download_phenocam()`.

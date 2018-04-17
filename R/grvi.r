@@ -10,7 +10,8 @@
 #' @param par grvi parameters (digital number weights)
 #' @param internal return a data structure if given a file on disk
 #' (\code{TRUE} / \code{FALSE} = default)
-#' @param out_dir output directory where to store data 
+#' @param out_dir output directory where to store data
+#' @return Inserts a GRVI data column in a PhenoCam data structure or file.
 #' @keywords time series, smoothing, phenocam
 #' @export
 #' @examples

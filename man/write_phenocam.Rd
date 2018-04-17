@@ -11,6 +11,10 @@ write_phenocam(df = NULL, out_dir = tempdir())
 
 \item{out_dir}{output directory where to store data}
 }
+\value{
+writes PhenoCam data structure to file, retains proper header info
+and inserts a processing time stamp.
+}
 \description{
 Writes a nested data structure of class phenocamr to file, reconstructing
 the original data structure from included headers and data components.

@@ -10,6 +10,8 @@
 #' @param internal return a data structure if given a file on disk
 #' (\code{TRUE} / \code{FALSE} = default)
 #' @param out_dir output directory where to store data (default = tempdir())
+#' @return A PhenoCam data structure or file which combines PhenoCam timeseries
+#' data with Daymet based climate values.
 #' @keywords time series, PhenoCam, Daymet, data integration
 #' @export
 #' @examples

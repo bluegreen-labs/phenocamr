@@ -9,6 +9,10 @@
 #' @param internal return PhenoCam data file or data frame
 #' @param out_dir output directory
 #' @param ... pass parameters to the transition_dates() function
+#' @return Estimates transition dates for both rising and falling parts of a
+#' PhenoCam timeseries. Returns a nested list with UNIX time based values
+#' including uncertainties on these estimates and their associated 
+#' thresholds. When written to disk UNIX dates are converted to YYYY-MM-DD.
 #' @keywords PhenoCam, transition dates, phenology, time series
 #' @export
 #' @examples

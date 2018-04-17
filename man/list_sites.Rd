@@ -11,6 +11,9 @@ list_sites(out_dir = tempdir(), internal = TRUE)
 
 \item{internal}{TRUE or FALSE (default = TRUE)}
 }
+\value{
+A data frame with meta-data for all available sites.
+}
 \description{
 The site list can be helpful in determining which time series to download
 using `download_phenocam()`. The site list also includes meta-data 

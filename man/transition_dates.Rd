@@ -27,6 +27,10 @@ transition_dates(data, lower_thresh = 0.1, middle_thresh = 0.25,
 
 \item{plot}{plot for debugging purposes}
 }
+\value{
+Transition date estimates in UNIX time, including uncertainties
+and the threshold values estimated for each section of a timeseries.
+}
 \description{
 Segments of a PhenoCam time series and calculates threshold based transition
 dates for all segments.

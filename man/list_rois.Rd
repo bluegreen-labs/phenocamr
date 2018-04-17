@@ -11,6 +11,9 @@ list_rois(out_dir = tempdir(), internal = TRUE)
 
 \item{internal}{TRUE or FALSE (default = TRUE)}
 }
+\value{
+A data frame with ROIs for all available cameras
+}
 \description{
 The ROI list can be helpful in determining which time series to download
 using `download_phenocam()`.

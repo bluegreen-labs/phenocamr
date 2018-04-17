@@ -12,6 +12,8 @@
 #' @param seg_length minimum length of a segment to be evaluated
 #' @param reverse flip the direction of the processing
 #' @param plot plot for debugging purposes
+#' @return Transition date estimates in UNIX time, including uncertainties
+#' and the threshold values estimated for each section of a timeseries.
 #' @keywords PhenoCam, transition dates, phenology, time series
 #' @export
 #' @examples

@@ -17,6 +17,12 @@ phenophases(data, mat = NULL, internal = TRUE, out_dir = tempdir(), ...)
 
 \item{...}{pass parameters to the transition_dates() function}
 }
+\value{
+Estimates transition dates for both rising and falling parts of a
+PhenoCam timeseries. Returns a nested list with UNIX time based values
+including uncertainties on these estimates and their associated 
+thresholds. When written to disk UNIX dates are converted to YYYY-MM-DD.
+}
 \description{
 This routine combines a forward and backward
 run of transition_dates function to calculate the phenophases in both

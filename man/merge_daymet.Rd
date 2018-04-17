@@ -18,6 +18,10 @@ PhenoCam time series or include the whole Daymet time series (1980-current).
 
 \item{out_dir}{output directory where to store data (default = tempdir())}
 }
+\value{
+A PhenoCam data structure or file which combines PhenoCam timeseries
+data with Daymet based climate values.
+}
 \description{
 Combine PhenoCam time series with matching climatological variables from
 Daymet.
