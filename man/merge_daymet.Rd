@@ -4,7 +4,7 @@
 \alias{merge_daymet}
 \title{Merge Daymet data with a PhenoCam data file}
 \usage{
-merge_daymet(data, trim = FALSE, internal = TRUE, out_dir)
+merge_daymet(data, trim = FALSE, internal = TRUE, out_dir = tempdir())
 }
 \arguments{
 \item{data}{a PhenoCam data file or data structure}

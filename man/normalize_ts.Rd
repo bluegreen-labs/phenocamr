@@ -14,7 +14,8 @@ normalize_ts(df, percentile = 90)
 \description{
 Normalize PhenoCam data between 0-1 to to standardize
 further processing, independent of the relative amplitude
-of the time series (works on vectors not data frames)
+of the time series (works on vectors not data frames).
+For internal use only.
 }
 \examples{
 

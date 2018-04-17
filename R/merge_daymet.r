@@ -28,7 +28,7 @@
 merge_daymet  = function(data,
                          trim = FALSE,
                          internal = TRUE,
-                         out_dir){
+                         out_dir = tempdir()){
  
   # if the data is not a data frame, load
   # the file (assuming it is a phenocam)

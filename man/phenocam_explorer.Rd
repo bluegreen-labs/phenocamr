@@ -2,17 +2,12 @@
 % Please edit documentation in R/phenocam_explorer.r
 \name{phenocam_explorer}
 \alias{phenocam_explorer}
-\title{Starts the phenocamr shiny interface
-in your default browser. The GUI
-allows you to interactively download
-data and visualize timeseries.}
+\title{Starts the phenocamr shiny interface}
 \usage{
 phenocam_explorer()
 }
 \description{
-Starts the phenocamr shiny interface
-in your default browser. The GUI
-allows you to interactively download
+The GUI allows you to interactively download
 data and visualize timeseries.
 }
 \examples{

@@ -1,6 +1,6 @@
 #' Starts the phenocamr shiny interface
-#' in your default browser. The GUI
-#' allows you to interactively download
+#' 
+#' The GUI allows you to interactively download
 #' data and visualize timeseries.
 #' 
 #' @keywords GUI, front end, interactive

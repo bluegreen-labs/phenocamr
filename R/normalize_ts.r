@@ -2,7 +2,8 @@
 #' 
 #' Normalize PhenoCam data between 0-1 to to standardize
 #' further processing, independent of the relative amplitude
-#' of the time series (works on vectors not data frames)
+#' of the time series (works on vectors not data frames).
+#' For internal use only.
 #' 
 #' @param df a PhenoCam data frame
 #' @param percentile percentile value to interprete
