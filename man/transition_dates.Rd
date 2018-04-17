@@ -45,8 +45,9 @@ download_phenocam(site = "harvard$",
                   roi_id = "1",
                   frequency = "3")
 
-df = utils::read.csv(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
-my_dates = transition_dates(df,
+# read the data and calculate transition dates
+df <- read_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
+my_dates <- transition_dates(df,
                             lower_thresh = 0.1,
                             middle_thresh = 0.25,
                             upper_thresh = 0.5,

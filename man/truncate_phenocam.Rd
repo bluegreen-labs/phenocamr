@@ -10,9 +10,9 @@ some.}
 truncate_phenocam(filename, year = 2015)
 }
 \arguments{
-\item{filename}{a PhenoCam data frame}
-
 \item{year}{the last valid year, discard the rest}
+
+\item{data}{a PhenoCam file or data frame}
 }
 \description{
 Truncate a PhenoCam file using a given year as last valid year.

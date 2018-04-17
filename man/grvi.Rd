@@ -40,8 +40,8 @@ grvi(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
 
 # the function also works on a PhenoCam data frame
 # but you will lose the extensive header meta-data in the process
-df = utils::read.csv(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
-df = grvi(df, par = c(1, 1, 0))
+df <- read_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
+df <- grvi(df, par = c(1, 1, 0))
 }
 }
 \keyword{phenocam}

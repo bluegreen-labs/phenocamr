@@ -23,6 +23,7 @@
 #'                   roi_id = "1",
 #'                   frequency = "3")
 #'
+#' # read the data and calculate transition dates
 #' df <- read_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
 #' my_dates <- transition_dates(df,
 #'                             lower_thresh = 0.1,
