@@ -2,9 +2,7 @@
 % Please edit documentation in R/detect_outliers.r
 \name{detect_outliers}
 \alias{detect_outliers}
-\title{Detect outliers in PhenoCam time series (data frame or file)
-The function fills in the existing column to hold outlier flags,
-and either overwrites the original file or outputs a new data frame.}
+\title{Detect outliers in PhenoCam time series (data frame or file)}
 \usage{
 detect_outliers(data, iterations = 20, sigma = 2, grvi = FALSE,
   snowflag = FALSE, plot = FALSE, internal = TRUE, out_dir = tempdir())
@@ -31,7 +29,6 @@ to accomodate for GRVI outliers}
 \item{out_dir}{output directory where to store data}
 }
 \description{
-Detect outliers in PhenoCam time series (data frame or file)
 The function fills in the existing column to hold outlier flags,
 and either overwrites the original file or outputs a new data frame.
 }

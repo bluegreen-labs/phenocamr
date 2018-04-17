@@ -1,4 +1,5 @@
 #' Detect outliers in PhenoCam time series (data frame or file)
+#' 
 #' The function fills in the existing column to hold outlier flags,
 #' and either overwrites the original file or outputs a new data frame.
 #'
