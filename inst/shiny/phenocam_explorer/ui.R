@@ -136,7 +136,7 @@ body <- dashboardBody(tags$head(tags$script(
             )
           )),
           fluidRow(column(
-            3, downloadButton('downloadData',label = "Download Transition Dates")
+            3, downloadButton('downloadData', label = "Download Transition Dates")
           ))
         )
       )

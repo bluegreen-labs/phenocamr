@@ -24,7 +24,7 @@ col_text = "#787878"
 
 # grab the latest roi list using jsonlite
 # this should work across all platforms regardless
-df = jsonlite::fromJSON("https://phenocam.sr.unh.edu/webcam/roi/roilistinfo/")
+df = list_rois()
 
 df = df[, c(
   "site",
@@ -40,7 +40,7 @@ df = df[, c(
 )]
 
 # download metadata, and select useful columns for the explorer
-metadata = jsonlite::fromJSON("https://phenocam.sr.unh.edu/webcam/network/siteinfo/")
+metadata = list_sites()
 
 # use gridded (daymet / worldclim) data in case of missing site specific MAT / MAP
 metadata$MAT = ifelse(is.na(metadata$MAT_site),
@@ -87,13 +87,6 @@ df$preview = unlist(lapply(df$site, function(x)
     "<td><b>",
     x,
     "</b></td>",
-    "</tr>",
-    "<tr>",
-    "<td>",
-    "<img src=https://phenocam.sr.unh.edu/data/latest/thumbs/",
-    x,
-    ".thumb.jpg>",
-    "</td>",
     "</tr>",
     "</table>",
     sep = ""
@@ -438,7 +431,11 @@ server = function(input, output, session) {
     # check if the data is on file, if so assume it is
     # checked for outliers and has smoothed data
     if (file.exists(data_file)) {
-      data = read.table(data_file, header = TRUE, sep = ',')
+      
+      # read the data to plot_data
+      data_raw = read_phenocam(data_file)
+      data = data_raw$data
+      
     } else{
       # kick start progress bar
       progress$set(value = 0.5, detail = "Downloading PhenoCam data")
@@ -459,22 +456,21 @@ server = function(input, output, session) {
       )
       
       # read the data to plot_data
-      data = read.table(data_file, header = TRUE, sep = ',')
+      data_raw = read_phenocam(data_file)
+      data = data_raw$data
     }
     
     # grab the transition dates
     # trap errors, mainly if no dates can be detected return an empty
     # string (NAs) to prevent plotting errors further down.
     # code this up in the transition.dates() function TODO TODO TODO
-    spring = transition_dates(data,
+    spring = transition_dates(data_raw,
                               percentile = percentile,
-                              reverse = FALSE,
-                              frequency = frequency)
+                              reverse = FALSE)
     
-    fall = transition_dates(data,
+    fall = transition_dates(data_raw,
                             percentile = percentile,
-                            reverse = TRUE,
-                            frequency = frequency)
+                            reverse = TRUE)
 
     # Final plot preparations
     progress$set(value = 0.8, detail = "preparing final plot")
@@ -636,13 +632,13 @@ server = function(input, output, session) {
       
       # populate the download handler with phenology data
       output$downloadData <- downloadHandler(
-        filename = sprintf(
+        filename = function(){sprintf(
           'phenology_data_%s_%s_%04d_%s.csv',
           site,
           veg,
-          roi,
+          as.numeric(roi),
           Sys.Date()
-        ),
+        )},
         content = function(file = filename) {
           write.table(
             phenology_header,
