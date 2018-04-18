@@ -40,6 +40,9 @@ test_that("check ancillary routines",{
   # test expand
   expand = try(expand_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv")))
   
+  # smooth test
+  smooth = try(smooth_ts(paste0(tempdir(),"/harvard_DB_0001_3day.csv")))
+  
   # test contract
   contract = try(contract_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv")))
   
@@ -72,6 +75,7 @@ test_that("check ancillary routines",{
           !inherits(outliers, "try-error") &
           !inherits(transitions, "try-error") &
           !inherits(expand, "try-error") &
+          !inherits(smooth, "try-error") &
           !inherits(contract, "try-error") &
           !inherits(dl, "try-error") &
           !inherits(os, "try-error") &
