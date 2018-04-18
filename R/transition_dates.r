@@ -399,15 +399,18 @@ transition_dates = function(data,
       # end of the season
       if (!is.na(int_flag[eos_loc])) {
 
-        eos_lower_loc = min(index[which(index >= eos_loc & is.na(int_flag))])
-        eos_upper_loc = max(index[which(index <= eos_loc & is.na(int_flag))])
+        eos_lower_loc = suppressWarnings(min(index[which(index >= eos_loc &
+                                                           is.na(int_flag))]))
+        
+        eos_upper_loc = suppressWarnings(max(index[which(index <= eos_loc &
+                                                           is.na(int_flag))]))
 
       } else {
-        eos_lower_loc = min(index_segment[which(
+        eos_lower_loc = suppressWarnings(min(index_segment[which(
           lower_segment >= maximum_threshold &
             index_segment > min_loc &
             index_segment < max_loc
-        )])
+        )]))
 
         eos_upper_loc = max(index_segment[which(
           upper_segment <= maximum_threshold &
@@ -419,43 +422,50 @@ transition_dates = function(data,
       # middle of the season
       if (!is.na(int_flag[mos_loc])) {
 
-        mos_lower_loc = min(index[which(index >= mos_loc & is.na(int_flag))])
-        mos_upper_loc = max(index[which(index <= mos_loc & is.na(int_flag))])
+        mos_lower_loc = suppressWarnings(min(index[which(index >= mos_loc &
+                                                           is.na(int_flag))]))
+        
+        mos_upper_loc = suppressWarnings(max(index[which(index <= mos_loc &
+                                                           is.na(int_flag))]))
 
       } else {
 
-        mos_lower_loc = min(index_segment[which(
+        mos_lower_loc = suppressWarnings(min(index_segment[which(
           lower_segment >= middle_threshold &
             index_segment > min_loc &
             index_segment < max_loc
-        )])
+        )]))
 
-        mos_upper_loc = max(index_segment[which(
+        mos_upper_loc = suppressWarnings(max(index_segment[which(
           upper_segment <= middle_threshold &
             index_segment > min_loc &
             index_segment < max_loc
-        )])
+        )]))
       }
 
       # start of the season
       if (!is.na(int_flag[sos_loc])) {
-
-        sos_lower_loc = min(index[which(index >= sos_loc & is.na(int_flag))])
-        sos_upper_loc = max(index[which(index <= sos_loc & is.na(int_flag))])
+        
+        
+        sos_lower_loc = suppressWarnings(min(index[which(index >= sos_loc &
+                                                           is.na(int_flag))]))
+        
+        sos_upper_loc = suppressWarnings(max(index[which(index <= sos_loc &
+                                                           is.na(int_flag))]))
 
       } else {
 
-        sos_lower_loc = min(index_segment[which(
+        sos_lower_loc = suppressWarnings(min(index_segment[which(
           lower_segment >= minimum_threshold &
             index_segment > min_loc &
             index_segment < max_loc
-        )])
+        )]))
 
-        sos_upper_loc = max(index_segment[which(
+        sos_upper_loc = suppressWarnings(max(index_segment[which(
           upper_segment <= minimum_threshold &
             index_segment > min_loc &
             index_segment < max_loc
-        )])
+        )]))
       }
     }
 

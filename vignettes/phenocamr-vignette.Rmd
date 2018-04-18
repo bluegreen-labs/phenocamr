@@ -68,6 +68,15 @@ df <- read_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
 print(str(df))
 ```
 
+
+### Expanding 3-day data for maximum phenology resolution
+
+The downloaded time series is of a 3-day resolution. However, to correctly evaluate the phenology on a daily time step the time series needs to be expanded to this one day time step. This can be achieved using the expand_phenocam() function.
+
+```{r eval = TRUE}
+df <- expand_phenocam(df)
+```
+
 ### Detect data outlier
 
 After reading in the data as a data frame you can apply the outlier detection routine. This routine uses an iterative method to detect outlier values in the Gcc time series. This routine filters out most spurious values due contaminiation by snow, mist, rain or otherwise very bright events. Warnings are suppressed as the routine is iterative and might throw warnings if it does not converge on a solution. This has no implications for the routine and data returned.
@@ -122,8 +131,6 @@ abline(v = phenology_dates$falling$transition_50,
 ## References
 
 Hufkens K., Basler J. D., Milliman T. Melaas E., Richardson A.D. 2018 [An integrated phenology modelling framework in R: Phenology modelling with phenor. Methods in Ecology & Evolution](http://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12970/full), 9: 1-10.
-
-Richardson, A.D., Hufkens, K., Milliman, T., Aubrecht, D.M., Chen, M., Gray, J.M., Johnston, M.R., Keenan, T.F., Klosterman, S.T., Kosmala, M., Melaas, E.K., Friedl, M.A., Frolking, S. 2017. [Tracking vegetation phenology across diverse North American biomes using PhenoCam imagery](https://www.nature.com/articles/sdata201828). Scientific Data, 5, 180028.
 
 ## Acknowledgements
 

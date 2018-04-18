@@ -220,28 +220,32 @@ smooth_ts = function(data,
     # 3-day product, as not to inflate the number of measurements
     if (data$frequency == "3day"){
       
-      optim_span = optimal_span(x = as.numeric(dates[loc]),
-                                y = gap_filled[loc],
-                                plot = FALSE) # plot for debugging
+      optim_span = suppressWarnings(
+        optimal_span(x = as.numeric(dates[loc]),
+                     y = gap_filled[loc],
+                     plot = FALSE))
       
-      fit = stats::loess(gap_filled[loc] ~ as.numeric(dates[loc]),
-                  span = optim_span,
-                  weights = weights[loc])
+      fit = suppressWarnings(
+              stats::loess(gap_filled[loc] ~ as.numeric(dates[loc]),
+                           span = optim_span,
+                           weights = weights[loc]))
 
     } else { # 1-day product
 
-      optim_span = optimal_span(x = as.numeric(dates),
-                                y = gap_filled,
-                                plot = FALSE) # plot for debugging
+      optim_span = suppressWarnings(
+                      optimal_span(x = as.numeric(dates),
+                                   y = gap_filled,
+                                   plot = FALSE))
 
-      fit = stats::loess(gap_filled ~ as.numeric(dates),
-                  span = optim_span,
-                  weights = weights)
+      fit = suppressWarnings(
+              stats::loess(gap_filled ~ as.numeric(dates),
+                           span = optim_span,
+                           weights = weights))
 
     }
 
     # make projections based upon the optimal fit
-    fit = stats::predict(fit, as.numeric(dates), se = TRUE)
+    fit = suppressWarnings(stats::predict(fit, as.numeric(dates), se = TRUE))
 
     # grab the smoothed series and the CI (from SE)
     # set to 0 if no SE is provided

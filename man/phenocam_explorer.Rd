@@ -12,7 +12,7 @@ data and visualize time series.
 }
 \examples{
 
-\donttest{
+\dontrun{
 # Starts the PhenoCam explorer GUI in a browser
 phenocam_explorer()
 }
