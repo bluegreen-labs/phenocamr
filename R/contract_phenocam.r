@@ -11,7 +11,9 @@
 #' @param no_padding allow for padding to REMAIN or not  
 #' (\code{TRUE} / \code{FALSE} = default)
 #' @param out_dir output directory where to store data (default = tempdir())
-#' @keywords time series, smoothing, phenocam
+#' @return A contracted PhenoCam 3-day time series to its original 3-day time
+#' step (if provided at a 1-day interval).
+#' @keywords time series, phenocam, post-processing
 #' @export
 #' @examples
 #' 
@@ -49,6 +51,11 @@ contract_phenocam = function(data,
     }
   } else {
     on_disk = FALSE
+  }
+  
+  # sanity check, only contract 3-day data
+  if(data$frequency == "1day"){
+    stop("This is a 1-day file, will not be contracted to 3-day frequency ")
   }
   
   # split out data

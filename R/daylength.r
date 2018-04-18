@@ -4,6 +4,8 @@
 #'
 #' @param doy a vector with doy values 1 - 365(6)
 #' @param latitude a given latitude
+#' @return nested list with daylength (daylength) and
+#' solar elevation (solar_elev) elements
 #' @keywords solar, ephemerids
 #' @export
 #' @examples
@@ -53,5 +55,6 @@ daylength = function(doy, latitude) {
       DL[i - 1] <- 0
     }
   }
-  return(list(DL, solar_elev))
+  return(list("daylength" = DL,
+              "solar_elev" = solar_elev))
 }

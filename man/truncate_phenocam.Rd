@@ -2,7 +2,7 @@
 % Please edit documentation in R/truncate_phenocam.r
 \name{truncate_phenocam}
 \alias{truncate_phenocam}
-\title{Truncate a PhenoCam timeseries}
+\title{Truncate a PhenoCam time series}
 \usage{
 truncate_phenocam(data, year = 2015, internal = TRUE, out_dir = tempdir())
 }
@@ -21,9 +21,9 @@ A truncated PhenoCam data structure or file, with data limited to
 the year specified.
 }
 \description{
-The `expand_phenocam()` function provides a similar functionality and is to be
-prefered. This function remains as it might serve a purpose to
-some.
+The `expand_phenocam()` function provides a similar functionality and is
+prefered. This function remains as it might serve a purpose to some. Migth
+be deprecated in the future.
 }
 \examples{
 

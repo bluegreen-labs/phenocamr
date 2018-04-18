@@ -11,8 +11,9 @@
 #' @param internal return a data structure if given a file on disk
 #' (\code{TRUE} / \code{FALSE} = default)
 #' @param out_dir output directory where to store data
-#' @return Inserts a GRVI data column in a PhenoCam data structure or file.
-#' @keywords time series, smoothing, phenocam
+#' @return Inserts a GRVI data column into the provided PhenoCam
+#' data structure or file.
+#' @keywords time series, colour index, phenocam
 #' @export
 #' @examples
 #' 
@@ -29,8 +30,7 @@
 #' # calculate and append the GRVI for a file (overwrites the original)
 #' grvi(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
 #' 
-#' # the function also works on a PhenoCam data frame
-#' # but you will lose the extensive header meta-data in the process
+#' # as all functions this also works on a PhenoCam data structure
 #' df <- read_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
 #' df <- grvi(df, par = c(1, 1, 0))
 #' }

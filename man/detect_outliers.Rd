@@ -2,15 +2,15 @@
 % Please edit documentation in R/detect_outliers.r
 \name{detect_outliers}
 \alias{detect_outliers}
-\title{Detect outliers in PhenoCam time series (data frame or file)}
+\title{Detect outliers in PhenoCam time series}
 \usage{
 detect_outliers(data, iterations = 20, sigma = 2, grvi = FALSE,
   snowflag = FALSE, plot = FALSE, internal = TRUE, out_dir = tempdir())
 }
 \arguments{
-\item{data}{PhenoCam data frame or filename}
+\item{data}{PhenoCam data structure or filename}
 
-\item{iterations}{number of itterations over which to cycle to detect outliers ()}
+\item{iterations}{number of itterations in order to detect outliers ()}
 
 \item{sigma}{number of deviations to exclude outliers at}
 
@@ -30,7 +30,7 @@ to accomodate for GRVI outliers}
 }
 \description{
 The function fills in the existing column to hold outlier flags,
-and either overwrites the original file or outputs a new data frame.
+and either overwrites the original file or outputs a data structure.
 }
 \examples{
 
@@ -49,5 +49,4 @@ detect_outliers(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
 }
 \keyword{PhenoCam,}
 \keyword{outliers,}
-\keyword{pre-processing}
-\keyword{smoothing,}
+\keyword{post-processing}

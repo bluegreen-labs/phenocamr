@@ -8,7 +8,7 @@ phenocam_explorer()
 }
 \description{
 The GUI allows you to interactively download
-data and visualize timeseries.
+data and visualize time series.
 }
 \examples{
 

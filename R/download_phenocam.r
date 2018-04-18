@@ -18,7 +18,9 @@
 #' @param phenophase logical, calculate transition dates (default = \code{FALSE})
 #' @param out_dir output directory where to store downloaded data 
 #' (default = tempdir())
-#' @keywords PhenoCam, Daymet, climate data, modelling
+#' @return Downloaded files in out_dir of requested time series products, as well
+#' as derived phenophase estimates based upon these time series.
+#' @keywords PhenoCam, Daymet, climate data, modelling, post-processing
 #' @export
 #' @examples
 #'
@@ -29,6 +31,10 @@
 #'                   veg_type = "DB",
 #'                   roi_id = "1",
 #'                   frequency = "3")
+#'  
+#' # read phenocam data into phenocamr data structure                  
+#' df <- read_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
+#'                   
 #' }
 
 download_phenocam = function(site = "harvard$",

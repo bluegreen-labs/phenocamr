@@ -18,7 +18,8 @@ full path if not in the current working directory)}
 \item{out_dir}{output directory where to store data}
 }
 \value{
-Inserts a GRVI data column in a PhenoCam data structure or file.
+Inserts a GRVI data column into the provided PhenoCam
+data structure or file.
 }
 \description{
 The GRVI is defined as the normalized ratio between the red and green channel
@@ -41,13 +42,13 @@ download_phenocam(site = "harvard$",
 # calculate and append the GRVI for a file (overwrites the original)
 grvi(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
 
-# the function also works on a PhenoCam data frame
-# but you will lose the extensive header meta-data in the process
+# as all functions this also works on a PhenoCam data structure
 df <- read_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
 df <- grvi(df, par = c(1, 1, 0))
 }
 }
+\keyword{colour}
+\keyword{index,}
 \keyword{phenocam}
 \keyword{series,}
-\keyword{smoothing,}
 \keyword{time}

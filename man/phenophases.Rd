@@ -18,21 +18,23 @@ phenophases(data, mat = NULL, internal = TRUE, out_dir = tempdir(), ...)
 \item{...}{pass parameters to the transition_dates() function}
 }
 \value{
-Estimates transition dates for both rising and falling parts of a
-PhenoCam timeseries. Returns a nested list with UNIX time based values
+Estimates of transition dates for both rising and falling parts of a
+PhenoCam time series. All time series are evaluated (gcc_90, gcc_75, etc).
+The function returns a nested list with UNIX time based values
 including uncertainties on these estimates and their associated 
 thresholds. When written to disk UNIX dates are converted to YYYY-MM-DD.
+The nested list has named locations rising and falling, or location 1 and 2
+in the list respectivelly.
 }
 \description{
 This routine combines a forward and backward
 run of transition_dates function to calculate the phenophases in both
-rising and falling parts of a PhenoCam timeseries.
+rising and falling parts of a PhenoCam time series.
 }
 \examples{
 
 \donttest{
 # downloads a time series
-# [[2]] the greendown dates
 download_phenocam(site = "harvard$",
                   veg_type = "DB",
                   roi_id = "1",
@@ -41,6 +43,9 @@ download_phenocam(site = "harvard$",
 # read in data as data frame and calculate phenophases
 df <- read_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
 my_dates <- phenophases(df, internal = TRUE)
+
+# print results
+print(my_dates)
 }
 }
 \keyword{PhenoCam,}

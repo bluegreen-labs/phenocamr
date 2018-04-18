@@ -36,6 +36,10 @@ as a regular expression ("harvard$" == exact match)}
 \item{out_dir}{output directory where to store downloaded data 
 (default = tempdir())}
 }
+\value{
+Downloaded files in out_dir of requested time series products, as well
+as derived phenophase estimates based upon these time series.
+}
 \description{
 This is a wrapper around most of all the other functions.
 It downloads a time series and extract relevant phenological transition
@@ -50,10 +54,15 @@ download_phenocam(site = "harvard$",
                   veg_type = "DB",
                   roi_id = "1",
                   frequency = "3")
+ 
+# read phenocam data into phenocamr data structure                  
+df <- read_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
+                  
 }
 }
 \keyword{Daymet,}
 \keyword{PhenoCam,}
 \keyword{climate}
 \keyword{data,}
-\keyword{modelling}
+\keyword{modelling,}
+\keyword{post-processing}

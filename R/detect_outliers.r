@@ -1,10 +1,10 @@
-#' Detect outliers in PhenoCam time series (data frame or file)
+#' Detect outliers in PhenoCam time series
 #' 
 #' The function fills in the existing column to hold outlier flags,
-#' and either overwrites the original file or outputs a new data frame.
+#' and either overwrites the original file or outputs a data structure.
 #'
-#' @param data PhenoCam data frame or filename
-#' @param iterations number of itterations over which to cycle to detect outliers ()
+#' @param data PhenoCam data structure or filename
+#' @param iterations number of itterations in order to detect outliers ()
 #' @param sigma number of deviations to exclude outliers at
 #' @param grvi reverse the direction of the screening intervals
 #' to accomodate for GRVI outliers
@@ -15,7 +15,7 @@
 #' (\code{TRUE} / \code{FALSE} = default)
 #' @param snowflag integrate snow flags?
 #' @param out_dir output directory where to store data 
-#' @keywords PhenoCam, outliers, smoothing, pre-processing
+#' @keywords PhenoCam, outliers, post-processing
 #' @export
 #' @examples
 #'

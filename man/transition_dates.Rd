@@ -2,7 +2,7 @@
 % Please edit documentation in R/transition_dates.r
 \name{transition_dates}
 \alias{transition_dates}
-\title{Calculates transition dates for a PhenoCam file or data structure}
+\title{Calculates transition dates for a PhenoCam time series}
 \usage{
 transition_dates(data, lower_thresh = 0.1, middle_thresh = 0.25,
   upper_thresh = 0.5, percentile = 90, penalty = 0.5, seg_length = 14,
@@ -29,11 +29,12 @@ transition_dates(data, lower_thresh = 0.1, middle_thresh = 0.25,
 }
 \value{
 Transition date estimates in UNIX time, including uncertainties
-and the threshold values estimated for each section of a timeseries.
+and the threshold values estimated for each section of a time series.
 }
 \description{
 Segments of a PhenoCam time series and calculates threshold based transition
-dates for all segments.
+dates for all segments. This function is rarely called stand alone and
+`phenophases()` should be preferred when evaluating PhenoCam time series.
 }
 \examples{
 

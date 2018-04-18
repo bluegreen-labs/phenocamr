@@ -9,6 +9,8 @@
 #' @param step span increment size
 #' @param label title to be used when plotting function output
 #' @param plot plot visual output of the optimization routine
+#' @return Returns an optimal span to smooth a provided vector using 
+#' the `loess()` smoother.
 #' @keywords smoother, span, loess, time series
 #' @export
 #' @examples

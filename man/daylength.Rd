@@ -11,6 +11,10 @@ daylength(doy, latitude)
 
 \item{latitude}{a given latitude}
 }
+\value{
+nested list with daylength (daylength) and
+solar elevation (solar_elev) elements
+}
 \description{
 This routine uses Forsythe et al. 1995.
 }

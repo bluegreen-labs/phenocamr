@@ -20,6 +20,10 @@ optimal_span(y, x = NULL, weights = NULL, step = 0.01, label = NULL,
 
 \item{plot}{plot visual output of the optimization routine}
 }
+\value{
+Returns an optimal span to smooth a provided vector using 
+the `loess()` smoother.
+}
 \description{
 The optimal span is calculated based upon the bayesian information
 criterion (BIC).

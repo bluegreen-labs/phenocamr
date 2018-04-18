@@ -1,7 +1,8 @@
-#' Calculates transition dates for a PhenoCam file or data structure
+#' Calculates transition dates for a PhenoCam time series
 #' 
 #' Segments of a PhenoCam time series and calculates threshold based transition
-#' dates for all segments.
+#' dates for all segments. This function is rarely called stand alone and
+#' `phenophases()` should be preferred when evaluating PhenoCam time series.
 #'
 #' @param data a PhenoCam data file or data structure
 #' @param lower_thresh the minimum threshold used (default = 0.1)
@@ -13,7 +14,7 @@
 #' @param reverse flip the direction of the processing
 #' @param plot plot for debugging purposes
 #' @return Transition date estimates in UNIX time, including uncertainties
-#' and the threshold values estimated for each section of a timeseries.
+#' and the threshold values estimated for each section of a time series.
 #' @keywords PhenoCam, transition dates, phenology, time series
 #' @export
 #' @examples

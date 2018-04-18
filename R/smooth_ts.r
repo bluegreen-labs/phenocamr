@@ -1,7 +1,7 @@
 #' Smooths a PhenoCam time series
 #' 
-#' The loess based routine uses a bayesian information criterion based 
-#' smoothing parameter optimization to find an optimal fit.
+#' Smooths time series iteratively using a bayesian information criterion (BIC) 
+#' to find an optimal smoothing parameter and curve.
 #' 
 #' @param data a PhenoCam data file or data structure
 #' @param metrics which metrics to process, normally all default ones
@@ -9,6 +9,9 @@
 #' @param internal return a data structure if given a file on disk
 #' (\code{TRUE} / \code{FALSE} = default)
 #' @param out_dir output directory where to store data 
+#' @return An PhenoCam data structure or file with optimally smoothed time series
+#' objects added to the original file. Smoothing is required for `phenophase()`
+#' and `transition_dates()` functions.
 #' @keywords time series, smoothing, phenocam
 #' @export
 #' @examples

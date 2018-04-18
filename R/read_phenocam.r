@@ -1,6 +1,6 @@
-#' Read phenocam time series data
+#' Read PhenoCam time series data
 #' 
-#' Data is read into a nested list, preserving
+#' Reads PhenoCam data into a nested list, preserving
 #' header data and critical file name information.
 #' 
 #' @param filename a PhenoCam data file
@@ -25,7 +25,7 @@
 #' df = read_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
 #' 
 #' # print data structure
-#' print(str(df))
+#' print(summary(df))
 #' 
 #' # write the phenocamo data file
 #' write_phenocam(df, out_dir = tempdir())

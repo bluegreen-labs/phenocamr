@@ -18,6 +18,10 @@ contract_phenocam(data, internal = TRUE, no_padding = FALSE,
 
 \item{out_dir}{output directory where to store data (default = tempdir())}
 }
+\value{
+A contracted PhenoCam 3-day time series to its original 3-day time
+step (if provided at a 1-day interval).
+}
 \description{
 Reverts the `expand_phenocam()` function in order
 to save space and generate files as outlined in
@@ -42,7 +46,7 @@ expand_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
 contract_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
 }
 }
-\keyword{phenocam}
+\keyword{phenocam,}
+\keyword{post-processing}
 \keyword{series,}
-\keyword{smoothing,}
 \keyword{time}

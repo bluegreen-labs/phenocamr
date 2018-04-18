@@ -1,8 +1,8 @@
-#' Truncate a PhenoCam timeseries
+#' Truncate a PhenoCam time series
 #' 
-#' The `expand_phenocam()` function provides a similar functionality and is to be
-#' prefered. This function remains as it might serve a purpose to
-#' some.
+#' The `expand_phenocam()` function provides a similar functionality and is
+#' prefered. This function remains as it might serve a purpose to some. Migth
+#' be deprecated in the future.
 #'
 #' @param data a PhenoCam file or data frame
 #' @param year the last valid year, discard the rest

@@ -45,6 +45,6 @@ contract_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
 }
 }
 \keyword{phenocam}
+\keyword{post-processing,}
 \keyword{series,}
-\keyword{smoothing,}
 \keyword{time}

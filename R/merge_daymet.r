@@ -1,4 +1,4 @@
-#' Merge Daymet data with a PhenoCam data file
+#' Merge Daymet data with a PhenoCam time series
 #' 
 #' Combine PhenoCam time series with matching climatological variables from
 #' Daymet.
@@ -10,14 +10,14 @@
 #' @param internal return a data structure if given a file on disk
 #' (\code{TRUE} / \code{FALSE} = default)
 #' @param out_dir output directory where to store data (default = tempdir())
-#' @return A PhenoCam data structure or file which combines PhenoCam timeseries
-#' data with Daymet based climate values.
+#' @return A PhenoCam data structure or file which combines PhenoCam time series
+#' data with Daymet based climate values (columns will be added).
 #' @keywords time series, PhenoCam, Daymet, data integration
 #' @export
 #' @examples
 #' 
 #' \donttest{
-#' # download demo data (do not smooth)
+#' # download demo data
 #' download_phenocam(site = "harvard$",
 #'                   veg_type = "DB",
 #'                   roi_id = "1",

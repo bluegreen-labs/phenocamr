@@ -20,9 +20,14 @@ smooth_ts(data, metrics = c("gcc_mean", "gcc_50", "gcc_75", "gcc_90",
 
 \item{out_dir}{output directory where to store data}
 }
+\value{
+An PhenoCam data structure or file with optimally smoothed time series
+objects added to the original file. Smoothing is required for `phenophase()`
+and `transition_dates()` functions.
+}
 \description{
-The loess based routine uses a bayesian information criterion based 
-smoothing parameter optimization to find an optimal fit.
+Smooths time series iteratively using a bayesian information criterion (BIC) 
+to find an optimal smoothing parameter and curve.
 }
 \examples{
 

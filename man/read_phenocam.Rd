@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_phenocam.r
 \name{read_phenocam}
 \alias{read_phenocam}
-\title{Read phenocam time series data}
+\title{Read PhenoCam time series data}
 \usage{
 read_phenocam(filename)
 }
@@ -14,7 +14,7 @@ A nested data structure including site meta-data, the full
 header and the data as a `data.frame()`.
 }
 \description{
-Data is read into a nested list, preserving
+Reads PhenoCam data into a nested list, preserving
 header data and critical file name information.
 }
 \examples{
@@ -34,7 +34,7 @@ download_phenocam(site = "harvard$",
 df = read_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
 
 # print data structure
-print(str(df))
+print(summary(df))
 
 # write the phenocamo data file
 write_phenocam(df, out_dir = tempdir())

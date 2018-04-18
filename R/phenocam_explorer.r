@@ -1,7 +1,7 @@
 #' Starts the phenocamr shiny interface
 #' 
 #' The GUI allows you to interactively download
-#' data and visualize timeseries.
+#' data and visualize time series.
 #' 
 #' @keywords GUI, front end, interactive
 #' @export
