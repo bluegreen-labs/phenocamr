@@ -1,9 +1,11 @@
 [![Build Status](https://travis-ci.org/khufkens/phenocamr.svg?branch=master)](https://travis-ci.org/khufkens/phenocamr)
 [![codecov](https://codecov.io/gh/khufkens/phenocamr/branch/master/graph/badge.svg)](https://codecov.io/gh/khufkens/phenocamr)
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/phenocamr)](https://cran.r-project.org/package=phenocamr)
+![CRAN\_Downloads](https://cranlogs.r-pkg.org/badges/grand-total/phenocamr)
 
 # phenocamr
 
-Facilitates the retrieval and post-processing of PhenoCam time series. The post-processing of PhenoCam data includes outlier removal and the generation of data products such as phenological transition dates. If requested complementary [Daymet climate data](https://daymet.ornl.gov/) will be downloaded and merged with the PhenoCam data for modelling purposes. For a detailed overview of the assumptions made during post-processing I refer publications by Hufkens et al. (2018) and Richardson et al. (2018). Please cite the Hufkens et al. (2018) reference when using the package. A worked example is included below and in the package vignette.
+Facilitates the retrieval and post-processing of PhenoCam time series. The post-processing of PhenoCam data includes outlier removal and the generation of data products such as phenological transition dates. If requested complementary [Daymet climate data](https://daymet.ornl.gov/) will be downloaded and merged with the PhenoCam data for modelling purposes. For a detailed overview of the assumptions made during post-processing I refer publications by Hufkens et al. (2018) and Richardson et al. (2018). Please cite the Hufkens et al. (2018) paper when using the package. A worked example is included below and in the package vignette.
 
 ## Installation
 
@@ -23,6 +25,14 @@ To install the development releases of the package run the following commands:
 ```R
 if(!require(devtools)){install.package(devtools)}
 devtools::install_github("khufkens/phenocamr")
+library(phenocamr)
+```
+
+Vignettes are not rendered by default, if you want to include additional documentation please use:
+
+```R
+if(!require(devtools)){install.package("devtools")}
+devtools::install_github("khufkens/phenocamr", build_vignettes = TRUE)
 library(phenocamr)
 ```
 
