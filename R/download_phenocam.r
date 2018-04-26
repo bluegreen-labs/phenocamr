@@ -55,8 +55,8 @@ download_phenocam = function(site = "harvard$",
     stop("No correct frequency provided...")
   }
   
-  # get site listing
-  site_list = jsonlite::fromJSON("https://phenocam.sr.unh.edu/webcam/roi/roilistinfo/")
+  # get roi site listing
+  site_list = list_rois()
 
   # is there a site name?
   # this excludes any geographic constraints
