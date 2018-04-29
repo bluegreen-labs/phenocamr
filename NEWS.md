@@ -1,6 +1,7 @@
 # phenocamr 1.1.1
 
-* package version requirement for daymetr (>= 1.3.2) due to Daymet server changes
+* small changes to download routine
+* ...
 
 # phenocamr 1.1.0
 
