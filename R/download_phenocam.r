@@ -29,11 +29,11 @@
 #' # at an aggregation frequency of 3-days.
 #' download_phenocam(site = "harvard$",
 #'                   veg_type = "DB",
-#'                   roi_id = "1",
+#'                   roi_id = "1000",
 #'                   frequency = "3")
 #'  
 #' # read phenocam data into phenocamr data structure                  
-#' df <- read_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
+#' df <- read_phenocam(file.path(tempdir(),"harvard_DB_1000_3day.csv"))
 #'                   
 #' }
 

@@ -1,7 +1,7 @@
 # phenocamr 1.1.1
 
 * small changes to download routine
-* ...
+* corrections of all unit test due to changes in the ROI naming convention
 
 # phenocamr 1.1.0
 

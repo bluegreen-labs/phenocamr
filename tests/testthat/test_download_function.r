@@ -5,7 +5,7 @@ test_that("check download options",{
   
   df = try(download_phenocam(site = "harvard$",
                          veg_type = "DB",
-                         roi_id = "1",
+                         roi_id = "1000",
                          frequency = 3,
                          smooth = TRUE,
                          outlier_detection = TRUE,
@@ -16,13 +16,13 @@ test_that("check download options",{
   
   df_raw = try(download_phenocam(site = "harvard$",
                              veg_type = "DB",
-                             roi_id = "1",
+                             roi_id = "1000",
                              frequency = "roistats",
                              out_dir = tempdir()))
   
   df_daymet = try(download_phenocam(site = "harvard$",
                              veg_type = "DB",
-                             roi_id = "1",
+                             roi_id = "1000",
                              frequency = 3,
                              smooth = TRUE,
                              outlier_detection = FALSE,
@@ -33,7 +33,7 @@ test_that("check download options",{
   
   df_contract = try(download_phenocam(site = "harvard$",
                                     veg_type = "DB",
-                                    roi_id = "1",
+                                    roi_id = "1000",
                                     frequency = 3,
                                     smooth = FALSE,
                                     contract = TRUE,
@@ -44,7 +44,7 @@ test_that("check download options",{
   
   df_false = try(download_phenocam(site = "harvard$",
                              veg_type = "DB",
-                             roi_id = "1",
+                             roi_id = "1000",
                              frequency = 3,
                              smooth = FALSE,
                              outlier_detection = FALSE,

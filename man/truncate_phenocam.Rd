@@ -31,12 +31,12 @@ be deprecated in the future.
 # download demo data
 download_phenocam(site = "harvard$",
                   veg_type = "DB",
-                  roi_id = "1",
+                  roi_id = "1000",
                   frequency = "3")
                   
 # overwrites the original file, increasing
 # decreasing the file size, with given year as maximum.
-truncate_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv"),
+truncate_phenocam(file.paste(tempdir(),"harvard_DB_1000_3day.csv"),
                   year = 2015)
 }
 }

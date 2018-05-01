@@ -20,11 +20,11 @@
 #' # download demo data
 #' download_phenocam(site = "harvard$",
 #'                   veg_type = "DB",
-#'                   roi_id = "1",
+#'                   roi_id = "1000",
 #'                   frequency = "3")
 #'
 #' # merge data with daymet data
-#' merge_daymet(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
+#' merge_daymet(file.path(tempdir(),"harvard_DB_1000_3day.csv"))
 #' }
 
 merge_daymet  = function(data,

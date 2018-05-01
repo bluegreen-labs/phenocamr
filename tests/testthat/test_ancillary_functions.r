@@ -14,7 +14,7 @@ test_that("check ancillary routines",{
   # download initial data
   df = try(download_phenocam(site = "harvard$",
                          veg_type = "DB",
-                         roi_id = "1",
+                         roi_id = "1000",
                          frequency = 3,
                          outlier_detection = FALSE,
                          smooth = TRUE,
@@ -22,32 +22,32 @@ test_that("check ancillary routines",{
   
   # transtion dates routine
   png(paste0(tempdir(),"/harvard_test.png"),900,900)
-  transitions = try(transition_dates(paste0(tempdir(),"/harvard_DB_0001_3day.csv"),
+  transitions = try(transition_dates(paste0(tempdir(),"/harvard_DB_1000_3day.csv"),
                                      plot = TRUE))
   dev.off()
   
   # test truncate
-  truncate = try(truncate_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv"),
+  truncate = try(truncate_phenocam(paste0(tempdir(),"/harvard_DB_1000_3day.csv"),
                                    year = 2015))
   
   # test outlier routine
   png(paste0(tempdir(),"/harvard_test.png"),900,900)
-  outliers = try(detect_outliers(paste0(tempdir(),"/harvard_DB_0001_3day.csv"),
+  outliers = try(detect_outliers(paste0(tempdir(),"/harvard_DB_1000_3day.csv"),
                                  plot = TRUE,
                                  snowflag = TRUE))
   dev.off()
   
   # test expand
-  expand = try(expand_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv")))
+  expand = try(expand_phenocam(paste0(tempdir(),"/harvard_DB_1000_3day.csv")))
   
   # smooth test
-  smooth = try(smooth_ts(paste0(tempdir(),"/harvard_DB_0001_3day.csv")))
+  smooth = try(smooth_ts(paste0(tempdir(),"/harvard_DB_1000_3day.csv")))
   
   # test contract
-  contract = try(contract_phenocam(paste0(tempdir(),"/harvard_DB_0001_3day.csv")))
+  contract = try(contract_phenocam(paste0(tempdir(),"/harvard_DB_1000_3day.csv")))
   
   # test grvi routine
-  grvi_test = try(grvi(paste0(tempdir(),"/harvard_DB_0001_3day.csv")))
+  grvi_test = try(grvi(paste0(tempdir(),"/harvard_DB_1000_3day.csv")))
 
   # check daylength routine
   dl = try(daylength(doy = 180,

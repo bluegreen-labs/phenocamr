@@ -23,12 +23,12 @@
 #' # download demo data (do not detect outliers)
 #' download_phenocam(site = "harvard$",
 #'                   veg_type = "DB",
-#'                   roi_id = "1",
+#'                   roi_id = "1000",
 #'                   frequency = "3",
 #'                   outlier_detection = FALSE)
 #'
 #' # detect outliers in the downloaded file
-#' detect_outliers(paste0(tempdir(),"/harvard_DB_0001_3day.csv"))
+#' detect_outliers(file.path(tempdir(),"harvard_DB_1000_3day.csv"))
 #'
 #' }
 
