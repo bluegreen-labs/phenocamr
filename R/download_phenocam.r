@@ -157,12 +157,14 @@ download_phenocam = function(site = "harvard$",
         cat("Flagging outliers! \n")
 
         # detect outliers
-        df = try(suppressWarnings(detect_outliers(df)),
+        df.tmp = try(suppressWarnings(detect_outliers(df)),
                                       silent = TRUE)
 
         # trap errors
-        if(inherits(df,"try-error")){
+        if(inherits(df.tmp,"try-error")){
           cat("--failed \n")
+        }else{
+          df <- df.tmp
         }
       }
       
@@ -172,12 +174,14 @@ download_phenocam = function(site = "harvard$",
         cat("Smoothing time series! \n")
         
         # smooth time series
-        df = try(suppressWarnings(smooth_ts(df)),
+        df.tmp = try(suppressWarnings(smooth_ts(df)),
                                       silent = TRUE)
 
         # trap errors
-        if(inherits(df,"try-error")){
+        if(inherits(df.tmp,"try-error")){
           warning("smoothing failed...")
+        }else{
+          df <- df.tmp
         }
       }
 
@@ -206,13 +210,15 @@ download_phenocam = function(site = "harvard$",
         cat("Merging Daymet Data! \n")
 
         # merge daymet data into the time series file
-        df = try(merge_daymet(df,
+        df.tmp = try(merge_daymet(df,
                               trim = trim_daymet),
                      silent = TRUE)
 
         # trap errors
-        if(inherits(df,"try-error")){
+        if(inherits(df.tmp,"try-error")){
           warning("merging daymet data failed...")
+        }else{
+          df <- df.tmp
         }
       }
       
@@ -223,12 +229,14 @@ download_phenocam = function(site = "harvard$",
         cat("Contracting Data! \n")
         
         # merge daymet data into the time series file
-        df = try(contract_phenocam(df),
+        df.tmp = try(contract_phenocam(df),
                  silent = TRUE)
         
         # trap errors
-        if(inherits(df,"try-error")){
+        if(inherits(df.tmp,"try-error")){
           warning("contracting data failed...")
+        }else{
+          df <- df.tmp
         }
       }
       
