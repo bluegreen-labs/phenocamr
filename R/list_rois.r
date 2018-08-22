@@ -18,15 +18,26 @@
 list_rois <- function(out_dir = tempdir(),
                        internal = TRUE){
   
-  # donwload the data
-  roi_data <- jsonlite::fromJSON("https://phenocam.sr.unh.edu/webcam/roi/roilistinfo/")
- 
+  # download json data using httr
+  error = try(httr::content(httr::GET(url = "https://phenocam.sr.unh.edu/webcam/roi/roilistinfo/",
+                        httr::timeout(30)),
+                        "text",
+                        encoding = "UTF-8"))
+  
+  if (inherits(error, "try-error")){
+    stop("Download of ROI list failed, timeout or server error...")
+  }
+  
+  # row bind the json list and replace
+  # NULL values with NA
+  roi_data = jsonlite::fromJSON(error)
+
   # output according to parameters
   if(internal){
     return(roi_data)
   } else {
    utils::write.table(roi_data,
-                      paste0(tempdir(),"/roi_data.csv"),
+                      file.path(out_dir, "roi_data.csv"),
                       col.names = TRUE,
                       row.names = FALSE,
                       quote = FALSE) 
