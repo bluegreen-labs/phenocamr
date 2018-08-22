@@ -1,8 +1,10 @@
 # phenocamr 1.1.1
 
 * package version requirement for daymetr (>= 1.3.2) due to Daymet server changes
-* adding in r-hub checks for common platforms
+* adding in r-hub checks for common platforms (osx, windows)
 * move from curl to httr for stable Windows support
+* fixed AICc1 formula error
+* syntax, documentation fixes
 
 # phenocamr 1.1.0
 
