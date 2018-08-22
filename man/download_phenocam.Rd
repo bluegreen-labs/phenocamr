@@ -4,10 +4,11 @@
 \alias{download_phenocam}
 \title{Function to download and post-process PhenoCam time series}
 \usage{
-download_phenocam(site = "harvard$", veg_type = NULL, frequency = "3",
-  roi_id = NULL, outlier_detection = TRUE, smooth = TRUE,
-  contract = FALSE, daymet = FALSE, trim_daymet = TRUE, trim = NULL,
-  phenophase = FALSE, out_dir = tempdir())
+download_phenocam(site = "harvard$", veg_type = NULL,
+  frequency = "3", roi_id = NULL, outlier_detection = TRUE,
+  smooth = TRUE, contract = FALSE, daymet = FALSE,
+  trim_daymet = TRUE, trim = NULL, phenophase = FALSE,
+  out_dir = tempdir())
 }
 \arguments{
 \item{site}{the site name, as mentioned on the PhenoCam web page expressed

@@ -4,7 +4,8 @@
 \alias{phenophases}
 \title{Calculates phenophases, for rising and falling parts of a time series}
 \usage{
-phenophases(data, mat = NULL, internal = TRUE, out_dir = tempdir(), ...)
+phenophases(data, mat = NULL, internal = TRUE, out_dir = tempdir(),
+  ...)
 }
 \arguments{
 \item{data}{a PhenoCam data file (or data frame)}

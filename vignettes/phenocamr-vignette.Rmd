@@ -32,18 +32,18 @@ Below I describe the most common use of the package, downloading recent PhenoCam
 
 ### Select a site
 
-To select a site first download an overview meta-data table of all available sites together with their ROI id's and vegetation type and a limited set of meta-data parameters.
-
-```{r eval = TRUE}
-rois <- list_rois()
-print(head(rois))
-```
-
 A full list of meta-data for all sites can be queried using the list_sites() function.
 
 ```{r eval = TRUE}
 sites <- list_sites()
 print(head(sites))
+```
+
+To select a site first download an overview meta-data table of all available sites together with their ROI id's and vegetation type and a limited set of meta-data parameters.
+
+```{r eval = TRUE}
+rois <- list_rois()
+print(head(rois))
 ```
 
 ### Download a PhenoCam time series.

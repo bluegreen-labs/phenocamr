@@ -4,7 +4,8 @@
 \alias{truncate_phenocam}
 \title{Truncate a PhenoCam time series}
 \usage{
-truncate_phenocam(data, year = 2015, internal = TRUE, out_dir = tempdir())
+truncate_phenocam(data, year = 2015, internal = TRUE,
+  out_dir = tempdir())
 }
 \arguments{
 \item{data}{a PhenoCam file or data frame}

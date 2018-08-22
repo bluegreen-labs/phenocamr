@@ -2,6 +2,11 @@
 
 # download routine
 test_that("check download options",{
+
+  # instigate once, needed on windows
+  # checks for some reason otherwise
+  # the connection is slow
+  list_rois()
   
   df = try(download_phenocam(site = "harvard$",
                          veg_type = "DB",
@@ -13,13 +18,13 @@ test_that("check download options",{
                          daymet = FALSE,
                          trim_daymet = FALSE,
                          out_dir = tempdir()))
-  
+
   df_raw = try(download_phenocam(site = "harvard$",
                              veg_type = "DB",
                              roi_id = "1000",
                              frequency = "roistats",
                              out_dir = tempdir()))
-  
+
   df_daymet = try(download_phenocam(site = "harvard$",
                              veg_type = "DB",
                              roi_id = "1000",
@@ -30,7 +35,7 @@ test_that("check download options",{
                              daymet = TRUE,
                              trim_daymet = TRUE,
                              out_dir = tempdir()))
-  
+
   df_contract = try(download_phenocam(site = "harvard$",
                                     veg_type = "DB",
                                     roi_id = "1000",
@@ -41,7 +46,7 @@ test_that("check download options",{
                                     phenophase = FALSE,
                                     daymet = FALSE,
                                     out_dir = tempdir()))
-  
+
   df_false = try(download_phenocam(site = "harvard$",
                              veg_type = "DB",
                              roi_id = "1000",
@@ -52,14 +57,14 @@ test_that("check download options",{
                              daymet = FALSE,
                              trim_daymet = FALSE,
                              out_dir = tempdir()))
-  
+
   # see if any of the runs failed
   check = !inherits(df,"try-error") &
           !inherits(df_raw,"try-error") &
           !inherits(df_false, "try-error") &
           !inherits(df_contract, "try-error") &
           !inherits(df_daymet,"try-error")
-  
+
   # check if no error occured
   expect_true(check)
 })

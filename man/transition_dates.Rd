@@ -5,8 +5,8 @@
 \title{Calculates transition dates for a PhenoCam time series}
 \usage{
 transition_dates(data, lower_thresh = 0.1, middle_thresh = 0.25,
-  upper_thresh = 0.5, percentile = 90, penalty = 0.5, seg_length = 14,
-  reverse = FALSE, plot = FALSE)
+  upper_thresh = 0.5, percentile = 90, penalty = 0.5,
+  seg_length = 14, reverse = FALSE, plot = FALSE)
 }
 \arguments{
 \item{data}{a PhenoCam data file or data structure}
