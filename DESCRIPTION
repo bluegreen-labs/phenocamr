@@ -14,25 +14,25 @@ Depends:
     R (>= 3.4.0),
 Imports:
     shiny,
-    shinydashboard,
-    leaflet,
-    plotly,
     jsonlite,
     changepoint,
-    curl,
+    httr,
     zoo,
     utils,
     graphics,
-    DT,
     stats,
     daymetr
 Suggests:
     covr,
     testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    shinydashboard,
+    leaflet,
+    plotly,
+    DT
 License: AGPL-3
 LazyData: true
 ByteCompile: true
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 VignetteBuilder: knitr

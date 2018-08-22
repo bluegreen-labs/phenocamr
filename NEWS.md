@@ -1,7 +1,8 @@
 # phenocamr 1.1.1
 
-* small changes to download routine
-* corrections of all unit test due to changes in the ROI naming convention
+* package version requirement for daymetr (>= 1.3.2) due to Daymet server changes
+* adding in r-hub checks for common platforms
+* move from curl to httr for stable Windows support
 
 # phenocamr 1.1.0
 
