@@ -130,7 +130,7 @@ transition_dates = function(data,
   # small, no pattern will be detected, output empty data frame
   # this is a parameter
   #if (sd(raw_data, na.rm = TRUE) < 0.003) {
-  #  cat("Too little seasonal variability, not reporting any values \n")
+  #  message("Too little seasonal variability, not reporting any values")
   #  return(err_function())
   #}
 

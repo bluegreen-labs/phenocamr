@@ -11,7 +11,7 @@ test_that("check download options",{
   df = try(download_phenocam(site = "harvard$",
                          veg_type = "DB",
                          roi_id = "1000",
-                         frequency = 3,
+                         frequency = 1,
                          smooth = TRUE,
                          outlier_detection = TRUE,
                          phenophase = TRUE,
@@ -57,13 +57,26 @@ test_that("check download options",{
                              daymet = FALSE,
                              trim_daymet = FALSE,
                              out_dir = tempdir()))
+  
+  df_internal = try(download_phenocam(site = "harvard$",
+                                   veg_type = "DB",
+                                   roi_id = "1000",
+                                   frequency = 3,
+                                   smooth = FALSE,
+                                   outlier_detection = FALSE,
+                                   phenophase = FALSE,
+                                   daymet = FALSE,
+                                   trim_daymet = FALSE,
+                                   out_dir = tempdir(),
+                                   internal = TRUE))
 
   # see if any of the runs failed
   check = !inherits(df,"try-error") &
           !inherits(df_raw,"try-error") &
           !inherits(df_false, "try-error") &
           !inherits(df_contract, "try-error") &
-          !inherits(df_daymet,"try-error")
+          !inherits(df_daymet,"try-error") &
+          !inherits(df_internal,"try-error")
 
   # check if no error occured
   expect_true(check)
