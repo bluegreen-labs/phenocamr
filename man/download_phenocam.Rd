@@ -8,7 +8,7 @@ download_phenocam(site = "harvard$", veg_type = NULL,
   frequency = "3", roi_id = NULL, outlier_detection = TRUE,
   smooth = TRUE, contract = FALSE, daymet = FALSE,
   trim_daymet = TRUE, trim = NULL, phenophase = FALSE,
-  out_dir = tempdir())
+  out_dir = tempdir(), internal = FALSE)
 }
 \arguments{
 \item{site}{the site name, as mentioned on the PhenoCam web page expressed
@@ -36,6 +36,8 @@ as a regular expression ("harvard$" == exact match)}
 
 \item{out_dir}{output directory where to store downloaded data 
 (default = tempdir())}
+
+\item{internal}{allow for the data element to be returned to the workspace}
 }
 \value{
 Downloaded files in out_dir of requested time series products, as well
