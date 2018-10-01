@@ -72,7 +72,7 @@ read_phenocam <- function(filename){
   
   # set frequency
   if(!grepl("ROI color", names(values[2]))){
-    frequency = ifelse(grepl("3day", names(values[2])), "3day", "1day")
+    frequency = ifelse(grepl("3-day", names(values[2])), "3day", "1day")
   } else {
     frequency = "roistats"
   }
