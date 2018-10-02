@@ -1,3 +1,8 @@
+# phenocamr 1.1.2
+
+* critical bug fix in contract_phenocam()
+* read_phenocam() allows "3" as a sitename component
+
 # phenocamr 1.1.1
 
 * package version requirement for daymetr (>= 1.3.2) due to Daymet server changes
