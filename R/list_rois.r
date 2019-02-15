@@ -19,18 +19,18 @@ list_rois <- function(out_dir = tempdir(),
                        internal = TRUE){
   
   # download json data using httr
-  error = try(httr::content(httr::GET(url = "https://phenocam.sr.unh.edu/webcam/roi/roilistinfo/",
-                        httr::timeout(30)),
-                        "text",
-                        encoding = "UTF-8"))
+  error <- httr::GET(url = server_rois(),
+                        httr::timeout(30))
   
-  if (inherits(error, "try-error")){
+  if (httr::http_error(error)){
     stop("Download of ROI list failed, timeout or server error...")
   }
   
   # row bind the json list and replace
   # NULL values with NA
-  roi_data = jsonlite::fromJSON(error)
+  roi_data <- jsonlite::fromJSON(
+    httr::content(error, "text", encoding = "UTF-8")
+    )
 
   # output according to parameters
   if(internal){

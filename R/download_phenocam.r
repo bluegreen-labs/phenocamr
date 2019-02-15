@@ -58,7 +58,7 @@ download_phenocam = function(site = "harvard$",
   }
   
   # get roi site listing
-  site_list = list_rois()
+  site_list <- list_rois()
   
   # check for server timeout
   if (inherits(site_list,"try-error")){
@@ -97,28 +97,18 @@ download_phenocam = function(site = "harvard$",
   }
 
   # subset the site list
-  site_list = site_list[loc,]
+  site_list <- site_list[loc,]
 
   # cycle through the selection
   for (i in 1:dim(site_list)[1]){
 
-    # create server string, the location of the site data
-    if (frequency == "roistats"){
-      data_location=sprintf("https://phenocam.sr.unh.edu/data/archive/%s/ROI",
-                            site_list$site[i])
-      filename = sprintf("%s_%s_%04d_roistats.csv",
-                         site_list$site[i],
-                         site_list$veg_type[i],
-                         site_list$roi_id_number[i])
-    } else {
-      data_location=sprintf("https://phenocam.sr.unh.edu/data/archive/%s/ROI",
-                            site_list$site[i])
-      filename = sprintf("%s_%s_%04d_%sday.csv",
-                         site_list$site[i],
-                         site_list$veg_type[i],
-                         site_list$roi_id_number[i],
-                         frequency)
-    }
+    # build url
+    url_info <- server_archive(frequency = frequency,
+                               site = site_list$site[i],
+                               veg_type = site_list$veg_type[i],
+                               roi_id_number = site_list$roi_id_number[i])
+    filename <- url_info$filename
+    data_location <- url_info$data_location
 
     # formulate output file location
     output_filename = file.path(out_dir, filename)
@@ -127,9 +117,10 @@ download_phenocam = function(site = "harvard$",
     message(sprintf("Downloading: %s", filename))
     
     # try to download the data
-    error = try(httr::GET(url = sprintf("%s/%s",data_location, filename),
-                          httr::timeout(15),
-                          httr::write_disk(path = output_filename, overwrite = TRUE)))
+    error = try(httr::GET(
+      url = sprintf("%s/%s",data_location, filename),
+      httr::timeout(15),
+      httr::write_disk(path = output_filename, overwrite = TRUE)))
     
     # trap errors on download, return a general error statement
     # with the most common causes

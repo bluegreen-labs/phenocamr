@@ -21,7 +21,7 @@ list_sites <- function(out_dir = tempdir(),
                        internal = TRUE){
   
   # download json data using httr
-  error = try(httr::content(httr::GET(url = "https://phenocam.sr.unh.edu/webcam/network/siteinfo/",
+  error = try(httr::content(httr::GET(url = server_lists(),
                                       httr::timeout(30)),
                             "text",
                             encoding = "UTF-8"))

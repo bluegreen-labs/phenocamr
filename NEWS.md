@@ -1,3 +1,9 @@
+# phenocamr 1.1.3
+
+* use of bartlett site in unit checks
+  * smaller files do not time out on CRAN
+* check server online status in unit checks
+
 # phenocamr 1.1.2
 
 * critical bug fix in contract_phenocam()
