@@ -2,6 +2,8 @@
 [![codecov](https://codecov.io/gh/khufkens/phenocamr/branch/master/graph/badge.svg)](https://codecov.io/gh/khufkens/phenocamr)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/phenocamr)](https://cran.r-project.org/package=phenocamr)
 ![CRAN\_Downloads](https://cranlogs.r-pkg.org/badges/grand-total/phenocamr)
+<a href="https://www.buymeacoffee.com/H2wlgqCLO" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" height="21px" ></a>
+<a href="https://liberapay.com/khufkens/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg" height="21px"></a>
 
 # phenocamr
 
