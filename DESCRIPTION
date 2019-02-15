@@ -21,6 +21,7 @@ Imports:
     utils,
     graphics,
     stats,
+    memoise,
     daymetr
 Suggests:
     covr,

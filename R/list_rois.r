@@ -15,8 +15,10 @@
 #' df <- list_rois()
 #' }
 
-list_rois <- function(out_dir = tempdir(),
-                       internal = TRUE){
+list_rois <- memoise::memoise(
+  function(
+    out_dir = tempdir(),
+    internal = TRUE){
   
   # download json data using httr
   error <- httr::GET(url = server_rois(),
@@ -42,4 +44,4 @@ list_rois <- function(out_dir = tempdir(),
                       row.names = FALSE,
                       quote = FALSE) 
   }
-}
+})
