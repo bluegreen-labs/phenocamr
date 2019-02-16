@@ -13,10 +13,10 @@ test_that("check download options",{
   # the connection is slow
   list_rois()
   
-  expect_message(download_phenocam(site = "bartlett$",
+  expect_message(download_phenocam(site = "queens$",
                          veg_type = "DB",
                          roi_id = "1000",
-                         frequency = 1,
+                         frequency = 3,
                          smooth = TRUE,
                          outlier_detection = TRUE,
                          phenophase = TRUE,
@@ -33,7 +33,7 @@ test_that("check download options",{
   expect_message(download_phenocam(site = "bartlett$",
                              veg_type = "DB",
                              roi_id = "1000",
-                             frequency = 3,
+                             frequency = 1,
                              smooth = TRUE,
                              outlier_detection = FALSE,
                              phenophase = FALSE,
