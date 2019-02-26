@@ -1,5 +1,4 @@
 # Phenocamr unit tests
-
 server_check <- phenocam_running(server_rois())
 
 # ancillary functions

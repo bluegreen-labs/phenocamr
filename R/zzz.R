@@ -32,8 +32,11 @@ server_archive <- function(frequency, site, veg_type, roi_id_number){
 
 # check if server is reachable
 # returns bolean TRUE if so
-phenocam_running <- function(url){
-  ct <- httr::GET(url)
+phenocam_running <- function(url = "http://phenocam.sr.unh.edu"){
+  ct <- try(httr::GET(url), silent = TRUE)
+  if(inherits(ct,"try-error")){
+    return(FALSE)
+  }
   if(ct$status_code > 400){
     FALSE  
   } else {

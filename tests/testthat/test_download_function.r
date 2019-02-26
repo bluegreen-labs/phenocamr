@@ -1,5 +1,4 @@
 # Phenocamr unit tests
-
 server_check <- phenocam_running(server_rois())
 
 # download routine
@@ -76,3 +75,4 @@ test_that("check download options",{
                                    internal = TRUE))
 
 })
+
