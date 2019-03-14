@@ -8,3 +8,5 @@
 ^NEWS\.md$
 ^LICENSE$
 ^docs$
+^phenocam-logo\.*$
+^.*-logo\\.
