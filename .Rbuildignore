@@ -9,4 +9,4 @@
 ^LICENSE$
 ^docs$
 ^phenocam-logo\.*$
-^.*-logo\\.
+^.*-logo\..*$
