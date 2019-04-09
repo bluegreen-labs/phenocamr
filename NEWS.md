@@ -1,3 +1,7 @@
+# phenocamr 1.1.4
+
+* adding local processing support with `process_phenocam()`
+
 # phenocamr 1.1.3
 
 * use of bartlett site in unit checks
