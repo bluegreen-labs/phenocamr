@@ -7,6 +7,8 @@ before_install:
     - sudo apt-get install --yes udunits-bin libudunits2-dev
     - sudo apt-get install --yes libproj-dev libgeos-dev libgdal-dev libgdal1-dev 
     - sudo apt-get install --yes libnetcdf-dev netcdf-bin
+    - R -e 'source("https://install-github.me/r-lib/remotes")'
+    
 r:
   - release
   - devel
