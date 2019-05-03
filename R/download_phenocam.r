@@ -51,7 +51,7 @@ download_phenocam = function(site = "harvard$",
                              phenophase = FALSE,
                              out_dir = tempdir(),
                              internal = FALSE){
-  
+
   # sanity check on frequency values
   if (!any(frequency %in% c("1","3","roistats"))){
     stop("No correct frequency provided...")
@@ -64,44 +64,44 @@ download_phenocam = function(site = "harvard$",
   if (inherits(site_list,"try-error")){
     stop("Downloading ROI list failed...")
   }
-  
+
   # is there a site name?
   # this excludes any geographic constraints
-  
+
   if (!is.null(site)){
     if (is.null(veg_type)){
       loc = grep(site, site_list$site)
     }else{
-      
+
       if (!is.null(roi_id)){
-        
+
         # list only particular vegetation types and rois
         loc = which( grepl(site,site_list$site) & site_list$veg_type %in% veg_type &
-                       site_list$roi_id_number %in% roi_id)
-        
+                      site_list$roi_id_number %in% roi_id)
+
       }else{
-        
+
         # list only vegetation types for all rois
         loc = which( grepl(site,site_list$site) & site_list$veg_type %in% veg_type)
-        
+
       }
     }
-    
+
   }else{
     stop("No site selected, at a minimum provide a site name")
   }
-  
+
   # if no valid files are detected stop any download attempts
   if (length(loc) == 0){
     stop("No files are available for download! \n",call.=TRUE)
   }
-  
+
   # subset the site list
   site_list <- site_list[loc,]
-  
+
   # cycle through the selection
   for (i in 1:dim(site_list)[1]){
-    
+
     # build url
     url_info <- server_archive(frequency = frequency,
                                site = site_list$site[i],
@@ -109,10 +109,10 @@ download_phenocam = function(site = "harvard$",
                                roi_id_number = site_list$roi_id_number[i])
     filename <- url_info$filename
     data_location <- url_info$data_location
-    
+
     # formulate output file location
     output_filename = file.path(out_dir, filename)
-    
+
     # download data + feedback
     message(sprintf("Downloading: %s", filename))
     
@@ -135,7 +135,7 @@ download_phenocam = function(site = "harvard$",
       if (frequency == "roistats"){
         next
       }
-      
+
       # read in data using read_phenocam to process all in memory
       df = read_phenocam(output_filename)
       
@@ -153,11 +153,11 @@ download_phenocam = function(site = "harvard$",
         
         # feedback
         message("-- Flagging outliers!")
-        
+
         # detect outliers
         df = try(suppressWarnings(detect_outliers(df)),
-                 silent = TRUE)
-        
+                                      silent = TRUE)
+
         # trap errors
         if(inherits(df, "try-error")){
           warning("outlier detection failed...")
@@ -171,43 +171,43 @@ download_phenocam = function(site = "harvard$",
         
         # smooth time series
         df = try(suppressWarnings(smooth_ts(df)),
-                 silent = TRUE)
-        
+                                      silent = TRUE)
+
         # trap errors
         if(inherits(df,"try-error")){
           warning("smoothing failed...")
         }
       }
-      
+
       # Output transition dates
       if (phenophase){
         
         # feedback
         message("-- Estimating transition dates!")
-        
+
         # smooth time series
         phenophase_check = try(suppressWarnings(phenophases(data = df,
-                                                            out_dir = out_dir,
-                                                            internal = FALSE)),
-                               silent = TRUE)
-        
+                                 out_dir = out_dir,
+                                 internal = FALSE)),
+                     silent = TRUE)
+
         # trap errors
         if(inherits(phenophase_check, "try-error")){
           warning("estimating transition dates failed...")
         }
       }
-      
+
       # merge with daymet
       if (daymet){
         
         # feedback
         message("-- Merging Daymet Data!")
-        
+
         # merge daymet data into the time series file
         df = try(merge_daymet(df,
                               trim = trim_daymet),
-                 silent = TRUE)
-        
+                     silent = TRUE)
+
         # trap errors
         if(inherits(df,"try-error")){
           warning("merging daymet data failed...")
