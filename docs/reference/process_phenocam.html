@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Calculates transition dates for a PhenoCam time series — transition_dates • phenocamr</title>
+<title>Function to post-process PhenoCam time series — process_phenocam • phenocamr</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,11 +30,9 @@
 
 
 
-<meta property="og:title" content="Calculates transition dates for a PhenoCam time series — transition_dates" />
+<meta property="og:title" content="Function to post-process PhenoCam time series — process_phenocam" />
 
-<meta property="og:description" content="Segments of a PhenoCam time series and calculates threshold based transition
-dates for all segments. This function is rarely called stand alone and
-`phenophases()` should be preferred when evaluating PhenoCam time series." />
+<meta property="og:description" content="Wrapper around other more basic funtions" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -111,86 +109,89 @@ dates for all segments. This function is rarely called stand alone and
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Calculates transition dates for a PhenoCam time series</h1>
+    <h1>Function to post-process PhenoCam time series</h1>
     
-    <div class="hidden name"><code>transition_dates.Rd</code></div>
+    <div class="hidden name"><code>process_phenocam.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Segments of a PhenoCam time series and calculates threshold based transition
-dates for all segments. This function is rarely called stand alone and
-`phenophases()` should be preferred when evaluating PhenoCam time series.</p>
+    <p>Wrapper around other more basic funtions</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>transition_dates</span>(<span class='no'>data</span>, <span class='kw'>lower_thresh</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>middle_thresh</span> <span class='kw'>=</span> <span class='fl'>0.25</span>,
-  <span class='kw'>upper_thresh</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>percentile</span> <span class='kw'>=</span> <span class='fl'>90</span>, <span class='kw'>penalty</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
-  <span class='kw'>seg_length</span> <span class='kw'>=</span> <span class='fl'>14</span>, <span class='kw'>reverse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>process_phenocam</span>(<span class='no'>file</span>, <span class='kw'>outlier_detection</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>smooth</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>contract</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>daymet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>trim_daymet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>trim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>phenophase</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>out_dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(),
+  <span class='kw'>internal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>snowflag</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
-      <td><p>a PhenoCam data file or data structure</p></td>
+      <th>file</th>
+      <td><p>1 or 3-day PhenoCam time series file path</p></td>
     </tr>
     <tr>
-      <th>lower_thresh</th>
-      <td><p>the minimum threshold used (default = 0.1)</p></td>
+      <th>outlier_detection</th>
+      <td><p>TRUE or FALSE, detect outliers</p></td>
     </tr>
     <tr>
-      <th>middle_thresh</th>
-      <td><p>the middle threshold used (default = 0.25)</p></td>
+      <th>smooth</th>
+      <td><p>smooth data (logical, default is <code>TRUE</code>)</p></td>
     </tr>
     <tr>
-      <th>upper_thresh</th>
-      <td><p>the maximum threshold used (default = 0.5)</p></td>
+      <th>contract</th>
+      <td><p>contract 3-day data (logical, default is <code>TRUE</code>)</p></td>
     </tr>
     <tr>
-      <th>percentile</th>
-      <td><p>time series percentiles to process (mean, 50, 75, 90)</p></td>
+      <th>daymet</th>
+      <td><p>TRUE or FALSE, merges the daymet data</p></td>
     </tr>
     <tr>
-      <th>penalty</th>
-      <td><p>how sensitive is the algorithm, lower is more sensitve (&lt; 0 )</p></td>
+      <th>trim_daymet</th>
+      <td><p>TRUE or FALSE, trims data to match PhenoCam data</p></td>
     </tr>
     <tr>
-      <th>seg_length</th>
-      <td><p>minimum length of a segment to be evaluated</p></td>
+      <th>trim</th>
+      <td><p>year (numeric) to which to constrain the output (default = <code>NULL</code>)</p></td>
     </tr>
     <tr>
-      <th>reverse</th>
-      <td><p>flip the direction of the processing</p></td>
+      <th>phenophase</th>
+      <td><p>logical, calculate transition dates (default = <code>FALSE</code>)</p></td>
     </tr>
     <tr>
-      <th>plot</th>
-      <td><p>plot for debugging purposes</p></td>
+      <th>out_dir</th>
+      <td><p>output directory where to store downloaded data 
+(default = tempdir())</p></td>
+    </tr>
+    <tr>
+      <th>internal</th>
+      <td><p>allow for the data element to be returned to the workspace</p></td>
+    </tr>
+    <tr>
+      <th>snowflag</th>
+      <td><p>integrate snow flags?</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Transition date estimates in UNIX time, including uncertainties
-and the threshold values estimated for each section of a time series.</p>
+    <p>Downloaded files in out_dir of requested time series products, as well
+as derived phenophase estimates based upon these time series.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-</div><div class='input'><span class='co'># download demo data</span>
+</div><div class='input'><span class='co'># download the first ROI time series for the Harvard PhenoCam site</span>
+<span class='co'># at an aggregation frequency of 3-days.</span>
 <span class='fu'><a href='download_phenocam.html'>download_phenocam</a></span>(<span class='kw'>site</span> <span class='kw'>=</span> <span class='st'>"harvard$"</span>,
                   <span class='kw'>veg_type</span> <span class='kw'>=</span> <span class='st'>"DB"</span>,
                   <span class='kw'>roi_id</span> <span class='kw'>=</span> <span class='st'>"1000"</span>,
                   <span class='kw'>frequency</span> <span class='kw'>=</span> <span class='st'>"3"</span>)</div><div class='output co'>#&gt; <span class='message'>Downloading: harvard_DB_1000_3day.csv</span></div><div class='output co'>#&gt; <span class='message'>-- Flagging outliers!</span></div><div class='output co'>#&gt; <span class='message'>-- Smoothing time series!</span></div><div class='input'>
-<span class='co'># read the data and calculate transition dates</span>
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read_phenocam.html'>read_phenocam</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/file.path'>file.path</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(),<span class='st'>"harvard_DB_1000_3day.csv"</span>))
-<span class='no'>my_dates</span> <span class='kw'>&lt;-</span> <span class='fu'>transition_dates</span>(<span class='no'>df</span>,
-                            <span class='kw'>lower_thresh</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
-                            <span class='kw'>middle_thresh</span> <span class='kw'>=</span> <span class='fl'>0.25</span>,
-                            <span class='kw'>upper_thresh</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
-                            <span class='kw'>percentile</span> <span class='kw'>=</span> <span class='fl'>90</span>,
-                            <span class='kw'>reverse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-                            <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div></pre>
+<span class='co'># read phenocam data into phenocamr data structure                  </span>
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>process_phenocam</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/file.path'>file.path</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(),<span class='st'>"harvard_DB_1000_3day.csv"</span>))</div><div class='output co'>#&gt; <span class='message'>-- Flagging outliers!</span></div><div class='output co'>#&gt; <span class='message'>-- Smoothing time series!</span></div><div class='input'>                  
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
