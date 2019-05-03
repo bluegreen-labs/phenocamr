@@ -13,6 +13,7 @@
 #' @param out_dir output directory where to store downloaded data 
 #' (default = tempdir())
 #' @param internal allow for the data element to be returned to the workspace
+#' @param snowflag integrate snow flags?
 #' @return Downloaded files in out_dir of requested time series products, as well
 #' as derived phenophase estimates based upon these time series.
 #' @keywords PhenoCam, Daymet, climate data, modelling, post-processing
@@ -42,7 +43,8 @@ process_phenocam <- function(
   trim = NULL,
   phenophase = FALSE,
   out_dir = tempdir(),
-  internal = FALSE
+  internal = FALSE,
+  snowflag = FALSE
 ){
   
   # check file
@@ -69,7 +71,7 @@ process_phenocam <- function(
     message("-- Flagging outliers!")
     
     # detect outliers
-    df = try(suppressWarnings(detect_outliers(df)),
+    df = try(suppressWarnings(detect_outliers(df, snowflag = snowflag)),
              silent = TRUE)
     
     # trap errors
