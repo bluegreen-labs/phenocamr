@@ -46,7 +46,7 @@ optimal_span = function(y,
 
     # calculate AICc1
     # as formulated by Clifford M. Hurvich; Jeffrey S. Simonoff; Chih-Ling Tsai (1998)
-    AICc1 = n*log(sigma2) + n* ( (delta1/delta2)*(n+enp)/(delta1^2/delta2)-2 )
+    AICc1 = n*log(sigma2) + n* ( (delta1/delta2)*(n+enp) / ((delta1^2/delta2)-2))
 
     if(is.na(AICc1) | is.infinite(AICc1)){
       return(NA)

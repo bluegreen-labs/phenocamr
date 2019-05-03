@@ -1,9 +1,18 @@
 # Phenocamr unit tests
+server_check <- phenocam_running(server_rois())
 
 # download routine
 test_that("check download options",{
+
+  # skip if server is down
+  skip_if_not(server_check)
   
-  df = try(download_phenocam(site = "harvard$",
+  # instigate once, needed on windows
+  # checks for some reason otherwise
+  # the connection is slow
+  list_rois()
+  
+  expect_message(download_phenocam(site = "queens$",
                          veg_type = "DB",
                          roi_id = "1000",
                          frequency = 3,
@@ -13,25 +22,25 @@ test_that("check download options",{
                          daymet = FALSE,
                          trim_daymet = FALSE,
                          out_dir = tempdir()))
-  
-  df_raw = try(download_phenocam(site = "harvard$",
+
+  expect_message(download_phenocam(site = "bartlett$",
                              veg_type = "DB",
                              roi_id = "1000",
                              frequency = "roistats",
                              out_dir = tempdir()))
-  
-  df_daymet = try(download_phenocam(site = "harvard$",
+
+  expect_message(download_phenocam(site = "bartlett$",
                              veg_type = "DB",
                              roi_id = "1000",
-                             frequency = 3,
+                             frequency = 1,
                              smooth = TRUE,
                              outlier_detection = FALSE,
                              phenophase = FALSE,
                              daymet = TRUE,
                              trim_daymet = TRUE,
                              out_dir = tempdir()))
-  
-  df_contract = try(download_phenocam(site = "harvard$",
+
+  expect_message(download_phenocam(site = "bartlett$",
                                     veg_type = "DB",
                                     roi_id = "1000",
                                     frequency = 3,
@@ -41,8 +50,8 @@ test_that("check download options",{
                                     phenophase = FALSE,
                                     daymet = FALSE,
                                     out_dir = tempdir()))
-  
-  df_false = try(download_phenocam(site = "harvard$",
+
+  df_false = try(download_phenocam(site = "bartlett$",
                              veg_type = "DB",
                              roi_id = "1000",
                              frequency = 3,
@@ -53,13 +62,17 @@ test_that("check download options",{
                              trim_daymet = FALSE,
                              out_dir = tempdir()))
   
-  # see if any of the runs failed
-  check = !inherits(df,"try-error") &
-          !inherits(df_raw,"try-error") &
-          !inherits(df_false, "try-error") &
-          !inherits(df_contract, "try-error") &
-          !inherits(df_daymet,"try-error")
-  
-  # check if no error occured
-  expect_true(check)
+  expect_message(download_phenocam(site = "bartlett$",
+                                   veg_type = "DB",
+                                   roi_id = "1000",
+                                   frequency = 3,
+                                   smooth = FALSE,
+                                   outlier_detection = FALSE,
+                                   phenophase = FALSE,
+                                   daymet = FALSE,
+                                   trim_daymet = FALSE,
+                                   out_dir = tempdir(),
+                                   internal = TRUE))
+
 })
+

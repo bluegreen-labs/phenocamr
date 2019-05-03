@@ -17,20 +17,33 @@
 #' df <- list_sites()
 #' }
 
-list_sites <- function(out_dir = tempdir(),
-                       internal = TRUE){
+list_sites <- memoise::memoise(
+  function(
+    out_dir = tempdir(),
+    internal = TRUE){
   
-  # donwload the data
-  meta_data <- jsonlite::fromJSON("https://phenocam.sr.unh.edu/webcam/network/siteinfo/")
+  # download json data using httr
+  error = try(httr::content(httr::GET(url = server_lists(),
+                                      httr::timeout(30)),
+                            "text",
+                            encoding = "UTF-8"))
+  
+  if (inherits(error, "try-error")){
+    stop("Download of ROI list failed, timeout or server error...")
+  }
+  
+  # row bind the json list and replace
+  # NULL values with NA
+  meta_data = jsonlite::fromJSON(error)
   
   # output according to parameters
   if(internal){
     return(meta_data)
   } else {
     utils::write.table(meta_data,
-                       paste0(tempdir(),"/site_meta_data.csv"),
+                       file.path(out_dir, "site_meta_data.csv"),
                        col.names = TRUE,
                        row.names = FALSE,
                        quote = FALSE) 
   }
-}
+})

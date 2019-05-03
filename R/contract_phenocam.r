@@ -5,14 +5,15 @@
 #' the cited data paper. This routine is used as a 
 #' post-production measure.
 #'
-#' @param data a phenocam data file with a 3 day time step
+#' @param data a phenocam data file with a 1 or 3 day time step
 #' @param internal return a data structure if given a file on disk
 #' (\code{TRUE} / \code{FALSE} = default) 
 #' @param no_padding allow for padding to REMAIN or not  
 #' (\code{TRUE} / \code{FALSE} = default)
 #' @param out_dir output directory where to store data (default = tempdir())
 #' @return A contracted PhenoCam 3-day time series to its original 3-day time
-#' step (if provided at a 1-day interval).
+#' step (if provided at a 1-day interval), also removes padding introduced
+#' by processing for 1-day data.
 #' @keywords time series, phenocam, post-processing
 #' @export
 #' @examples
@@ -51,11 +52,6 @@ contract_phenocam = function(data,
     }
   } else {
     on_disk = FALSE
-  }
-  
-  # sanity check, only contract 3-day data
-  if(data$frequency == "1day"){
-    stop("This is a 1-day file, will not be contracted to 3-day frequency ")
   }
   
   # split out data
