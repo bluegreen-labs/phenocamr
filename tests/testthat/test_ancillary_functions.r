@@ -1,87 +1,71 @@
 # Phenocamr unit tests
+server_check <- phenocam_running(server_rois())
 
 # ancillary functions
 test_that("check ancillary routines",{
-  
-  # test roi downloads
-  roi = try(list_rois())
-  roi_disk = try(list_rois(internal = FALSE))
+
+  # skip if server is down
+  skip_if_not(server_check)
   
   # test meta-data downloads
-  sites = try(list_sites())
-  sites_disk = try(list_sites(internal = FALSE))
+  expect_output(str(list_sites()))
+  expect_silent(list_sites(internal = FALSE))
+
+  # test roi downloads
+  expect_output(str(list_rois()))
+  expect_silent(list_rois(internal = FALSE))
   
   # download initial data
-  df = try(download_phenocam(site = "harvard$",
+  expect_message(download_phenocam(site = "bartlett$",
                          veg_type = "DB",
                          roi_id = "1000",
                          frequency = 3,
                          outlier_detection = FALSE,
                          smooth = TRUE,
                          out_dir = tempdir()))
-  
+
   # transtion dates routine
-  png(paste0(tempdir(),"/harvard_test.png"),900,900)
-  transitions = try(transition_dates(paste0(tempdir(),"/harvard_DB_1000_3day.csv"),
+  png(paste0(tempdir(),"/bartlett_test.png"),900,900)
+  expect_silent(transition_dates(paste0(tempdir(),"/bartlett_DB_1000_3day.csv"),
                                      plot = TRUE))
   dev.off()
-  
+
   # test truncate
-  truncate = try(truncate_phenocam(paste0(tempdir(),"/harvard_DB_1000_3day.csv"),
+  expect_silent(truncate_phenocam(paste0(tempdir(),"/bartlett_DB_1000_3day.csv"),
                                    year = 2015))
-  
+
   # test outlier routine
-  png(paste0(tempdir(),"/harvard_test.png"),900,900)
-  outliers = try(detect_outliers(paste0(tempdir(),"/harvard_DB_1000_3day.csv"),
+  png(paste0(tempdir(),"/bartlett_test.png"),900,900)
+  expect_silent(detect_outliers(paste0(tempdir(),"/bartlett_DB_1000_3day.csv"),
                                  plot = TRUE,
                                  snowflag = TRUE))
   dev.off()
-  
+
   # test expand
-  expand = try(expand_phenocam(paste0(tempdir(),"/harvard_DB_1000_3day.csv")))
-  
+  expect_silent(expand_phenocam(paste0(tempdir(),"/bartlett_DB_1000_3day.csv")))
+
   # smooth test
-  smooth = try(smooth_ts(paste0(tempdir(),"/harvard_DB_1000_3day.csv")))
-  
+  expect_silent(smooth_ts(paste0(tempdir(),"/bartlett_DB_1000_3day.csv")))
+
   # test contract
-  contract = try(contract_phenocam(paste0(tempdir(),"/harvard_DB_1000_3day.csv")))
-  
+  expect_silent(contract_phenocam(paste0(tempdir(),"/bartlett_DB_1000_3day.csv")))
+
   # test grvi routine
-  grvi_test = try(grvi(paste0(tempdir(),"/harvard_DB_1000_3day.csv")))
+  expect_silent(grvi(paste0(tempdir(),"/bartlett_DB_1000_3day.csv")))
 
   # check daylength routine
-  dl = try(daylength(doy = 180,
-                     latitude = 44))
-  
+  expect_output(str(daylength(doy = 180,
+                     latitude = 44)))
+
   # optimal span routine
   l = sin(seq(1,10,0.01))
   l = l + runif(length(l))
-  
-  png(paste0(tempdir(),"/harvard_test.png"),900,900)
-  os = try(optimal_span(l,
-                        plot = TRUE))
-  dev.off()
-  
-  os_w = try(optimal_span(l,
-                          weights = runif(length(l))))
 
-  # see if any of the runs failed
-  check = !inherits(roi,"try-error") &
-          !inherits(roi_disk,"try-error") &
-          !inherits(sites,"try-error") &
-          !inherits(sites_disk,"try-error") &
-          !inherits(df,"try-error") &
-          !inherits(truncate, "try-error") &
-          !inherits(outliers, "try-error") &
-          !inherits(transitions, "try-error") &
-          !inherits(expand, "try-error") &
-          !inherits(smooth, "try-error") &
-          !inherits(contract, "try-error") &
-          !inherits(dl, "try-error") &
-          !inherits(os, "try-error") &
-          !inherits(os_w, "try-error") &
-          !inherits(grvi_test, "try-error")
-  
-  # check if no error occured
-  expect_true(check)
+  png(paste0(tempdir(),"/bartlett_test.png"),900,900)
+  expect_warning(optimal_span(l,
+                             plot = TRUE))
+  dev.off()
+
+  expect_silent(optimal_span(l,
+                          weights = runif(length(l))))
 })

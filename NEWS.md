@@ -1,7 +1,25 @@
+# phenocamr 1.1.4
+
+* adding local processing support with `process_phenocam()`
+
+# phenocamr 1.1.3
+
+* use of bartlett site in unit checks
+  * smaller files do not time out on CRAN
+* check server online status in unit checks
+
+# phenocamr 1.1.2
+
+* critical bug fix in contract_phenocam()
+* read_phenocam() allows "3" as a sitename component
+
 # phenocamr 1.1.1
 
-* small changes to download routine
-* corrections of all unit test due to changes in the ROI naming convention
+* package version requirement for daymetr (>= 1.3.2) due to Daymet server changes
+* adding in r-hub checks for common platforms (osx, windows)
+* move from curl to httr for stable Windows support
+* fixed AICc1 formula error
+* syntax, documentation fixes
 
 # phenocamr 1.1.0
 

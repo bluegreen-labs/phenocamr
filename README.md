@@ -1,9 +1,11 @@
+# phenocamr <a href='https://khufkens.github.io/phenocamr/'><img src='phenocamr-logo.png' align="right" height="139" /></a>
+
 [![Build Status](https://travis-ci.org/khufkens/phenocamr.svg?branch=master)](https://travis-ci.org/khufkens/phenocamr)
 [![codecov](https://codecov.io/gh/khufkens/phenocamr/branch/master/graph/badge.svg)](https://codecov.io/gh/khufkens/phenocamr)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/phenocamr)](https://cran.r-project.org/package=phenocamr)
 ![CRAN\_Downloads](https://cranlogs.r-pkg.org/badges/grand-total/phenocamr)
-
-# phenocamr
+<a href="https://www.buymeacoffee.com/H2wlgqCLO" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" height="21px" ></a>
+<a href="https://liberapay.com/khufkens/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg" height="21px"></a>
 
 Facilitates the retrieval and post-processing of PhenoCam time series. The post-processing of PhenoCam data includes outlier removal and the generation of data products such as phenological transition dates. If requested complementary [Daymet climate data](https://daymet.ornl.gov/) will be downloaded and merged with the PhenoCam data for modelling purposes. For a detailed overview of the assumptions made during post-processing I refer publications by Hufkens et al. (2018) and Richardson et al. (2018). Please cite the Hufkens et al. (2018) paper when using the package. A worked example is included below and in the package vignette.
 
@@ -58,4 +60,5 @@ Richardson, A.D., Hufkens, K., Milliman, T., Aubrecht, D.M., Chen, M., Gray, J.M
 
 ## Acknowledgements
 
-This project was is supported by the National Science Foundation’s Macro-system Biology Program (awards EF-1065029 and EF-1702697).
+This project was is supported by the National Science Foundation’s Macro-system Biology Program (awards EF-1065029 and EF-1702697). Logo design elements are taken from the FontAwesome library according to [these terms](https://fontawesome.com/license).
+

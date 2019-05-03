@@ -5,8 +5,8 @@
 \title{Smooths a PhenoCam time series}
 \usage{
 smooth_ts(data, metrics = c("gcc_mean", "gcc_50", "gcc_75", "gcc_90",
-  "rcc_mean", "rcc_50", "rcc_75", "rcc_90"), force = TRUE, internal = TRUE,
-  out_dir = tempdir())
+  "rcc_mean", "rcc_50", "rcc_75", "rcc_90"), force = TRUE,
+  internal = TRUE, out_dir = tempdir())
 }
 \arguments{
 \item{data}{a PhenoCam data file or data structure}

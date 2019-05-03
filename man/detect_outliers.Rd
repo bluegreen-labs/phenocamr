@@ -5,7 +5,8 @@
 \title{Detect outliers in PhenoCam time series}
 \usage{
 detect_outliers(data, iterations = 20, sigma = 2, grvi = FALSE,
-  snowflag = FALSE, plot = FALSE, internal = TRUE, out_dir = tempdir())
+  snowflag = FALSE, plot = FALSE, internal = TRUE,
+  out_dir = tempdir())
 }
 \arguments{
 \item{data}{PhenoCam data structure or filename}

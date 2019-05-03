@@ -8,7 +8,7 @@ contract_phenocam(data, internal = TRUE, no_padding = FALSE,
   out_dir = tempdir())
 }
 \arguments{
-\item{data}{a phenocam data file with a 3 day time step}
+\item{data}{a phenocam data file with a 1 or 3 day time step}
 
 \item{internal}{return a data structure if given a file on disk
 (\code{TRUE} / \code{FALSE} = default)}
@@ -20,7 +20,8 @@ contract_phenocam(data, internal = TRUE, no_padding = FALSE,
 }
 \value{
 A contracted PhenoCam 3-day time series to its original 3-day time
-step (if provided at a 1-day interval).
+step (if provided at a 1-day interval), also removes padding introduced
+by processing for 1-day data.
 }
 \description{
 Reverts the `expand_phenocam()` function in order

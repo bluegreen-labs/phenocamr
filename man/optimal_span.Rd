@@ -4,8 +4,8 @@
 \alias{optimal_span}
 \title{Calculates the optimal span for a loess spline}
 \usage{
-optimal_span(y, x = NULL, weights = NULL, step = 0.01, label = NULL,
-  plot = FALSE)
+optimal_span(y, x = NULL, weights = NULL, step = 0.01,
+  label = NULL, plot = FALSE)
 }
 \arguments{
 \item{y}{a vector with measurement values to smooth}

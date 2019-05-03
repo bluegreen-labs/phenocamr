@@ -143,7 +143,7 @@ body <- dashboardBody(tags$head(tags$script(
     ),
     tabItem(# the about page
       tabName = "citation",
-      tabPanel("Citing Data", box(width = NULL, citation$value)))
+      tabPanel("Citing data", box(width = NULL, citation$value)))
   ))
 
 ui <- dashboardPage(skin = "green", header, sidebar, body)
