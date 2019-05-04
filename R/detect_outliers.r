@@ -261,19 +261,23 @@ detect_outliers = function(data,
       # gcc / bcc / rcc time series
       midday_gcc = df$midday_g / (df$midday_r + df$midday_g + df$midday_b)
       midday_bcc = df$midday_b / (df$midday_r + df$midday_g + df$midday_b)
+      
+      # also accounting for the days when there is snow flag data available
+      snowflagged_indices <- (df$snow_flag==1)  
+      snowflagged_indices[is.na(snowflagged_indices)] <- FALSE # treating NA's as no-snow
 
       # put everything back into the dataframe
       if (k == "mean"){
-        df$outlierflag_gcc_mean[midday_bcc > midday_gcc] = 1
+        df$outlierflag_gcc_mean[(midday_bcc > midday_gcc)|snowflagged_indices] = 1
       }
       if (k == 90){
-        df$outlierflag_gcc_90[midday_bcc > midday_gcc] = 1
+        df$outlierflag_gcc_90[(midday_bcc > midday_gcc)|snowflagged_indices] = 1
       }
       if (k == 75){
-        df$outlierflag_gcc_75[midday_bcc > midday_gcc] = 1
+        df$outlierflag_gcc_75[(midday_bcc > midday_gcc)|snowflagged_indices] = 1
       }
       if (k == 50){
-        df$outlierflag_gcc_50[midday_bcc > midday_gcc] = 1
+        df$outlierflag_gcc_50[(midday_bcc > midday_gcc)|snowflagged_indices] = 1
       }
     }
 
