@@ -18,7 +18,7 @@ detect_outliers(data, iterations = 20, sigma = 2, grvi = FALSE,
 \item{grvi}{reverse the direction of the screening intervals
 to accomodate for GRVI outliers}
 
-\item{snowflag}{integrate snow flags?}
+\item{snowflag}{use manual snow flag labels as outliers}
 
 \item{plot}{visualize the process, mostly for debugging
 (\code{TRUE} / \code{FALSE} = default)}
