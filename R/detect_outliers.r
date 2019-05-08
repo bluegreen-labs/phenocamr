@@ -13,7 +13,7 @@
 #' to accomodate for GRVI outliers
 #' @param plot visualize the process, mostly for debugging
 #' (\code{TRUE} / \code{FALSE} = default)
-#' @param snowflag integrate snow flags?
+#' @param snowflag use manual snow flag labels as outliers
 #' @param out_dir output directory where to store data 
 #' @keywords PhenoCam, outliers, post-processing
 #' @export
@@ -253,14 +253,10 @@ detect_outliers = function(data,
 
     } # loop over years
 
-    # Bcc > Gcc (a sign of snow / weather contamination).
+    # Only consider manual snow flag labels
     # This can be done outside the next yearly loop (vector operation)
     # optional using parameter
-    if (snowflag == TRUE){
-
-      # gcc / bcc / rcc time series
-      midday_gcc = df$midday_g / (df$midday_r + df$midday_g + df$midday_b)
-      midday_bcc = df$midday_b / (df$midday_r + df$midday_g + df$midday_b)
+    if (snowflag){
       
       # also accounting for the days when there is snow flag data available
       snowflagged_indices <- (df$snow_flag==1)  
@@ -268,16 +264,16 @@ detect_outliers = function(data,
 
       # put everything back into the dataframe
       if (k == "mean"){
-        df$outlierflag_gcc_mean[(midday_bcc > midday_gcc)|snowflagged_indices] = 1
+        df$outlierflag_gcc_mean[snowflagged_indices] = 1
       }
       if (k == 90){
-        df$outlierflag_gcc_90[(midday_bcc > midday_gcc)|snowflagged_indices] = 1
+        df$outlierflag_gcc_90[snowflagged_indices] = 1
       }
       if (k == 75){
-        df$outlierflag_gcc_75[(midday_bcc > midday_gcc)|snowflagged_indices] = 1
+        df$outlierflag_gcc_75[snowflagged_indices] = 1
       }
       if (k == 50){
-        df$outlierflag_gcc_50[(midday_bcc > midday_gcc)|snowflagged_indices] = 1
+        df$outlierflag_gcc_50[snowflagged_indices] = 1
       }
     }
 
