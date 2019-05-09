@@ -8,6 +8,7 @@
 #' @param force \code{TRUE} / \code{FALSE}, force reprocessing?
 #' @param internal return a data structure if given a file on disk
 #' (\code{TRUE} / \code{FALSE} = default)
+#' @param snow_flag use manual snow flag labels as outliers
 #' @param out_dir output directory where to store data 
 #' @return An PhenoCam data structure or file with optimally smoothed time series
 #' objects added to the original file. Smoothing is required for `phenophase()`
@@ -46,6 +47,7 @@ smooth_ts = function(data,
                                  "rcc_90"),
                      force = TRUE,
                      internal = TRUE,
+                     snow_flag = FALSE,
                      out_dir = tempdir()) {
 
   # if the data is not a data frame, load
@@ -213,7 +215,9 @@ smooth_ts = function(data,
     # values and snow flag data
     weights = rep(1,length(values))
     weights[na_orig] = 0.001
-    #weights[df$snow_flag == 1] = 0.001
+    
+    # df$snow_flag <- 0
+    if(snow_flag) weights[df$snow_flag == 1] = .01
     
     # smooth input series for plotting
     # set locations to NA which would otherwise not exist in the
