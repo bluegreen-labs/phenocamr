@@ -8,7 +8,7 @@ download_phenocam(site = "harvard$", veg_type = NULL,
   frequency = "3", roi_id = NULL, outlier_detection = TRUE,
   smooth = TRUE, contract = FALSE, daymet = FALSE,
   trim_daymet = TRUE, trim = NULL, phenophase = FALSE,
-  out_dir = tempdir(), internal = FALSE)
+  snow_weight = 1, out_dir = tempdir(), internal = FALSE)
 }
 \arguments{
 \item{site}{the site name, as mentioned on the PhenoCam web page expressed
@@ -33,6 +33,9 @@ as a regular expression ("harvard$" == exact match)}
 \item{trim}{year (numeric) to which to constrain the output (default = \code{NULL})}
 
 \item{phenophase}{logical, calculate transition dates (default = \code{FALSE})}
+
+\item{snow_weight}{weight given to snow flagged values, by default these are
+not down weighted in smoothing (default = 1)}
 
 \item{out_dir}{output directory where to store downloaded data 
 (default = tempdir())}

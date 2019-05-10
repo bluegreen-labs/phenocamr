@@ -86,7 +86,8 @@ process_phenocam <- function(
     message("-- Smoothing time series!")
     
     # smooth time series
-    df = try(suppressWarnings(smooth_ts(df)),
+    df = try(suppressWarnings(smooth_ts(df,
+                                        snowflag = snowflag)),
              silent = TRUE)
     
     # trap errors
