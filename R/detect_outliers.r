@@ -13,7 +13,7 @@
 #' to accomodate for GRVI outliers
 #' @param plot visualize the process, mostly for debugging
 #' (\code{TRUE} / \code{FALSE} = default)
-#' @param snowflag use manual snow flag labels as outliers
+#' @param snow_flag use manual snow flag labels as outliers
 #' @param out_dir output directory where to store data 
 #' @keywords PhenoCam, outliers, post-processing
 #' @export
@@ -36,7 +36,7 @@ detect_outliers = function(data,
                            iterations=20,
                            sigma = 2,
                            grvi = FALSE,
-                           snowflag = FALSE,
+                           snow_flag = FALSE,
                            plot = FALSE,
                            internal = TRUE,
                            out_dir = tempdir()){
@@ -256,10 +256,10 @@ detect_outliers = function(data,
     # Only consider manual snow flag labels
     # This can be done outside the next yearly loop (vector operation)
     # optional using parameter
-    if (snowflag){
-      
-      # also accounting for the days when there is snow flag data available
-      snowflagged_indices <- (df$snow_flag==1)  
+    if (snow_flag&FALSE){  # temporary disabling snow_flag here, as making more trouble now, snow flag is now applied as weights
+    
+      # accounting for the days when there is snow flag data available
+      snowflagged_indices <- (df$snow_flag==1)
       snowflagged_indices[is.na(snowflagged_indices)] <- FALSE # treating NA's as no-snow
 
       # put everything back into the dataframe

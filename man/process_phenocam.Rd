@@ -7,7 +7,7 @@
 process_phenocam(file, outlier_detection = TRUE, smooth = TRUE,
   contract = FALSE, daymet = FALSE, trim_daymet = TRUE,
   trim = NULL, phenophase = FALSE, out_dir = tempdir(),
-  internal = FALSE, snowflag = FALSE)
+  internal = FALSE, snow_flag = FALSE)
 }
 \arguments{
 \item{file}{1 or 3-day PhenoCam time series file path}
@@ -31,7 +31,7 @@ process_phenocam(file, outlier_detection = TRUE, smooth = TRUE,
 
 \item{internal}{allow for the data element to be returned to the workspace}
 
-\item{snowflag}{integrate snow flags?}
+\item{snow_flag}{integrate snow flags?}
 }
 \value{
 Downloaded files in out_dir of requested time series products, as well

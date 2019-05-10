@@ -21,6 +21,7 @@ smooth_ts(data, metrics = c("gcc_mean", "gcc_50", "gcc_75", "gcc_90",
 \item{snow_weight}{weight given to snow flagged values, by default these are
 not down weighted in smoothing (default = 1)}
 
+
 \item{out_dir}{output directory where to store data}
 }
 \value{

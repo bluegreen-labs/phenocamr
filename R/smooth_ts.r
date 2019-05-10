@@ -217,7 +217,7 @@ smooth_ts = function(data,
     weights = rep(1,length(values))
     weights[na_orig] = 0.001
     weights[df$snow_flag == 1] = snow_weight
-    
+   
     # smooth input series for plotting
     # set locations to NA which would otherwise not exist in the
     # 3-day product, as not to inflate the number of measurements

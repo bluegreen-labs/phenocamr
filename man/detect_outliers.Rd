@@ -5,7 +5,7 @@
 \title{Detect outliers in PhenoCam time series}
 \usage{
 detect_outliers(data, iterations = 20, sigma = 2, grvi = FALSE,
-  snowflag = FALSE, plot = FALSE, internal = TRUE,
+  snow_flag = FALSE, plot = FALSE, internal = TRUE,
   out_dir = tempdir())
 }
 \arguments{
@@ -18,7 +18,7 @@ detect_outliers(data, iterations = 20, sigma = 2, grvi = FALSE,
 \item{grvi}{reverse the direction of the screening intervals
 to accomodate for GRVI outliers}
 
-\item{snowflag}{use manual snow flag labels as outliers}
+\item{snow_flag}{use manual snow flag labels as outliers}
 
 \item{plot}{visualize the process, mostly for debugging
 (\code{TRUE} / \code{FALSE} = default)}
