@@ -256,7 +256,7 @@ detect_outliers = function(data,
     # Only consider manual snow flag labels
     # This can be done outside the next yearly loop (vector operation)
     # optional using parameter
-    if (snow_flag&FALSE){  # temporary disabling snow_flag here, as making more trouble now, snow flag is now applied as weights
+    if (snow_flag){  
     
       # accounting for the days when there is snow flag data available
       snowflagged_indices <- (df$snow_flag==1)
