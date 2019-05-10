@@ -103,6 +103,7 @@ optimal_span = function(y,
          xlab = 'value',
          ylab = 'Gcc',
          type = 'p',
+         col = 'grey',
          pch = 19,
          main = label)
     
