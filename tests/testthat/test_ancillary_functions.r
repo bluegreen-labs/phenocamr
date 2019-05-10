@@ -38,7 +38,7 @@ test_that("check ancillary routines",{
   png(paste0(tempdir(),"/bartlett_test.png"),900,900)
   expect_silent(detect_outliers(paste0(tempdir(),"/bartlett_DB_1000_3day.csv"),
                                  plot = TRUE,
-                                 snowflag = TRUE))
+                                 snow_flag = TRUE))
   dev.off()
 
   # test expand
