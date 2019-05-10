@@ -239,7 +239,8 @@ smooth_ts = function(data,
       optim_span = suppressWarnings(
                       optimal_span(x = as.numeric(dates),
                                    y = gap_filled,
-                                   plot = FALSE))
+                                   plot = TRUE,
+                                   label = i))
 
       fit = suppressWarnings(
               stats::loess(gap_filled ~ as.numeric(dates),
