@@ -45,8 +45,10 @@ optimal_span = function(y,
     enp = x$enp
 
     # calculate AICc1
-    # as formulated by Clifford M. Hurvich; Jeffrey S. Simonoff; Chih-Ling Tsai (1998)
-    AICc1 = n*log(sigma2) + n* ( (delta1/delta2)*(n+enp) / ((delta1^2/delta2)-2))
+    # as formulated by Clifford M. Hurvich;
+    # Jeffrey S. Simonoff; Chih-Ling Tsai (1998)
+    AICc1 = n*log(sigma2) + n* ( (delta1/delta2)*(n+enp) /
+                                   ((delta1^2/delta2)-2))
 
     if(is.na(AICc1) | is.infinite(AICc1)){
       return(NA)
@@ -107,12 +109,16 @@ optimal_span = function(y,
     col = grDevices::rainbow(length(span),alpha = 0.5)
     
     for (i in 1:length(span)){
-      fit = stats::loess(y ~ as.numeric(x),
-                  span = span[i])
-      graphics::lines(fit$x,
-            fit$fitted,
-            lwd = 1,
-            col = col[i])
+      fit <- try(stats::loess(y ~ as.numeric(x),
+                  span = span[i]),
+          silent = TRUE)
+      
+      if(!inherits(fit, "try-error")){
+        graphics::lines(fit$x,
+                        fit$fitted,
+                        lwd = 1,
+                        col = col[i])  
+      }
     }
     
     fit = stats::loess(y ~ as.numeric(x),

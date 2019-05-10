@@ -6,7 +6,7 @@
 \usage{
 smooth_ts(data, metrics = c("gcc_mean", "gcc_50", "gcc_75", "gcc_90",
   "rcc_mean", "rcc_50", "rcc_75", "rcc_90"), force = TRUE,
-  internal = TRUE, snow_flag = FALSE, out_dir = tempdir())
+  internal = TRUE, snow_weight = 1, out_dir = tempdir())
 }
 \arguments{
 \item{data}{a PhenoCam data file or data structure}
@@ -18,7 +18,9 @@ smooth_ts(data, metrics = c("gcc_mean", "gcc_50", "gcc_75", "gcc_90",
 \item{internal}{return a data structure if given a file on disk
 (\code{TRUE} / \code{FALSE} = default)}
 
-\item{snow_flag}{use manual snow flag labels as outliers}
+\item{snow_weight}{weight given to snow flagged values, by default these are
+not down weighted in smoothing (default = 1)}
+
 
 \item{out_dir}{output directory where to store data}
 }

@@ -16,6 +16,8 @@
 #' @param outlier_detection TRUE or FALSE, detect outliers
 #' @param trim year (numeric) to which to constrain the output (default = \code{NULL})
 #' @param phenophase logical, calculate transition dates (default = \code{FALSE})
+#' @param snow_weight weight given to snow flagged values, by default these are
+#' not down weighted in smoothing (default = 1)
 #' @param out_dir output directory where to store downloaded data 
 #' (default = tempdir())
 #' @param internal allow for the data element to be returned to the workspace
@@ -49,6 +51,7 @@ download_phenocam = function(site = "harvard$",
                              trim_daymet = TRUE,
                              trim = NULL,
                              phenophase = FALSE,
+                             snow_weight = 1,
                              out_dir = tempdir(),
                              internal = FALSE){
 
@@ -172,7 +175,8 @@ download_phenocam = function(site = "harvard$",
         message("-- Smoothing time series!")
         
         # smooth time series
-        df.tmp = try(suppressWarnings(smooth_ts(df)),
+        df.tmp = try(suppressWarnings(smooth_ts(df,
+                                                snow_weight = snow_weight)),
                                       silent = TRUE)
 
         # trap errors
