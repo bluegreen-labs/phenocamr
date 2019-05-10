@@ -16,6 +16,7 @@
 #' @param outlier_detection TRUE or FALSE, detect outliers
 #' @param trim year (numeric) to which to constrain the output (default = \code{NULL})
 #' @param phenophase logical, calculate transition dates (default = \code{FALSE})
+#' @param snow_flag use manual snow flag labels as outliers
 #' @param snow_weight weight given to snow flagged values, by default these are
 #' not down weighted in smoothing (default = 1)
 #' @param out_dir output directory where to store downloaded data 
@@ -52,6 +53,7 @@ download_phenocam = function(site = "harvard$",
                              trim = NULL,
                              phenophase = FALSE,
                              snow_weight = 1,
+                             snow_flag = FALSE,
                              out_dir = tempdir(),
                              internal = FALSE){
 
@@ -158,7 +160,8 @@ download_phenocam = function(site = "harvard$",
         message("-- Flagging outliers!")
 
         # detect outliers
-        df.tmp = try(suppressWarnings(detect_outliers(df)),
+        df.tmp = try(suppressWarnings(detect_outliers(df, 
+                                                      snow_flag = snow_flag)),
                                       silent = TRUE)
 
         # trap errors

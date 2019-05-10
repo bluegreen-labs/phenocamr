@@ -7,7 +7,7 @@
 process_phenocam(file, outlier_detection = TRUE, smooth = TRUE,
   contract = FALSE, daymet = FALSE, trim_daymet = TRUE,
   trim = NULL, phenophase = FALSE, out_dir = tempdir(),
-  internal = FALSE, snow_flag = FALSE)
+  internal = FALSE, snow_flag = FALSE, snow_weight = 1)
 }
 \arguments{
 \item{file}{1 or 3-day PhenoCam time series file path}
@@ -32,6 +32,9 @@ process_phenocam(file, outlier_detection = TRUE, smooth = TRUE,
 \item{internal}{allow for the data element to be returned to the workspace}
 
 \item{snow_flag}{integrate snow flags?}
+
+\item{snow_weight}{weight given to snow flagged values, by default these are
+not down weighted in smoothing (default = 1)}
 }
 \value{
 Downloaded files in out_dir of requested time series products, as well

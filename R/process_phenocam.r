@@ -14,6 +14,8 @@
 #' (default = tempdir())
 #' @param internal allow for the data element to be returned to the workspace
 #' @param snow_flag integrate snow flags?
+#' @param snow_weight weight given to snow flagged values, by default these are
+#' not down weighted in smoothing (default = 1)
 #' @return Downloaded files in out_dir of requested time series products, as well
 #' as derived phenophase estimates based upon these time series.
 #' @keywords PhenoCam, Daymet, climate data, modelling, post-processing
@@ -44,7 +46,8 @@ process_phenocam <- function(
   phenophase = FALSE,
   out_dir = tempdir(),
   internal = FALSE,
-  snow_flag = FALSE
+  snow_flag = FALSE, 
+  snow_weight = 1
 ){
   
   # check file
@@ -71,12 +74,15 @@ process_phenocam <- function(
     message("-- Flagging outliers!")
     
     # detect outliers
-    df = try(suppressWarnings(detect_outliers(df, snow_flag = snow_flag)),
+    df.tmp = try(suppressWarnings(detect_outliers(df, 
+                                              snow_flag = snow_flag)),
              silent = TRUE)
     
     # trap errors
-    if(inherits(df, "try-error")){
+    if(inherits(df.tmp, "try-error")){
       warning("outlier detection failed...")
+    }else{
+      df <- df.tmp
     }
   }
   
@@ -86,12 +92,15 @@ process_phenocam <- function(
     message("-- Smoothing time series!")
     
     # smooth time series
-    df = try(suppressWarnings(smooth_ts(df)),
+    df.tmp = try(suppressWarnings(smooth_ts(df, 
+                                        snow_weight = snow_weight)),
              silent = TRUE)
     
     # trap errors
-    if(inherits(df,"try-error")){
+    if(inherits(df.tmp,"try-error")){
       warning("smoothing failed...")
+    }else{
+      df <- df.tmp
     }
   }
   
@@ -121,13 +130,15 @@ process_phenocam <- function(
     message("-- Merging Daymet Data!")
     
     # merge daymet data into the time series file
-    df = try(merge_daymet(df,
+    df.tmp = try(merge_daymet(df,
                           trim = trim_daymet),
              silent = TRUE)
     
     # trap errors
-    if(inherits(df,"try-error")){
+    if(inherits(df.tmp,"try-error")){
       warning("merging daymet data failed...")
+    }else{
+      df <- df.tmp
     }
   }
   
@@ -138,12 +149,14 @@ process_phenocam <- function(
     message("-- Contracting Data!")
     
     # merge daymet data into the time series file
-    df = try(contract_phenocam(df),
+    df.tmp = try(contract_phenocam(df),
              silent = TRUE)
     
     # trap errors
-    if(inherits(df,"try-error")){
+    if(inherits(df.tmp,"try-error")){
       warning("contracting data failed...")
+    }else{
+      dt <- df.tmp
     }
   }
   
