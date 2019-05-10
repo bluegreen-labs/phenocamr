@@ -226,7 +226,7 @@ smooth_ts = function(data,
       optim_span = suppressWarnings(
         optimal_span(x = as.numeric(dates[loc]),
                      y = gap_filled[loc],
-                     plot = TRUE,
+                     plot = FALSE,
                      label = i)) # label plot metric (i.e. gcc, rcc)
       
       fit = suppressWarnings(
@@ -239,7 +239,7 @@ smooth_ts = function(data,
       optim_span = suppressWarnings(
                       optimal_span(x = as.numeric(dates),
                                    y = gap_filled,
-                                   plot = TRUE,
+                                   plot = FALSE,
                                    label = i))
 
       fit = suppressWarnings(
