@@ -6,7 +6,8 @@
 \usage{
 smooth_ts(data, metrics = c("gcc_mean", "gcc_50", "gcc_75", "gcc_90",
   "rcc_mean", "rcc_50", "rcc_75", "rcc_90"), force = TRUE,
-  internal = TRUE, snow_weight = 1, out_dir = tempdir())
+  internal = TRUE, span = NULL, snow_weight = 1,
+  save_gcc90 = FALSE, out_dir = tempdir())
 }
 \arguments{
 \item{data}{a PhenoCam data file or data structure}
@@ -18,8 +19,12 @@ smooth_ts(data, metrics = c("gcc_mean", "gcc_50", "gcc_75", "gcc_90",
 \item{internal}{return a data structure if given a file on disk
 (\code{TRUE} / \code{FALSE} = default)}
 
+\item{span}{customized span list or variable, default is NULL}
+
 \item{snow_weight}{weight given to snow flagged values, by default these are
 not down weighted in smoothing (default = 1)}
+
+\item{save_gcc90}{whether to save the plot output for gcc_90 timeseries (as a test)}
 
 \item{out_dir}{output directory where to store data}
 }

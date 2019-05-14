@@ -7,7 +7,8 @@
 process_phenocam(file, outlier_detection = TRUE, smooth = TRUE,
   contract = FALSE, daymet = FALSE, trim_daymet = TRUE,
   trim = NULL, phenophase = FALSE, out_dir = tempdir(),
-  internal = FALSE, snow_flag = FALSE, snow_weight = 1)
+  internal = FALSE, snow_flag = FALSE, snow_weight = 1,
+  save_gcc90 = FALSE, span = NULL)
 }
 \arguments{
 \item{file}{1 or 3-day PhenoCam time series file path}
@@ -35,6 +36,10 @@ process_phenocam(file, outlier_detection = TRUE, smooth = TRUE,
 
 \item{snow_weight}{weight given to snow flagged values, by default these are
 not down weighted in smoothing (default = 1)}
+
+\item{save_gcc90}{whether to save the plot output for gcc_90 timeseries (as a test)}
+
+\item{span}{customized span list or variable, default is NULL}
 }
 \value{
 Downloaded files in out_dir of requested time series products, as well

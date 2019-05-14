@@ -4,7 +4,7 @@
 \alias{optimal_span}
 \title{Calculates the optimal span for a loess spline}
 \usage{
-optimal_span(y, x = NULL, weights = NULL, step = 0.01,
+optimal_span(y, x = NULL, weights = NULL, step = 0.01, span = NULL,
   label = NULL, plot = FALSE)
 }
 \arguments{
@@ -15,6 +15,8 @@ optimal_span(y, x = NULL, weights = NULL, step = 0.01,
 \item{weights}{optional values to weigh the loess fit with}
 
 \item{step}{span increment size}
+
+\item{span}{customized span list or variable. if NULL, it would be set by step}
 
 \item{label}{title to be used when plotting function output}
 
