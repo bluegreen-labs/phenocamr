@@ -244,7 +244,7 @@ smooth_ts = function(data,
                      y = gap_filled[loc],
                      weights = weights[loc],
                      span = span,
-                     plot = (i=='gcc_90'),
+                     plot = save_gcc90&(i=='gcc_90'),
                      label = i)) # label plot metric (i.e. gcc, rcc)
       
       fit = suppressWarnings(
@@ -259,7 +259,7 @@ smooth_ts = function(data,
                      y = gap_filled,
                      span = span,
                      weights = weights,
-                     plot = (i=='gcc_90'),
+                     plot = save_gcc90&(i=='gcc_90'),
                      label = i))
       
       
