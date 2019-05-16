@@ -5,7 +5,7 @@
 \title{Calculates the optimal span for a loess spline}
 \usage{
 optimal_span(y, x = NULL, weights = NULL, step = 0.01, span = NULL,
-  label = NULL, plot = FALSE)
+  label = NULL, plot = FALSE, weights_as_n = FALSE)
 }
 \arguments{
 \item{y}{a vector with measurement values to smooth}
@@ -21,6 +21,8 @@ optimal_span(y, x = NULL, weights = NULL, step = 0.01, span = NULL,
 \item{label}{title to be used when plotting function output}
 
 \item{plot}{plot visual output of the optimization routine}
+
+\item{weights_as_n}{whether to use sum of the weights in AIC formula}
 }
 \value{
 Returns an optimal span to smooth a provided vector using 

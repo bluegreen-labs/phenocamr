@@ -7,7 +7,7 @@
 smooth_ts(data, metrics = c("gcc_mean", "gcc_50", "gcc_75", "gcc_90",
   "rcc_mean", "rcc_50", "rcc_75", "rcc_90"), force = TRUE,
   internal = TRUE, span = NULL, snow_weight = 1,
-  save_gcc90 = FALSE, out_dir = tempdir())
+  save_gcc90 = FALSE, weights_as_n = FALSE, out_dir = tempdir())
 }
 \arguments{
 \item{data}{a PhenoCam data file or data structure}
@@ -25,6 +25,8 @@ smooth_ts(data, metrics = c("gcc_mean", "gcc_50", "gcc_75", "gcc_90",
 not down weighted in smoothing (default = 1)}
 
 \item{save_gcc90}{whether to save the plot output for gcc_90 timeseries (as a test)}
+
+\item{weights_as_n}{whether to use sum of the weights in AIC formula}
 
 \item{out_dir}{output directory where to store data}
 }
