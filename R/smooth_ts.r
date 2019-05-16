@@ -13,6 +13,7 @@
 #' @param out_dir output directory where to store data 
 #' @param span customized span list or variable, default is NULL
 #' @param save_gcc90 whether to save the plot output for gcc_90 timeseries (as a test)
+#' @param weights_as_n whether to use sum of the weights in AIC formula
 #' @return An PhenoCam data structure or file with optimally smoothed time series
 #' objects added to the original file. Smoothing is required for `phenophase()`
 #' and `transition_dates()` functions.
@@ -53,6 +54,7 @@ smooth_ts = function(data,
                      span = NULL,
                      snow_weight = 1,
                      save_gcc90 = FALSE,
+                     weights_as_n = FALSE,
                      out_dir = tempdir()) {
   
   # if the data is not a data frame, load
@@ -245,6 +247,7 @@ smooth_ts = function(data,
                      weights = weights[loc],
                      span = span,
                      plot = save_gcc90&(i=='gcc_90'),
+                     weights_as_n = weights_as_n, 
                      label = i)) # label plot metric (i.e. gcc, rcc)
       
       fit = suppressWarnings(
@@ -260,6 +263,7 @@ smooth_ts = function(data,
                      span = span,
                      weights = weights,
                      plot = save_gcc90&(i=='gcc_90'),
+                     weights_as_n = weights_as_n, 
                      label = i))
       
       

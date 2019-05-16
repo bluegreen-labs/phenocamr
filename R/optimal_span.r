@@ -10,6 +10,7 @@
 #' @param span customized span list or variable. if NULL, it would be set by step
 #' @param label title to be used when plotting function output
 #' @param plot plot visual output of the optimization routine
+#' @param weights_as_n whether to use sum of the weights in AIC formula
 #' @return Returns an optimal span to smooth a provided vector using 
 #' the `loess()` smoother.
 #' @keywords smoother, span, loess, time series
@@ -29,7 +30,9 @@ optimal_span = function(y,
                         step = 0.01,
                         span = NULL,
                         label = NULL,
-                        plot = FALSE){
+                        plot = FALSE,
+                        weights_as_n = FALSE
+                        ){
   
   # parameter range
   # manual span range
@@ -44,6 +47,9 @@ optimal_span = function(y,
     
     # extract loess object parameters
     n = x$n
+    
+    if(weights_as_n) n = sum(weights)
+    
     traceL = x$trace.hat
     sigma2 = sum( x$residuals^2 ) / (n-1)
     delta1 = x$one.delta
@@ -110,7 +116,7 @@ optimal_span = function(y,
          pch = 19,
          main = label)
     
-    col = grDevices::rainbow(length(span),alpha = 0.5)
+    col = grDevices::rainbow(length(span), alpha = 0.5)
     
     for (i in 1:length(span)){
       

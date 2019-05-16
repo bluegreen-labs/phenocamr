@@ -18,6 +18,7 @@
 #' not down weighted in smoothing (default = 1)
 #' @param span customized span list or variable, default is NULL
 #' @param save_gcc90 whether to save the plot output for gcc_90 timeseries (as a test)
+#' @param weights_as_n whether to use sum of the weights in AIC formula
 #' @return Downloaded files in out_dir of requested time series products, as well
 #' as derived phenophase estimates based upon these time series.
 #' @keywords PhenoCam, Daymet, climate data, modelling, post-processing
@@ -51,6 +52,7 @@ process_phenocam <- function(
   snow_flag = FALSE, 
   snow_weight = 1,
   save_gcc90 = FALSE,
+  weights_as_n = FALSE,
   span = NULL
 ){
   
@@ -99,6 +101,7 @@ process_phenocam <- function(
     df.tmp = try(suppressWarnings(smooth_ts(df, 
                                             span = span,
                                             save_gcc90 = save_gcc90,
+                                            weights_as_n = weights_as_n,
                                             snow_weight = snow_weight)),
                  silent = TRUE)
     
