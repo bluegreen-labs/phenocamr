@@ -7,8 +7,10 @@
 #' @param x a vector with dates / time steps
 #' @param weights optional values to weigh the loess fit with
 #' @param step span increment size
+#' @param span customized span list or variable. if NULL, it would be set by step
 #' @param label title to be used when plotting function output
 #' @param plot plot visual output of the optimization routine
+#' @param weights_as_n whether to use sum of the weights in AIC formula
 #' @return Returns an optimal span to smooth a provided vector using 
 #' the `loess()` smoother.
 #' @keywords smoother, span, loess, time series
@@ -26,56 +28,66 @@ optimal_span = function(y,
                         x = NULL,
                         weights = NULL,
                         step = 0.01,
+                        span = NULL,
                         label = NULL,
-                        plot = FALSE){
-
+                        plot = FALSE,
+                        weights_as_n = FALSE
+                        ){
+  
+  # parameter range
+  # manual span range
+  if(is.null(span)) span = seq(0.01, 0.5, by = step)
+  
   # custom AIC function which accepts loess regressions
   myAIC = function(x){
-
+    
     if (!(inherits(x, "loess"))){
       stop("Error: argument must be a loess object")
     }
-
+    
     # extract loess object parameters
     n = x$n
+    
+    if(weights_as_n) n = sum(weights)
+    
     traceL = x$trace.hat
     sigma2 = sum( x$residuals^2 ) / (n-1)
     delta1 = x$one.delta
     delta2 = x$two.delta
     enp = x$enp
-
+    
     # calculate AICc1
     # as formulated by Clifford M. Hurvich;
     # Jeffrey S. Simonoff; Chih-Ling Tsai (1998)
     AICc1 = n*log(sigma2) + n* ( (delta1/delta2)*(n+enp) /
                                    ((delta1^2/delta2)-2))
-
+    
     if(is.na(AICc1) | is.infinite(AICc1)){
       return(NA)
     }else{
       return(AICc1)
     }
   }
-
+  
   # create numerator if there is none
   if (is.null(x)){
     x = 1:length(y)
   }
-
+  
   # return AIC for a loess function with a given span
   loessAIC = function(span){
     # check if there are weights, if so use them
     if ( is.null(weights) ){
       fit = suppressWarnings(try(stats::loess(y ~ as.numeric(x),
-                                       span = span),
+                                              span = span),
                                  silent = TRUE))
     } else {
       fit = suppressWarnings(try(stats::loess(y ~ as.numeric(x),
-                                       span = span, 
-                                       weights = weights),
+                                              span = span, 
+                                              weights = weights),
                                  silent = TRUE))
     }
-
+    
     # check if the fit failed if so return NA
     if (inherits(fit, "try-error")){
       return(NA)
@@ -83,10 +95,7 @@ optimal_span = function(y,
       return(myAIC(fit))
     }
   }
-
-  # parameter range
-  span = seq(0.01, 1, by = step)
-
+  
   # temporary AIC matrix, lapply loop
   # (instead of for loop) cleaner syntax
   tmp = unlist(lapply(span, loessAIC))
@@ -103,15 +112,25 @@ optimal_span = function(y,
          xlab = 'value',
          ylab = 'Gcc',
          type = 'p',
+         col = 'grey',
          pch = 19,
          main = label)
     
-    col = grDevices::rainbow(length(span),alpha = 0.5)
+    col = grDevices::rainbow(length(span), alpha = 0.5)
     
     for (i in 1:length(span)){
-      fit <- try(stats::loess(y ~ as.numeric(x),
-                  span = span[i]),
-          silent = TRUE)
+      
+      # check if there are weights, if so use them
+      if(is.null(weights)){
+        fit <- try(stats::loess(y ~ as.numeric(x),
+                                span = span[i]),
+                   silent = TRUE)
+      }else{
+        fit <- try(stats::loess(y ~ as.numeric(x),
+                                weights =weights, 
+                                span = span[i]),
+                   silent = TRUE)
+      }
       
       if(!inherits(fit, "try-error")){
         graphics::lines(fit$x,
@@ -121,14 +140,21 @@ optimal_span = function(y,
       }
     }
     
-    fit = stats::loess(y ~ as.numeric(x),
-                span = opt_span)
+    # check if there are weights, if so use them
+    if(is.null(weights)){
+      fit = stats::loess(y ~ as.numeric(x),
+                         span = opt_span)
+    }else{
+      fit = stats::loess(y ~ as.numeric(x),
+                         weights =weights, 
+                         span = opt_span)
+    }
     
     graphics::lines(fit$x,
-          fit$fitted,
-          lwd = 3,
-          col = 'black',
-          lty = 1)
+                    fit$fitted,
+                    lwd = 3,
+                    col = 'black',
+                    lty = 1)
     
     plot(span,
          tmp,
@@ -140,7 +166,7 @@ optimal_span = function(y,
     graphics::abline(v = opt_span,col = 'black')
     
   }
-
+  
   # trap error and return optimal span
   if (is.na(opt_span)) {
     return(NULL)
