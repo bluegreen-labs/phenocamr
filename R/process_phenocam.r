@@ -87,9 +87,6 @@ process_phenocam <- function(
       detect_outliers(df)),
              silent = TRUE)
 
-    print(str(df))
-    
-        
     # trap errors
     if(inherits(df, "try-error")){
       warning("outlier detection failed...")
@@ -155,6 +152,6 @@ process_phenocam <- function(
   if(!internal){
     write_phenocam(df, out_dir = out_dir)
   }else {
-    return(df)    
+    return(df)
   }
 }
