@@ -19,7 +19,7 @@ transition_dates(data, lower_thresh = 0.1, middle_thresh = 0.25,
 
 \item{percentile}{time series percentiles to process (mean, 50, 75, 90)}
 
-\item{penalty}{how sensitive is the algorithm, lower is more sensitve (< 0 )}
+\item{penalty}{how sensitive is the algorithm, lower is more sensitve (< 1 )}
 
 \item{seg_length}{minimum length of a segment to be evaluated}
 

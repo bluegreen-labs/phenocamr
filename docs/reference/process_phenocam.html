@@ -32,7 +32,8 @@
 
 <meta property="og:title" content="Function to post-process PhenoCam time series — process_phenocam" />
 
-<meta property="og:description" content="Wrapper around other more basic funtions" />
+<meta property="og:description" content="Wrapper around other more basic funtions, in order to generate phenocam
+data products." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -116,14 +117,15 @@
 
     <div class="ref-description">
     
-    <p>Wrapper around other more basic funtions</p>
+    <p>Wrapper around other more basic funtions, in order to generate phenocam
+data products.</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>process_phenocam</span>(<span class='no'>file</span>, <span class='kw'>outlier_detection</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>smooth</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>contract</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>daymet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>trim_daymet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>trim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>phenophase</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>out_dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(),
-  <span class='kw'>internal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>snowflag</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>contract</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>expand</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>truncate</span>, <span class='kw'>phenophase</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>snow_flag</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>penalty</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>out_dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(),
+  <span class='kw'>internal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -142,23 +144,26 @@
     </tr>
     <tr>
       <th>contract</th>
-      <td><p>contract 3-day data (logical, default is <code>TRUE</code>)</p></td>
+      <td><p>contract 3-day data upon output
+(logical, default is <code>TRUE</code>)</p></td>
     </tr>
     <tr>
-      <th>daymet</th>
-      <td><p>TRUE or FALSE, merges the daymet data</p></td>
+      <th>expand</th>
+      <td><p>expand 3-day data upon input 
+(logical, default is <code>TRUE</code>)</p></td>
     </tr>
     <tr>
-      <th>trim_daymet</th>
-      <td><p>TRUE or FALSE, trims data to match PhenoCam data</p></td>
-    </tr>
-    <tr>
-      <th>trim</th>
-      <td><p>year (numeric) to which to constrain the output (default = <code>NULL</code>)</p></td>
+      <th>truncate</th>
+      <td><p>year (numeric) to which to constrain the output</p></td>
     </tr>
     <tr>
       <th>phenophase</th>
       <td><p>logical, calculate transition dates (default = <code>FALSE</code>)</p></td>
+    </tr>
+    <tr>
+      <th>penalty</th>
+      <td><p>how sensitive is the change point algorithm, lower is more
+sensitve (&lt; 1, default = 0.5)</p></td>
     </tr>
     <tr>
       <th>out_dir</th>
@@ -190,7 +195,7 @@ as derived phenophase estimates based upon these time series.</p>
                   <span class='kw'>roi_id</span> <span class='kw'>=</span> <span class='st'>"1000"</span>,
                   <span class='kw'>frequency</span> <span class='kw'>=</span> <span class='st'>"3"</span>)</div><div class='output co'>#&gt; <span class='message'>Downloading: harvard_DB_1000_3day.csv</span></div><div class='output co'>#&gt; <span class='message'>-- Flagging outliers!</span></div><div class='output co'>#&gt; <span class='message'>-- Smoothing time series!</span></div><div class='input'>
 <span class='co'># read phenocam data into phenocamr data structure                  </span>
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>process_phenocam</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/file.path'>file.path</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(),<span class='st'>"harvard_DB_1000_3day.csv"</span>))</div><div class='output co'>#&gt; <span class='message'>-- Flagging outliers!</span></div><div class='output co'>#&gt; <span class='message'>-- Smoothing time series!</span></div><div class='input'>                  
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>process_phenocam</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/file.path'>file.path</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(),<span class='st'>"harvard_DB_1000_3day.csv"</span>))</div><div class='output co'>#&gt; <span class='message'>Processing file: /tmp/RtmpsQedSM/harvard_DB_1000_3day.csv</span></div><div class='output co'>#&gt; <span class='error'>Error in process_phenocam(file.path(tempdir(), "harvard_DB_1000_3day.csv")): argument "truncate" is missing, with no default</span></div><div class='input'>                  
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

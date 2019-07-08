@@ -1,6 +1,7 @@
 # phenocamr 1.1.4
 
 * adding local processing support with `process_phenocam()`
+* ensuring phenocamr classes are maintained between processing steps
 * additional bug fixes and error traps
 
 # phenocamr 1.1.3

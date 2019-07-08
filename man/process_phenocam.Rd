@@ -5,9 +5,9 @@
 \title{Function to post-process PhenoCam time series}
 \usage{
 process_phenocam(file, outlier_detection = TRUE, smooth = TRUE,
-  contract = FALSE, daymet = FALSE, trim_daymet = TRUE,
-  trim = NULL, phenophase = FALSE, out_dir = tempdir(),
-  internal = FALSE, snowflag = FALSE)
+  contract = FALSE, expand = TRUE, truncate, phenophase = TRUE,
+  snow_flag = FALSE, penalty = 0.5, out_dir = tempdir(),
+  internal = FALSE)
 }
 \arguments{
 \item{file}{1 or 3-day PhenoCam time series file path}
@@ -16,15 +16,18 @@ process_phenocam(file, outlier_detection = TRUE, smooth = TRUE,
 
 \item{smooth}{smooth data (logical, default is \code{TRUE})}
 
-\item{contract}{contract 3-day data (logical, default is \code{TRUE})}
+\item{contract}{contract 3-day data upon output
+(logical, default is \code{TRUE})}
 
-\item{daymet}{TRUE or FALSE, merges the daymet data}
+\item{expand}{expand 3-day data upon input 
+(logical, default is \code{TRUE})}
 
-\item{trim_daymet}{TRUE or FALSE, trims data to match PhenoCam data}
-
-\item{trim}{year (numeric) to which to constrain the output (default = \code{NULL})}
+\item{truncate}{year (numeric) to which to constrain the output}
 
 \item{phenophase}{logical, calculate transition dates (default = \code{FALSE})}
+
+\item{penalty}{how sensitive is the change point algorithm, lower is more
+sensitve (< 1, default = 0.5)}
 
 \item{out_dir}{output directory where to store downloaded data 
 (default = tempdir())}
@@ -38,7 +41,8 @@ Downloaded files in out_dir of requested time series products, as well
 as derived phenophase estimates based upon these time series.
 }
 \description{
-Wrapper around other more basic funtions
+Wrapper around other more basic funtions, in order to generate phenocam
+data products.
 }
 \examples{
 

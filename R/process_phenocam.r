@@ -1,19 +1,23 @@
 #' Function to post-process PhenoCam time series
 #' 
-#' Wrapper around other more basic funtions
+#' Wrapper around other more basic funtions, in order to generate phenocam
+#' data products.
 #'
 #' @param file 1 or 3-day PhenoCam time series file path
 #' @param smooth smooth data (logical, default is \code{TRUE})
-#' @param daymet TRUE or FALSE, merges the daymet data
-#' @param contract contract 3-day data (logical, default is \code{TRUE})
-#' @param trim_daymet TRUE or FALSE, trims data to match PhenoCam data
+#' @param contract contract 3-day data upon output
+#' (logical, default is \code{TRUE})
+#' @param expand expand 3-day data upon input 
+#' (logical, default is \code{TRUE})
 #' @param outlier_detection TRUE or FALSE, detect outliers
-#' @param trim year (numeric) to which to constrain the output (default = \code{NULL})
+#' @param truncate year (numeric) to which to constrain the output
 #' @param phenophase logical, calculate transition dates (default = \code{FALSE})
 #' @param out_dir output directory where to store downloaded data 
 #' (default = tempdir())
 #' @param internal allow for the data element to be returned to the workspace
 #' @param snowflag integrate snow flags?
+#' @param penalty how sensitive is the change point algorithm, lower is more
+#' sensitve (< 1, default = 0.5)
 #' @return Downloaded files in out_dir of requested time series products, as well
 #' as derived phenophase estimates based upon these time series.
 #' @keywords PhenoCam, Daymet, climate data, modelling, post-processing
@@ -38,13 +42,13 @@ process_phenocam <- function(
   outlier_detection = TRUE,
   smooth = TRUE,
   contract = FALSE,
-  daymet = FALSE,
-  trim_daymet = TRUE,
-  trim = NULL,
-  phenophase = FALSE,
+  expand = TRUE,
+  truncate,
+  phenophase = TRUE,
+  snow_flag = FALSE,
+  penalty = 0.5,
   out_dir = tempdir(),
-  internal = FALSE,
-  snowflag = FALSE
+  internal = FALSE
 ){
   
   # check file
@@ -53,15 +57,23 @@ process_phenocam <- function(
   }
   
   # read in data using read_phenocam to process all in memory
-  df = read_phenocam(file)
+  message(paste0("Processing file: ", file))
+  df <- read_phenocam(file)
   
-  # always expand the time series to get maximal
+  # By default always contract files to start the processing
+  # to avoid including previously padded areas
+  df <- contract_phenocam(df)
+  
+  # Expand the time series to get maximal
   # phenophase date resolution as well as additional
   # padding around the ends - 90 days
-  if(!is.null(trim) & is.numeric(trim)){
-    df = expand_phenocam(df, truncate = trim)
-  } else {
-    df = expand_phenocam(df)
+  if(expand){
+    if(!missing(truncate) & is.numeric(truncate)){
+      df <- expand_phenocam(df,
+                           truncate = truncate)
+    } else {
+      df <- expand_phenocam(df)
+    }
   }
   
   # remove outliers (overwrites original file)
@@ -71,9 +83,13 @@ process_phenocam <- function(
     message("-- Flagging outliers!")
     
     # detect outliers
-    df = try(suppressWarnings(detect_outliers(df, snowflag = snowflag)),
+    df <- try(suppressWarnings(
+      detect_outliers(df)),
              silent = TRUE)
+
+    print(str(df))
     
+        
     # trap errors
     if(inherits(df, "try-error")){
       warning("outlier detection failed...")
@@ -85,12 +101,15 @@ process_phenocam <- function(
     # feedback
     message("-- Smoothing time series!")
     
-    # smooth time series
-    df = try(suppressWarnings(smooth_ts(df)),
+    # smooth time series, force processing as to redo any
+    # calculations should smoothed data be provided
+    df <- try(suppressWarnings(
+      smooth_ts(df,
+                force = TRUE)),
              silent = TRUE)
     
     # trap errors
-    if(inherits(df,"try-error")){
+    if(inherits(df, "try-error")){
       warning("smoothing failed...")
     }
   }
@@ -101,33 +120,18 @@ process_phenocam <- function(
     # feedback
     message("-- Estimating transition dates!")
     
-    # smooth time series
-    phenophase_check = try(suppressWarnings(
-      phenophases(data = df,
-      out_dir = out_dir,
-      internal = FALSE)),
-      silent = TRUE)
+    # calculate phenophases
+    phenophase_check <- try(suppressWarnings(
+      phenophases(
+        data = df,
+        out_dir = out_dir,
+        internal = FALSE,
+        penalty = penalty)
+      ), silent = TRUE)
     
     # trap errors
     if(inherits(phenophase_check, "try-error")){
       warning("estimating transition dates failed...")
-    }
-  }
-  
-  # merge with daymet
-  if (daymet){
-    
-    # feedback
-    message("-- Merging Daymet Data!")
-    
-    # merge daymet data into the time series file
-    df = try(merge_daymet(df,
-                          trim = trim_daymet),
-             silent = TRUE)
-    
-    # trap errors
-    if(inherits(df,"try-error")){
-      warning("merging daymet data failed...")
     }
   }
   

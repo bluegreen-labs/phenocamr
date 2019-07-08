@@ -166,6 +166,7 @@ merge_daymet  = function(data,
   } else {
     # if provided a data frame
     # return the original data frame, with flagged outliers
+    class(data) = "phenocamr"
     return(data)
   }
 }

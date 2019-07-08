@@ -32,7 +32,7 @@
 #'
 #' }
 
-detect_outliers = function(data,
+detect_outliers <- function(data,
                            iterations=20,
                            sigma = 2,
                            grvi = FALSE,
@@ -289,6 +289,7 @@ detect_outliers = function(data,
   } else {
     # if provided a data frame
     # return the original data frame, with flagged outliers
+    class(data) <- "phenocamr"
     return(data)
   }
 }
