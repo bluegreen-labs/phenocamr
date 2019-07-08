@@ -7,7 +7,7 @@
 process_phenocam(file, outlier_detection = TRUE, smooth = TRUE,
   contract = FALSE, expand = TRUE, truncate, phenophase = TRUE,
   snow_flag = FALSE, penalty = 0.5, out_dir = tempdir(),
-  internal = FALSE)
+  internal = FALSE, ...)
 }
 \arguments{
 \item{file}{1 or 3-day PhenoCam time series file path}

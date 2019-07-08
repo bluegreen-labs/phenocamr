@@ -48,7 +48,8 @@ process_phenocam <- function(
   snow_flag = FALSE,
   penalty = 0.5,
   out_dir = tempdir(),
-  internal = FALSE
+  internal = FALSE,
+  ...
 ){
   
   # check file
@@ -62,7 +63,8 @@ process_phenocam <- function(
   
   # By default always contract files to start the processing
   # to avoid including previously padded areas
-  df <- contract_phenocam(df)
+  df <- contract_phenocam(df,
+                          no_padding = TRUE)
   
   # Expand the time series to get maximal
   # phenophase date resolution as well as additional
@@ -123,7 +125,8 @@ process_phenocam <- function(
         data = df,
         out_dir = out_dir,
         internal = FALSE,
-        penalty = penalty)
+        penalty = penalty,
+        ...)
       ), silent = TRUE)
     
     # trap errors
