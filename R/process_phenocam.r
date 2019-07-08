@@ -15,7 +15,7 @@
 #' @param out_dir output directory where to store downloaded data 
 #' (default = tempdir())
 #' @param internal allow for the data element to be returned to the workspace
-#' @param snowflag integrate snow flags?
+#' @param snow_flag integrate snow flags?
 #' @param penalty how sensitive is the change point algorithm, lower is more
 #' sensitve (< 1, default = 0.5)
 #' @return Downloaded files in out_dir of requested time series products, as well

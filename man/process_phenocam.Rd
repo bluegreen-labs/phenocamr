@@ -26,6 +26,8 @@ process_phenocam(file, outlier_detection = TRUE, smooth = TRUE,
 
 \item{phenophase}{logical, calculate transition dates (default = \code{FALSE})}
 
+\item{snow_flag}{integrate snow flags?}
+
 \item{penalty}{how sensitive is the change point algorithm, lower is more
 sensitve (< 1, default = 0.5)}
 
@@ -33,8 +35,6 @@ sensitve (< 1, default = 0.5)}
 (default = tempdir())}
 
 \item{internal}{allow for the data element to be returned to the workspace}
-
-\item{snowflag}{integrate snow flags?}
 }
 \value{
 Downloaded files in out_dir of requested time series products, as well
