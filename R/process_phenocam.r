@@ -12,12 +12,14 @@
 #' @param outlier_detection TRUE or FALSE, detect outliers
 #' @param truncate year (numeric) to which to constrain the output
 #' @param phenophase logical, calculate transition dates (default = \code{FALSE})
-#' @param out_dir output directory where to store downloaded data 
-#' (default = tempdir())
 #' @param internal allow for the data element to be returned to the workspace
 #' @param snow_flag integrate snow flags?
 #' @param penalty how sensitive is the change point algorithm, lower is more
 #' sensitve (< 1, default = 0.5)
+#' @param out_dir output directory where to store downloaded data 
+#' (default = tempdir())
+#' @param ... additional parameters to be forwarded to the phenophases()
+#' function, used internally in the routine
 #' @return Downloaded files in out_dir of requested time series products, as well
 #' as derived phenophase estimates based upon these time series.
 #' @keywords PhenoCam, Daymet, climate data, modelling, post-processing

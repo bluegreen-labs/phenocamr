@@ -125,7 +125,7 @@ data products.</p>
     <pre class="usage"><span class='fu'>process_phenocam</span>(<span class='no'>file</span>, <span class='kw'>outlier_detection</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>smooth</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>contract</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>expand</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>truncate</span>, <span class='kw'>phenophase</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>snow_flag</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>penalty</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>out_dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(),
-  <span class='kw'>internal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>internal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -161,6 +161,10 @@ data products.</p>
       <td><p>logical, calculate transition dates (default = <code>FALSE</code>)</p></td>
     </tr>
     <tr>
+      <th>snow_flag</th>
+      <td><p>integrate snow flags?</p></td>
+    </tr>
+    <tr>
       <th>penalty</th>
       <td><p>how sensitive is the change point algorithm, lower is more
 sensitve (&lt; 1, default = 0.5)</p></td>
@@ -175,8 +179,9 @@ sensitve (&lt; 1, default = 0.5)</p></td>
       <td><p>allow for the data element to be returned to the workspace</p></td>
     </tr>
     <tr>
-      <th>snowflag</th>
-      <td><p>integrate snow flags?</p></td>
+      <th>...</th>
+      <td><p>additional parameters to be forwarded to the phenophases()
+function, used internally in the routine</p></td>
     </tr>
     </table>
     
@@ -195,7 +200,7 @@ as derived phenophase estimates based upon these time series.</p>
                   <span class='kw'>roi_id</span> <span class='kw'>=</span> <span class='st'>"1000"</span>,
                   <span class='kw'>frequency</span> <span class='kw'>=</span> <span class='st'>"3"</span>)</div><div class='output co'>#&gt; <span class='message'>Downloading: harvard_DB_1000_3day.csv</span></div><div class='output co'>#&gt; <span class='message'>-- Flagging outliers!</span></div><div class='output co'>#&gt; <span class='message'>-- Smoothing time series!</span></div><div class='input'>
 <span class='co'># read phenocam data into phenocamr data structure                  </span>
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>process_phenocam</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/file.path'>file.path</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(),<span class='st'>"harvard_DB_1000_3day.csv"</span>))</div><div class='output co'>#&gt; <span class='message'>Processing file: /tmp/RtmpsQedSM/harvard_DB_1000_3day.csv</span></div><div class='output co'>#&gt; <span class='error'>Error in process_phenocam(file.path(tempdir(), "harvard_DB_1000_3day.csv")): argument "truncate" is missing, with no default</span></div><div class='input'>                  
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>process_phenocam</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/file.path'>file.path</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(),<span class='st'>"harvard_DB_1000_3day.csv"</span>))</div><div class='output co'>#&gt; <span class='message'>Processing file: /tmp/RtmpdlAP2l/harvard_DB_1000_3day.csv</span></div><div class='output co'>#&gt; <span class='error'>Error in process_phenocam(file.path(tempdir(), "harvard_DB_1000_3day.csv")): argument "truncate" is missing, with no default</span></div><div class='input'>                  
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

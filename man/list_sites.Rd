@@ -2,7 +2,7 @@
 % Please edit documentation in R/list_sites.r
 \name{list_sites}
 \alias{list_sites}
-\title{Function to list all site meta-data}
+\title{List all site meta-data}
 \usage{
 list_sites(out_dir = tempdir(), internal = TRUE)
 }

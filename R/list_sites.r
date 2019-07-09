@@ -1,4 +1,4 @@
-#' Function to list all site meta-data
+#' List all site meta-data
 #' 
 #' The site list can be helpful in determining which time series to download
 #' using `download_phenocam()`. The site list also includes meta-data 

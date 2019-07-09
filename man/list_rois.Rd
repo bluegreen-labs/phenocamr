@@ -2,7 +2,7 @@
 % Please edit documentation in R/list_rois.r
 \name{list_rois}
 \alias{list_rois}
-\title{Function to list all site regions-of-interst (ROIs)}
+\title{List all site regions-of-interst (ROIs)}
 \usage{
 list_rois(out_dir = tempdir(), internal = TRUE)
 }

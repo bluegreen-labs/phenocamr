@@ -2,7 +2,7 @@
 % Please edit documentation in R/download_phenocam.r
 \name{download_phenocam}
 \alias{download_phenocam}
-\title{Function to download and post-process PhenoCam time series}
+\title{Downloads PhenoCam time series}
 \usage{
 download_phenocam(site = "harvard$", veg_type = NULL,
   frequency = "3", roi_id = NULL, outlier_detection = TRUE,

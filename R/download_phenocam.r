@@ -1,4 +1,4 @@
-#' Function to download and post-process PhenoCam time series
+#' Downloads PhenoCam time series
 #' 
 #' This is a wrapper around most of all the other functions.
 #' It downloads a time series and extract relevant phenological transition

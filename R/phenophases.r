@@ -1,4 +1,4 @@
-#' Calculates phenophases, for rising and falling parts of a time series
+#' Calculates phenophases
 #' 
 #' This routine combines a forward and backward
 #' run of transition_dates function to calculate the phenophases in both
@@ -35,136 +35,137 @@
 #' print(my_dates)
 #' }
 
-phenophases = function(data,
-                       mat = NULL,
-                       internal = TRUE,
-                       out_dir = tempdir(),
-                       ...
-                       ){
-
+phenophases <- function(
+  data,
+  mat,
+  internal = TRUE,
+  out_dir = tempdir(),
+  ...
+){
+  
   # if the data is not a data frame, load
   # the file (assuming it is a phenocam)
   # summary file, otherwise rename the
   # input data to df
   if(class(data) != "phenocamr"){
     if(file.exists(data)){
-      data = read_phenocam(data)
-      on_disk = TRUE
+      data <- read_phenocam(data)
+      on_disk <- TRUE
     } else {
       stop("not a valid PhenoCam data frame or file")
     }
   } else {
-    on_disk = FALSE
+    on_disk <- FALSE
   }
   
   # split out data from read in or provided data
-  df = data$data
+  df <- data$data
 
   # set threshold values
-  mat_threshold = 10
+  mat_threshold <- 10
 
   # if no mean annual temperature is provided
   # set to the threshold value, invalidating
   # further screening
-  if (is.null(mat)){
-    mat = mat_threshold
+  if (missing(mat)){
+    mat <- mat_threshold
   }
   
   # calculate rising greenness transtions dates
   # all percentiles
-  percentiles = c(90,75,50,"mean")
+  percentiles <- c(90,75,50,"mean")
   
-  rising = do.call("rbind", lapply(percentiles, function(i){
+  rising <- do.call("rbind", lapply(percentiles, function(i){
 
     # calculate the transition dates
-    tmp = suppressWarnings(transition_dates(data,
+    tmp <- suppressWarnings(transition_dates(data,
                            reverse = FALSE,
                            percentile = i,
                            ...))
     
     # screen for false rising parts
-    loc = strptime(as.Date(tmp$transition_10, origin = "1970-01-01"),
+    loc <- strptime(as.Date(tmp$transition_10, origin = "1970-01-01"),
                    "%Y-%m-%d")$yday
-    l = which(loc < 30 | loc > 250)
+    l <- which(loc < 30 | loc > 250)
     if ( mat < mat_threshold & data$veg_type %in% c("DB","SH","GR","EN") & !length(l)==0L ){
-      tmp = tmp[-l,]
+      tmp <- tmp[-l,]
     }
     
     # formatting output
-    gcc_value = rep(sprintf("gcc_%s",i),dim(tmp)[1])
-    tmp = cbind(gcc_value, tmp)
+    gcc_value <- rep(sprintf("gcc_%s",i),dim(tmp)[1])
+    tmp <- cbind(gcc_value, tmp)
     return(tmp)
   }))
 
   # calculate falling greenness transition dates
   # all percentiles
-  falling = do.call("rbind", lapply(percentiles, function(i){
+  falling <- do.call("rbind", lapply(percentiles, function(i){
     
-    tmp = suppressWarnings(transition_dates(data,
+    tmp <- suppressWarnings(transition_dates(data,
                            reverse = TRUE,
                            percentile = i,
                            ...))
     
     # screen for false falling curves
-    loc = strptime(as.Date(tmp$transition_10, origin = "1970-01-01"),
+    loc <- strptime(as.Date(tmp$transition_10, origin = "1970-01-01"),
                    "%Y-%m-%d")$yday
     
     
     l = which(loc > 30 & loc < 240)
     if ( mat < mat_threshold & data$veg_type %in% c("DB","SH","GR","EN") & !length(l)==0L ){
-      tmp = tmp[-l,]
+      tmp <- tmp[-l,]
     }
     
     # formatting output
-    gcc_value = rep(sprintf("gcc_%s",i),dim(tmp)[1])
-    tmp = cbind(gcc_value, tmp)
+    gcc_value <- rep(sprintf("gcc_%s",i),dim(tmp)[1])
+    tmp <- cbind(gcc_value, tmp)
     return(tmp)
   }))
 
   # calculate the RMSE for all spline fits
-  smooth_data = df[,grep("smooth_gcc",colnames(df))]
-  original_data = df[,grep("^gcc",colnames(df))]
+  smooth_data <- df[,grep("smooth_gcc",colnames(df))]
+  original_data <- df[,grep("^gcc",colnames(df))]
   
   # remove the gcc_std column
-  original_data = original_data[,-2]
+  original_data <- original_data[,-2]
   
   # calculate the RMSE
-  RMSE = round(sqrt(apply((smooth_data - original_data)^2,2,mean,na.rm=TRUE)),5)
+  RMSE <- round(sqrt(apply((smooth_data - original_data)^2,2,mean,na.rm=TRUE)),5)
 
   # output data to file
   if (!internal){
 
     # bind spring and fall phenology data in a coherent format
-    phenology = rbind(rising,falling)
+    phenology <- rbind(rising,falling)
     
     # get the nr rows for each run
-    rising_length = nrow(rising)
-    falling_length = nrow(falling)
+    rising_length <- nrow(rising)
+    falling_length <- nrow(falling)
 
     # create a string for the direction of the analysis
     # rising or falling curves
-    direction = c(rep("rising", rising_length),
+    direction <- c(rep("rising", rising_length),
                   rep("falling", falling_length))
 
     # same for sitename, veg_type and roi_id
-    site = rep(data$site,rising_length + falling_length)
-    veg_type = rep(data$veg_type,rising_length + falling_length)
-    roi_id = rep(sprintf("%s",data$roi_id),rising_length + falling_length)
+    site <- rep(data$site,rising_length + falling_length)
+    veg_type <- rep(data$veg_type,rising_length + falling_length)
+    roi_id <- rep(sprintf("%s",data$roi_id),rising_length + falling_length)
 
     # convert UNIX time to normal dates
     phenology[, 2:10] = apply(phenology[, 2:10], 2, function(x)
       as.character(as.Date(x, origin = "1970-01-01")))
 
     # column bind in new labels
-    phenology = cbind(site,veg_type,roi_id,direction,phenology)
+    phenology <- cbind(site,veg_type,roi_id,direction,phenology)
 
     # drop NA lines if any
-    phenology = stats::na.omit(phenology)
+    phenology <- stats::na.omit(phenology)
 
     # create header with output information
     # can be done with one sprintf statement
     # and \n line endings, fix
-    phenology_header = paste(
+    phenology_header <- paste(
       "#\n",
       sprintf("# Transition date estimate for %s\n",data$site),
       "#\n",
@@ -188,7 +189,7 @@ phenophases = function(data,
       sep='')
 
     # set filename
-    filename = sprintf(
+    filename <- sprintf(
       '%s/%s_%s_%s_%s_transition_dates.csv',
       out_dir,
       data$site,

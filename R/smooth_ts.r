@@ -1,6 +1,6 @@
-#' Smooths a PhenoCam time series
+#' Smooth a PhenoCam time series
 #' 
-#' Smooths time series iteratively using a bayesian information criterion (BIC) 
+#' Smooths time series iteratively using a Akaike information criterion (AIC) 
 #' to find an optimal smoothing parameter and curve.
 #' 
 #' @param data a PhenoCam data file or data structure

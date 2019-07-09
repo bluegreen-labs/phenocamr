@@ -35,6 +35,9 @@ sensitve (< 1, default = 0.5)}
 (default = tempdir())}
 
 \item{internal}{allow for the data element to be returned to the workspace}
+
+\item{...}{additional parameters to be forwarded to the phenophases()
+function, used internally in the routine}
 }
 \value{
 Downloaded files in out_dir of requested time series products, as well
