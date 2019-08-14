@@ -119,7 +119,6 @@ download_phenocam = function(site = "harvard$",
     # try to download the data
     error = try(httr::GET(
       url = sprintf("%s/%s",data_location, filename),
-      httr::timeout(15),
       httr::write_disk(path = output_filename, overwrite = TRUE)))
     
     # trap errors on download, return a general error statement
