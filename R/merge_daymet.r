@@ -31,7 +31,7 @@ merge_daymet  = function(data,
                          trim = FALSE,
                          internal = TRUE,
                          out_dir = tempdir()){
- 
+  
   # if the data is not a data frame, load
   # the file (assuming it is a phenocam)
   # summary file, otherwise rename the
@@ -62,7 +62,7 @@ merge_daymet  = function(data,
   ),
   silent = TRUE
   )
-    
+   
   # error trap the latency in the Daymet data releases
   if(inherits(daymet_status,"try-error")){
     if (grepl("check coordinates", daymet_status)){
@@ -91,73 +91,30 @@ merge_daymet  = function(data,
   daymet_data = daymet_status$data
 
   # create date strings
-  daymet_dates = as.Date(sprintf("%s-%s",
+  daymet_data$date = as.Date(sprintf("%s-%s",
                                  daymet_data$year,
                                  daymet_data$yday),
                          "%Y-%j")
   
+  # subset only valid columns
+  daymet_data$year <- NULL
+  daymet_data$yday <- NULL
+  
   # read phenocam data
-  phenocam_data = data$data
+  phenocam_data <- data$data
+  phenocam_data$date <- as.Date(phenocam_data$date)
   
-  # create phenocam dates string
-  phenocam_dates = as.Date(phenocam_data$date)
+  # remove old data
+  l <- grepl("\\.\\.",colnames(phenocam_data))
+  phenocam_data[,l] <- NULL
   
-  # set year ranges
-  if (trim == FALSE){
-    min_range = min(daymet_dates)
-    max_range = max(max(daymet_dates),
-                    max(phenocam_dates))
-  }else{
-    min_range = min(phenocam_dates)
-    max_range = max(phenocam_dates)
-  }
-  
-  # create the output matrix
-  all_dates = seq(as.Date(min_range), as.Date(max_range), "days")
-  all_years = format(all_dates,"%Y")
-  all_doys = format(all_dates,"%j")
-  nr_dates = length(all_dates)
-  
-  # create daymet subset matrix
-  daymet_data = daymet_data[,-c(1:2)]
-  
-  # find overlap between datasets / USE MERGE / CLEAN UP SECTION
-  cor_daymet_dates = which(all_dates %in% daymet_dates)
-  cor_phenocam_dates = which(all_dates %in% phenocam_dates)
-  
-  # create output matrix
-  daymet_col = dim(daymet_data)[2]
-  phenocam_col = dim(phenocam_data)[2]
-  nr_cols = daymet_col + phenocam_col
-  output_matrix = as.data.frame(matrix(NA,length(all_dates),nr_cols))
-  
-  # now fill up the matrix matching dates
-  # clean up the code, this is messy with the references to the columns
-  output_matrix[,1] = as.character(all_dates) # fill in date values
-  output_matrix[,2] = all_years # fill in date values 
-  output_matrix[,3] = all_doys
-    
-  output_matrix[cor_daymet_dates,4:(daymet_col+3)] = as.matrix(daymet_data[cor_daymet_dates,])
-  output_matrix[cor_phenocam_dates,(daymet_col+4):(daymet_col+phenocam_col)] = as.matrix(phenocam_data[,4:(phenocam_col)])
-  
-  # extract the phenocam header
-  phenocam_colnames = names(phenocam_data)
-  phenocam_colnames = phenocam_colnames[4:length(phenocam_colnames)]
-  
-  # create matrix holding the column descriptions
-  output_header_names = matrix(c("date","year","doy",
-                                 "dayl","prcp",
-                                 "srad","swe",
-                                 "tmax","tmin",
-                                 "vp",phenocam_colnames),
-                               nrow=1,
-                               byrow=TRUE)
-  
-  # set new column names
-  colnames(output_matrix) = output_header_names
-  
+  # merge datasets
+  phenocam_data = merge(phenocam_data,
+                        daymet_data,
+                        by = "date")
+
   # put data back into the data structure
-  data$data = output_matrix
+  data$data = phenocam_data
   
   # write the data to the original data frame or the
   # original file (overwrites the data!!!)
