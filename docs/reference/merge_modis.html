@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Normalize PhenoCam time series — normalize_ts • phenocamr</title>
+<title>Merge ORNL MODIS data with a PhenoCam time series — merge_modis • phenocamr</title>
 
 
 <!-- jquery -->
@@ -35,11 +35,8 @@
 
 
 
-<meta property="og:title" content="Normalize PhenoCam time series — normalize_ts" />
-<meta property="og:description" content="Normalize PhenoCam data between 0-1 to to standardize
-further processing, independent of the relative amplitude
-of the time series (works on vectors not data frames).
-For internal use only." />
+<meta property="og:title" content="Merge ORNL MODIS data with a PhenoCam time series — merge_modis" />
+<meta property="og:description" content="Combine PhenoCam time series with MODIS data for matching dates." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -118,42 +115,78 @@ For internal use only." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Normalize PhenoCam time series</h1>
+    <h1>Merge ORNL MODIS data with a PhenoCam time series</h1>
     
-    <div class="hidden name"><code>normalize_ts.Rd</code></div>
+    <div class="hidden name"><code>merge_modis.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Normalize PhenoCam data between 0-1 to to standardize
-further processing, independent of the relative amplitude
-of the time series (works on vectors not data frames).
-For internal use only.</p>
+    <p>Combine PhenoCam time series with MODIS data for matching dates.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>normalize_ts</span>(<span class='no'>df</span>, <span class='kw'>percentile</span> <span class='kw'>=</span> <span class='fl'>90</span>)</pre>
+    <pre class="usage"><span class='fu'>merge_modis</span>(
+  <span class='no'>data</span>,
+  <span class='no'>product</span>,
+  <span class='no'>band</span>,
+  <span class='kw'>trim</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>internal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>out_dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>()
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>df</th>
-      <td><p>a PhenoCam data frame</p></td>
+      <th>data</th>
+      <td><p>a PhenoCam data file or data structure</p></td>
     </tr>
     <tr>
-      <th>percentile</th>
-      <td><p>percentile value to interprete</p></td>
+      <th>product</th>
+      <td><p>which MODIS product to query (character vector)</p></td>
+    </tr>
+    <tr>
+      <th>band</th>
+      <td><p>which MODIS band(s) to include (character vector)</p></td>
+    </tr>
+    <tr>
+      <th>trim</th>
+      <td><p>logical, trim the MODIS data to the length of the
+PhenoCam time series or include the whole Daymet time series (1980-current).
+(default = <code>FALSE</code>)</p></td>
+    </tr>
+    <tr>
+      <th>internal</th>
+      <td><p>return a data structure if given a file on disk
+(<code>TRUE</code> / <code>FALSE</code> = default)</p></td>
+    </tr>
+    <tr>
+      <th>out_dir</th>
+      <td><p>output directory where to store data (default = tempdir())</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A normalized PhenoCam time series.</p>
+    <p>A PhenoCam data structure or file which combines PhenoCam time series
+data with MODIS values (columns will be added). Data is queried from the
+ORNL MODIS subsets service using the `MODISTools` package, please consult 
+either sources on product and band names.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-# Internal function only, should not be used stand-alone.
-# As such no documentation is provided.
-</div></pre>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># download demo data</span>
+<span class='fu'><a href='download_phenocam.html'>download_phenocam</a></span>(<span class='kw'>site</span> <span class='kw'>=</span> <span class='st'>"harvard$"</span>,
+                  <span class='kw'>veg_type</span> <span class='kw'>=</span> <span class='st'>"DB"</span>,
+                  <span class='kw'>roi_id</span> <span class='kw'>=</span> <span class='st'>"1000"</span>,
+                  <span class='kw'>frequency</span> <span class='kw'>=</span> <span class='st'>"3"</span>)
+
+<span class='co'># merge data with daymet data</span>
+<span class='no'>df</span> <span class='kw'>&lt;-</span>  <span class='fu'>merge_modis</span>(<span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(),
+<span class='st'>"harvard_DB_1000_3day.csv"</span>),
+<span class='kw'>product</span> <span class='kw'>=</span> <span class='st'>"MOD13Q1"</span>,
+<span class='kw'>band</span> <span class='kw'>=</span> <span class='st'>"250m_16_days_NDVI"</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
