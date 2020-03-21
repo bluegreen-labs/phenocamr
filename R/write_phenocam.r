@@ -11,7 +11,7 @@
 #' @export
 #' @examples
 #'
-#' \donttest{
+#' \dontrun{
 #' # download demo data (do not smooth)
 #' download_phenocam(site = "harvard$",
 #'                   veg_type = "DB",
@@ -37,7 +37,7 @@ write_phenocam <- function(df = NULL,
   }
   
   # format filename
-  filename = sprintf("%s/%s_%s_%s_%s.csv",
+  filename <- sprintf("%s/%s_%s_%s_%s.csv",
                      path.expand(out_dir),
                      df$site,
                      df$veg_type,
@@ -45,32 +45,32 @@ write_phenocam <- function(df = NULL,
                      df$frequency)
   
   # processing time locations
-  proc_loc = grep("Final Processing", names(df$header))
+  proc_loc <- grep("Final Processing", names(df$header))
   
   # remove Final Processinig time stamps
   if( length(proc_loc) > 0  ){
-    df$header = df$header[-proc_loc]
+    df$header <- df$header[-proc_loc]
   }
   
   # add processing time info
-  df$header = df$header[-max(which(is.na(df$header)))]
-  vector_names = names(df$header)
-  df$header = c(df$header,
+  df$header <- df$header[-max(which(is.na(df$header)))]
+  vector_names <- names(df$header)
+  df$header <- c(df$header,
                 format(Sys.Date(),"%Y-%m-%d"),
                 format(Sys.time(), "%H:%M:%S"),
                 NA)
-  names(df$header) = c(vector_names,
+  names(df$header) <- c(vector_names,
                       "# Final Processing Date:",
                       "# Final Processing Time:",
                       "#")
   
   # collapse named vector into a matrix
-  header = apply(cbind(names(df$header), df$header),
+  header <- apply(cbind(names(df$header), df$header),
                  1,
                  function(x)paste(x,collapse=": "))
   
   # fix collated empty lines
-  header = gsub(": NA", "", header)
+  header <- gsub(": NA", "", header)
   
   # writing the final data frame to file, retaining the original header
   utils::write.table(

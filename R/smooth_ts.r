@@ -16,7 +16,7 @@
 #' @export
 #' @examples
 #'
-#' \donttest{
+#' \dontrun{
 #' # with defaults, outputting a data frame
 #' # with smoothed values, overwriting the original
 #'

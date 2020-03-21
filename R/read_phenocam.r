@@ -10,7 +10,7 @@
 #' @export
 #' @examples
 #'
-#' \donttest{
+#' \dontrun{
 #' # download demo data (do not smooth)
 #' download_phenocam(site = "harvard$",
 #'                   veg_type = "DB",
