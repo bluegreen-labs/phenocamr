@@ -2,6 +2,7 @@
 
 * adding local processing support with `process_phenocam()`
 * ensuring phenocamr classes are maintained between processing steps
+* added `merge_modis()` and `merge_daymet()` to provide additional data streams
 * additional bug fixes and error traps
 
 # phenocamr 1.1.3
