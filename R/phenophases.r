@@ -16,7 +16,6 @@
 #' thresholds. When written to disk UNIX dates are converted to YYYY-MM-DD.
 #' The nested list has named locations rising and falling, or location 1 and 2
 #' in the list respectivelly.
-#' @keywords PhenoCam phenology time series
 #' @export
 #' @examples
 #'

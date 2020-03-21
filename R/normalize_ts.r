@@ -8,7 +8,6 @@
 #' @param df a PhenoCam data frame
 #' @param percentile percentile value to interprete
 #' @return A normalized PhenoCam time series.
-#' @keywords time-series smoothing phenocam
 #' @export
 #' @examples
 #' 

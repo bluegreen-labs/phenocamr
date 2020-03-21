@@ -15,7 +15,6 @@
 #' data with MODIS values (columns will be added). Data is queried from the
 #' ORNL MODIS subsets service using the `MODISTools` package, please consult 
 #' either sources on product and band names.
-#' @keywords time-series data-fusion
 #' @export
 #' @examples
 #' 

@@ -6,7 +6,6 @@
 #' @param out_dir output directory (default = tempdir())
 #' @param internal TRUE or FALSE (default = TRUE)
 #' @return A data frame with ROIs for all available cameras
-#' @keywords meta-data
 #' @export
 #' @examples
 #'

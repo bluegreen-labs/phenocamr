@@ -12,7 +12,6 @@
 #' @param out_dir output directory where to store data (default = tempdir())
 #' @return A PhenoCam data structure or file which combines PhenoCam time series
 #' data with Daymet based climate values (columns will be added).
-#' @keywords time-series data-fusion
 #' @export
 #' @examples
 #' 
