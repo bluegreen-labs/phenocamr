@@ -1,6 +1,12 @@
 # Phenocamr unit tests
 server_check <- phenocam_running(server_rois())
 
+# pre-download the harvard data
+download_phenocam(site = "harvard$",
+                  veg_type = "DB",
+                  roi_id = "1000",
+                  frequency = "3")
+
 # ancillary functions
 test_that("check ancillary routines",{
 
@@ -69,4 +75,11 @@ test_that("check ancillary routines",{
 
   expect_silent(optimal_span(l,
                           weights = runif(length(l))))
+  
+  # read phenocam data into phenocamr data structure                  
+  expect_message(process_phenocam(file.path(tempdir(),
+                   "harvard_DB_1000_3day.csv"),
+                   truncate = 2015)
+                )
+  
 })
