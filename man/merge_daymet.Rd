@@ -4,8 +4,7 @@
 \alias{merge_daymet}
 \title{Merge Daymet data with a PhenoCam time series}
 \usage{
-merge_daymet(data, trim = FALSE, internal = TRUE,
-  out_dir = tempdir())
+merge_daymet(data, trim = FALSE, internal = TRUE, out_dir = tempdir())
 }
 \arguments{
 \item{data}{a PhenoCam data file or data structure}
@@ -29,7 +28,7 @@ Daymet.
 }
 \examples{
 
-\donttest{
+\dontrun{
 # download demo data
 download_phenocam(site = "harvard$",
                   veg_type = "DB",
@@ -40,9 +39,3 @@ download_phenocam(site = "harvard$",
 merge_daymet(file.path(tempdir(),"harvard_DB_1000_3day.csv"))
 }
 }
-\keyword{Daymet,}
-\keyword{PhenoCam,}
-\keyword{data}
-\keyword{integration}
-\keyword{series,}
-\keyword{time}

@@ -4,10 +4,20 @@
 \alias{process_phenocam}
 \title{Function to post-process PhenoCam time series}
 \usage{
-process_phenocam(file, outlier_detection = TRUE, smooth = TRUE,
-  contract = FALSE, expand = TRUE, truncate, phenophase = TRUE,
-  snow_flag = FALSE, penalty = 0.5, out_dir = tempdir(),
-  internal = FALSE, ...)
+process_phenocam(
+  file,
+  outlier_detection = TRUE,
+  smooth = TRUE,
+  contract = FALSE,
+  expand = TRUE,
+  truncate,
+  phenophase = TRUE,
+  snow_flag = FALSE,
+  penalty = 0.5,
+  out_dir = tempdir(),
+  internal = FALSE,
+  ...
+)
 }
 \arguments{
 \item{file}{1 or 3-day PhenoCam time series file path}
@@ -49,7 +59,7 @@ data products.
 }
 \examples{
 
-\donttest{
+\dontrun{
 # download the first ROI time series for the Harvard PhenoCam site
 # at an aggregation frequency of 3-days.
 download_phenocam(site = "harvard$",
@@ -62,9 +72,3 @@ df <- process_phenocam(file.path(tempdir(),"harvard_DB_1000_3day.csv"))
                   
 }
 }
-\keyword{Daymet,}
-\keyword{PhenoCam,}
-\keyword{climate}
-\keyword{data,}
-\keyword{modelling,}
-\keyword{post-processing}

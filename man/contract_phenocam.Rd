@@ -4,8 +4,12 @@
 \alias{contract_phenocam}
 \title{Contracts the file from 1-day to a 3-day time step}
 \usage{
-contract_phenocam(data, internal = TRUE, no_padding = FALSE,
-  out_dir = tempdir())
+contract_phenocam(
+  data,
+  internal = TRUE,
+  no_padding = FALSE,
+  out_dir = tempdir()
+)
 }
 \arguments{
 \item{data}{a phenocam data file with a 1 or 3 day time step}
@@ -31,7 +35,7 @@ post-production measure.
 }
 \examples{
 
-\donttest{
+\dontrun{
 # download demo data
 download_phenocam(site = "harvard$",
                   veg_type = "DB",
@@ -47,7 +51,3 @@ expand_phenocam(file.path(tempdir(),"harvard_DB_1000_3day.csv"))
 contract_phenocam(file.path(tempdir(),"harvard_DB_1000_3day.csv"))
 }
 }
-\keyword{phenocam,}
-\keyword{post-processing}
-\keyword{series,}
-\keyword{time}

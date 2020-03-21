@@ -29,7 +29,7 @@ so different channels / DN can be weighted separately.
 }
 \examples{
 
-\donttest{
+\dontrun{
 # with defaults, outputting a data frame
 # with smoothed values, overwriting the original
 
@@ -47,8 +47,3 @@ df <- read_phenocam(file.path(tempdir(),"harvard_DB_1000_3day.csv"))
 df <- grvi(df, par = c(1, 1, 0))
 }
 }
-\keyword{colour}
-\keyword{index,}
-\keyword{phenocam}
-\keyword{series,}
-\keyword{time}

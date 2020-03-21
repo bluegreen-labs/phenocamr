@@ -4,8 +4,14 @@
 \alias{optimal_span}
 \title{Calculates the optimal span for a loess spline}
 \usage{
-optimal_span(y, x = NULL, weights = NULL, step = 0.01,
-  label = NULL, plot = FALSE)
+optimal_span(
+  y,
+  x = NULL,
+  weights = NULL,
+  step = 0.01,
+  label = NULL,
+  plot = FALSE
+)
 }
 \arguments{
 \item{y}{a vector with measurement values to smooth}
@@ -30,15 +36,10 @@ criterion (BIC).
 }
 \examples{
 
-\donttest{
+\dontrun{
 # Internal function only, should not be used stand-alone.
 l <- sin(seq(1,10,0.01))
 l <- l + runif(length(l))
 optimal_span(l, plot = TRUE)
 }
 }
-\keyword{loess,}
-\keyword{series}
-\keyword{smoother,}
-\keyword{span,}
-\keyword{time}

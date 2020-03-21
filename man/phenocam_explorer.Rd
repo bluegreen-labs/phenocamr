@@ -17,7 +17,3 @@ data and visualize time series.
 phenocam_explorer()
 }
 }
-\keyword{GUI,}
-\keyword{end,}
-\keyword{front}
-\keyword{interactive}

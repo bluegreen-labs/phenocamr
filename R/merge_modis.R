@@ -48,12 +48,9 @@ merge_modis = function(
   if(class(data) != "phenocamr"){
     if(file.exists(data)){
       data = read_phenocam(data)
-      on_disk = TRUE
     } else {
       stop("not a valid PhenoCam data frame or file")
     }
-  } else {
-    on_disk = FALSE
   }
   
   if(missing(product) || missing(band)){
@@ -121,7 +118,7 @@ merge_modis = function(
   
   # write the data to the original data frame or the
   # original file (overwrites the data!!!)
-  if(on_disk & !internal ){
+  if( !internal ){
     write_phenocam(data, out_dir = out_dir)
   } else {
     # if provided a data frame

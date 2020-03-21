@@ -33,7 +33,7 @@ rising and falling parts of a PhenoCam time series.
 }
 \examples{
 
-\donttest{
+\dontrun{
 # downloads a time series
 download_phenocam(site = "harvard$",
                   veg_type = "DB",
@@ -48,9 +48,3 @@ my_dates <- phenophases(df, internal = TRUE)
 print(my_dates)
 }
 }
-\keyword{PhenoCam,}
-\keyword{dates,}
-\keyword{phenology,}
-\keyword{series}
-\keyword{time}
-\keyword{transition}

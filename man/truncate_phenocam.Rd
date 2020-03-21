@@ -4,8 +4,7 @@
 \alias{truncate_phenocam}
 \title{Truncate a PhenoCam time series}
 \usage{
-truncate_phenocam(data, year = 2015, internal = TRUE,
-  out_dir = tempdir())
+truncate_phenocam(data, year = 2015, internal = TRUE, out_dir = tempdir())
 }
 \arguments{
 \item{data}{a PhenoCam file or data frame}
@@ -28,7 +27,7 @@ be deprecated in the future.
 }
 \examples{
 
-\donttest{
+\dontrun{
 # download demo data
 download_phenocam(site = "harvard$",
                   veg_type = "DB",
@@ -41,7 +40,3 @@ truncate_phenocam(file.paste(tempdir(),"harvard_DB_1000_3day.csv"),
                   year = 2015)
 }
 }
-\keyword{phenocam}
-\keyword{series,}
-\keyword{smoothing,}
-\keyword{time}

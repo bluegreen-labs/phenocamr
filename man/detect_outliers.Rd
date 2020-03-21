@@ -4,9 +4,16 @@
 \alias{detect_outliers}
 \title{Detect outliers in PhenoCam time series}
 \usage{
-detect_outliers(data, iterations = 20, sigma = 2, grvi = FALSE,
-  snowflag = FALSE, plot = FALSE, internal = TRUE,
-  out_dir = tempdir())
+detect_outliers(
+  data,
+  iterations = 20,
+  sigma = 2,
+  grvi = FALSE,
+  snowflag = FALSE,
+  plot = FALSE,
+  internal = TRUE,
+  out_dir = tempdir()
+)
 }
 \arguments{
 \item{data}{PhenoCam data structure or filename}
@@ -48,6 +55,3 @@ detect_outliers(file.path(tempdir(),"harvard_DB_1000_3day.csv"))
 
 }
 }
-\keyword{PhenoCam,}
-\keyword{outliers,}
-\keyword{post-processing}

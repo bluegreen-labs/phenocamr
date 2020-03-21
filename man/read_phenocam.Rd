@@ -19,7 +19,7 @@ header data and critical file name information.
 }
 \examples{
 
-\donttest{
+\dontrun{
 # download demo data (do not smooth)
 download_phenocam(site = "harvard$",
                   veg_type = "DB",
@@ -37,7 +37,3 @@ print(summary(df))
 write_phenocam(df, out_dir = tempdir())
 }
 }
-\keyword{phenocam}
-\keyword{series,}
-\keyword{smoothing,}
-\keyword{time}

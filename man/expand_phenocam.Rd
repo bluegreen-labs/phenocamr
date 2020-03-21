@@ -4,8 +4,7 @@
 \alias{expand_phenocam}
 \title{Expand a PhenoCam time series from 3-day to a 1-day time step}
 \usage{
-expand_phenocam(data, truncate = NULL, internal = TRUE,
-  out_dir = tempdir())
+expand_phenocam(data, truncate = NULL, internal = TRUE, out_dir = tempdir())
 }
 \arguments{
 \item{data}{a PhenoCam file}
@@ -28,7 +27,7 @@ data products. Should rarely be used independent of `download_phenocam()`.
 }
 \examples{
 
-\donttest{
+\dontrun{
 # download demo data
 download_phenocam(site = "harvard$",
                   veg_type = "DB",
@@ -44,7 +43,3 @@ expand_phenocam(file.path(tempdir(),"harvard_DB_1000_3day.csv"))
 contract_phenocam(file.path(tempdir(),"harvard_DB_1000_3day.csv"))
 }
 }
-\keyword{phenocam}
-\keyword{post-processing,}
-\keyword{series,}
-\keyword{time}

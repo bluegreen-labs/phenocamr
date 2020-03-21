@@ -22,10 +22,8 @@ conditions such as mean annual temperature or geographic location.
 }
 \examples{
 
-\donttest{
+\dontrun{
 # download the site meta-data
 df <- list_sites()
 }
 }
-\keyword{PhenoCam,}
-\keyword{meta-data}

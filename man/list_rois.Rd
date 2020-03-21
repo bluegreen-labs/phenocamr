@@ -20,10 +20,8 @@ using `download_phenocam()`.
 }
 \examples{
 
-\donttest{
+\dontrun{
 # download the site meta-data
 df <- list_rois()
 }
 }
-\keyword{PhenoCam,}
-\keyword{meta-data}

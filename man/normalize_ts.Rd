@@ -25,7 +25,3 @@ For internal use only.
 # Internal function only, should not be used stand-alone.
 # As such no documentation is provided.
 }
-\keyword{phenocam}
-\keyword{series,}
-\keyword{smoothing,}
-\keyword{time}

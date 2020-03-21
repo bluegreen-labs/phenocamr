@@ -4,9 +4,17 @@
 \alias{transition_dates}
 \title{Calculates transition dates for a PhenoCam time series}
 \usage{
-transition_dates(data, lower_thresh = 0.1, middle_thresh = 0.25,
-  upper_thresh = 0.5, percentile = 90, penalty = 0.5,
-  seg_length = 14, reverse = FALSE, plot = FALSE)
+transition_dates(
+  data,
+  lower_thresh = 0.1,
+  middle_thresh = 0.25,
+  upper_thresh = 0.5,
+  percentile = 90,
+  penalty = 0.5,
+  seg_length = 14,
+  reverse = FALSE,
+  plot = FALSE
+)
 }
 \arguments{
 \item{data}{a PhenoCam data file or data structure}
@@ -38,7 +46,7 @@ dates for all segments. This function is rarely called stand alone and
 }
 \examples{
 
-\donttest{
+\dontrun{
 # download demo data
 download_phenocam(site = "harvard$",
                   veg_type = "DB",
@@ -56,9 +64,3 @@ my_dates <- transition_dates(df,
                             plot = FALSE)
 }
 }
-\keyword{PhenoCam,}
-\keyword{dates,}
-\keyword{phenology,}
-\keyword{series}
-\keyword{time}
-\keyword{transition}

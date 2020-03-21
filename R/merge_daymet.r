@@ -38,12 +38,9 @@ merge_daymet  = function(data,
   if(class(data) != "phenocamr"){
     if(file.exists(data)){
       data = read_phenocam(data)
-      on_disk = TRUE
     } else {
       stop("not a valid PhenoCam data frame or file")
     }
-  } else {
-    on_disk = FALSE
   }
   
   # start and end year of daymet downloads
@@ -108,16 +105,13 @@ merge_daymet  = function(data,
   phenocam_data[,l] <- NULL
   
   # merge datasets
-  phenocam_data = merge(phenocam_data,
+  data$data = merge(phenocam_data,
                         daymet_data,
                         by = "date")
 
-  # put data back into the data structure
-  data$data = phenocam_data
-  
   # write the data to the original data frame or the
   # original file (overwrites the data!!!)
-  if(on_disk | !internal ){
+  if( !internal ){
     write_phenocam(data, out_dir = out_dir)
   } else {
     # if provided a data frame

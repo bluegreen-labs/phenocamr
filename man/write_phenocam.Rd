@@ -21,7 +21,7 @@ the original data structure from included headers and data components.
 }
 \examples{
 
-\donttest{
+\dontrun{
 # download demo data (do not smooth)
 download_phenocam(site = "harvard$",
                   veg_type = "DB",
@@ -39,7 +39,3 @@ print(summary(df))
 write_phenocam(df, out_dir = tempdir())
 }
 }
-\keyword{phenocam}
-\keyword{series,}
-\keyword{smoothing,}
-\keyword{time}

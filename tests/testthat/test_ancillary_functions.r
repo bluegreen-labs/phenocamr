@@ -6,6 +6,7 @@ test_that("check ancillary routines",{
 
   # skip if server is down
   skip_if_not(server_check)
+  skip_on_cran()
   
   # test meta-data downloads
   expect_output(str(list_sites()))
