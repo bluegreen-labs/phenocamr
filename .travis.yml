@@ -11,6 +11,7 @@ before_install:
 r:
   - release
   - devel
+  - 3.4
 
 r_packages:
   - devtools
