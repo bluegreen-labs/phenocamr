@@ -42,7 +42,7 @@ and either overwrites the original file or outputs a data structure.
 }
 \examples{
 
-\donttest{
+\dontrun{
 # download demo data (do not detect outliers)
 download_phenocam(site = "harvard$",
                   veg_type = "DB",

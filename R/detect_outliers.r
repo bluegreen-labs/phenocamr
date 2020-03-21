@@ -18,7 +18,7 @@
 #' @export
 #' @examples
 #'
-#' \donttest{
+#' \dontrun{
 #' # download demo data (do not detect outliers)
 #' download_phenocam(site = "harvard$",
 #'                   veg_type = "DB",
