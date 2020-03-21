@@ -26,9 +26,10 @@
 #'                   frequency = "3")
 #'
 #' # merge data with daymet data
-#' merge_modis(file.path(tempdir(),"harvard_DB_1000_3day.csv"),
-#' product = "",
-#' band = "")
+#' df <-  merge_modis(file.path(tempdir(),
+#' "harvard_DB_1000_3day.csv"),
+#' product = "MOD13Q1",
+#' band = "250m_16_days_NDVI")
 #' }
 
 merge_modis = function(
@@ -82,6 +83,11 @@ merge_modis = function(
   # selected centre pixel only
   px <- floor(max(modis_data$pixel)/2)
   modis_data <- modis_data[which(modis_data$pixel == px),]
+  
+  # apply multiplier
+  if(modis_data$scale[1] != "Not Available"){
+    modis_data$value <- modis_data$value * as.numeric(modis_data$scale)
+  }
   
   # only retain date / band and value
   modis_data <- modis_data[,c("calendar_date","band","value")]
