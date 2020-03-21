@@ -3,7 +3,7 @@
 #' The GUI allows you to interactively download
 #' data and visualize time series.
 #' 
-#' @keywords GUI, front end, interactive
+#' @keywords GUI interactive
 #' @export
 #' @examples
 #' 

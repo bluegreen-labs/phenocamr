@@ -22,7 +22,7 @@
 #' function, used internally in the routine
 #' @return Downloaded files in out_dir of requested time series products, as well
 #' as derived phenophase estimates based upon these time series.
-#' @keywords PhenoCam, Daymet, climate data, modelling, post-processing
+#' @keywords Daymet climate modelling post-processing
 #' @export
 #' @examples
 #'

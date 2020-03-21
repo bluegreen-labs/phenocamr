@@ -11,7 +11,7 @@
 #' @param plot plot visual output of the optimization routine
 #' @return Returns an optimal span to smooth a provided vector using 
 #' the `loess()` smoother.
-#' @keywords smoother, span, loess, time series
+#' @keywords smoother span loess time-series
 #' @export
 #' @examples
 #'

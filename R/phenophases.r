@@ -16,11 +16,11 @@
 #' thresholds. When written to disk UNIX dates are converted to YYYY-MM-DD.
 #' The nested list has named locations rising and falling, or location 1 and 2
 #' in the list respectivelly.
-#' @keywords PhenoCam, transition dates, phenology, time series
+#' @keywords PhenoCam phenology time series
 #' @export
 #' @examples
 #'
-#' \donttest{
+#' \dontrun{
 #' # downloads a time series
 #' download_phenocam(site = "harvard$",
 #'                   veg_type = "DB",

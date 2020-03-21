@@ -11,7 +11,7 @@
 #' @param out_dir output directory where to store data (default = tempdir())
 #' @return A truncated PhenoCam data structure or file, with data limited to
 #' the year specified.
-#' @keywords time series, smoothing, phenocam
+#' @keywords time-series io
 #' @export
 #' @examples
 #'

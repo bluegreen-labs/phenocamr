@@ -11,7 +11,7 @@
 #' @param out_dir output directory where to store data (default = tempdir())
 #' @return Expanded PhenoCam data structure or file, including 90 day padding
 #' if requested.
-#' @keywords time series, post-processing, phenocam
+#' @keywords time-series post-processing
 #' @export
 #' @examples
 #'

@@ -15,7 +15,7 @@
 #' (\code{TRUE} / \code{FALSE} = default)
 #' @param snowflag use manual snow flag labels as outliers
 #' @param out_dir output directory where to store data 
-#' @keywords PhenoCam, outliers, post-processing
+#' @keywords outliers post-processing
 #' @export
 #' @examples
 #'

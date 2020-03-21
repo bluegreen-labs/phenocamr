@@ -12,7 +12,7 @@
 #' @return An PhenoCam data structure or file with optimally smoothed time series
 #' objects added to the original file. Smoothing is required for `phenophase()`
 #' and `transition_dates()` functions.
-#' @keywords time series, smoothing, phenocam
+#' @keywords time-series smoothing phenocam
 #' @export
 #' @examples
 #'

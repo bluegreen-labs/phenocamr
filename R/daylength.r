@@ -6,7 +6,7 @@
 #' @param latitude a given latitude
 #' @return nested list with daylength (daylength) and
 #' solar elevation (solar_elev) elements
-#' @keywords solar, ephemerids
+#' @keywords solar ephemerids
 #' @export
 #' @examples
 #' 

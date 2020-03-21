@@ -7,7 +7,7 @@
 #' @param out_dir output directory where to store data 
 #' @return writes PhenoCam data structure to file, retains proper header info
 #' and inserts a processing time stamp.
-#' @keywords time series, smoothing, phenocam
+#' @keywords time-series io
 #' @export
 #' @examples
 #'

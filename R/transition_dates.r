@@ -15,7 +15,7 @@
 #' @param plot plot for debugging purposes
 #' @return Transition date estimates in UNIX time, including uncertainties
 #' and the threshold values estimated for each section of a time series.
-#' @keywords PhenoCam, transition dates, phenology, time series
+#' @keywords phenology time-series
 #' @export
 #' @examples
 #' 

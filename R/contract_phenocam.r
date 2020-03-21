@@ -14,7 +14,7 @@
 #' @return A contracted PhenoCam 3-day time series to its original 3-day time
 #' step (if provided at a 1-day interval), also removes padding introduced
 #' by processing for 1-day data.
-#' @keywords time series, phenocam, post-processing
+#' @keywords time-series phenocam post-processing
 #' @export
 #' @examples
 #' 
