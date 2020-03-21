@@ -13,7 +13,6 @@
 #' @param out_dir output directory where to store data
 #' @return Inserts a GRVI data column into the provided PhenoCam
 #' data structure or file.
-#' @keywords time-series index
 #' @export
 #' @examples
 #' 

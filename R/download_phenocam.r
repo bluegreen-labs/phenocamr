@@ -21,7 +21,6 @@
 #' @param internal allow for the data element to be returned to the workspace
 #' @return Downloaded files in out_dir of requested time series products, as well
 #' as derived phenophase estimates based upon these time series.
-#' @keywords modelling post-processing
 #' @export
 #' @examples
 #'
