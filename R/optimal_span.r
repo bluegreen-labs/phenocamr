@@ -15,7 +15,7 @@
 #' @export
 #' @examples
 #'
-#' \donttest{
+#' \dontrun{
 #' # Internal function only, should not be used stand-alone.
 #' l <- sin(seq(1,10,0.01))
 #' l <- l + runif(length(l))

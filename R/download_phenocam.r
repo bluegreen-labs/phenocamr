@@ -25,7 +25,7 @@
 #' @export
 #' @examples
 #'
-#' \donttest{
+#' \dontrun{
 #' # download the first ROI time series for the Harvard PhenoCam site
 #' # at an aggregation frequency of 3-days.
 #' download_phenocam(site = "harvard$",

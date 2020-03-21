@@ -13,7 +13,6 @@ Description:
 Depends:
     R (>= 3.4.0),
 Imports:
-    shiny,
     jsonlite,
     changepoint,
     httr,
@@ -22,8 +21,10 @@ Imports:
     graphics,
     stats,
     memoise,
-    daymetr
+    daymetr,
+    MODISTools
 Suggests:
+    shiny,
     covr,
     testthat,
     knitr,
