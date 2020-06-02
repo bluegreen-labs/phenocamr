@@ -1,7 +1,7 @@
-# phenocamr <a href='https://khufkens.github.io/phenocamr/'><img src='https://github.com/khufkens/phenocamr/raw/master/phenocamr-logo.png' align="right" height="139" /></a>
+# phenocamr <a href='https://bluegreen-labs.github.io/phenocamr/'><img src='https://github.com/bluegreen-labs/phenocamr/raw/master/phenocamr-logo.png' align="right" height="139" /></a>
 
-[![Build Status](https://travis-ci.org/khufkens/phenocamr.svg?branch=master)](https://travis-ci.org/khufkens/phenocamr)
-[![codecov](https://codecov.io/gh/khufkens/phenocamr/branch/master/graph/badge.svg)](https://codecov.io/gh/khufkens/phenocamr)
+[![Build Status](https://travis-ci.org/bluegreen-labs/phenocamr.svg?branch=master)](https://travis-ci.org/bluegreen-labs/phenocamr)
+[![codecov](https://codecov.io/gh/bluegreen-labs/phenocamr/branch/master/graph/badge.svg)](https://codecov.io/gh/bluegreen-labs/phenocamr)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/phenocamr)](https://cran.r-project.org/package=phenocamr)
 ![CRAN\_Downloads](https://cranlogs.r-pkg.org/badges/grand-total/phenocamr)
 
@@ -24,7 +24,7 @@ To install the development releases of the package run the following commands:
 
 ```R
 if(!require(devtools)){install.package(devtools)}
-devtools::install_github("khufkens/phenocamr")
+devtools::install_github("bluegreen-labs/phenocamr")
 library(phenocamr)
 ```
 
@@ -32,7 +32,7 @@ Vignettes are not rendered by default, if you want to include additional documen
 
 ```R
 if(!require(devtools)){install.package("devtools")}
-devtools::install_github("khufkens/phenocamr", build_vignettes = TRUE)
+devtools::install_github("bluegreen-labs/phenocamr", build_vignettes = TRUE)
 library(phenocamr)
 ```
 

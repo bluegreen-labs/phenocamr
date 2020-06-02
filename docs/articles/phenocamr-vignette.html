@@ -78,7 +78,7 @@
       <h1>phenocamr</h1>
                         <h4 class="author">Koen Hufkens</h4>
             
-            <h4 class="date">2020-03-21</h4>
+            <h4 class="date">2020-06-02</h4>
       
       
       <div class="hidden name"><code>phenocamr-vignette.Rmd</code></div>
@@ -100,90 +100,83 @@
 <p>A full list of meta-data for all sites can be queried using the list_sites() function.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">sites &lt;-<span class="st"> </span><span class="kw"><a href="../reference/list_sites.html">list_sites</a></span>()</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(sites)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">#&gt;             site      lat        lon elev</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">#&gt; 1         acadia 44.37694  -68.26083  158</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">#&gt; 2  aguatibiaeast 33.62200 -116.86700 1086</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">#&gt; 3 aguatibianorth 33.60222 -117.34368 1090</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co">#&gt; 4       ahwahnee 37.74670 -119.58160 1199</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">#&gt; 5      alleypond 40.74284  -73.74304   61</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co">#&gt; 6 alligatorriver 35.78790  -75.90380    1</span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co">#&gt;                                       contact1</span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">#&gt; 1         Dee Morse &lt;dee_morse AT nps DOT gov&gt;</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">#&gt; 2  Ann E Mebane &lt;amebane AT fs DOT fed DOT us&gt;</span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">#&gt; 3                                             </span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">#&gt; 4         Dee Morse &lt;dee_morse AT nps DOT gov&gt;</span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">#&gt; 5 Mary Martin &lt;mary DOT martin AT unh DOT edu&gt;</span></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">#&gt; 6     Asko Noormets &lt;noormets AT tamu DOT edu&gt;</span></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">#&gt;                                         contact2 date_start   date_end nimage</span></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co">#&gt; 1         John Gross &lt;John_Gross AT nps DOT gov&gt; 2007-03-15 2020-03-20  48623</span></a>
-<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="co">#&gt; 2  Kristi Savig &lt;KSavig AT air-resource DOT com&gt; 2007-08-16 2019-01-25  36615</span></a>
-<a class="sourceLine" id="cb1-20" data-line-number="20"><span class="co">#&gt; 3                                                2003-10-01 2006-10-25   2639</span></a>
-<a class="sourceLine" id="cb1-21" data-line-number="21"><span class="co">#&gt; 4         John Gross &lt;John_Gross AT nps DOT gov&gt; 2008-08-28 2020-03-20  51302</span></a>
-<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="co">#&gt; 5 Nicholas Grant &lt;ngrant02 AT fs DOT fed DOT us&gt; 2014-11-05 2015-10-13   1452</span></a>
-<a class="sourceLine" id="cb1-23" data-line-number="23"><span class="co">#&gt; 6          John King &lt;john_king AT ncsu DOT edu&gt; 2012-05-03 2020-03-20  54856</span></a>
-<a class="sourceLine" id="cb1-24" data-line-number="24"><span class="co">#&gt;   tzoffset active infrared   method</span></a>
-<a class="sourceLine" id="cb1-25" data-line-number="25"><span class="co">#&gt; 1       -5   TRUE        N httppull</span></a>
-<a class="sourceLine" id="cb1-26" data-line-number="26"><span class="co">#&gt; 2       -8   TRUE        N httppull</span></a>
-<a class="sourceLine" id="cb1-27" data-line-number="27"><span class="co">#&gt; 3       -8  FALSE        N httppull</span></a>
-<a class="sourceLine" id="cb1-28" data-line-number="28"><span class="co">#&gt; 4       -8   TRUE        N httppull</span></a>
-<a class="sourceLine" id="cb1-29" data-line-number="29"><span class="co">#&gt; 5       -5  FALSE        N  ftppush</span></a>
-<a class="sourceLine" id="cb1-30" data-line-number="30"><span class="co">#&gt; 6       -5   TRUE        Y  ftppush</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">#&gt;                 site      lat        lon elev</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">#&gt; 1 aafcottawacfiaf14e 45.29210  -75.76640   90</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">#&gt; 2 aafcottawacfiaf14w 45.29210  -75.76640   90</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">#&gt; 3             acadia 44.37694  -68.26083  158</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co">#&gt; 4      aguatibiaeast 33.62200 -116.86700 1086</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">#&gt; 5     aguatibianorth 33.60222 -117.34368 1090</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co">#&gt; 6           ahwahnee 37.74670 -119.58160 1199</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co">#&gt;                                                   contact1</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">#&gt; 1 Elizabeth Pattey &lt;elizabeth DOT pattey AT canada DOT ca&gt;</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">#&gt; 2 Elizabeth Pattey &lt;elizabeth DOT pattey AT canada DOT ca&gt;</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">#&gt; 3                     Dee Morse &lt;dee_morse AT nps DOT gov&gt;</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">#&gt; 4              Ann E Mebane &lt;amebane AT fs DOT fed DOT us&gt;</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">#&gt; 5                                                         </span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">#&gt; 6                     Dee Morse &lt;dee_morse AT nps DOT gov&gt;</span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">#&gt;                                              contact2 date_start   date_end</span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co">#&gt; 1 Luc Pelletier &lt;luc DOT pelletier3 AT canada DOT ca&gt; 2020-04-27 2020-05-25</span></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="co">#&gt; 2 Luc Pelletier &lt;luc DOT pelletier3 AT canada DOT ca&gt; 2020-05-01 2020-05-25</span></a>
+<a class="sourceLine" id="cb1-20" data-line-number="20"><span class="co">#&gt; 3              John Gross &lt;John_Gross AT nps DOT gov&gt; 2007-03-15 2020-06-01</span></a>
+<a class="sourceLine" id="cb1-21" data-line-number="21"><span class="co">#&gt; 4       Kristi Savig &lt;KSavig AT air-resource DOT com&gt; 2007-08-16 2019-01-25</span></a>
+<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="co">#&gt; 5                                                     2003-10-01 2006-10-25</span></a>
+<a class="sourceLine" id="cb1-23" data-line-number="23"><span class="co">#&gt; 6              John Gross &lt;John_Gross AT nps DOT gov&gt; 2008-08-28 2020-06-01</span></a>
+<a class="sourceLine" id="cb1-24" data-line-number="24"><span class="co">#&gt;   nimage tzoffset active infrared   method</span></a>
+<a class="sourceLine" id="cb1-25" data-line-number="25"><span class="co">#&gt; 1   1038       -5   TRUE        N  ftppush</span></a>
+<a class="sourceLine" id="cb1-26" data-line-number="26"><span class="co">#&gt; 2    881       -5   TRUE        N  ftppush</span></a>
+<a class="sourceLine" id="cb1-27" data-line-number="27"><span class="co">#&gt; 3  49475       -5   TRUE        N httppull</span></a>
+<a class="sourceLine" id="cb1-28" data-line-number="28"><span class="co">#&gt; 4  36615       -8  FALSE        N httppull</span></a>
+<a class="sourceLine" id="cb1-29" data-line-number="29"><span class="co">#&gt; 5   2639       -8  FALSE        N httppull</span></a>
+<a class="sourceLine" id="cb1-30" data-line-number="30"><span class="co">#&gt; 6  52293       -8   TRUE        N httppull</span></a>
 <a class="sourceLine" id="cb1-31" data-line-number="31"><span class="co">#&gt;                                               site_description</span></a>
-<a class="sourceLine" id="cb1-32" data-line-number="32"><span class="co">#&gt; 1 Acadia National Park, McFarland Hill, near Bar Harbor, Maine</span></a>
-<a class="sourceLine" id="cb1-33" data-line-number="33"><span class="co">#&gt; 2                            Agua Tibia Wilderness, California</span></a>
-<a class="sourceLine" id="cb1-34" data-line-number="34"><span class="co">#&gt; 3                            Agua Tibia Wilderness, California</span></a>
-<a class="sourceLine" id="cb1-35" data-line-number="35"><span class="co">#&gt; 4          Ahwahnee Meadow, Yosemite National Park, California</span></a>
-<a class="sourceLine" id="cb1-36" data-line-number="36"><span class="co">#&gt; 5                                 Alley Pond, Queens, New York</span></a>
-<a class="sourceLine" id="cb1-37" data-line-number="37"><span class="co">#&gt; 6     Alligator River National Wildlife Refuge, North Carolina</span></a>
-<a class="sourceLine" id="cb1-38" data-line-number="38"><span class="co">#&gt;                   group camera_description camera_orientation site_type</span></a>
-<a class="sourceLine" id="cb1-39" data-line-number="39"><span class="co">#&gt; 1 National Park Service            unknown                 NE       III</span></a>
-<a class="sourceLine" id="cb1-40" data-line-number="40"><span class="co">#&gt; 2                  USFS            unknown                 SW       III</span></a>
-<a class="sourceLine" id="cb1-41" data-line-number="41"><span class="co">#&gt; 3                  USFS            unknown                 NE       III</span></a>
-<a class="sourceLine" id="cb1-42" data-line-number="42"><span class="co">#&gt; 4 National Park Service            unknown                  E       III</span></a>
-<a class="sourceLine" id="cb1-43" data-line-number="43"><span class="co">#&gt; 5          SmartForests  StarDot NetCam SC                  S        II</span></a>
-<a class="sourceLine" id="cb1-44" data-line-number="44"><span class="co">#&gt; 6    PhenoCam AMERIFLUX  StarDot NetCam SC                  N         I</span></a>
+<a class="sourceLine" id="cb1-32" data-line-number="32"><span class="co">#&gt; 1  AAFC Site - Ottawa (On) - CFIA - Field F14 -East Flux Tower</span></a>
+<a class="sourceLine" id="cb1-33" data-line-number="33"><span class="co">#&gt; 2  AAFC Site - Ottawa (On) - CFIA - Field F14 -West Flux Tower</span></a>
+<a class="sourceLine" id="cb1-34" data-line-number="34"><span class="co">#&gt; 3 Acadia National Park, McFarland Hill, near Bar Harbor, Maine</span></a>
+<a class="sourceLine" id="cb1-35" data-line-number="35"><span class="co">#&gt; 4                            Agua Tibia Wilderness, California</span></a>
+<a class="sourceLine" id="cb1-36" data-line-number="36"><span class="co">#&gt; 5                            Agua Tibia Wilderness, California</span></a>
+<a class="sourceLine" id="cb1-37" data-line-number="37"><span class="co">#&gt; 6          Ahwahnee Meadow, Yosemite National Park, California</span></a>
+<a class="sourceLine" id="cb1-38" data-line-number="38"><span class="co">#&gt;                   group       camera_description camera_orientation site_type</span></a>
+<a class="sourceLine" id="cb1-39" data-line-number="39"><span class="co">#&gt; 1                  &lt;NA&gt; Campbell Scientific CCFC                 NE        II</span></a>
+<a class="sourceLine" id="cb1-40" data-line-number="40"><span class="co">#&gt; 2                  &lt;NA&gt; Campbell Scientific CCFC                WNW        II</span></a>
+<a class="sourceLine" id="cb1-41" data-line-number="41"><span class="co">#&gt; 3 National Park Service                  unknown                 NE       III</span></a>
+<a class="sourceLine" id="cb1-42" data-line-number="42"><span class="co">#&gt; 4                  USFS                  unknown                 SW       III</span></a>
+<a class="sourceLine" id="cb1-43" data-line-number="43"><span class="co">#&gt; 5                  USFS                  unknown                 NE       III</span></a>
+<a class="sourceLine" id="cb1-44" data-line-number="44"><span class="co">#&gt; 6 National Park Service                  unknown                  E       III</span></a>
 <a class="sourceLine" id="cb1-45" data-line-number="45"><span class="co">#&gt;   flux_data flux_networks flux_sitenames MAT_site MAP_site MAT_daymet</span></a>
-<a class="sourceLine" id="cb1-46" data-line-number="46"><span class="co">#&gt; 1     FALSE                                    NA       NA       7.05</span></a>
-<a class="sourceLine" id="cb1-47" data-line-number="47"><span class="co">#&gt; 2     FALSE                                    NA       NA      15.75</span></a>
-<a class="sourceLine" id="cb1-48" data-line-number="48"><span class="co">#&gt; 3     FALSE                                    NA       NA      16.00</span></a>
-<a class="sourceLine" id="cb1-49" data-line-number="49"><span class="co">#&gt; 4     FALSE                                    NA       NA      12.25</span></a>
-<a class="sourceLine" id="cb1-50" data-line-number="50"><span class="co">#&gt; 5     FALSE                                    NA       NA      11.90</span></a>
-<a class="sourceLine" id="cb1-51" data-line-number="51"><span class="co">#&gt; 6      TRUE     AMERIFLUX         US-NC4     16.6     1310      16.75</span></a>
+<a class="sourceLine" id="cb1-46" data-line-number="46"><span class="co">#&gt; 1      TRUE                         &lt;NA&gt;      6.4      943       6.30</span></a>
+<a class="sourceLine" id="cb1-47" data-line-number="47"><span class="co">#&gt; 2      TRUE         OTHER           &lt;NA&gt;      6.4      943       6.30</span></a>
+<a class="sourceLine" id="cb1-48" data-line-number="48"><span class="co">#&gt; 3     FALSE                                    NA       NA       7.05</span></a>
+<a class="sourceLine" id="cb1-49" data-line-number="49"><span class="co">#&gt; 4     FALSE                                    NA       NA      15.75</span></a>
+<a class="sourceLine" id="cb1-50" data-line-number="50"><span class="co">#&gt; 5     FALSE                                    NA       NA      16.00</span></a>
+<a class="sourceLine" id="cb1-51" data-line-number="51"><span class="co">#&gt; 6     FALSE                                    NA       NA      12.25</span></a>
 <a class="sourceLine" id="cb1-52" data-line-number="52"><span class="co">#&gt;   MAP_daymet MAT_worldclim MAP_worldclim</span></a>
-<a class="sourceLine" id="cb1-53" data-line-number="53"><span class="co">#&gt; 1       1439           6.5          1303</span></a>
-<a class="sourceLine" id="cb1-54" data-line-number="54"><span class="co">#&gt; 2        483          14.9           504</span></a>
-<a class="sourceLine" id="cb1-55" data-line-number="55"><span class="co">#&gt; 3        489          13.8           729</span></a>
-<a class="sourceLine" id="cb1-56" data-line-number="56"><span class="co">#&gt; 4        871          11.8           886</span></a>
-<a class="sourceLine" id="cb1-57" data-line-number="57"><span class="co">#&gt; 5       1263          11.7          1109</span></a>
-<a class="sourceLine" id="cb1-58" data-line-number="58"><span class="co">#&gt; 6       1371          16.4          1312</span></a>
-<a class="sourceLine" id="cb1-59" data-line-number="59"><span class="co">#&gt;                                                   dominant_species</span></a>
-<a class="sourceLine" id="cb1-60" data-line-number="60"><span class="co">#&gt; 1                                                                 </span></a>
-<a class="sourceLine" id="cb1-61" data-line-number="61"><span class="co">#&gt; 2                                                                 </span></a>
-<a class="sourceLine" id="cb1-62" data-line-number="62"><span class="co">#&gt; 3                                                                 </span></a>
-<a class="sourceLine" id="cb1-63" data-line-number="63"><span class="co">#&gt; 4                                                                 </span></a>
-<a class="sourceLine" id="cb1-64" data-line-number="64"><span class="co">#&gt; 5                                                                 </span></a>
-<a class="sourceLine" id="cb1-65" data-line-number="65"><span class="co">#&gt; 6 Nyssa sylvatica, Taxodium distichum, Nyssa aquatica, Acer rubrum</span></a>
-<a class="sourceLine" id="cb1-66" data-line-number="66"><span class="co">#&gt;   primary_veg_type secondary_veg_type koeppen_geiger ecoregion wwf_biome</span></a>
-<a class="sourceLine" id="cb1-67" data-line-number="67"><span class="co">#&gt; 1               DB                 EN            Dfb         8         4</span></a>
-<a class="sourceLine" id="cb1-68" data-line-number="68"><span class="co">#&gt; 2               SH                               Csa        11        12</span></a>
-<a class="sourceLine" id="cb1-69" data-line-number="69"><span class="co">#&gt; 3               SH                               Csa        11        12</span></a>
-<a class="sourceLine" id="cb1-70" data-line-number="70"><span class="co">#&gt; 4               EN                 GR            Csb         6         5</span></a>
-<a class="sourceLine" id="cb1-71" data-line-number="71"><span class="co">#&gt; 5               DB                               Cfa         8         4</span></a>
-<a class="sourceLine" id="cb1-72" data-line-number="72"><span class="co">#&gt; 6               DB                 WL            Cfa         8         5</span></a>
-<a class="sourceLine" id="cb1-73" data-line-number="73"><span class="co">#&gt;   landcover_igbp</span></a>
-<a class="sourceLine" id="cb1-74" data-line-number="74"><span class="co">#&gt; 1              5</span></a>
-<a class="sourceLine" id="cb1-75" data-line-number="75"><span class="co">#&gt; 2              7</span></a>
-<a class="sourceLine" id="cb1-76" data-line-number="76"><span class="co">#&gt; 3              7</span></a>
-<a class="sourceLine" id="cb1-77" data-line-number="77"><span class="co">#&gt; 4              8</span></a>
-<a class="sourceLine" id="cb1-78" data-line-number="78"><span class="co">#&gt; 5             13</span></a>
-<a class="sourceLine" id="cb1-79" data-line-number="79"><span class="co">#&gt; 6              5</span></a>
-<a class="sourceLine" id="cb1-80" data-line-number="80"><span class="co">#&gt;                                                                                                                                                                                                                 site_acknowledgements</span></a>
-<a class="sourceLine" id="cb1-81" data-line-number="81"><span class="co">#&gt; 1                                                                                                                   Camera images from Acadia National Park are provided courtesy of the National Park Service Air Resources Program.</span></a>
-<a class="sourceLine" id="cb1-82" data-line-number="82"><span class="co">#&gt; 2                                                                                                         Camera images from Agua Tibia Wilderness are provided courtesy of the USDA Forest Service Air Resources Management Program.</span></a>
-<a class="sourceLine" id="cb1-83" data-line-number="83"><span class="co">#&gt; 3                                                                                                         Camera images from Agua Tibia Wilderness are provided courtesy of the USDA Forest Service Air Resources Management Program.</span></a>
-<a class="sourceLine" id="cb1-84" data-line-number="84"><span class="co">#&gt; 4                                                                                                                 Camera images from Yosemite National Park are provided courtesy of the National Park Service Air Resources Program.</span></a>
-<a class="sourceLine" id="cb1-85" data-line-number="85"><span class="co">#&gt; 5                                                                                                                                                                                                                                    </span></a>
-<a class="sourceLine" id="cb1-86" data-line-number="86"><span class="co">#&gt; 6 Research at the Alligator River flux site is supported by DOE NICCR (award 08-SC-NICCR-1072), DOE-TES (awards 11-DE-SC-0006700 and 7090112), USDA Forest Service (award 13-JV-11330110-081) and USDA-NIFA (award 2014-67003-22068).</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-53" data-line-number="53"><span class="co">#&gt; 1        952           6.0           863</span></a>
+<a class="sourceLine" id="cb1-54" data-line-number="54"><span class="co">#&gt; 2        952           6.0           863</span></a>
+<a class="sourceLine" id="cb1-55" data-line-number="55"><span class="co">#&gt; 3       1439           6.5          1303</span></a>
+<a class="sourceLine" id="cb1-56" data-line-number="56"><span class="co">#&gt; 4        483          14.9           504</span></a>
+<a class="sourceLine" id="cb1-57" data-line-number="57"><span class="co">#&gt; 5        489          13.8           729</span></a>
+<a class="sourceLine" id="cb1-58" data-line-number="58"><span class="co">#&gt; 6        871          11.8           886</span></a>
+<a class="sourceLine" id="cb1-59" data-line-number="59"><span class="co">#&gt;                                           dominant_species primary_veg_type</span></a>
+<a class="sourceLine" id="cb1-60" data-line-number="60"><span class="co">#&gt; 1 Zea mays, Triticum aestivum, Brassica napus, Glycine max               AG</span></a>
+<a class="sourceLine" id="cb1-61" data-line-number="61"><span class="co">#&gt; 2 Zea mays, Triticum aestivum, Brassica napus, Glycine max               AG</span></a>
+<a class="sourceLine" id="cb1-62" data-line-number="62"><span class="co">#&gt; 3                                                                        DB</span></a>
+<a class="sourceLine" id="cb1-63" data-line-number="63"><span class="co">#&gt; 4                                                                        SH</span></a>
+<a class="sourceLine" id="cb1-64" data-line-number="64"><span class="co">#&gt; 5                                                                        SH</span></a>
+<a class="sourceLine" id="cb1-65" data-line-number="65"><span class="co">#&gt; 6                                                                        EN</span></a>
+<a class="sourceLine" id="cb1-66" data-line-number="66"><span class="co">#&gt;   secondary_veg_type koeppen_geiger ecoregion wwf_biome landcover_igbp</span></a>
+<a class="sourceLine" id="cb1-67" data-line-number="67"><span class="co">#&gt; 1                 AG            Dfb         8         4             12</span></a>
+<a class="sourceLine" id="cb1-68" data-line-number="68"><span class="co">#&gt; 2                 AG            Dfb         8         4             12</span></a>
+<a class="sourceLine" id="cb1-69" data-line-number="69"><span class="co">#&gt; 3                 EN            Dfb         8         4              5</span></a>
+<a class="sourceLine" id="cb1-70" data-line-number="70"><span class="co">#&gt; 4                               Csa        11        12              7</span></a>
+<a class="sourceLine" id="cb1-71" data-line-number="71"><span class="co">#&gt; 5                               Csa        11        12              7</span></a>
+<a class="sourceLine" id="cb1-72" data-line-number="72"><span class="co">#&gt; 6                 GR            Csb         6         5              8</span></a>
+<a class="sourceLine" id="cb1-73" data-line-number="73"><span class="co">#&gt;                                                                                                                                                                                                                                                                                                                         site_acknowledgements</span></a>
+<a class="sourceLine" id="cb1-74" data-line-number="74"><span class="co">#&gt; 1  Camera funded by Agriculture and Agri-Food Canada (AAFC) Project J-001735 - Commercial inhibitors’ impact on crop productivity and emissions of nitrous oxide led by Dr. Elizabeth Pattey; Support provided by Drs, Luc Pelletier and Elizabeth  Pattey, Micrometeorologiccal Laboratory of AAFC - Ottawa Research and Development Centre.</span></a>
+<a class="sourceLine" id="cb1-75" data-line-number="75"><span class="co">#&gt; 2 Cameras funded by Agriculture and Agri-Food Canada (AAFC) Project J-001735 - Commercial inhibitors’ impact on crop productivity and emissions of nitrous oxide led by Dr. Elizabeth Pattey; Support provided by Drs, Luc Pelletier and Elizabeth  Pattey, Micrometeorologiccal Laboratory of AAFC - Ottawa Research and Development Centre.</span></a>
+<a class="sourceLine" id="cb1-76" data-line-number="76"><span class="co">#&gt; 3                                                                                                                                                                                                                           Camera images from Acadia National Park are provided courtesy of the National Park Service Air Resources Program.</span></a>
+<a class="sourceLine" id="cb1-77" data-line-number="77"><span class="co">#&gt; 4                                                                                                                                                                                                                 Camera images from Agua Tibia Wilderness are provided courtesy of the USDA Forest Service Air Resources Management Program.</span></a>
+<a class="sourceLine" id="cb1-78" data-line-number="78"><span class="co">#&gt; 5                                                                                                                                                                                                                 Camera images from Agua Tibia Wilderness are provided courtesy of the USDA Forest Service Air Resources Management Program.</span></a>
+<a class="sourceLine" id="cb1-79" data-line-number="79"><span class="co">#&gt; 6                                                                                                                                                                                                                         Camera images from Yosemite National Park are provided courtesy of the National Park Service Air Resources Program.</span></a></code></pre></div>
 <p>To select a site first download an overview meta-data table of all available sites together with their ROI id’s and vegetation type and a limited set of meta-data parameters.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">rois &lt;-<span class="st"> </span><span class="kw"><a href="../reference/list_rois.html">list_rois</a></span>()</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(rois)</a>
@@ -203,10 +196,10 @@
 <a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; 6                                                           understory plants</span></a>
 <a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt;   first_date  last_date site_years missing_data_pct</span></a>
 <a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">#&gt; 1 2007-03-15 2017-09-20        9.8                7</span></a>
-<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt; 2 2017-10-11 2020-03-20        2.2                8</span></a>
+<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt; 2 2017-10-11 2020-05-31        2.4                8</span></a>
 <a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">#&gt; 3 2008-08-29 2011-10-14        2.8                9</span></a>
 <a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">#&gt; 4 2012-05-01 2015-07-01        3.2                0</span></a>
-<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="co">#&gt; 5 2015-07-28 2020-03-20        4.6                0</span></a>
+<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="co">#&gt; 5 2015-07-28 2020-05-31        4.8                0</span></a>
 <a class="sourceLine" id="cb2-23" data-line-number="23"><span class="co">#&gt; 6 2014-11-04 2015-10-14        0.7               24</span></a></code></pre></div>
 </div>
 <div id="download-a-phenocam-time-series-" class="section level3">
@@ -235,39 +228,39 @@
 <a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt;  $ solar_elev_min: num 10</span></a>
 <a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt;  $ header        : Named chr [1:24] NA NA NA "harvard" ...</span></a>
 <a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt;   ..- attr(*, "names")= chr [1:24] "#" "# 3-day summary product time series for harvard" "#" "# Site" ...</span></a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt;  $ data          :'data.frame':  4549 obs. of  32 variables:</span></a>
-<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt;   ..$ date                : chr [1:4549] "2008-01-05" "2008-01-06" "2008-01-07" "2008-01-08" ...</span></a>
-<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">#&gt;   ..$ year                : int [1:4549] 2008 2008 2008 2008 2008 2008 2008 2008 2008 2008 ...</span></a>
-<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt;   ..$ doy                 : int [1:4549] 5 6 7 8 9 10 11 12 13 14 ...</span></a>
-<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt;   ..$ image_count         : int [1:4549] NA NA NA NA NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co">#&gt;   ..$ midday_filename     : chr [1:4549] NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="co">#&gt;   ..$ midday_r            : num [1:4549] NA NA NA NA NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb4-21" data-line-number="21"><span class="co">#&gt;   ..$ midday_g            : num [1:4549] NA NA NA NA NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb4-22" data-line-number="22"><span class="co">#&gt;   ..$ midday_b            : num [1:4549] NA NA NA NA NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb4-23" data-line-number="23"><span class="co">#&gt;   ..$ midday_gcc          : num [1:4549] NA NA NA NA NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb4-24" data-line-number="24"><span class="co">#&gt;   ..$ midday_rcc          : num [1:4549] NA NA NA NA NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb4-25" data-line-number="25"><span class="co">#&gt;   ..$ r_mean              : num [1:4549] NA NA NA NA NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb4-26" data-line-number="26"><span class="co">#&gt;   ..$ r_std               : num [1:4549] NA NA NA NA NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb4-27" data-line-number="27"><span class="co">#&gt;   ..$ g_mean              : num [1:4549] NA NA NA NA NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb4-28" data-line-number="28"><span class="co">#&gt;   ..$ g_std               : num [1:4549] NA NA NA NA NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb4-29" data-line-number="29"><span class="co">#&gt;   ..$ b_mean              : num [1:4549] NA NA NA NA NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb4-30" data-line-number="30"><span class="co">#&gt;   ..$ b_std               : num [1:4549] NA NA NA NA NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb4-31" data-line-number="31"><span class="co">#&gt;   ..$ gcc_mean            : num [1:4549] NA NA NA NA NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb4-32" data-line-number="32"><span class="co">#&gt;   ..$ gcc_std             : num [1:4549] NA NA NA NA NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb4-33" data-line-number="33"><span class="co">#&gt;   ..$ gcc_50              : num [1:4549] NA NA NA NA NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb4-34" data-line-number="34"><span class="co">#&gt;   ..$ gcc_75              : num [1:4549] NA NA NA NA NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb4-35" data-line-number="35"><span class="co">#&gt;   ..$ gcc_90              : num [1:4549] NA NA NA NA NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb4-36" data-line-number="36"><span class="co">#&gt;   ..$ rcc_mean            : num [1:4549] NA NA NA NA NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb4-37" data-line-number="37"><span class="co">#&gt;   ..$ rcc_std             : num [1:4549] NA NA NA NA NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb4-38" data-line-number="38"><span class="co">#&gt;   ..$ rcc_50              : num [1:4549] NA NA NA NA NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb4-39" data-line-number="39"><span class="co">#&gt;   ..$ rcc_75              : num [1:4549] NA NA NA NA NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb4-40" data-line-number="40"><span class="co">#&gt;   ..$ rcc_90              : num [1:4549] NA NA NA NA NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb4-41" data-line-number="41"><span class="co">#&gt;   ..$ max_solar_elev      : num [1:4549] NA NA NA NA NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb4-42" data-line-number="42"><span class="co">#&gt;   ..$ snow_flag           : logi [1:4549] NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb4-43" data-line-number="43"><span class="co">#&gt;   ..$ outlierflag_gcc_mean: logi [1:4549] NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb4-44" data-line-number="44"><span class="co">#&gt;   ..$ outlierflag_gcc_50  : logi [1:4549] NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb4-45" data-line-number="45"><span class="co">#&gt;   ..$ outlierflag_gcc_75  : logi [1:4549] NA NA NA NA NA NA ...</span></a>
-<a class="sourceLine" id="cb4-46" data-line-number="46"><span class="co">#&gt;   ..$ outlierflag_gcc_90  : logi [1:4549] NA NA NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt;  $ data          :'data.frame':  4621 obs. of  32 variables:</span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt;   ..$ date                : chr [1:4621] "2008-01-05" "2008-01-06" "2008-01-07" "2008-01-08" ...</span></a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">#&gt;   ..$ year                : int [1:4621] 2008 2008 2008 2008 2008 2008 2008 2008 2008 2008 ...</span></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt;   ..$ doy                 : int [1:4621] 5 6 7 8 9 10 11 12 13 14 ...</span></a>
+<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt;   ..$ image_count         : int [1:4621] NA NA NA NA NA NA NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co">#&gt;   ..$ midday_filename     : chr [1:4621] NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="co">#&gt;   ..$ midday_r            : num [1:4621] NA NA NA NA NA NA NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb4-21" data-line-number="21"><span class="co">#&gt;   ..$ midday_g            : num [1:4621] NA NA NA NA NA NA NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb4-22" data-line-number="22"><span class="co">#&gt;   ..$ midday_b            : num [1:4621] NA NA NA NA NA NA NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb4-23" data-line-number="23"><span class="co">#&gt;   ..$ midday_gcc          : num [1:4621] NA NA NA NA NA NA NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb4-24" data-line-number="24"><span class="co">#&gt;   ..$ midday_rcc          : num [1:4621] NA NA NA NA NA NA NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb4-25" data-line-number="25"><span class="co">#&gt;   ..$ r_mean              : num [1:4621] NA NA NA NA NA NA NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb4-26" data-line-number="26"><span class="co">#&gt;   ..$ r_std               : num [1:4621] NA NA NA NA NA NA NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb4-27" data-line-number="27"><span class="co">#&gt;   ..$ g_mean              : num [1:4621] NA NA NA NA NA NA NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb4-28" data-line-number="28"><span class="co">#&gt;   ..$ g_std               : num [1:4621] NA NA NA NA NA NA NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb4-29" data-line-number="29"><span class="co">#&gt;   ..$ b_mean              : num [1:4621] NA NA NA NA NA NA NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb4-30" data-line-number="30"><span class="co">#&gt;   ..$ b_std               : num [1:4621] NA NA NA NA NA NA NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb4-31" data-line-number="31"><span class="co">#&gt;   ..$ gcc_mean            : num [1:4621] NA NA NA NA NA NA NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb4-32" data-line-number="32"><span class="co">#&gt;   ..$ gcc_std             : num [1:4621] NA NA NA NA NA NA NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb4-33" data-line-number="33"><span class="co">#&gt;   ..$ gcc_50              : num [1:4621] NA NA NA NA NA NA NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb4-34" data-line-number="34"><span class="co">#&gt;   ..$ gcc_75              : num [1:4621] NA NA NA NA NA NA NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb4-35" data-line-number="35"><span class="co">#&gt;   ..$ gcc_90              : num [1:4621] NA NA NA NA NA NA NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb4-36" data-line-number="36"><span class="co">#&gt;   ..$ rcc_mean            : num [1:4621] NA NA NA NA NA NA NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb4-37" data-line-number="37"><span class="co">#&gt;   ..$ rcc_std             : num [1:4621] NA NA NA NA NA NA NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb4-38" data-line-number="38"><span class="co">#&gt;   ..$ rcc_50              : num [1:4621] NA NA NA NA NA NA NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb4-39" data-line-number="39"><span class="co">#&gt;   ..$ rcc_75              : num [1:4621] NA NA NA NA NA NA NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb4-40" data-line-number="40"><span class="co">#&gt;   ..$ rcc_90              : num [1:4621] NA NA NA NA NA NA NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb4-41" data-line-number="41"><span class="co">#&gt;   ..$ max_solar_elev      : num [1:4621] NA NA NA NA NA NA NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb4-42" data-line-number="42"><span class="co">#&gt;   ..$ snow_flag           : logi [1:4621] NA NA NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb4-43" data-line-number="43"><span class="co">#&gt;   ..$ outlierflag_gcc_mean: logi [1:4621] NA NA NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb4-44" data-line-number="44"><span class="co">#&gt;   ..$ outlierflag_gcc_50  : logi [1:4621] NA NA NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb4-45" data-line-number="45"><span class="co">#&gt;   ..$ outlierflag_gcc_75  : logi [1:4621] NA NA NA NA NA NA ...</span></a>
+<a class="sourceLine" id="cb4-46" data-line-number="46"><span class="co">#&gt;   ..$ outlierflag_gcc_90  : logi [1:4621] NA NA NA NA NA NA ...</span></a>
 <a class="sourceLine" id="cb4-47" data-line-number="47"><span class="co">#&gt;  - attr(*, "class")= chr "phenocamr"</span></a>
 <a class="sourceLine" id="cb4-48" data-line-number="48"><span class="co">#&gt; NULL</span></a></code></pre></div>
 </div>
@@ -296,33 +289,33 @@
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">start_of_season &lt;-<span class="st"> </span><span class="kw"><a href="../reference/transition_dates.html">transition_dates</a></span>(df)</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(start_of_season))</a>
 <a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt;   transition_10 transition_25 transition_50 transition_10_lower_ci</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt; 1         14001         14007         14014                  13999</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; 2         14361         14366         14374                  14357</span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">#&gt; 3         14719         14724         14730                  14717</span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt; 4         15095         15101         15107                  15091</span></a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt; 5         15453         15460         15467                  15444</span></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt; 6         15824         15828         15835                  15822</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt; 1         14002         14006         14014                  14000</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; 2         14360         14366         14374                  14358</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">#&gt; 3         14719         14724         14730                  14711</span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt; 4         15095         15101         15107                  15093</span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt; 5         15452         15460         15467                  15444</span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt; 6         15824         15828         15835                  15823</span></a>
 <a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt;   transition_25_lower_ci transition_50_lower_ci transition_10_upper_ci</span></a>
 <a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt; 1                  14005                  14012                  14004</span></a>
-<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt; 2                  14365                  14372                  14364</span></a>
-<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt; 3                  14723                  14729                  14722</span></a>
-<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt; 4                  15100                  15105                  15098</span></a>
-<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt; 5                  15459                  15465                  15456</span></a>
-<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt; 6                  15827                  15833                  15826</span></a>
+<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt; 2                  14365                  14372                  14363</span></a>
+<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt; 3                  14723                  14728                  14722</span></a>
+<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt; 4                  15099                  15105                  15098</span></a>
+<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt; 5                  15459                  15465                  15455</span></a>
+<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt; 6                  15827                  15833                  15827</span></a>
 <a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt;   transition_25_upper_ci transition_50_upper_ci threshold_10 threshold_25</span></a>
-<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt; 1                  14009                  14015      0.37674      0.39191</span></a>
-<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">#&gt; 2                  14368                  14375      0.37729      0.38890</span></a>
-<a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">#&gt; 3                  14726                  14731      0.37666      0.39202</span></a>
-<a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">#&gt; 4                  15103                  15108      0.37967      0.39426</span></a>
-<a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co">#&gt; 5                  15462                  15468      0.38299      0.39800</span></a>
-<a class="sourceLine" id="cb8-23" data-line-number="23"><span class="co">#&gt; 6                  15831                  15836      0.38186      0.39409</span></a>
+<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt; 1                  14008                  14015      0.37788      0.39010</span></a>
+<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">#&gt; 2                  14369                  14375      0.37579      0.38932</span></a>
+<a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">#&gt; 3                  14726                  14731      0.37754      0.38978</span></a>
+<a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">#&gt; 4                  15103                  15108      0.37954      0.39489</span></a>
+<a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co">#&gt; 5                  15462                  15468      0.38294      0.39632</span></a>
+<a class="sourceLine" id="cb8-23" data-line-number="23"><span class="co">#&gt; 6                  15830                  15836      0.37994      0.39338</span></a>
 <a class="sourceLine" id="cb8-24" data-line-number="24"><span class="co">#&gt;   threshold_50 min_gcc max_gcc</span></a>
-<a class="sourceLine" id="cb8-25" data-line-number="25"><span class="co">#&gt; 1      0.41965 0.36904 0.46329</span></a>
-<a class="sourceLine" id="cb8-26" data-line-number="26"><span class="co">#&gt; 2      0.41811 0.36808 0.46200</span></a>
-<a class="sourceLine" id="cb8-27" data-line-number="27"><span class="co">#&gt; 3      0.41718 0.36909 0.46479</span></a>
-<a class="sourceLine" id="cb8-28" data-line-number="28"><span class="co">#&gt; 4      0.42197 0.37074 0.46826</span></a>
-<a class="sourceLine" id="cb8-29" data-line-number="29"><span class="co">#&gt; 5      0.42706 0.37250 0.47762</span></a>
-<a class="sourceLine" id="cb8-30" data-line-number="30"><span class="co">#&gt; 6      0.42516 0.37268 0.47110</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-25" data-line-number="25"><span class="co">#&gt; 1      0.41886 0.36862 0.46235</span></a>
+<a class="sourceLine" id="cb8-26" data-line-number="26"><span class="co">#&gt; 2      0.41912 0.36805 0.46195</span></a>
+<a class="sourceLine" id="cb8-27" data-line-number="27"><span class="co">#&gt; 3      0.41839 0.36908 0.46493</span></a>
+<a class="sourceLine" id="cb8-28" data-line-number="28"><span class="co">#&gt; 4      0.42211 0.37067 0.46856</span></a>
+<a class="sourceLine" id="cb8-29" data-line-number="29"><span class="co">#&gt; 5      0.42919 0.37250 0.47732</span></a>
+<a class="sourceLine" id="cb8-30" data-line-number="30"><span class="co">#&gt; 6      0.42361 0.37262 0.47034</span></a></code></pre></div>
 <p>Alternatively you can use the phenophases() function which is a wrapper of the transition_dates() function. However, as it potentially writes data to disk it needs additional information such as the roi_id, site name etc. The phenophases() function is the function which generated the final data products in the Richardson et al. (2018) paper. If used internally the output will be formatted in unix time, when written to file the dates will be human readable in YYYY-MM-DD format. Both start and end of season estimates will be provided.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">phenology_dates &lt;-<span class="st"> </span><span class="kw"><a href="../reference/phenophases.html">phenophases</a></span>(df, <span class="dt">internal =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p>With the phenoogy dates calculated we can plot their respective locations on the smoothed time series. In this case the plot will show the 50% amplitude threshold values for both rising and falling parts of the 90th percentile Gcc curve, marked with green and brown vertical lines respectivelly.</p>
@@ -372,7 +365,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Hufkens Koen.</p>
+  <p>Developed by Koen Hufkens.</p>
 </div>
 
 <div class="pkgdown">

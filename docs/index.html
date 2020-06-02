@@ -81,9 +81,9 @@
   <div class="contents col-md-9">
 <div id="phenocamr" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#phenocamr" class="anchor"></a>phenocamr <a href="https://khufkens.github.io/phenocamr/"><img src="https://github.com/khufkens/phenocamr/raw/master/phenocamr-logo.png" align="right" height="139"></a>
+<a href="#phenocamr" class="anchor"></a>phenocamr <a href="https://bluegreen-labs.github.io/phenocamr/"><img src="https://github.com/bluegreen-labs/phenocamr/raw/master/phenocamr-logo.png" align="right" height="139"></a>
 </h1></div>
-<p><a href="https://travis-ci.org/khufkens/phenocamr"><img src="https://travis-ci.org/khufkens/phenocamr.svg?branch=master" alt="Build Status"></a> <a href="https://codecov.io/gh/khufkens/phenocamr"><img src="https://codecov.io/gh/khufkens/phenocamr/branch/master/graph/badge.svg" alt="codecov"></a> <a href="https://cran.r-project.org/package=phenocamr"><img src="https://www.r-pkg.org/badges/version/phenocamr" alt="CRAN_Status_Badge"></a> <img src="https://cranlogs.r-pkg.org/badges/grand-total/phenocamr" alt="CRAN_Downloads"></p>
+<p><a href="https://travis-ci.org/bluegreen-labs/phenocamr"><img src="https://travis-ci.org/bluegreen-labs/phenocamr.svg?branch=master" alt="Build Status"></a> <a href="https://codecov.io/gh/bluegreen-labs/phenocamr"><img src="https://codecov.io/gh/bluegreen-labs/phenocamr/branch/master/graph/badge.svg" alt="codecov"></a> <a href="https://cran.r-project.org/package=phenocamr"><img src="https://www.r-pkg.org/badges/version/phenocamr" alt="CRAN_Status_Badge"></a> <img src="https://cranlogs.r-pkg.org/badges/grand-total/phenocamr" alt="CRAN_Downloads"></p>
 <p>Facilitates the retrieval and post-processing of PhenoCam time series. The post-processing of PhenoCam data includes outlier removal and the generation of data products such as phenological transition dates. If requested complementary <a href="https://daymet.ornl.gov/">Daymet climate data</a> will be downloaded and merged with the PhenoCam data for modelling purposes. For a detailed overview of the assumptions made during post-processing I refer publications by Hufkens et al. (2018) and Richardson et al. (2018). Please cite the Hufkens et al. (2018) paper when using the package. A worked example is included below and in the package vignette.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -100,11 +100,11 @@
 <a href="#development-release" class="anchor"></a>development release</h3>
 <p>To install the development releases of the package run the following commands:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="cf">if</span>(<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span>(devtools)){<span class="kw">install.package</span>(devtools)}</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"khufkens/phenocamr"</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"bluegreen-labs/phenocamr"</span>)</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(phenocamr)</a></code></pre></div>
 <p>Vignettes are not rendered by default, if you want to include additional documentation please use:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="cf">if</span>(<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span>(devtools)){<span class="kw">install.package</span>(<span class="st">"devtools"</span>)}</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"khufkens/phenocamr"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"bluegreen-labs/phenocamr"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(phenocamr)</a></code></pre></div>
 </div>
 </div>
@@ -115,7 +115,7 @@
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="reference/download_phenocam.html">download_phenocam</a></span>(<span class="dt">site =</span> <span class="st">"harvard"</span>,</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">                  <span class="dt">veg_type =</span> <span class="st">"DB"</span>,</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3">                  <span class="dt">frequency =</span> <span class="dv">3</span>,</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">                  <span class="dt">phenophases =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">                  <span class="dt">phenophase =</span> <span class="ot">TRUE</span>,</a>
 <a class="sourceLine" id="cb4-5" data-line-number="5">                  <span class="dt">out_dir =</span> <span class="st">"~"</span>)</a></code></pre></div>
 <p>This will download all deciduous broadleaf (DB) PhenoCam time series for the “harvard” site at a 3-day time step into your home directory. In addition, the data is processed to estimate phenological transition dates (phenophases) and written to file. For detailed overview of all functions and worked example we reference to the R help documentation and the manuscripts below.</p>
 </div>
@@ -156,7 +156,7 @@
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Hufkens Koen <br><small class="roles"> Author, maintainer </small>  </li>
+<li>Koen Hufkens <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-5070-8109" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID"></a> </li>
 </ul>
 </div>
 
@@ -165,7 +165,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Hufkens Koen.</p>
+  <p>Developed by Koen Hufkens.</p>
 </div>
 
 <div class="pkgdown">

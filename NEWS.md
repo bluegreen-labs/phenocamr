@@ -4,6 +4,8 @@
 * ensuring phenocamr classes are maintained between processing steps
 * added `merge_modis()` and `merge_daymet()` to provide additional data streams
 * additional bug fixes and error traps
+* R >= 3.6
+* bluegreen-labs migration
 
 # phenocamr 1.1.3
 
