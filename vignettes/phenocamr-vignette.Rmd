@@ -1,5 +1,5 @@
 ---
-title: "phenocamr"
+title: "phenocamr functionality"
 author: "Koen Hufkens"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
