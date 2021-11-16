@@ -1,12 +1,24 @@
+# docs and unit tests
 ^\.travis\.yml$
-^.*\.Rproj$
-^\.Rproj\.user$
-^README\.md$
-^_config\.yml$
-^cran-comments\.md$
+^_pkgdown\.yml$
+^pkgdown$
+^docs$
+^data-raw$
+
+# R-markdown files in the root folder.
+^LICENSE$
 ^CONDUCT\.md$
 ^NEWS\.md$
-^LICENSE$
-^docs$
-^phenocam-logo\.*$
+^README\.md$
+^contact\.md$
+^cran-comments\.md$
+^review-notes\.md$
+
+# Stuff
+^.github$
+^.*\.Rproj$
+^.*\.Renviron$
+^\.Rproj\.user$
+^\.httr-oauth$
 ^.*-logo\..*$
+^codemeta\.json$
