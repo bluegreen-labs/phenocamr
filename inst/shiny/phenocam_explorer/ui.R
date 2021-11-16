@@ -24,10 +24,20 @@ vegtype = c(
 # interface elements
 
 # the header
-header <- dashboardHeader(title = "PhenoCam Explorer")
+header <- dashboardHeader(
+  title = "PhenoCam Explorer",
+  tags$li(a(href = 'https://bluegreenlabs.org',
+            img(src = 'https://bluegreenlabs.org/img/logo_text_small.png',
+                title = "BlueGreen Labs",
+                height = "30px"),
+            style = "padding-top:10px; padding-bottom:10px;"),
+          class = "dropdown")
+  )
 
 # the sidebar
-sidebar <- dashboardSidebar(sidebarMenu(
+sidebar <- dashboardSidebar(
+  collapsed = TRUE,
+  sidebarMenu(
   menuItem(
     "Explore data", tabName = "explorer", icon = icon("bar-chart-o")
   ),
@@ -37,8 +47,26 @@ sidebar <- dashboardSidebar(sidebarMenu(
 ))
 
 # main body
-body <- dashboardBody(tags$head(tags$script(
-  HTML(
+body <- dashboardBody(
+  tags$head(
+    tags$style(HTML('
+        /* logo */
+        .skin-blue .main-header .logo {
+                              background-color: #0b2735;
+                              }
+
+        /* logo when hovered */
+        .skin-blue .main-header .logo:hover {
+                              background-color: #0b2735;
+                              }
+
+        /* navbar (rest of the header) */
+        .skin-blue .main-header .navbar {
+                              background-color: #0b2735;
+                              }
+                              '
+    )),
+  tags$script(HTML(
     "
     window.onload = function() {
     resizeMap();
@@ -146,4 +174,4 @@ body <- dashboardBody(tags$head(tags$script(
       tabPanel("Citing data", box(width = NULL, citation$value)))
   ))
 
-ui <- dashboardPage(skin = "green", header, sidebar, body)
+ui <- dashboardPage(header, sidebar, body)

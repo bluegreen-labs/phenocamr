@@ -699,7 +699,7 @@ server = function(input, output, session) {
               y = ~ gcc_smooth - ci,
               mode = "lines",
               type = "scatter",
-              line = list(width = 0, color = "rgb(200,200,200)"),
+              line = list(width = 0),
               showlegend = FALSE,
               name = "Gcc 95% CI"
             ) %>%
@@ -707,14 +707,15 @@ server = function(input, output, session) {
               y = ~ gcc_smooth + ci,
               fill = "tonexty",
               mode = "lines",
-              line = list(width = 0, color = "rgb(200,200,200)"),
+              line = list(width = 0),
+              color = I(rgb(0.5,0.5,0.5)),
               showlegend = TRUE,
               name = "Gcc 95% CI"
             ) %>%
             add_trace(
               y = ~ gcc_smooth,
               mode = "lines",
-              line = list(width = 2, color = "rgb(120,120,120)"),
+              line = list(width = 2, color = rgb(0.3,0.3,0.3)),
               name = "Gcc loess fit",
               showlegend = TRUE
             ) %>%
@@ -896,7 +897,7 @@ server = function(input, output, session) {
             mode = "lines",
             fill = "none",
             type = 'scatter',
-            line = list(width = 0, color = "rgb(200,200,200)"),
+            line = list(width = 0, color = "rgb(0.5,0.5,0.5)"),
             showlegend = FALSE,
             name = "1 SD"
           ) %>%
@@ -904,7 +905,7 @@ server = function(input, output, session) {
               y = ~ mn + sd,
               mode = "lines",
               fill = "tonexty",
-              line = list(width = 0, color = "rgb(200,200,200)"),
+              line = list(width = 0, color = "rgb(0.5,0.5,0.5)"),
               showlegend = TRUE,
               name = "1 SD"
             ) %>%
