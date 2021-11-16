@@ -1,3 +1,8 @@
+# phenocamr 1.1.5
+
+* Fix shiny plotly bug
+* github actions CI
+
 # phenocamr 1.1.4
 
 * adding local processing support with `process_phenocam()`

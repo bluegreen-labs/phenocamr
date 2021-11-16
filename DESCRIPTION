@@ -1,6 +1,6 @@
 Package: phenocamr
 Title: Facilitates 'PhenoCam' Data Access and Time Series Post-Processing
-Version: 1.1.4
+Version: 1.1.5
 Authors@R: c(person(
                family = "Hufkens",
                given = "Koen",
