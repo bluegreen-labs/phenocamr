@@ -897,7 +897,7 @@ server = function(input, output, session) {
             mode = "lines",
             fill = "none",
             type = 'scatter',
-            line = list(width = 0, color = "rgb(0.5,0.5,0.5)"),
+            line = list(width = 0),
             showlegend = FALSE,
             name = "1 SD"
           ) %>%
@@ -905,7 +905,8 @@ server = function(input, output, session) {
               y = ~ mn + sd,
               mode = "lines",
               fill = "tonexty",
-              line = list(width = 0, color = "rgb(0.5,0.5,0.5)"),
+              line = list(width = 0),
+              color = I(rgb(0.5,0.5,0.5)),
               showlegend = TRUE,
               name = "1 SD"
             ) %>%
