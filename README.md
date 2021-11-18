@@ -1,4 +1,4 @@
-# phenocamr <a href='https://bluegreen-labs.github.io/phenocamr/'><img src='https://github.com/bluegreen-labs/phenocamr/raw/master/phenocamr-logo.png' align="right" height="139" /></a>
+# phenocamr <a href='https://bluegreen-labs.github.io/phenocamr/'><img src='https://github.com/bluegreen-labs/phenocamr/raw/master/logo.png' align="right" height="139" /></a>
 
 [![Build Status](https://travis-ci.com/bluegreen-labs/phenocamr.svg?branch=master)](https://travis-ci.org/bluegreen-labs/phenocamr)
 [![codecov](https://codecov.io/gh/bluegreen-labs/phenocamr/branch/master/graph/badge.svg)](https://codecov.io/gh/bluegreen-labs/phenocamr)
