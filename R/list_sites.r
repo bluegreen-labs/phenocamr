@@ -22,7 +22,7 @@ list_sites <- memoise::memoise(
     internal = TRUE){
   
   # download json data using httr
-  error = try(httr::content(httr::GET(url = server_lists(),
+  error <- try(httr::content(httr::GET(url = server_lists(),
                                       httr::timeout(30)),
                             "text",
                             encoding = "UTF-8"))
@@ -33,7 +33,7 @@ list_sites <- memoise::memoise(
   
   # row bind the json list and replace
   # NULL values with NA
-  meta_data = jsonlite::fromJSON(error)
+  meta_data <- jsonlite::fromJSON(error)
   
   # output according to parameters
   if(internal){

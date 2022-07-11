@@ -78,7 +78,7 @@ transition_dates = function(data,
   # the file (assuming it is a phenocam)
   # summary file, otherwise rename the
   # input data to df
-  if(class(data) != "phenocamr"){
+  if(!inherits(data, "phenocamr")){
     if(file.exists(data)){
       data = read_phenocam(data)
       on_disk = TRUE

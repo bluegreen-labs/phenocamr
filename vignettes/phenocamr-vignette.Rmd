@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 
 # check if server is reachable
 # returns bolean TRUE if so
-phenocam_running <- function(url = "http://phenocam.sr.unh.edu"){
+phenocam_running <- function(url = "http://phenocam.nau.edu"){
   ct <- try(httr::GET(url))
   if(inherits(ct,"try-error")){return(FALSE)}
   if(ct$status_code > 400){

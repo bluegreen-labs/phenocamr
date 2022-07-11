@@ -31,7 +31,7 @@
 write_phenocam <- function(df = NULL,
                            out_dir = tempdir()){
   
-  if(class(df)!="phenocamr" | is.null(df)){
+  if( !inherits(df, "phenocamr") | is.null(df)){
     stop("not a phenocamr dataset or no dataset provided")
   }
   

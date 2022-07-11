@@ -1,19 +1,20 @@
 # Phenocamr unit tests
-server_check <- phenocam_running(server_rois())
-
-# pre-download the harvard data
-download_phenocam(site = "harvard$",
-                  veg_type = "DB",
-                  roi_id = "1000",
-                  frequency = "3")
 
 # ancillary functions
 test_that("check ancillary routines",{
 
   # skip if server is down
-  skip_if_not(server_check)
   skip_on_cran()
   
+  # pre-download the harvard data
+  try(
+    download_phenocam(
+      site = "harvard$",
+      veg_type = "DB",
+      roi_id = "1000",
+      frequency = "3")
+  )
+    
   # test meta-data downloads
   expect_output(str(list_sites()))
   expect_silent(list_sites(internal = FALSE))
