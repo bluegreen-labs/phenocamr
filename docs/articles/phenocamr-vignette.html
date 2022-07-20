@@ -70,7 +70,12 @@
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-        
+        <li>
+  <a href="https://github.com/bluegreen-labs/phenocamr/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
 </div>
 <!--/.nav-collapse -->
@@ -90,18 +95,19 @@ Hufkens</h4>
             
             <h4 data-toc-skip class="date">2022-07-20</h4>
       
-      <small class="dont-index">Source: <a href="NA/NA/NA/blob/HEAD/vignettes/phenocamr-vignette.Rmd"><code>vignettes/phenocamr-vignette.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/bluegreen-labs/phenocamr/blob/HEAD/vignettes/phenocamr-vignette.Rmd" class="external-link"><code>vignettes/phenocamr-vignette.Rmd</code></a></small>
       <div class="hidden name"><code>phenocamr-vignette.Rmd</code></div>
 
     </div>
 
     
     
-<p>A programmatic interface to the <a href="https://phenocam.sr.unh.edu/" class="external-link">PhenoCam web services</a>. Allows
-for easy downloads of PhenoCam near-surface remote sensing greenness
-(Gcc) time series directly to your R workspace or your computer.
-Post-processing allows for the smoothing of the time-series and the
-calculation of phenological transition dates as a final product.</p>
+<p>A programmatic interface to the <a href="https://phenocam.nau.edu/webcam/" class="external-link">PhenoCam web services</a>.
+Allows for easy downloads of PhenoCam near-surface remote sensing
+greenness (Gcc) time series directly to your R workspace or your
+computer. Post-processing allows for the smoothing of the time-series
+and the calculation of phenological transition dates as a final
+product.</p>
 <p>The package gives access to the latest generated PhenoCam time series
 (at most 1-day old for running sites) and allows for the extraction of
 up-to-date phenological transition dates. However, the data acquired
@@ -110,7 +116,7 @@ through the package will not be curated and vetted for data quality.</p>
 downloading the dataset as described by Richardson et al. (2018). This
 dataset uses the phenocamr packages in its final processing steps
 however quality control is gauranteed through careful review of the
-data. The data can be interactivly explored on <a href="http://explore.phenocam.us" class="external-link">explore.phenocam.us</a> and downloaded
+data. The data can be interactively explored on <a href="http://explore.phenocam.us" class="external-link">explore.phenocam.us</a> and downloaded
 in full from the <a href="https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1511" class="external-link">ORNL
 DAAC</a>. If in need of more recent data you can use the package and its
 functionality but be mindful of quality control especially the
@@ -125,7 +131,8 @@ for a given site and data type. I intentionally disable most automated
 processing and step through some of the routines to illustrate the
 workflow which normally happens internally to the main function
 download_phenocam(). Generated transition date files can be used in
-later analysis or modelling exercises using for example the <a href="https://github.com/khufkens/phenor" class="external-link">phenor R package</a>.</p>
+later analysis or modelling exercises using for example the <a href="https://github.com/bluegreen-labs/phenor" class="external-link">phenor R
+package</a>.</p>
 <div class="section level3">
 <h3 id="select-a-site">Select a site<a class="anchor" aria-label="anchor" href="#select-a-site"></a>
 </h3>
@@ -436,7 +443,7 @@ lines respectivelly.</p>
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <p>Hufkens K., Basler J. D., Milliman T. Melaas E., Richardson A.D. 2018
-<a href="http://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12970/full" class="external-link">An
+<a href="https://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12970/full" class="external-link">An
 integrated phenology modelling framework in R: Phenology modelling with
 phenor. Methods in Ecology &amp; Evolution</a>, 9: 1-10.</p>
 </div>

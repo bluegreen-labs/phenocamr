@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 
 # check if server is reachable
 # returns bolean TRUE if so
-phenocam_running <- function(url = "http://phenocam.nau.edu"){
+phenocam_running <- function(url = "https://phenocam.nau.edu"){
   ct <- try(httr::GET(url))
   if(inherits(ct,"try-error")){return(FALSE)}
   if(ct$status_code > 400){
@@ -33,15 +33,15 @@ library(phenocamr)
 check <- phenocam_running()
 ```
 
-A programmatic interface to the [PhenoCam web services](https://phenocam.sr.unh.edu/). Allows for easy downloads of PhenoCam near-surface remote sensing greenness (Gcc) time series directly to your R workspace or your computer. Post-processing allows for the smoothing of the time-series and the calculation of phenological transition dates as a final product.
+A programmatic interface to the [PhenoCam web services](https://phenocam.nau.edu/webcam/). Allows for easy downloads of PhenoCam near-surface remote sensing greenness (Gcc) time series directly to your R workspace or your computer. Post-processing allows for the smoothing of the time-series and the calculation of phenological transition dates as a final product.
 
 The package gives access to the latest generated PhenoCam time series (at most 1-day old for running sites) and allows for the extraction of up-to-date phenological transition dates. However, the data acquired through the package will not be curated and vetted for data quality.
 
-For a quality controlled and fully described dataset I suggest downloading the dataset as described by Richardson et al. (2018). This dataset uses the phenocamr packages in its final processing steps however quality control is gauranteed through careful review of the data. The data can be interactivly explored on [explore.phenocam.us](http://explore.phenocam.us) and downloaded in full from the [ORNL DAAC](https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1511). If in need of more recent data you can use the package and its functionality but be mindful of quality control especially the region-of-interest (ROI) used and potential unaccounted field-of-view (FOV) shifts in the dataset.
+For a quality controlled and fully described dataset I suggest downloading the dataset as described by Richardson et al. (2018). This dataset uses the phenocamr packages in its final processing steps however quality control is gauranteed through careful review of the data. The data can be interactively explored on [explore.phenocam.us](http://explore.phenocam.us) and downloaded in full from the [ORNL DAAC](https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1511). If in need of more recent data you can use the package and its functionality but be mindful of quality control especially the region-of-interest (ROI) used and potential unaccounted field-of-view (FOV) shifts in the dataset.
 
 ## A worked example
 
-Below I describe the most common use of the package, downloading recent PhenoCam time series and generating phenological transition dates for a given site and data type. I intentionally disable most automated processing and step through some of the routines to illustrate the workflow which normally happens internally to the main function download_phenocam(). Generated transition date files can be used in later analysis or modelling exercises using for example the [phenor R package](https://github.com/khufkens/phenor).
+Below I describe the most common use of the package, downloading recent PhenoCam time series and generating phenological transition dates for a given site and data type. I intentionally disable most automated processing and step through some of the routines to illustrate the workflow which normally happens internally to the main function download_phenocam(). Generated transition date files can be used in later analysis or modelling exercises using for example the [phenor R package](https://github.com/bluegreen-labs/phenor).
 
 ### Select a site
 
@@ -142,7 +142,7 @@ abline(v = phenology_dates$falling$transition_50,
 
 ## References
 
-Hufkens K., Basler J. D., Milliman T. Melaas E., Richardson A.D. 2018 [An integrated phenology modelling framework in R: Phenology modelling with phenor. Methods in Ecology & Evolution](http://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12970/full), 9: 1-10.
+Hufkens K., Basler J. D., Milliman T. Melaas E., Richardson A.D. 2018 [An integrated phenology modelling framework in R: Phenology modelling with phenor. Methods in Ecology & Evolution](https://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12970/full), 9: 1-10.
 
 ## Acknowledgements
 

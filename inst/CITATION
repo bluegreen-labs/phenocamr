@@ -11,7 +11,7 @@ citEntry(entry = "Article",
          year         = "2018",
          volume       = "9",
          pages        = "1-10",
-         url          = "http://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12970/full",
+         url          = "https://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12970/full",
 
          textVersion  =
            paste("Hufkens et al. (2018).",

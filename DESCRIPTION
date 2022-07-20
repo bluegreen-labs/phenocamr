@@ -10,7 +10,7 @@ Authors@R: c(person(
               person(given = "BlueGreen Labs",
                 role = c("cph", "fnd")))
 Description:
-    Programmatic interface to the 'PhenoCam' web services (<http://phenocam.nau.edu>).
+    Programmatic interface to the 'PhenoCam' web services (<https://phenocam.nau.edu/webcam>).
     Allows for easy downloading of 'PhenoCam' data directly to your R workspace
     or your computer and provides post-processing routines for consistent and easy
     timeseries outlier detection, smoothing and estimation of phenological transition dates.
@@ -44,4 +44,4 @@ RoxygenNote: 7.2.0
 VignetteBuilder: knitr
 Encoding: UTF-8
 URL: https://github.com/bluegreen-labs/phenocamr
-BugReports: https://github.com/bluegreen-labs/issues
+BugReports: https://github.com/bluegreen-labs/phenocamr/issues
