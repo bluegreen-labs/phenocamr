@@ -1,4 +1,4 @@
-# phenocamr <a href='https://bluegreen-labs.github.io/phenocamr/'><img src='https://github.com/bluegreen-labs/phenocamr/raw/master/logo.png' align="right" height="139" /></a>
+# phenocamr <img src='./logo.png' align="right" height="139"/>
 
 [![R-CMD-check](https://github.com/bluegreen-labs/phenocamr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bluegreen-labs/phenocamr/actions/workflows/R-CMD-check.yaml)
 [![codecov](https://codecov.io/gh/bluegreen-labs/phenocamr/branch/master/graph/badge.svg)](https://codecov.io/gh/bluegreen-labs/phenocamr)
