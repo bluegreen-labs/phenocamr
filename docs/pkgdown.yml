@@ -1,7 +1,7 @@
-pandoc: 2.14.0.3
-pkgdown: 1.6.1
+pandoc: 2.17.1.1
+pkgdown: 2.0.4
 pkgdown_sha: ~
 articles:
   phenocamr-vignette: phenocamr-vignette.html
-last_built: 2021-11-21T09:27Z
+last_built: 2022-07-20T16:43Z
 

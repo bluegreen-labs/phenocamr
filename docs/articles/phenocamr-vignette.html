@@ -24,6 +24,8 @@
 <meta name="twitter:card" content="summary">
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,9 +40,9 @@
       </button>
 
       <div class="navbar-brand-container">
-        <a class="hidden-sm hidden-xs" href="https://bluegreenlabs.org">
+        <a class="external-link hidden-sm hidden-xs" href="https://bluegreenlabs.org">
           <img src="https://bluegreenlabs.org/img/logo_text_small.png" id="hexlogo" alt="bluegreen labs"></a>
-        <a class="hidden-md hidden-lg" href="https://bluegreenlabs.org">
+        <a class="external-link hidden-md hidden-lg" href="https://bluegreenlabs.org">
           <img src="https://bluegreenlabs.org/img/logo.png" id="hexlogo" alt="bluegreen labs"></a>
         <a class="navbar-brand" href="../index.html">
            <i>phenocamr <small>v1.1.5</small></i>
@@ -51,16 +53,10 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -74,18 +70,7 @@
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-<li>
-  <a href="https://twitter.com/bluegreen_labs">
-    <span class="fab fa-twitter fa-lg"></span>
-     
-  </a>
-</li>
-        <li>
-  <a href="https://github.com/bluegreen-labs/issues/">
-    <span class="fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
 </div>
 <!--/.nav-collapse -->
@@ -96,35 +81,59 @@
 
       
 
-      </header><script src="phenocamr-vignette_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>phenocamr functionality</h1>
-                        <h4 class="author">Koen Hufkens</h4>
+                        <h4 data-toc-skip class="author">Koen
+Hufkens</h4>
             
-            <h4 class="date">2021-11-21</h4>
+            <h4 data-toc-skip class="date">2022-07-20</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/bluegreen-labs/issues/blob/master/vignettes/phenocamr-vignette.Rmd"><code>vignettes/phenocamr-vignette.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="NA/NA/NA/blob/HEAD/vignettes/phenocamr-vignette.Rmd"><code>vignettes/phenocamr-vignette.Rmd</code></a></small>
       <div class="hidden name"><code>phenocamr-vignette.Rmd</code></div>
 
     </div>
 
     
     
-<p>A programmatic interface to the <a href="https://phenocam.sr.unh.edu/">PhenoCam web services</a>. Allows for easy downloads of PhenoCam near-surface remote sensing greenness (Gcc) time series directly to your R workspace or your computer. Post-processing allows for the smoothing of the time-series and the calculation of phenological transition dates as a final product.</p>
-<p>The package gives access to the latest generated PhenoCam time series (at most 1-day old for running sites) and allows for the extraction of up-to-date phenological transition dates. However, the data acquired through the package will not be curated and vetted for data quality.</p>
-<p>For a quality controlled and fully described dataset I suggest downloading the dataset as described by Richardson et al. (2018). This dataset uses the phenocamr packages in its final processing steps however quality control is gauranteed through careful review of the data. The data can be interactivly explored on <a href="http://explore.phenocam.us">explore.phenocam.us</a> and downloaded in full from the <a href="https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1511">ORNL DAAC</a>. If in need of more recent data you can use the package and its functionality but be mindful of quality control especially the region-of-interest (ROI) used and potential unaccounted field-of-view (FOV) shifts in the dataset.</p>
-<div id="a-worked-example" class="section level2">
-<h2 class="hasAnchor">
-<a href="#a-worked-example" class="anchor"></a>A worked example</h2>
-<p>Below I describe the most common use of the package, downloading recent PhenoCam time series and generating phenological transition dates for a given site and data type. I intentionally disable most automated processing and step through some of the routines to illustrate the workflow which normally happens internally to the main function download_phenocam(). Generated transition date files can be used in later analysis or modelling exercises using for example the <a href="https://github.com/khufkens/phenor">phenor R package</a>.</p>
-<div id="select-a-site" class="section level3">
-<h3 class="hasAnchor">
-<a href="#select-a-site" class="anchor"></a>Select a site</h3>
-<p>A full list of meta-data for all sites can be queried using the list_sites() function.</p>
+<p>A programmatic interface to the <a href="https://phenocam.sr.unh.edu/" class="external-link">PhenoCam web services</a>. Allows
+for easy downloads of PhenoCam near-surface remote sensing greenness
+(Gcc) time series directly to your R workspace or your computer.
+Post-processing allows for the smoothing of the time-series and the
+calculation of phenological transition dates as a final product.</p>
+<p>The package gives access to the latest generated PhenoCam time series
+(at most 1-day old for running sites) and allows for the extraction of
+up-to-date phenological transition dates. However, the data acquired
+through the package will not be curated and vetted for data quality.</p>
+<p>For a quality controlled and fully described dataset I suggest
+downloading the dataset as described by Richardson et al. (2018). This
+dataset uses the phenocamr packages in its final processing steps
+however quality control is gauranteed through careful review of the
+data. The data can be interactivly explored on <a href="http://explore.phenocam.us" class="external-link">explore.phenocam.us</a> and downloaded
+in full from the <a href="https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1511" class="external-link">ORNL
+DAAC</a>. If in need of more recent data you can use the package and its
+functionality but be mindful of quality control especially the
+region-of-interest (ROI) used and potential unaccounted field-of-view
+(FOV) shifts in the dataset.</p>
+<div class="section level2">
+<h2 id="a-worked-example">A worked example<a class="anchor" aria-label="anchor" href="#a-worked-example"></a>
+</h2>
+<p>Below I describe the most common use of the package, downloading
+recent PhenoCam time series and generating phenological transition dates
+for a given site and data type. I intentionally disable most automated
+processing and step through some of the routines to illustrate the
+workflow which normally happens internally to the main function
+download_phenocam(). Generated transition date files can be used in
+later analysis or modelling exercises using for example the <a href="https://github.com/khufkens/phenor" class="external-link">phenor R package</a>.</p>
+<div class="section level3">
+<h3 id="select-a-site">Select a site<a class="anchor" aria-label="anchor" href="#select-a-site"></a>
+</h3>
+<p>A full list of meta-data for all sites can be queried using the
+list_sites() function.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sites</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/list_sites.html">list_sites</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">sites</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sites</span><span class="op">)</span>
 <span class="co">#&gt;                 site       lat       lon elev</span>
 <span class="co">#&gt; 1 aafcottawacfiaf14e  45.29210 -75.76640   90</span>
 <span class="co">#&gt; 2 aafcottawacfiaf14n  45.29290 -75.76700   90</span>
@@ -147,12 +156,12 @@
 <span class="co">#&gt; 5 Scott Graham &lt;grahams AT landcareresearch DOT co DOT nz&gt; 2021-03-04</span>
 <span class="co">#&gt; 6 Scott Graham &lt;grahams AT landcareresearch DOT co DOT nz&gt; 2021-03-02</span>
 <span class="co">#&gt;     date_end nimage tzoffset active infrared   method</span>
-<span class="co">#&gt; 1 2021-11-15  20975       -5   TRUE        N  ftppush</span>
-<span class="co">#&gt; 2 2021-11-15   2770       -5   TRUE        Y  ftppush</span>
-<span class="co">#&gt; 3 2021-11-15  20505       -5   TRUE        N  ftppush</span>
-<span class="co">#&gt; 4 2021-11-19  55377       -5   TRUE        N httppull</span>
-<span class="co">#&gt; 5 2021-11-20   5281       12   TRUE        Y  ftppush</span>
-<span class="co">#&gt; 6 2021-11-20   5075       12   TRUE        Y  ftppush</span>
+<span class="co">#&gt; 1 2022-07-04  27185       -5   TRUE        N  ftppush</span>
+<span class="co">#&gt; 2 2022-07-18   8998       -5   TRUE        Y  ftppush</span>
+<span class="co">#&gt; 3 2022-05-16  25487       -5   TRUE        N  ftppush</span>
+<span class="co">#&gt; 4 2022-01-07  55421       -5  FALSE        N httppull</span>
+<span class="co">#&gt; 5 2022-07-19  11100       12   TRUE        Y  ftppush</span>
+<span class="co">#&gt; 6 2022-07-19  12507       12   TRUE        Y  ftppush</span>
 <span class="co">#&gt;                                                                                                           site_description</span>
 <span class="co">#&gt; 1                                                             AAFC Site - Ottawa (On) - CFIA - Field F14 - East Flux Tower</span>
 <span class="co">#&gt; 2                                                               AAFC Site - Ottawa (On) - CFIA - Field F14 - North Section</span>
@@ -209,36 +218,48 @@
 <span class="co">#&gt; 4                                                                                                                                                                                                                           Camera images from Acadia National Park are provided courtesy of the National Park Service Air Resources Program.</span>
 <span class="co">#&gt; 5                                                                                                                                                                                                                    Ministry of Business, Innovation and Employment; New Zealand Agricultural Greenhouse Gas Research Centre; Manaaki Whenua</span>
 <span class="co">#&gt; 6                                                                                                                                                                                                                    Ministry of Business, Innovation and Employment; New Zealand Agricultural Greenhouse Gas Research Centre; Manaaki Whenua</span></code></pre></div>
-<p>To select a site first download an overview meta-data table of all available sites together with their ROI id’s and vegetation type and a limited set of meta-data parameters.</p>
+<p>To select a site first download an overview meta-data table of all
+available sites together with their ROI id’s and vegetation type and a
+limited set of meta-data parameters.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rois</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/list_rois.html">list_rois</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">rois</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rois</span><span class="op">)</span>
 <span class="co">#&gt;                 site       lat       lon veg_type roi_id_number</span>
 <span class="co">#&gt; 1 aafcottawacfiaf14e  45.29210 -75.76640       AG          1000</span>
-<span class="co">#&gt; 2 aafcottawacfiaf14w  45.29210 -75.76640       AG          1000</span>
-<span class="co">#&gt; 3             acadia  44.37694 -68.26083       DB          1000</span>
-<span class="co">#&gt; 4             acadia  44.37694 -68.26083       DB          2000</span>
-<span class="co">#&gt; 5       admixpasture -43.64930 172.34950       AG          1000</span>
-<span class="co">#&gt; 6       adrycpasture -43.65130 172.35010       AG          1000</span>
+<span class="co">#&gt; 2 aafcottawacfiaf14n  45.29290 -75.76700       AG          1000</span>
+<span class="co">#&gt; 3 aafcottawacfiaf14w  45.29210 -75.76640       AG          1000</span>
+<span class="co">#&gt; 4             acadia  44.37694 -68.26083       DB          1000</span>
+<span class="co">#&gt; 5             acadia  44.37694 -68.26083       DB          2000</span>
+<span class="co">#&gt; 6       admixpasture -43.64930 172.34950       AG          1000</span>
 <span class="co">#&gt;                                                                   description</span>
 <span class="co">#&gt; 1                                                         Field in foreground</span>
-<span class="co">#&gt; 2                                                         field in foreground</span>
-<span class="co">#&gt; 3                                        Deciduous trees in foreground center</span>
-<span class="co">#&gt; 4 Mixed forest in foreground.  Start new timeseries due to camera/FOV change.</span>
-<span class="co">#&gt; 5                                                         grass in foreground</span>
-<span class="co">#&gt; 6                                                                     Pasture</span>
+<span class="co">#&gt; 2                                                          Agricultural field</span>
+<span class="co">#&gt; 3                                                         field in foreground</span>
+<span class="co">#&gt; 4                                        Deciduous trees in foreground center</span>
+<span class="co">#&gt; 5 Mixed forest in foreground.  Start new timeseries due to camera/FOV change.</span>
+<span class="co">#&gt; 6                                                         grass in foreground</span>
 <span class="co">#&gt;   first_date  last_date site_years missing_data_pct</span>
-<span class="co">#&gt; 1 2020-04-28 2021-11-16        1.6                0</span>
-<span class="co">#&gt; 2 2020-05-01 2021-11-16        1.5                1</span>
-<span class="co">#&gt; 3 2007-03-15 2017-09-20        9.8                7</span>
-<span class="co">#&gt; 4 2017-10-11 2021-11-19        3.7                9</span>
-<span class="co">#&gt; 5 2021-03-03 2021-11-19        0.7                4</span>
-<span class="co">#&gt; 6 2021-06-10 2021-11-19        0.5                0</span></code></pre></div>
+<span class="co">#&gt; 1 2020-04-28 2022-07-04        2.1                3</span>
+<span class="co">#&gt; 2 2021-09-02 2022-07-19        0.8                6</span>
+<span class="co">#&gt; 3 2020-05-01 2022-05-17        2.0                2</span>
+<span class="co">#&gt; 4 2007-03-15 2017-09-20        9.8                7</span>
+<span class="co">#&gt; 5 2017-10-11 2021-09-23        3.7                6</span>
+<span class="co">#&gt; 6 2021-03-03 2022-07-19        1.4                2</span></code></pre></div>
 </div>
-<div id="download-a-phenocam-time-series-" class="section level3">
-<h3 class="hasAnchor">
-<a href="#download-a-phenocam-time-series-" class="anchor"></a>Download a PhenoCam time series.</h3>
-<p>The below code shows you how to download a PhenoCam time series for the “<strong>harvard</strong>” site, ROI (roi_id) 1 and a time step frequency of 3-days. In this case the default outlier detection and smoothing routines has been disabled and will be run separately in subsequent steps. In normal use these will be enabled by default. The default output directory is tempdir() but any directory can be specified for data management purposes. If default settings are maintained, outlier detection and smoothing will be performed automatically. If so desired phenology dates can be estimated in one pass. In the latter case new data will be written in the same directory as specified for downloading the time series data.</p>
+<div class="section level3">
+<h3 id="download-a-phenocam-time-series-">Download a PhenoCam time series.<a class="anchor" aria-label="anchor" href="#download-a-phenocam-time-series-"></a>
+</h3>
+<p>The below code shows you how to download a PhenoCam time series for
+the “<strong>harvard</strong>” site, ROI (roi_id) 1 and a time step
+frequency of 3-days. In this case the default outlier detection and
+smoothing routines has been disabled and will be run separately in
+subsequent steps. In normal use these will be enabled by default. The
+default output directory is tempdir() but any directory can be specified
+for data management purposes. If default settings are maintained,
+outlier detection and smoothing will be performed automatically. If so
+desired phenology dates can be estimated in one pass. In the latter case
+new data will be written in the same directory as specified for
+downloading the time series data.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R">  <span class="fu"><a href="../reference/download_phenocam.html">download_phenocam</a></span><span class="op">(</span>site <span class="op">=</span> <span class="st">"harvard$"</span>,
                     veg_type <span class="op">=</span> <span class="st">"DB"</span>,
@@ -246,12 +267,13 @@
                     frequency <span class="op">=</span> <span class="fl">3</span>,
                     outlier_detection <span class="op">=</span> <span class="cn">FALSE</span>,
                     smooth <span class="op">=</span> <span class="cn">FALSE</span>,
-                    out_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+                    out_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Downloading: harvard_DB_1000_3day.csv</span></code></pre></div>
-<p>After downloading we read in the data from disk. The data has a header and is comma separated.</p>
+<p>After downloading we read in the data from disk. The data has a
+header and is comma separated.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_phenocam.html">read_phenocam</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span>,<span class="st">"harvard_DB_1000_3day.csv"</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_phenocam.html">read_phenocam</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,<span class="st">"harvard_DB_1000_3day.csv"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; List of 10</span>
 <span class="co">#&gt;  $ site          : chr "harvard"</span>
 <span class="co">#&gt;  $ veg_type      : chr "DB"</span>
@@ -263,132 +285,166 @@
 <span class="co">#&gt;  $ solar_elev_min: num 10</span>
 <span class="co">#&gt;  $ header        : Named chr [1:24] NA NA NA "harvard" ...</span>
 <span class="co">#&gt;   ..- attr(*, "names")= chr [1:24] "#" "# 3-day summary product timeseries for harvard" "#" "# Site" ...</span>
-<span class="co">#&gt;  $ data          :'data.frame':  5158 obs. of  32 variables:</span>
-<span class="co">#&gt;   ..$ date                : chr [1:5158] "2008-01-05" "2008-01-06" "2008-01-07" "2008-01-08" ...</span>
-<span class="co">#&gt;   ..$ year                : int [1:5158] 2008 2008 2008 2008 2008 2008 2008 2008 2008 2008 ...</span>
-<span class="co">#&gt;   ..$ doy                 : int [1:5158] 5 6 7 8 9 10 11 12 13 14 ...</span>
-<span class="co">#&gt;   ..$ image_count         : int [1:5158] NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;   ..$ midday_filename     : chr [1:5158] NA NA NA NA ...</span>
-<span class="co">#&gt;   ..$ midday_r            : num [1:5158] NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;   ..$ midday_g            : num [1:5158] NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;   ..$ midday_b            : num [1:5158] NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;   ..$ midday_gcc          : num [1:5158] NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;   ..$ midday_rcc          : num [1:5158] NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;   ..$ r_mean              : num [1:5158] NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;   ..$ r_std               : num [1:5158] NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;   ..$ g_mean              : num [1:5158] NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;   ..$ g_std               : num [1:5158] NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;   ..$ b_mean              : num [1:5158] NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;   ..$ b_std               : num [1:5158] NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;   ..$ gcc_mean            : num [1:5158] NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;   ..$ gcc_std             : num [1:5158] NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;   ..$ gcc_50              : num [1:5158] NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;   ..$ gcc_75              : num [1:5158] NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;   ..$ gcc_90              : num [1:5158] NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;   ..$ rcc_mean            : num [1:5158] NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;   ..$ rcc_std             : num [1:5158] NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;   ..$ rcc_50              : num [1:5158] NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;   ..$ rcc_75              : num [1:5158] NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;   ..$ rcc_90              : num [1:5158] NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;   ..$ max_solar_elev      : num [1:5158] NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;   ..$ snow_flag           : logi [1:5158] NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;   ..$ outlierflag_gcc_mean: logi [1:5158] NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;   ..$ outlierflag_gcc_50  : logi [1:5158] NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;   ..$ outlierflag_gcc_75  : logi [1:5158] NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;   ..$ outlierflag_gcc_90  : logi [1:5158] NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ data          :'data.frame':  5400 obs. of  32 variables:</span>
+<span class="co">#&gt;   ..$ date                : chr [1:5400] "2008-01-05" "2008-01-06" "2008-01-07" "2008-01-08" ...</span>
+<span class="co">#&gt;   ..$ year                : int [1:5400] 2008 2008 2008 2008 2008 2008 2008 2008 2008 2008 ...</span>
+<span class="co">#&gt;   ..$ doy                 : int [1:5400] 5 6 7 8 9 10 11 12 13 14 ...</span>
+<span class="co">#&gt;   ..$ image_count         : int [1:5400] NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   ..$ midday_filename     : chr [1:5400] NA NA NA NA ...</span>
+<span class="co">#&gt;   ..$ midday_r            : num [1:5400] NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   ..$ midday_g            : num [1:5400] NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   ..$ midday_b            : num [1:5400] NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   ..$ midday_gcc          : num [1:5400] NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   ..$ midday_rcc          : num [1:5400] NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   ..$ r_mean              : num [1:5400] NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   ..$ r_std               : num [1:5400] NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   ..$ g_mean              : num [1:5400] NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   ..$ g_std               : num [1:5400] NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   ..$ b_mean              : num [1:5400] NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   ..$ b_std               : num [1:5400] NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   ..$ gcc_mean            : num [1:5400] NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   ..$ gcc_std             : num [1:5400] NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   ..$ gcc_50              : num [1:5400] NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   ..$ gcc_75              : num [1:5400] NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   ..$ gcc_90              : num [1:5400] NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   ..$ rcc_mean            : num [1:5400] NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   ..$ rcc_std             : num [1:5400] NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   ..$ rcc_50              : num [1:5400] NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   ..$ rcc_75              : num [1:5400] NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   ..$ rcc_90              : num [1:5400] NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   ..$ max_solar_elev      : num [1:5400] NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   ..$ snow_flag           : logi [1:5400] NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   ..$ outlierflag_gcc_mean: logi [1:5400] NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   ..$ outlierflag_gcc_50  : logi [1:5400] NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   ..$ outlierflag_gcc_75  : logi [1:5400] NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   ..$ outlierflag_gcc_90  : logi [1:5400] NA NA NA NA NA NA ...</span>
 <span class="co">#&gt;  - attr(*, "class")= chr "phenocamr"</span>
 <span class="co">#&gt; NULL</span></code></pre></div>
 </div>
-<div id="expanding-3-day-data-for-maximum-phenology-resolution" class="section level3">
-<h3 class="hasAnchor">
-<a href="#expanding-3-day-data-for-maximum-phenology-resolution" class="anchor"></a>Expanding 3-day data for maximum phenology resolution</h3>
-<p>The downloaded time series is of a 3-day resolution. However, to correctly evaluate the phenology on a daily time step the time series needs to be expanded to this one day time step. This can be achieved using the expand_phenocam() function.</p>
+<div class="section level3">
+<h3 id="expanding-3-day-data-for-maximum-phenology-resolution">Expanding 3-day data for maximum phenology resolution<a class="anchor" aria-label="anchor" href="#expanding-3-day-data-for-maximum-phenology-resolution"></a>
+</h3>
+<p>The downloaded time series is of a 3-day resolution. However, to
+correctly evaluate the phenology on a daily time step the time series
+needs to be expanded to this one day time step. This can be achieved
+using the expand_phenocam() function.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/expand_phenocam.html">expand_phenocam</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="detect-data-outlier" class="section level3">
-<h3 class="hasAnchor">
-<a href="#detect-data-outlier" class="anchor"></a>Detect data outlier</h3>
-<p>After reading in the data as a data frame you can apply the outlier detection routine. This routine uses an iterative method to detect outlier values in the Gcc time series. This routine filters out most spurious values due contaminiation by snow, mist, rain or otherwise very bright events. Warnings are suppressed as the routine is iterative and might throw warnings if it does not converge on a solution. This has no implications for the routine and data returned.</p>
+<div class="section level3">
+<h3 id="detect-data-outlier">Detect data outlier<a class="anchor" aria-label="anchor" href="#detect-data-outlier"></a>
+</h3>
+<p>After reading in the data as a data frame you can apply the outlier
+detection routine. This routine uses an iterative method to detect
+outlier values in the Gcc time series. This routine filters out most
+spurious values due contaminiation by snow, mist, rain or otherwise very
+bright events. Warnings are suppressed as the routine is iterative and
+might throw warnings if it does not converge on a solution. This has no
+implications for the routine and data returned.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R">  <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detect_outliers.html">detect_outliers</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="smoothing-a-time-series" class="section level3">
-<h3 class="hasAnchor">
-<a href="#smoothing-a-time-series" class="anchor"></a>Smoothing a time series</h3>
-<p>After detecting outliers you can smooth the data. This function uses an AIC based methodology to find the opitmal loess smoothing window. Warnings are suppressed as the routine uses an optimization in which certain parameter settings return warnings. This has no implications for the routine and data returned.</p>
+<div class="section level3">
+<h3 id="smoothing-a-time-series">Smoothing a time series<a class="anchor" aria-label="anchor" href="#smoothing-a-time-series"></a>
+</h3>
+<p>After detecting outliers you can smooth the data. This function uses
+an AIC based methodology to find the opitmal loess smoothing window.
+Warnings are suppressed as the routine uses an optimization in which
+certain parameter settings return warnings. This has no implications for
+the routine and data returned.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R">  <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/smooth_ts.html">smooth_ts</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="calculating-phenophases" class="section level3">
-<h3 class="hasAnchor">
-<a href="#calculating-phenophases" class="anchor"></a>Calculating phenophases</h3>
-<p>Finally, if smoothed data is available you can calculate phenological transition dates. This routine uses a PELT changepoint detection based approach to find meaningful seasonal cycles in the data. By default start of growing season dates are returned. If the reverse parameter is set to TRUE the end of growing season dates are returned. Dates are formatted as unix time and will be provided for three default threshold values (10 / 25 / 50%) of the Gcc amplitude.</p>
+<div class="section level3">
+<h3 id="calculating-phenophases">Calculating phenophases<a class="anchor" aria-label="anchor" href="#calculating-phenophases"></a>
+</h3>
+<p>Finally, if smoothed data is available you can calculate phenological
+transition dates. This routine uses a PELT changepoint detection based
+approach to find meaningful seasonal cycles in the data. By default
+start of growing season dates are returned. If the reverse parameter is
+set to TRUE the end of growing season dates are returned. Dates are
+formatted as unix time and will be provided for three default threshold
+values (10 / 25 / 50%) of the Gcc amplitude.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">start_of_season</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/transition_dates.html">transition_dates</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
-<span class="co">#&gt; Warning in index_segment &lt;= max_loc: longer object length is not a multiple of</span>
+<span class="co">#&gt; Warning in index_segment &gt;= min_loc: longer object length is not a multiple of</span>
 <span class="co">#&gt; shorter object length</span>
-<span class="co">#&gt; Warning in index_segment &lt; max_loc: longer object length is not a multiple of</span>
+<span class="co">#&gt; Warning in index_segment &gt; min_loc: longer object length is not a multiple of</span>
 <span class="co">#&gt; shorter object length</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">start_of_season</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">start_of_season</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;   transition_10 transition_25 transition_50 transition_10_lower_ci</span>
-<span class="co">#&gt; 1         14001         14006         14014                  13999</span>
-<span class="co">#&gt; 2         14360         14366         14374                  14357</span>
-<span class="co">#&gt; 3         14718         14724         14730                  14715</span>
-<span class="co">#&gt; 4         15095         15100         15107                  15093</span>
-<span class="co">#&gt; 5         15452         15460         15467                  15444</span>
-<span class="co">#&gt; 6         15824         15828         15835                  15822</span>
+<span class="co">#&gt; 1         14000         14005         14013                  13997</span>
+<span class="co">#&gt; 2         14360         14366         14373                  14356</span>
+<span class="co">#&gt; 3         14718         14723         14731                  14713</span>
+<span class="co">#&gt; 4         15094         15100         15107                  15092</span>
+<span class="co">#&gt; 5         15451         15459         15466                  15446</span>
+<span class="co">#&gt; 6         15823         15828         15835                  15820</span>
 <span class="co">#&gt;   transition_25_lower_ci transition_50_lower_ci transition_10_upper_ci</span>
-<span class="co">#&gt; 1                  14005                  14012                  14004</span>
-<span class="co">#&gt; 2                  14365                  14372                  14363</span>
-<span class="co">#&gt; 3                  14723                  14728                  14721</span>
-<span class="co">#&gt; 4                  15099                  15105                  15098</span>
-<span class="co">#&gt; 5                  15458                  15465                  15456</span>
-<span class="co">#&gt; 6                  15827                  15833                  15826</span>
+<span class="co">#&gt; 1                  14004                  14011                  14003</span>
+<span class="co">#&gt; 2                  14364                  14371                  14363</span>
+<span class="co">#&gt; 3                  14722                  14729                  14721</span>
+<span class="co">#&gt; 4                  15099                  15105                  15097</span>
+<span class="co">#&gt; 5                  15457                  15465                  15455</span>
+<span class="co">#&gt; 6                  15827                  15833                  15825</span>
 <span class="co">#&gt;   transition_25_upper_ci transition_50_upper_ci threshold_10 threshold_25</span>
-<span class="co">#&gt; 1                  14008                  14015      0.37706      0.38982</span>
-<span class="co">#&gt; 2                  14368                  14375      0.37711      0.38903</span>
-<span class="co">#&gt; 3                  14726                  14731      0.37760      0.39157</span>
-<span class="co">#&gt; 4                  15102                  15108      0.37978      0.39200</span>
-<span class="co">#&gt; 5                  15462                  15468      0.38219      0.39806</span>
-<span class="co">#&gt; 6                  15830                  15836      0.38201      0.39462</span>
+<span class="co">#&gt; 1                  14008                  14014      0.37586      0.38807</span>
+<span class="co">#&gt; 2                  14368                  14374      0.37682      0.39104</span>
+<span class="co">#&gt; 3                  14725                  14732      0.37812      0.39095</span>
+<span class="co">#&gt; 4                  15102                  15108      0.37887      0.39441</span>
+<span class="co">#&gt; 5                  15461                  15467      0.38192      0.39756</span>
+<span class="co">#&gt; 6                  15830                  15836      0.38172      0.39589</span>
 <span class="co">#&gt;   threshold_50 min_gcc max_gcc</span>
-<span class="co">#&gt; 1      0.41902 0.36847 0.46190</span>
-<span class="co">#&gt; 2      0.41846 0.36793 0.46226</span>
-<span class="co">#&gt; 3      0.41781 0.36882 0.46465</span>
-<span class="co">#&gt; 4      0.42046 0.37067 0.46825</span>
-<span class="co">#&gt; 5      0.42793 0.37233 0.47542</span>
-<span class="co">#&gt; 6      0.42482 0.37270 0.47074</span></code></pre></div>
-<p>Alternatively you can use the phenophases() function which is a wrapper of the transition_dates() function. However, as it potentially writes data to disk it needs additional information such as the roi_id, site name etc. The phenophases() function is the function which generated the final data products in the Richardson et al. (2018) paper. If used internally the output will be formatted in unix time, when written to file the dates will be human readable in YYYY-MM-DD format. Both start and end of season estimates will be provided.</p>
+<span class="co">#&gt; 1      0.41485 0.36733 0.46093</span>
+<span class="co">#&gt; 2      0.41549 0.36801 0.46125</span>
+<span class="co">#&gt; 3      0.42128 0.36879 0.46400</span>
+<span class="co">#&gt; 4      0.42132 0.37055 0.46809</span>
+<span class="co">#&gt; 5      0.42369 0.37223 0.47484</span>
+<span class="co">#&gt; 6      0.42472 0.37249 0.47047</span></code></pre></div>
+<p>Alternatively you can use the phenophases() function which is a
+wrapper of the transition_dates() function. However, as it potentially
+writes data to disk it needs additional information such as the roi_id,
+site name etc. The phenophases() function is the function which
+generated the final data products in the Richardson et al. (2018) paper.
+If used internally the output will be formatted in unix time, when
+written to file the dates will be human readable in YYYY-MM-DD format.
+Both start and end of season estimates will be provided.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">phenology_dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/phenophases.html">phenophases</a></span><span class="op">(</span><span class="va">df</span>, internal <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p>With the phenoogy dates calculated we can plot their respective locations on the smoothed time series. In this case the plot will show the 50% amplitude threshold values for both rising and falling parts of the 90th percentile Gcc curve, marked with green and brown vertical lines respectivelly.</p>
+<p>With the phenoogy dates calculated we can plot their respective
+locations on the smoothed time series. In this case the plot will show
+the 50% amplitude threshold values for both rising and falling parts of
+the 90th percentile Gcc curve, marked with green and brown vertical
+lines respectivelly.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">date</span><span class="op">)</span>,
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">date</span><span class="op">)</span>,
      <span class="va">df</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">smooth_gcc_90</span>,
      type <span class="op">=</span> <span class="st">"l"</span>,
      xlab <span class="op">=</span> <span class="st">"date"</span>,
      ylab <span class="op">=</span> <span class="st">"Gcc"</span><span class="op">)</span>
 
 <span class="co"># rising "spring" greenup dates</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">phenology_dates</span><span class="op">$</span><span class="va">rising</span><span class="op">$</span><span class="va">transition_50</span>,
+<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">phenology_dates</span><span class="op">$</span><span class="va">rising</span><span class="op">$</span><span class="va">transition_50</span>,
        col <span class="op">=</span> <span class="st">"green"</span><span class="op">)</span>
 
 <span class="co"># falling "autumn" senescence dates</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">phenology_dates</span><span class="op">$</span><span class="va">falling</span><span class="op">$</span><span class="va">transition_50</span>,
+<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">phenology_dates</span><span class="op">$</span><span class="va">falling</span><span class="op">$</span><span class="va">transition_50</span>,
        col <span class="op">=</span> <span class="st">"brown"</span><span class="op">)</span></code></pre></div>
 <p><img src="phenocamr-vignette_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
 </div>
 </div>
-<div id="references" class="section level2">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
-<p>Hufkens K., Basler J. D., Milliman T. Melaas E., Richardson A.D. 2018 <a href="http://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12970/full">An integrated phenology modelling framework in R: Phenology modelling with phenor. Methods in Ecology &amp; Evolution</a>, 9: 1-10.</p>
+<div class="section level2">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
+<p>Hufkens K., Basler J. D., Milliman T. Melaas E., Richardson A.D. 2018
+<a href="http://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12970/full" class="external-link">An
+integrated phenology modelling framework in R: Phenology modelling with
+phenor. Methods in Ecology &amp; Evolution</a>, 9: 1-10.</p>
 </div>
-<div id="acknowledgements" class="section level2">
-<h2 class="hasAnchor">
-<a href="#acknowledgements" class="anchor"></a>Acknowledgements</h2>
-<p>This project was is supported by the National Science Foundation’s Macro-system Biology Program (awards EF-1065029 and EF-1702697).</p>
+<div class="section level2">
+<h2 id="acknowledgements">Acknowledgements<a class="anchor" aria-label="anchor" href="#acknowledgements"></a>
+</h2>
+<p>This project was is supported by the National Science Foundation’s
+Macro-system Biology Program (awards EF-1065029 and EF-1702697).</p>
 </div>
   </div>
 
@@ -408,11 +464,11 @@
             <div class="col-xs-10">
                 <div class="row">
                     <div class="col-md-4 col-xs-6">
-                        <a href="http://github.com/bluegreen-labs" target="_blank">
+                        <a href="http://github.com/bluegreen-labs" target="_blank" class="external-link">
                           <div class="icon fab fa-github"></div></a>
-                        <a href="https://bluegreenlabs.org/labs/" target="_blank">
+                        <a href="https://bluegreenlabs.org/labs/" target="_blank" class="external-link">
                           <div class="icon fa fa-flask"></div></a>
-                        <a href="http://twitter.com/bluegreen_labs" target="_blank">
+                        <a href="http://twitter.com/bluegreen_labs" target="_blank" class="external-link">
                           <div class="icon fab fa-twitter"></div></a>
                     </div>
                 </div>
@@ -420,17 +476,17 @@
                     <div class="col-md-2 col-sm-4">
                         <ul>
 <h5 class="bottom-2">About</h5>
-                            <li><a href="https://bluegreenlabs.org/#intro">BlueGreen Labs</a></li>
-                            <li><a href="https://bluegreenlabs.org/#people">Our Team</a></li>
-                            <li><a href="https://bluegreenlabs.org/#contact">Contact Us</a></li>
+                            <li><a href="https://bluegreenlabs.org/#intro" class="external-link">BlueGreen Labs</a></li>
+                            <li><a href="https://bluegreenlabs.org/#people" class="external-link">Our Team</a></li>
+                            <li><a href="https://bluegreenlabs.org/#contact" class="external-link">Contact Us</a></li>
                         </ul>
 </div>
                     <div class="col-md-2 col-sm-4">
                         <ul>
 <h5 class="bottom-2">Resources</h5>
-                            <li><a href="https://github.com/bluegreen-labs">Packages</a></li>
-                            <li><a href="https://bluegreenlabs.org/publication/">Publications</a></li>
-                            <li><a href="https://bluegreenlabs.org/post/">Blog</a></li>
+                            <li><a href="https://github.com/bluegreen-labs" class="external-link">Packages</a></li>
+                            <li><a href="https://bluegreenlabs.org/publication/" class="external-link">Publications</a></li>
+                            <li><a href="https://bluegreenlabs.org/post/" class="external-link">Blog</a></li>
                         </ul>
 </div>
 
@@ -446,6 +502,8 @@
 
   
 
+
+  
 
   </body>
 </html>

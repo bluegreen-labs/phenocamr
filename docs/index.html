@@ -29,6 +29,8 @@
 <meta name="twitter:card" content="summary">
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -43,9 +45,9 @@
       </button>
 
       <div class="navbar-brand-container">
-        <a class="hidden-sm hidden-xs" href="https://bluegreenlabs.org">
+        <a class="external-link hidden-sm hidden-xs" href="https://bluegreenlabs.org">
           <img src="https://bluegreenlabs.org/img/logo_text_small.png" id="hexlogo" alt="bluegreen labs"></a>
-        <a class="hidden-md hidden-lg" href="https://bluegreenlabs.org">
+        <a class="external-link hidden-md hidden-lg" href="https://bluegreenlabs.org">
           <img src="https://bluegreenlabs.org/img/logo.png" id="hexlogo" alt="bluegreen labs"></a>
         <a class="navbar-brand" href="index.html">
            <i>phenocamr <small>v1.1.5</small></i>
@@ -56,16 +58,10 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -79,18 +75,7 @@
 <li>
   <a href="news/index.html">Changelog</a>
 </li>
-<li>
-  <a href="https://twitter.com/bluegreen_labs">
-    <span class="fab fa-twitter fa-lg"></span>
-     
-  </a>
-</li>
-        <li>
-  <a href="https://github.com/bluegreen-labs/issues/">
-    <span class="fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
 </div>
 <!--/.nav-collapse -->
@@ -103,41 +88,41 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="phenocamr-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#phenocamr-" class="anchor"></a>phenocamr <a href="https://bluegreen-labs.github.io/phenocamr/"><img src="https://github.com/bluegreen-labs/phenocamr/raw/master/logo.png" align="right" height="139"></a>
+<div class="section level1">
+<div class="page-header"><h1 id="phenocamr-">phenocamr <a href="https://bluegreen-labs.github.io/phenocamr/" class="external-link"><img src="https://github.com/bluegreen-labs/phenocamr/raw/master/logo.png" align="right" height="139"></a>
+<a class="anchor" aria-label="anchor" href="#phenocamr-"></a>
 </h1></div>
 
-<p>Facilitates the retrieval and post-processing of PhenoCam time series. The post-processing of PhenoCam data includes outlier removal and the generation of data products such as phenological transition dates. If requested complementary <a href="https://daymet.ornl.gov/">Daymet climate data</a> will be downloaded and merged with the PhenoCam data for modelling purposes. For a detailed overview of the assumptions made during post-processing I refer publications by Hufkens et al. (2018) and Richardson et al. (2018). Please cite the Hufkens et al. (2018) paper when using the package. A worked example is included below and in the package vignette.</p>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<div id="stable-release" class="section level3">
-<h3 class="hasAnchor">
-<a href="#stable-release" class="anchor"></a>stable release</h3>
+<p>Facilitates the retrieval and post-processing of PhenoCam time series. The post-processing of PhenoCam data includes outlier removal and the generation of data products such as phenological transition dates. If requested complementary <a href="https://daymet.ornl.gov/" class="external-link">Daymet climate data</a> will be downloaded and merged with the PhenoCam data for modelling purposes. For a detailed overview of the assumptions made during post-processing I refer publications by Hufkens et al. (2018) and Richardson et al. (2018). Please cite the Hufkens et al. (2018) paper when using the package. A worked example is included below and in the package vignette.</p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<div class="section level3">
+<h3 id="stable-release">stable release<a class="anchor" aria-label="anchor" href="#stable-release"></a>
+</h3>
 <p>To install the current stable release use a CRAN repository:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"phenocamr"</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bluegreen-labs/phenocamr">phenocamr</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"phenocamr"</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bluegreen-labs/phenocamr" class="external-link">phenocamr</a></span><span class="op">)</span></code></pre></div>
 </div>
-<div id="development-release" class="section level3">
-<h3 class="hasAnchor">
-<a href="#development-release" class="anchor"></a>development release</h3>
+<div class="section level3">
+<h3 id="development-release">development release<a class="anchor" aria-label="anchor" href="#development-release"></a>
+</h3>
 <p>To install the development releases of the package run the following commands:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/">devtools</a></span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu">install.package</span><span class="op">(</span><span class="va">devtools</span><span class="op">)</span><span class="op">}</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"bluegreen-labs/phenocamr"</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bluegreen-labs/phenocamr">phenocamr</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu">install.package</span><span class="op">(</span><span class="va">devtools</span><span class="op">)</span><span class="op">}</span>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"bluegreen-labs/phenocamr"</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bluegreen-labs/phenocamr" class="external-link">phenocamr</a></span><span class="op">)</span></code></pre></div>
 <p>Vignettes are not rendered by default, if you want to include additional documentation please use:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/">devtools</a></span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu">install.package</span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span><span class="op">}</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"bluegreen-labs/phenocamr"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bluegreen-labs/phenocamr">phenocamr</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span><span class="op">)</span><span class="op">{</span><span class="fu">install.package</span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span><span class="op">}</span>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"bluegreen-labs/phenocamr"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bluegreen-labs/phenocamr" class="external-link">phenocamr</a></span><span class="op">)</span></code></pre></div>
 </div>
 </div>
-<div id="use" class="section level2">
-<h2 class="hasAnchor">
-<a href="#use" class="anchor"></a>Use</h2>
+<div class="section level2">
+<h2 id="use">Use<a class="anchor" aria-label="anchor" href="#use"></a>
+</h2>
 <p>To download data for a single deciduous broadleaf forest site (harvard) use the following syntax:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/download_phenocam.html">download_phenocam</a></span><span class="op">(</span>site <span class="op">=</span> <span class="st">"harvard"</span>,
@@ -147,63 +132,65 @@
                   out_dir <span class="op">=</span> <span class="st">"~"</span><span class="op">)</span></code></pre></div>
 <p>This will download all deciduous broadleaf (DB) PhenoCam time series for the “harvard” site at a 3-day time step into your home directory. In addition, the data is processed to estimate phenological transition dates (phenophases) and written to file. For detailed overview of all functions and worked example we reference to the R help documentation and the manuscripts below.</p>
 </div>
-<div id="references" class="section level2">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
-<p>Hufkens K., Basler J. D., Milliman T. Melaas E., Richardson A.D. 2018 <a href="http://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12970/full">An integrated phenology modelling framework in R: Phenology modelling with phenor. Methods in Ecology &amp; Evolution</a>, 9: 1-10.</p>
-<p>Richardson, A.D., Hufkens, K., Milliman, T., Aubrecht, D.M., Chen, M., Gray, J.M., Johnston, M.R., Keenan, T.F., Klosterman, S.T., Kosmala, M., Melaas, E.K., Friedl, M.A., Frolking, S. 2017. <a href="https://www.nature.com/articles/sdata201828">Tracking vegetation phenology across diverse North American biomes using PhenoCam imagery</a>. Scientific Data, 5, 180028.</p>
+<div class="section level2">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
+<p>Hufkens K., Basler J. D., Milliman T. Melaas E., Richardson A.D. 2018 <a href="http://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12970/full" class="external-link">An integrated phenology modelling framework in R: Phenology modelling with phenor. Methods in Ecology &amp; Evolution</a>, 9: 1-10.</p>
+<p>Richardson, A.D., Hufkens, K., Milliman, T., Aubrecht, D.M., Chen, M., Gray, J.M., Johnston, M.R., Keenan, T.F., Klosterman, S.T., Kosmala, M., Melaas, E.K., Friedl, M.A., Frolking, S. 2017. <a href="https://www.nature.com/articles/sdata201828" class="external-link">Tracking vegetation phenology across diverse North American biomes using PhenoCam imagery</a>. Scientific Data, 5, 180028.</p>
 </div>
-<div id="acknowledgements" class="section level2">
-<h2 class="hasAnchor">
-<a href="#acknowledgements" class="anchor"></a>Acknowledgements</h2>
-<p>This project was is supported by the National Science Foundation’s Macro-system Biology Program (awards EF-1065029 and EF-1702697). Logo design elements are taken from the FontAwesome library according to <a href="https://fontawesome.com/license">these terms</a>.</p>
+<div class="section level2">
+<h2 id="acknowledgements">Acknowledgements<a class="anchor" aria-label="anchor" href="#acknowledgements"></a>
+</h2>
+<p>This project was is supported by the National Science Foundation’s Macro-system Biology Program (awards EF-1065029 and EF-1702697). Logo design elements are taken from the FontAwesome library according to <a href="https://fontawesome.com/license" class="external-link">these terms</a>.</p>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=phenocamr">https://​cloud.r-project.org/​package=phenocamr</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/bluegreen-labs/issues/">https://​github.com/​bluegreen-labs/​issues/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/bluegreen-labs/issues">https://​github.com/​bluegreen-labs/​issues</a>
-</li>
-</ul>
-</div>
-<div class="license">
-<h2>License</h2>
-<ul class="list-unstyled">
-<li><a href="https://www.r-project.org/Licenses/AGPL-3">AGPL-3</a></li>
-</ul>
-</div>
-<div class="citation">
-<h2>Citation</h2>
-<ul class="list-unstyled">
-<li><a href="authors.html">Citing phenocamr</a></li>
-</ul>
-</div>
-<div class="developers">
-<h2>Developers</h2>
-<ul class="list-unstyled">
-<li>
-<a href="https://bluegreenlabs.org">Koen Hufkens</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-5070-8109" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>
-<a href="https://bluegreenlabs.org">BlueGreen Labs</a> <br><small class="roles"> Copyright holder, funder </small>  </li>
+<li><a href="https://cloud.r-project.org/package=phenocamr" class="external-link">View on CRAN</a></li>
+<li><a href="NA/NA/NA/">Browse source code</a></li>
+<li><a href="https://github.com/bluegreen-labs/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="license">
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.org/bluegreen-labs/phenocamr"><img src="https://travis-ci.com/bluegreen-labs/phenocamr.svg?branch=master" alt="Build Status"></a></li>
-<li><a href="https://codecov.io/gh/bluegreen-labs/phenocamr"><img src="https://codecov.io/gh/bluegreen-labs/phenocamr/branch/master/graph/badge.svg" alt="codecov"></a></li>
-<li><a href="https://cran.r-project.org/package=phenocamr"><img src="https://www.r-pkg.org/badges/version/phenocamr" alt="CRAN_Status_Badge"></a></li>
+<li><a href="https://www.r-project.org/Licenses/AGPL-3" class="external-link">AGPL-3</a></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing phenocamr</a></li>
+</ul>
 </div>
+
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
+<ul class="list-unstyled">
+<li>
+<a href="https://bluegreenlabs.org" class="external-link">Koen Hufkens</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-5070-8109" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>
+<a href="https://bluegreenlabs.org" class="external-link">BlueGreen Labs</a> <br><small class="roles"> Copyright holder, funder </small>  </li>
+</ul>
+</div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://travis-ci.org/bluegreen-labs/phenocamr" class="external-link"><img src="https://travis-ci.com/bluegreen-labs/phenocamr.svg?branch=master" alt="Build Status"></a></li>
+<li><a href="https://codecov.io/gh/bluegreen-labs/phenocamr" class="external-link"><img src="https://codecov.io/gh/bluegreen-labs/phenocamr/branch/master/graph/badge.svg" alt="codecov"></a></li>
+<li><a href="https://cran.r-project.org/package=phenocamr" class="external-link"><img src="https://www.r-pkg.org/badges/version/phenocamr" alt="CRAN_Status_Badge"></a></li>
+</ul>
+</div>
+
+  </div>
 </div>
 
 
@@ -213,11 +200,11 @@
             <div class="col-xs-10">
                 <div class="row">
                     <div class="col-md-4 col-xs-6">
-                        <a href="http://github.com/bluegreen-labs" target="_blank">
+                        <a href="http://github.com/bluegreen-labs" target="_blank" class="external-link">
                           <div class="icon fab fa-github"></div></a>
-                        <a href="https://bluegreenlabs.org/labs/" target="_blank">
+                        <a href="https://bluegreenlabs.org/labs/" target="_blank" class="external-link">
                           <div class="icon fa fa-flask"></div></a>
-                        <a href="http://twitter.com/bluegreen_labs" target="_blank">
+                        <a href="http://twitter.com/bluegreen_labs" target="_blank" class="external-link">
                           <div class="icon fab fa-twitter"></div></a>
                     </div>
                 </div>
@@ -225,17 +212,17 @@
                     <div class="col-md-2 col-sm-4">
                         <ul>
 <h5 class="bottom-2">About</h5>
-                            <li><a href="https://bluegreenlabs.org/#intro">BlueGreen Labs</a></li>
-                            <li><a href="https://bluegreenlabs.org/#people">Our Team</a></li>
-                            <li><a href="https://bluegreenlabs.org/#contact">Contact Us</a></li>
+                            <li><a href="https://bluegreenlabs.org/#intro" class="external-link">BlueGreen Labs</a></li>
+                            <li><a href="https://bluegreenlabs.org/#people" class="external-link">Our Team</a></li>
+                            <li><a href="https://bluegreenlabs.org/#contact" class="external-link">Contact Us</a></li>
                         </ul>
 </div>
                     <div class="col-md-2 col-sm-4">
                         <ul>
 <h5 class="bottom-2">Resources</h5>
-                            <li><a href="https://github.com/bluegreen-labs">Packages</a></li>
-                            <li><a href="https://bluegreenlabs.org/publication/">Publications</a></li>
-                            <li><a href="https://bluegreenlabs.org/post/">Blog</a></li>
+                            <li><a href="https://github.com/bluegreen-labs" class="external-link">Packages</a></li>
+                            <li><a href="https://bluegreenlabs.org/publication/" class="external-link">Publications</a></li>
+                            <li><a href="https://bluegreenlabs.org/post/" class="external-link">Blog</a></li>
                         </ul>
 </div>
 
@@ -251,6 +238,8 @@
 
   
 
+
+  
 
   </body>
 </html>
