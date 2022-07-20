@@ -7,6 +7,8 @@
 #' @param internal TRUE or FALSE (default = TRUE)
 #' @return A data frame with ROIs for all available cameras
 #' @export
+#' @importFrom memoise memoise
+#' @importFrom jsonlite fromJSON
 #' @examples
 #'
 #' \dontrun{

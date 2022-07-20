@@ -1,7 +1,8 @@
 # phenocamr 1.1.5
 
-* Fix shiny plotly bug
-* github actions CI
+* Fix shiny + plotly colour bug
+* github actions CI migration
+* migration to new server URLs
 
 # phenocamr 1.1.4
 
