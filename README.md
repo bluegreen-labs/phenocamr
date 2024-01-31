@@ -5,7 +5,15 @@
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/phenocamr)](https://cran.r-project.org/package=phenocamr)
 ![CRAN\_Downloads](https://cranlogs.r-pkg.org/badges/grand-total/phenocamr)
 
-Facilitates the retrieval and post-processing of PhenoCam time series. The post-processing of PhenoCam data includes outlier removal and the generation of data products such as phenological transition dates. If requested complementary [Daymet climate data](https://daymet.ornl.gov/) will be downloaded and merged with the PhenoCam data for modelling purposes. For a detailed overview of the assumptions made during post-processing I refer publications by Hufkens et al. (2018) and Richardson et al. (2018). Please cite the Hufkens et al. (2018) paper when using the package. A worked example is included below and in the package vignette.
+Facilitates the retrieval and post-processing of PhenoCam time series. The post-processing of PhenoCam data includes outlier removal and the generation of data products such as phenological transition dates. If requested complementary [Daymet climate data](https://daymet.ornl.gov/) will be downloaded and merged with the PhenoCam data for modelling purposes. For a detailed overview of the assumptions made during post-processing I refer publications by Hufkens et al. (2018) and Richardson et al. (2018).
+
+## How to cite this package
+
+> [!important]
+> Hufkens K., Basler J. D., Milliman T. Melaas E., Richardson A.D. 2018
+> An integrated phenology modelling framework in R: Phenology modelling
+> with phenor. Methods in Ecology &
+> Evolution, 9: 1-10. https://doi.org/10.1111/2041-210X.12970
 
 ## Installation
 
