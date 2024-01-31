@@ -93,7 +93,7 @@
                         <h4 data-toc-skip class="author">Koen
 Hufkens</h4>
             
-            <h4 data-toc-skip class="date">2023-02-12</h4>
+            <h4 data-toc-skip class="date">2024-01-31</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/bluegreen-labs/phenocamr/blob/HEAD/vignettes/phenocamr-vignette.Rmd" class="external-link"><code>vignettes/phenocamr-vignette.Rmd</code></a></small>
       <div class="hidden name"><code>phenocamr-vignette.Rmd</code></div>
@@ -163,9 +163,9 @@ list_sites() function.</p>
 <span><span class="co">#&gt; 5 Scott Graham &lt;grahams AT landcareresearch DOT co DOT nz&gt; 2021-03-04</span></span>
 <span><span class="co">#&gt; 6 Scott Graham &lt;grahams AT landcareresearch DOT co DOT nz&gt; 2021-03-02</span></span>
 <span><span class="co">#&gt;     date_end nimage tzoffset active infrared   method</span></span>
-<span><span class="co">#&gt; 1 2023-02-07  37265       -5   TRUE        N  ftppush</span></span>
-<span><span class="co">#&gt; 2 2023-02-07  16743       -5   TRUE        Y  ftppush</span></span>
-<span><span class="co">#&gt; 3 2023-02-07  31177       -5   TRUE        N  ftppush</span></span>
+<span><span class="co">#&gt; 1 2024-01-12  49479       -5   TRUE        N  ftppush</span></span>
+<span><span class="co">#&gt; 2 2024-01-22  29381       -5   TRUE        Y  ftppush</span></span>
+<span><span class="co">#&gt; 3 2024-01-12  38524       -5   TRUE        N  ftppush</span></span>
 <span><span class="co">#&gt; 4 2022-01-07  55421       -5  FALSE        N httppull</span></span>
 <span><span class="co">#&gt; 5 2022-09-08  12279       12  FALSE        Y  ftppush</span></span>
 <span><span class="co">#&gt; 6 2022-09-08  14070       12  FALSE        Y  ftppush</span></span>
@@ -246,9 +246,9 @@ limited set of meta-data parameters.</p>
 <span><span class="co">#&gt; 5 Mixed forest in foreground.  Start new timeseries due to camera/FOV change.</span></span>
 <span><span class="co">#&gt; 6                                                         grass in foreground</span></span>
 <span><span class="co">#&gt;   first_date  last_date site_years missing_data_pct</span></span>
-<span><span class="co">#&gt; 1 2020-04-28 2023-02-07        2.7                2</span></span>
-<span><span class="co">#&gt; 2 2021-09-02 2023-02-07        1.4                4</span></span>
-<span><span class="co">#&gt; 3 2020-05-01 2022-05-17        2.0                2</span></span>
+<span><span class="co">#&gt; 1 2020-04-28 2024-01-29        3.7                2</span></span>
+<span><span class="co">#&gt; 2 2021-09-02 2024-01-29        2.3                3</span></span>
+<span><span class="co">#&gt; 3 2020-05-01 2024-01-29        2.6               32</span></span>
 <span><span class="co">#&gt; 4 2007-03-15 2017-09-20        9.8                7</span></span>
 <span><span class="co">#&gt; 5 2017-10-11 2021-09-23        3.7                6</span></span>
 <span><span class="co">#&gt; 6 2021-03-03 2022-09-08        1.5                2</span></span></code></pre></div>
@@ -292,39 +292,39 @@ header and is comma separated.</p>
 <span><span class="co">#&gt;  $ solar_elev_min: num 10</span></span>
 <span><span class="co">#&gt;  $ header        : Named chr [1:24] NA NA NA "harvard" ...</span></span>
 <span><span class="co">#&gt;   ..- attr(*, "names")= chr [1:24] "#" "# 3-day summary product timeseries for harvard" "#" "# Site" ...</span></span>
-<span><span class="co">#&gt;  $ data          :'data.frame':  5606 obs. of  32 variables:</span></span>
-<span><span class="co">#&gt;   ..$ date                : chr [1:5606] "2008-01-05" "2008-01-06" "2008-01-07" "2008-01-08" ...</span></span>
-<span><span class="co">#&gt;   ..$ year                : int [1:5606] 2008 2008 2008 2008 2008 2008 2008 2008 2008 2008 ...</span></span>
-<span><span class="co">#&gt;   ..$ doy                 : int [1:5606] 5 6 7 8 9 10 11 12 13 14 ...</span></span>
-<span><span class="co">#&gt;   ..$ image_count         : int [1:5606] NA NA NA NA NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;   ..$ midday_filename     : chr [1:5606] NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;   ..$ midday_r            : num [1:5606] NA NA NA NA NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;   ..$ midday_g            : num [1:5606] NA NA NA NA NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;   ..$ midday_b            : num [1:5606] NA NA NA NA NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;   ..$ midday_gcc          : num [1:5606] NA NA NA NA NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;   ..$ midday_rcc          : num [1:5606] NA NA NA NA NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;   ..$ r_mean              : num [1:5606] NA NA NA NA NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;   ..$ r_std               : num [1:5606] NA NA NA NA NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;   ..$ g_mean              : num [1:5606] NA NA NA NA NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;   ..$ g_std               : num [1:5606] NA NA NA NA NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;   ..$ b_mean              : num [1:5606] NA NA NA NA NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;   ..$ b_std               : num [1:5606] NA NA NA NA NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;   ..$ gcc_mean            : num [1:5606] NA NA NA NA NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;   ..$ gcc_std             : num [1:5606] NA NA NA NA NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;   ..$ gcc_50              : num [1:5606] NA NA NA NA NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;   ..$ gcc_75              : num [1:5606] NA NA NA NA NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;   ..$ gcc_90              : num [1:5606] NA NA NA NA NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;   ..$ rcc_mean            : num [1:5606] NA NA NA NA NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;   ..$ rcc_std             : num [1:5606] NA NA NA NA NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;   ..$ rcc_50              : num [1:5606] NA NA NA NA NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;   ..$ rcc_75              : num [1:5606] NA NA NA NA NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;   ..$ rcc_90              : num [1:5606] NA NA NA NA NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;   ..$ max_solar_elev      : num [1:5606] NA NA NA NA NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;   ..$ snow_flag           : logi [1:5606] NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;   ..$ outlierflag_gcc_mean: logi [1:5606] NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;   ..$ outlierflag_gcc_50  : logi [1:5606] NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;   ..$ outlierflag_gcc_75  : logi [1:5606] NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;   ..$ outlierflag_gcc_90  : logi [1:5606] NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;  $ data          :'data.frame':  5959 obs. of  32 variables:</span></span>
+<span><span class="co">#&gt;   ..$ date                : chr [1:5959] "2008-01-05" "2008-01-06" "2008-01-07" "2008-01-08" ...</span></span>
+<span><span class="co">#&gt;   ..$ year                : int [1:5959] 2008 2008 2008 2008 2008 2008 2008 2008 2008 2008 ...</span></span>
+<span><span class="co">#&gt;   ..$ doy                 : int [1:5959] 5 6 7 8 9 10 11 12 13 14 ...</span></span>
+<span><span class="co">#&gt;   ..$ image_count         : int [1:5959] NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;   ..$ midday_filename     : chr [1:5959] NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;   ..$ midday_r            : num [1:5959] NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;   ..$ midday_g            : num [1:5959] NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;   ..$ midday_b            : num [1:5959] NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;   ..$ midday_gcc          : num [1:5959] NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;   ..$ midday_rcc          : num [1:5959] NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;   ..$ r_mean              : num [1:5959] NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;   ..$ r_std               : num [1:5959] NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;   ..$ g_mean              : num [1:5959] NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;   ..$ g_std               : num [1:5959] NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;   ..$ b_mean              : num [1:5959] NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;   ..$ b_std               : num [1:5959] NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;   ..$ gcc_mean            : num [1:5959] NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;   ..$ gcc_std             : num [1:5959] NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;   ..$ gcc_50              : num [1:5959] NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;   ..$ gcc_75              : num [1:5959] NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;   ..$ gcc_90              : num [1:5959] NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;   ..$ rcc_mean            : num [1:5959] NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;   ..$ rcc_std             : num [1:5959] NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;   ..$ rcc_50              : num [1:5959] NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;   ..$ rcc_75              : num [1:5959] NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;   ..$ rcc_90              : num [1:5959] NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;   ..$ max_solar_elev      : num [1:5959] NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;   ..$ snow_flag           : logi [1:5959] NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;   ..$ outlierflag_gcc_mean: logi [1:5959] NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;   ..$ outlierflag_gcc_50  : logi [1:5959] NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;   ..$ outlierflag_gcc_75  : logi [1:5959] NA NA NA NA NA NA ...</span></span>
+<span><span class="co">#&gt;   ..$ outlierflag_gcc_90  : logi [1:5959] NA NA NA NA NA NA ...</span></span>
 <span><span class="co">#&gt;  - attr(*, "class")= chr "phenocamr"</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre></div>
 </div>
@@ -384,33 +384,33 @@ values (10 / 25 / 50%) of the Gcc amplitude.</p>
 <span><span class="co">#&gt; shorter object length</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">start_of_season</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   transition_10 transition_25 transition_50 transition_10_lower_ci</span></span>
-<span><span class="co">#&gt; 1         14000         14006         14013                  13998</span></span>
-<span><span class="co">#&gt; 2         14360         14366         14373                  14356</span></span>
-<span><span class="co">#&gt; 3         14718         14723         14730                  14710</span></span>
+<span><span class="co">#&gt; 1         14000         14006         14014                  13998</span></span>
+<span><span class="co">#&gt; 2         14360         14366         14374                  14357</span></span>
+<span><span class="co">#&gt; 3         14717         14723         14731                  14714</span></span>
 <span><span class="co">#&gt; 4         15094         15100         15107                  15092</span></span>
-<span><span class="co">#&gt; 5         15452         15459         15466                  15445</span></span>
+<span><span class="co">#&gt; 5         15451         15459         15466                  15446</span></span>
 <span><span class="co">#&gt; 6         15823         15828         15835                  15821</span></span>
 <span><span class="co">#&gt;   transition_25_lower_ci transition_50_lower_ci transition_10_upper_ci</span></span>
-<span><span class="co">#&gt; 1                  14004                  14011                  14003</span></span>
-<span><span class="co">#&gt; 2                  14364                  14371                  14363</span></span>
-<span><span class="co">#&gt; 3                  14722                  14728                  14721</span></span>
+<span><span class="co">#&gt; 1                  14004                  14012                  14003</span></span>
+<span><span class="co">#&gt; 2                  14365                  14371                  14363</span></span>
+<span><span class="co">#&gt; 3                  14722                  14729                  14720</span></span>
 <span><span class="co">#&gt; 4                  15099                  15105                  15097</span></span>
-<span><span class="co">#&gt; 5                  15457                  15464                  15455</span></span>
+<span><span class="co">#&gt; 5                  15458                  15464                  15455</span></span>
 <span><span class="co">#&gt; 6                  15827                  15833                  15825</span></span>
 <span><span class="co">#&gt;   transition_25_upper_ci transition_50_upper_ci threshold_10 threshold_25</span></span>
-<span><span class="co">#&gt; 1                  14008                  14014      0.37585      0.39017</span></span>
-<span><span class="co">#&gt; 2                  14368                  14374      0.37680      0.39103</span></span>
-<span><span class="co">#&gt; 3                  14725                  14731      0.37806      0.39059</span></span>
-<span><span class="co">#&gt; 4                  15102                  15108      0.37885      0.39400</span></span>
-<span><span class="co">#&gt; 5                  15461                  15467      0.38243      0.39707</span></span>
+<span><span class="co">#&gt; 1                  14008                  14015      0.37585      0.39017</span></span>
+<span><span class="co">#&gt; 2                  14368                  14375      0.37680      0.38992</span></span>
+<span><span class="co">#&gt; 3                  14725                  14732      0.37725      0.38977</span></span>
+<span><span class="co">#&gt; 4                  15102                  15108      0.37879      0.39329</span></span>
+<span><span class="co">#&gt; 5                  15461                  15467      0.38191      0.39679</span></span>
 <span><span class="co">#&gt; 6                  15830                  15836      0.38168      0.39589</span></span>
 <span><span class="co">#&gt;   threshold_50 min_gcc max_gcc</span></span>
-<span><span class="co">#&gt; 1      0.41523 0.36772 0.46047</span></span>
-<span><span class="co">#&gt; 2      0.41547 0.36795 0.46123</span></span>
-<span><span class="co">#&gt; 3      0.41723 0.36880 0.46400</span></span>
-<span><span class="co">#&gt; 4      0.42264 0.37057 0.46822</span></span>
-<span><span class="co">#&gt; 5      0.42482 0.37224 0.47502</span></span>
-<span><span class="co">#&gt; 6      0.42472 0.37258 0.47112</span></span></code></pre></div>
+<span><span class="co">#&gt; 1      0.41797 0.36788 0.46093</span></span>
+<span><span class="co">#&gt; 2      0.41851 0.36802 0.46125</span></span>
+<span><span class="co">#&gt; 3      0.42119 0.36877 0.46400</span></span>
+<span><span class="co">#&gt; 4      0.42130 0.37057 0.46822</span></span>
+<span><span class="co">#&gt; 5      0.42482 0.37218 0.47502</span></span>
+<span><span class="co">#&gt; 6      0.42461 0.37247 0.47046</span></span></code></pre></div>
 <p>Alternatively you can use the phenophases() function which is a
 wrapper of the transition_dates() function. However, as it potentially
 writes data to disk it needs additional information such as the roi_id,
