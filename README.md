@@ -9,7 +9,6 @@ Facilitates the retrieval and post-processing of PhenoCam time series. The post-
 
 ## How to cite this package
 
-> [!important]
 > Hufkens K., Basler J. D., Milliman T. Melaas E., Richardson A.D. 2018
 > An integrated phenology modelling framework in R: Phenology modelling
 > with phenor. Methods in Ecology &
