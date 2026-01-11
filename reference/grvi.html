@@ -3,7 +3,7 @@
 of a RGB image or digital number triplet. However, the blue channel can be
 used as well using a weighting factor. As such a paramter vector is provided
 so different channels / DN can be weighted separately."><meta property="og:image" content="/logo.png"><meta name="twitter:card" content="summary"></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -36,7 +36,7 @@ so different channels / DN can be weighted separately."><meta property="og:image
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -49,20 +49,20 @@ so different channels / DN can be weighted separately."><meta property="og:image
         <li>
   <a href="https://github.com/bluegreen-labs/phenocamr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Calculate green-red vegetation index (GRVI)</h1>
-    <small class="dont-index">Source: <a href="https://github.com/bluegreen-labs/phenocamr/blob/HEAD/R/grvi.r" class="external-link"><code>R/grvi.r</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/bluegreen-labs/phenocamr/blob/master/R/grvi.r" class="external-link"><code>R/grvi.r</code></a></small>
     <div class="hidden name"><code>grvi.Rd</code></div>
     </div>
 
@@ -79,36 +79,36 @@ so different channels / DN can be weighted separately.</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>data</dt>
+
+
+<dl><dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
 <dd><p>a PhenoCam data file or data frame (when using a file provide a
 full path if not in the current working directory)</p></dd>
 
 
-<dt>par</dt>
+<dt id="arg-par">par<a class="anchor" aria-label="anchor" href="#arg-par"></a></dt>
 <dd><p>grvi parameters (digital number weights)</p></dd>
 
 
-<dt>internal</dt>
+<dt id="arg-internal">internal<a class="anchor" aria-label="anchor" href="#arg-internal"></a></dt>
 <dd><p>return a data structure if given a file on disk
 (<code>TRUE</code> / <code>FALSE</code> = default)</p></dd>
 
 
-<dt>out_dir</dt>
+<dt id="arg-out-dir">out_dir<a class="anchor" aria-label="anchor" href="#arg-out-dir"></a></dt>
 <dd><p>output directory where to store data</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>Inserts a GRVI data column into the provided PhenoCam
+    <p>Inserts a GRVI data column into the provided PhenoCam
 data structure or file.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="co"># with defaults, outputting a data frame</span></span></span>
 <span class="r-in"><span><span class="co"># with smoothed values, overwriting the original</span></span></span>
 <span class="r-in"><span></span></span>
@@ -124,7 +124,7 @@ data structure or file.</p>
 <span class="r-in"><span><span class="co"># as all functions this also works on a PhenoCam data structure</span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="read_phenocam.html">read_phenocam</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,<span class="st">"harvard_DB_1000_3day.csv"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">grvi</span><span class="op">(</span><span class="va">df</span>, par <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -144,8 +144,8 @@ data structure or file.</p>
                           <div class="icon fab fa-github"></div></a>
                         <a href="https://bluegreenlabs.org/labs/" target="_blank" class="external-link">
                           <div class="icon fa fa-flask"></div></a>
-                        <a href="http://twitter.com/bluegreen_labs" target="_blank" class="external-link">
-                          <div class="icon fab fa-twitter"></div></a>
+                        <a href="https://www.linkedin.com/company/bluegreen-labs/" target="_blank" class="external-link">
+                          <div class="icon fa fa-linkedin"></div></a>
                     </div>
                 </div>
                 <div class="row top-4">
@@ -171,10 +171,10 @@ data structure or file.</p>
 
       </footer></div>
 
-  
 
 
-  
+
+
 
   </body></html>
 
